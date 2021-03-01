@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family={fontFamily}:100,300,400,500,700,900&display=swap');
+* {
+  font: normal 76px/1 {{fontFamily}}, Helvetica, sans-serif;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.phas-dashboard {
+  background-color: {{backgroundColor}};
+}
+
+.name {
+  color: {{nameColor}};
+  font-size: {{nameFontSize}};
+}
+
+.conclusion {
+  color: {{conclusionColor}};
+  font-size: {{conclusionFontSize}};
+}
+
+.evidence {
+  max-width: 65%;
+  height: 100%;
+  margin: auto auto;
+}
+
+.inactive {
+  fill: {{evidenceInactive}};
+}
+
+.active {
+  fill: {{evidenceActive}};
+}
+
+.impossible {
+  fill: {{evidenceImpossible}};
+}
+
+.svg-container {
+  height: auto; 
+  width: 100%;
+}
+
+.divider-color > * + * {
+  border-color: {{dividerColor}} 
+}
+
+.phas-border {
+  border-color: {{borderColor}}
+}

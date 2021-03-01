@@ -1,0 +1,184 @@
+{
+    "resetCommand": {
+      "type": "string",
+      "label": "Name Reset Command",
+      "value": "!ghostreset",
+      "group": "Commands"
+    },
+    "nameCommand": {
+         "type": "string",
+      "label": "Name Input Command",
+      "value": "!ghostname",
+      "group": "Commands"
+    },
+    "emfCommand": {
+      "type": "string",
+      "label": "EMF Toggle Command",
+      "value": "!ge",
+      "group": "Commands"
+    },
+    "spiritBoxCommand": {
+      "type": "string",
+      "label": "Spirit Box Toggle Command",
+      "value": "!gs",
+      "group": "Commands"
+    },
+    "fingerprintsCommand": {
+      "type": "string",
+      "label": "Fingerprints Toggle Command",
+      "value": "!gf",
+      "group": "Commands"
+    },
+    "orbsCommand": {
+      "type": "string",
+      "label": "Ghost Orbs Toggle Command",
+      "value": "!go",
+      "group": "Commands"
+    },
+    "writingCommand": {
+      "type": "string",
+      "label": "Ghost Writing Toggle Command",
+      "value": "!gw",
+      "group": "Commands"
+    },
+    "freezingCommand": {
+      "type": "string",
+      "label": "Freezing Temps Toggle Command",
+      "value": "!gt",
+      "group": "Commands"
+    },
+    "displayName": {
+      "type": "checkbox",
+      "label": "Display Name (may require save and refresh)",
+      "value": true,
+      "group": "Optionals"
+    },
+    "displayConclusion": {
+      "type": "checkbox",
+      "label": "Display Conclusion (may require save and refresh)",
+      "value": true,
+      "group": "Optionals"
+    },
+    "greyOutInvalidEvidence": {
+      "type": "checkbox",
+      "label": "Grey Out Invalid Evidence",
+      "value": true,
+      "group": "Optionals"
+    },
+    "backgroundColor": {
+      "type": "colorpicker",
+      "label": "Background Color",
+      "value": "rgba(0,0,0,.5)",
+      "group": "Theming"
+    },
+    "borderColor": {
+      "type": "colorpicker",
+      "label": "Border Color",
+      "value": "rgba(255, 255, 255, 1)",
+      "group": "Theming"
+    },
+    "borderType": {
+      "type": "dropdown",
+      "label": "Choose a border type:",
+      "value": "border-solid",
+      "options": {
+        "border-solid": "Solid Border",
+        "border-dashed": "Dashed Border",
+        "border-dotted": "Dotted Border",
+        "border-double": "Double Border",
+        "border-none": "No Border"
+      },
+      "group": "Theming"
+    },
+    "borderWidth": {
+      "type": "dropdown",
+      "label": "Choose a border width:",
+      "value": "border-4",
+      "options": {
+        "border": "1px",
+        "border-2": "2px",
+        "border-4": "4px",
+        "border-8": "8px"
+      },
+      "group": "Theming"
+    },
+    "dividerColor": {
+      "type": "colorpicker",
+      "label": "Divider Color",
+      "value": "rgba(255, 255, 255, 1)",
+      "group": "Theming"
+    },
+    "dividerType": {
+      "type": "dropdown",
+      "label": "Choose a divider type:",
+      "value": "divide-solid",
+      "options": {
+        "divide-solid": "Solid Divider",
+        "divide-dashed": "Dashed Divider",
+        "divide-dotted": "Dotted Divider",
+        "divide-double": "Double Divider",
+        "divide-none": "No Divider"
+      },
+      "group": "Theming"
+    },
+    "dividerWidth": {
+      "type": "dropdown",
+      "label": "Choose a border width:",
+      "value": "divide-y",
+      "options": {
+        "divide-y": "1px",
+        "divide-y-2": "2px",
+        "divide-y-4": "4px",
+        "divide-y-8": "8px"
+      },
+      "group": "Theming"
+    },
+    "fontFamily": {
+        "type": "googleFont",
+        "label": "Font",
+        "value": "Sail",
+      "group": "Theming"
+    },
+    "nameColor": {
+      "type": "colorpicker",
+      "label": "Name Color",
+      "value": "rgba(0,172,255,1)",
+      "group": "Theming"
+    },
+    "nameFontSize": {
+      "type": "fontSize",
+      "label": "Name Font Size",
+      "value": "16px",
+      "group": "Theming"
+    },
+    "conclusionColor": {
+      "type": "colorpicker",
+      "label": "Conclusion Color",
+      "value": "rgba(0,172,255,1)",
+      "group": "Theming"
+    },
+    "conclusionFontSize": {
+      "type": "fontSize",
+      "label": "Conclusion Font Size",
+      "value": "16px",
+      "group": "Theming"
+    },
+    "evidenceActive": {
+      "type": "colorpicker",
+      "label": "Evidence - Active",
+      "value": "rgba(50,205,50 ,1 )",
+      "group": "Theming"
+    },
+    "evidenceInactive": {
+      "type": "colorpicker",
+      "label": "Evidence - Inactive",
+      "value": "rgba(0,0,0,1)",
+      "group": "Theming"
+    },
+    "evidenceImpossible": {
+      "type": "colorpicker",
+      "label": "Evidence - Impossible",
+      "value": "rgba(192,192,192,1)",
+      "group": "Theming"
+    }
+  }
