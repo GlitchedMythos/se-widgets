@@ -111,13 +111,19 @@ window.addEventListener('onEventReceived', function (obj) {
   console.log('COMMAND: ' + givenCommand);
 
   let evidenceText;
+  let newName;
 
   switch (givenCommand) {
     case "{{resetCommand}}":
-      resetGhost();
+      newName = data.text.split(' ').slice(1).join(' ');
+      if (newName.length > 0) {
+        resetGhost(newName);
+      } else {
+        resetGhost(null);
+      }
       break;
     case "{{nameCommand}}":
-      let newName = data.text.split(' ').slice(1).join(' ');
+      newName = data.text.split(' ').slice(1).join(' ');
 
       $("#name").html(`Name: ${newName}`);
       break;
@@ -169,6 +175,8 @@ let toggleSVG = (svgID) => {
 }
 
 let resetEvidence = () => {
+  removeAllImpossibleCSS();
+  
   emf = false;
   $(`#emf-svg`).removeClass('active');
   $(`#emf-svg`).addClass('inactive');
@@ -194,12 +202,12 @@ let resetEvidence = () => {
   $(`#freezing-svg`).addClass('inactive');
 }
 
-let resetName = () => {
-  $("#name").html(`New Ghost...`);
+let resetName = (newName) => {
+  $("#name").html(`${(newName) ? `Name: ${newName}` : 'New Ghost...'}`);
 }
 
-let resetGhost = () => {
-  resetName();
+let resetGhost = (newName) => {
+  resetName(newName);
   resetEvidence();
   updateGhostGuess('No clue... yet');
 }
