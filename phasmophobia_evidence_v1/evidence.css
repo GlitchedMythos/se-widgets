@@ -43,9 +43,11 @@
 }
 
 .divider-color > * + * {
-  border-color: {{dividerColor}} 
+  border-color: {{dividerColor}} ;
 }
 
 .phas-border {
-  border-color: {{borderColor}}
+  border-color: {{borderColor}};
+  border-width: {{borderWidth}}px;
+  border-radius: {{borderRadius}}px;
 }
