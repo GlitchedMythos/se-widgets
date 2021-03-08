@@ -120,7 +120,8 @@ window.addEventListener('onWidgetLoad', function (obj) {
     fingerprintsCommand,
     orbsCommand,
     writingCommand,
-    freezingCommand
+    freezingCommand,
+    '!version'
   ];
 
   let displayName = fieldData['displayName'];
@@ -209,6 +210,11 @@ window.addEventListener('onEventReceived', function (obj) {
       freezing = !freezing;
       updateGhostGuess();
       break;
+    case "!version":
+      $('#version').addClass('elementToFadeInAndOut');
+      setTimeout(() => {
+        $('#version').removeClass('elementToFadeInAndOut');
+      }, 5000);
   }
 });
 
