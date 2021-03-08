@@ -187,81 +187,99 @@
     "value": 50,
     "group": "Theming"
   },
+  "noNameString": {
+    "type": "text",
+    "label": "No Ghost Name Message",
+    "value": "New Ghostie...",
+    "group": "Name Messages"
+  },
+  "zeroEvidenceConclusionString": {
+    "type": "text",
+    "label": "Zero Evidence",
+    "value": "Waiting for Evidence",
+    "group": "Conclusion Messages"
+  },
+  "oneEvidenceConclusionString": {
+    "type": "text",
+    "label": "One Evidence",
+    "value": "Not sure yet...",
+    "group": "Conclusion Messages"
+  },
   "impossibleConclusionString": {
     "type": "text",
-    "label": "Message to display when too much evidence is entered",
+    "label": "Too much evidence entered",
     "value": "It's over 9000!!",
     "group": "Conclusion Messages"
   },
   "bansheeString": {
     "type": "text",
-    "label": "Banshee Conclusion - Leave empty for default",
+    "label": "Banshee - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "demonString": {
     "type": "text",
-    "label": "Demon Conclusion - Leave empty for default",
+    "label": "Demon - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "jinnString": {
     "type": "text",
-    "label": "Jinn Conclusion - Leave empty for default",
+    "label": "Jinn - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "mareString": {
     "type": "text",
-    "label": "Mare Conclusion - Leave empty for default",
+    "label": "Mare - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "oniString": {
     "type": "text",
-    "label": "Oni Conclusion - Leave empty for default",
+    "label": "Oni - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "phantomString": {
     "type": "text",
-    "label": "Phantom Conclusion - Leave empty for default",
+    "label": "Phantom - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "poltergeistString": {
     "type": "text",
-    "label": "Poltergeist Conclusion - Leave empty for default",
+    "label": "Poltergeist - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "revenantString": {
     "type": "text",
-    "label": "Revenant Conclusion - Leave empty for default",
+    "label": "Revenant - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "shadeString": {
     "type": "text",
-    "label": "Shade Conclusion - Leave empty for default",
+    "label": "Shade - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "spiritString": {
     "type": "text",
-    "label": "Spirit Conclusion - Leave empty for default",
+    "label": "Spirit - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "wraithString": {
     "type": "text",
-    "label": "Wraith Conclusion - Leave empty for default",
+    "label": "Wraith - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
   "yureiString": {
     "type": "text",
-    "label": "Yurei Conclusion - Leave empty for default",
+    "label": "Yurei - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   }

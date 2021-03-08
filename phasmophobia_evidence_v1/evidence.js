@@ -36,6 +36,7 @@ demon = '011100';
 
 window.addEventListener('onWidgetLoad', function (obj) {
   const fieldData = obj.detail.fieldData;
+  console.log('the field data', fieldData)
   resetCommand = fieldData['resetCommand'];
   nameCommand = fieldData['nameCommand'];
   emfCommand = fieldData['emfCommand'];
@@ -47,7 +48,15 @@ window.addEventListener('onWidgetLoad', function (obj) {
   greyOutInvalidEvidence = fieldData['greyOutInvalidEvidence'];
 
   config.evidencePixelSize = fieldData['evidencePixelSize'];
+  config.nameStrings = {
+    noNameString: (fieldData['noNameString']) ?
+    fieldData['noNameString'] : 'A New Ghostie'
+  }
   config.conclusionStrings = {
+    zeroEvidenceConclusionString: (fieldData['zeroEvidenceConclusionString']) ?
+      fieldData['zeroEvidenceConclusionString'] : 'Waiting for Evidence',
+    oneEvidenceConclusionString: (fieldData['oneEvidenceConclusionString']) ?
+      fieldData['oneEvidenceConclusionString'] : 'Not sure yet...',
     tooMuchEvidence: (fieldData['impossibleConclusionString']) ?
       fieldData['impossibleConclusionString'] : 'Too Much Evidence'
   };
@@ -154,7 +163,6 @@ window.addEventListener('onEventReceived', function (obj) {
 
   console.log('COMMAND: ' + givenCommand);
 
-  let evidenceText;
   let newName;
 
   switch (givenCommand) {
@@ -247,13 +255,13 @@ let resetEvidence = () => {
 }
 
 let resetName = (newName) => {
-  $("#name").html(`${(newName) ? `Name: ${newName}` : 'New Ghost...'}`);
+  $("#name").html(`${(newName) ? `Name: ${newName}` : config.nameStrings.noNameString}`);
 }
 
 let resetGhost = (newName) => {
   resetName(newName);
   resetEvidence();
-  updateGhostGuess('No clue... yet');
+  updateGhostGuess(config.conclusionStrings.zeroEvidenceConclusionString);
 }
 
 let numOfTrueEvidence = () => {
@@ -271,29 +279,38 @@ let numOfTrueEvidence = () => {
 
 let checkEvidenceGhostMatch = () => {
   let evidenceString = createEvidenceString();
-  console.log('THE EVIDENCE STRING', evidenceString);
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
   let ghostGuessString = '';
 
-  // 0 - 1 Piece of Evidence
-  if (numOfTrueEvidence < 2) {
-    ghostGuessString = 'Not sure yet...';
+  // 0  Piece of Evidence
+  if (numOfTrueEvidence < 1) {
+    ghostGuessString = config.conclusionStrings.zeroEvidenceConclusionString;
+    if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
+  }
+  // 1  Piece of Evidence
+  else if (numOfTrueEvidence == 1) {
+    ghostGuessString = config.conclusionStrings.oneEvidenceConclusionString;
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
   } // 2 Pieces of Evidence
   else if (numOfTrueEvidence == 2) {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
     if (greyOutInvalidEvidence) {
-      invalidEvidenceUpdate(evidenceString, ghostPossibilities);
+      invalidEvidenceUpdate(ghostPossibilities);
     }
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
     console.log('the ghost possibiilties', ghostPossibilityStrings);
     ghostGuessString = `Could be a ` + ghostPossibilityStrings.join(', ');
   } // Exact match
   else if (numOfTrueEvidence == 3) {
-    if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
-    // TODO UPDATE BELOW
     let ghostPossibilities = getGhostPossibilities(evidenceString);
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
+
+    if (!greyOutInvalidEvidence) {
+      removeAllImpossibleCSS()
+    } else {
+      invalidEvidenceUpdate(ghostPossibilities);
+    }
+
     ghostGuessString = (ghostPossibilityStrings.length == 0) ?
       'UH OH... no match?!' :
       `It's a ${ghostPossibilities[0].type}!!`;
@@ -355,12 +372,12 @@ let getGhostPossibilities = (evidenceString) => {
 
   console.log("ALL the possible ghosts: ", possibleGhosts);
 
-  return [];
-  // return possibleGhosts;
+  return possibleGhosts;
 }
 
-let invalidEvidenceUpdate = (evidenceString, possibleGhosts) => {
+let invalidEvidenceUpdate = (possibleGhosts) => {
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
+  // Addition shorthand prior to impossibleEvidence converts the string to a number
   // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
   if (+impossibleEvidence[0] == 0) {
     $(`#emf-svg`).addClass('impossible');
@@ -418,7 +435,6 @@ let getImpossibleEvidence = (possibleGhosts) => {
       impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` // possibleGhosts[ghost][ghost evidence string][position in evidence string]
     }
   }
-  console.log(impossibleEvidenceString);
   return impossibleEvidenceString;
 }
 
