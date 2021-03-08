@@ -34,21 +34,6 @@ let phantom = '110010',
   spirit = '001101';
 demon = '011100';
 
-let ghosts = [
-  [phantom, 'Phantom'],
-  [banshee, 'Banshee'],
-  [jinn, 'Jinn'],
-  [revenant, 'Revenant'],
-  [shade, 'Shade'],
-  [oni, 'Oni'],
-  [wraith, 'Wraith'],
-  [mare, 'Mare'],
-  [yurei, 'Yurei'],
-  [poltergeist, 'Poltergeist'],
-  [spirit, 'Spirit'],
-  [demon, 'Demon']
-];
-
 window.addEventListener('onWidgetLoad', function (obj) {
   const fieldData = obj.detail.fieldData;
   resetCommand = fieldData['resetCommand'];
@@ -66,56 +51,57 @@ window.addEventListener('onWidgetLoad', function (obj) {
     tooMuchEvidence: (fieldData['impossibleConclusionString']) ?
       fieldData['impossibleConclusionString'] : 'Too Much Evidence'
   };
-  config.ghosts = {
-    "banshee": {
+  config.ghosts = [
+    {
+      "type": 'Banshee',
       "conclusion": createGhostConclusionString(fieldData['bansheeString'], 'Banshee'),
-      "evidence": banshee
-    },
-    "demon": {
+      "evidence": '110001'
+    }, {
+      "type": "Demon",
       "conclusion": createGhostConclusionString(fieldData['demonString'], 'Demon'),
-      "evidence": banshee
-    },
-    "jinn": {
+      "evidence": '011100'
+    }, {
+      "type": "Jinn",
       "conclusion": createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
-      "evidence": banshee
-    },
-    "mare": {
+      "evidence": '101010'
+    }, {
+      "type": "Mare",
       "conclusion": createGhostConclusionString(fieldData['mareString'], 'Mare'),
-      "evidence": banshee
-    },
-    "oni": {
+      "evidence": '011010'
+    }, {
+      "type": "Oni",
       "conclusion": createGhostConclusionString(fieldData['oniString'], 'Oni'),
-      "evidence": banshee
-    },
-    "phantom": {
+      "evidence": '101100'
+    }, {
+      "type": "Phantom",
       "conclusion": createGhostConclusionString(fieldData['phantomString'], 'Phantom'),
-      "evidence": banshee
-    },
-    "poltergeist": {
+      "evidence": '110010'
+    }, {
+      "type": "Poltergeist",
       "conclusion": createGhostConclusionString(fieldData['poltergeistString'], 'Poltergeist'),
-      "evidence": banshee
-    },
-    "revenant": {
+      "evidence": '001011'
+    }, {
+      "type": "Revenant",
       "conclusion": createGhostConclusionString(fieldData['revenantString'], 'Revenant'),
-      "evidence": banshee
-    },
-    "shade": {
+      "evidence": '100101'
+    }, {
+      "type": "Shade",
       "conclusion": createGhostConclusionString(fieldData['shadeString'], 'Shade'),
-      "evidence": banshee
-    },
-    "spirit": {
+      "evidence": '100110'
+    }, {
+      "type": "Spirit",
       "conclusion": createGhostConclusionString(fieldData['spiritString'], 'Spirit'),
-      "evidence": banshee
-    },
-    "wraith": {
+      "evidence": '001101'
+    }, {
+      "type": "Wraith",
       "conclusion": createGhostConclusionString(fieldData['wraithString'], 'Wraith'),
-      "evidence": banshee
-    },
-    "yurei": {
+      "evidence": '011001'
+    }, {
+      "type": "Yurei",
       "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
-      "evidence": banshee
+      "evidence": '010110'
     }
-  }
+  ];
 
   commands = [
     resetCommand,
@@ -289,25 +275,30 @@ let checkEvidenceGhostMatch = () => {
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
   let ghostGuessString = '';
 
+  // 0 - 1 Piece of Evidence
   if (numOfTrueEvidence < 2) {
     ghostGuessString = 'Not sure yet...';
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
-  } else if (numOfTrueEvidence == 2) {
+  } // 2 Pieces of Evidence
+  else if (numOfTrueEvidence == 2) {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
     if (greyOutInvalidEvidence) {
       invalidEvidenceUpdate(evidenceString, ghostPossibilities);
     }
-    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost[1]);
+    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
     console.log('the ghost possibiilties', ghostPossibilityStrings);
     ghostGuessString = `Could be a ` + ghostPossibilityStrings.join(', ');
-  } else if (numOfTrueEvidence == 3) {
+  } // Exact match
+  else if (numOfTrueEvidence == 3) {
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
+    // TODO UPDATE BELOW
     let ghostPossibilities = getGhostPossibilities(evidenceString);
-    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost[1]);
+    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
     ghostGuessString = (ghostPossibilityStrings.length == 0) ?
       'UH OH... no match?!' :
-      `It's a ${ghostPossibilities[0][1]}!!`;
-  } else {
+      `It's a ${ghostPossibilities[0].type}!!`;
+  } // Too much evidence
+  else {
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
     ghostGuessString = config.conclusionStrings.tooMuchEvidence;
   }
@@ -342,24 +333,30 @@ let getGhostPossibilities = (evidenceString) => {
   const possibleGhosts = [];
   const numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
 
-  for (let i = 0; i < ghosts.length; i++) {
+  for (let i = 0; i < config.ghosts.length; i++) {
     let evidenceMatch = 0;
-    console.log('GHOST: ', ghosts[i]);
+    let ghostToCheck = config.ghosts[i];
+    console.log('Checking ', ghostToCheck.type, ghostToCheck.evidence);
+
     for (let j = 0; j < evidenceString.length; j++) {
+      console.log(i, j);
       if (evidenceString.charAt(j) == '1') {
-        if (evidenceString.charAt(j) == ghosts[i][0].charAt(j)) {
+        if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
           evidenceMatch = evidenceMatch + 1;
         }
+        console.log('Have a true evidence', evidenceString.charAt(j), ghostToCheck.evidence.charAt(j), 'evidence: ', evidenceMatch, 'numtrue: ', numOfTrueEvidence);
       }
     }
+
     if (evidenceMatch == numOfTrueEvidence && evidenceMatch > 1) {
-      possibleGhosts.push(ghosts[i]);
+      possibleGhosts.push(config.ghosts[i]);
     }
   }
 
   console.log("ALL the possible ghosts: ", possibleGhosts);
 
-  return possibleGhosts;
+  return [];
+  // return possibleGhosts;
 }
 
 let invalidEvidenceUpdate = (evidenceString, possibleGhosts) => {
@@ -414,11 +411,11 @@ let removeAllImpossibleCSS = () => {
 let getImpossibleEvidence = (possibleGhosts) => {
   let impossibleEvidenceString = '000000'; // If it stays a 0, we know it can't match any of the ghosts
   for (let i = 0; i < possibleGhosts.length; i++) {
-    console.log('going through ghost', possibleGhosts[i])
+    console.log('going through ghost', possibleGhosts[i].type)
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
-      console.log('values: ', `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}`, `${+impossibleEvidenceString[k]}`, `${+possibleGhosts[i][0][k]}`);
-      impossibleEvidenceString = impossibleEvidenceString.substr(0, k) + `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}` + impossibleEvidenceString.substr(k + 1);
-      impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}` // possibleGhosts[ghost][ghost evidence string][position in evidence string]
+      console.log('values: ', `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}`, `${+impossibleEvidenceString[k]}`, `${+possibleGhosts[i].evidence[k]}`);
+      impossibleEvidenceString = impossibleEvidenceString.substr(0, k) + `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` + impossibleEvidenceString.substr(k + 1);
+      impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` // possibleGhosts[ghost][ghost evidence string][position in evidence string]
     }
   }
   console.log(impossibleEvidenceString);
@@ -430,7 +427,7 @@ let updateGhostGuess = (guessText) => {
 }
 
 let createGhostConclusionString = (conclusionString, ghostType) => {
-  reutrn (conclusionString) ? conclusionString : `It's a ${ghostType}!!`;
+  return (conclusionString) ? conclusionString : `It's a ${ghostType}!!`;
 }
 
 
