@@ -17,6 +17,8 @@ let emf,
 
 let greyOutInvalidEvidence;
 
+let config = {};
+
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
 let phantom = '110010',
@@ -59,6 +61,62 @@ window.addEventListener('onWidgetLoad', function (obj) {
   freezingCommand = fieldData['freezingCommand'];
   greyOutInvalidEvidence = fieldData['greyOutInvalidEvidence'];
 
+  config.evidencePixelSize = fieldData['evidencePixelSize'];
+  config.conclusionStrings = {
+    tooMuchEvidence: (fieldData['impossibleConclusionString']) ?
+      fieldData['impossibleConclusionString'] : 'Too Much Evidence'
+  };
+  config.ghosts = {
+    "banshee": {
+      "conclusion": fieldData['bansheeString'],
+      "evidence": banshee
+    },
+    "demon": {
+      "conclusion": fieldData['demonString'],
+      "evidence": banshee
+    },
+    "jinn": {
+      "conclusion": fieldData['jinnString'],
+      "evidence": banshee
+    },
+    "mare": {
+      "conclusion": fieldData['mareString'],
+      "evidence": banshee
+    },
+    "oni": {
+      "conclusion": fieldData['oniString'],
+      "evidence": banshee
+    },
+    "phantom": {
+      "conclusion": fieldData['phantomString'],
+      "evidence": banshee
+    },
+    "poltergeist": {
+      "conclusion": fieldData['poltergeistString'],
+      "evidence": banshee
+    },
+    "revenant": {
+      "conclusion": fieldData['revenantString'],
+      "evidence": banshee
+    },
+    "shade": {
+      "conclusion": fieldData['shadeString'],
+      "evidence": banshee
+    },
+    "spirit": {
+      "conclusion": fieldData['spiritString'],
+      "evidence": banshee
+    },
+    "wraith": {
+      "conclusion": fieldData['wraithString'],
+      "evidence": banshee
+    },
+    "yurei": {
+      "conclusion": fieldData['yureiString'],
+      "evidence": banshee
+    }
+  }
+
   commands = [
     resetCommand,
     nameCommand,
@@ -69,16 +127,16 @@ window.addEventListener('onWidgetLoad', function (obj) {
     writingCommand,
     freezingCommand
   ];
-  
+
   let displayName = fieldData['displayName'];
   let displayConclusion = fieldData['displayConclusion'];
-  
+
   if (!displayName) {
-   $(`#name`).addClass('hidden');
+    $(`#name`).addClass('hidden');
   }
-  
+
   if (!displayConclusion) {
-   $(`#conclusion`).addClass('hidden'); 
+    $(`#conclusion`).addClass('hidden');
   }
 
   resetEvidence();
@@ -176,7 +234,7 @@ let toggleSVG = (svgID) => {
 
 let resetEvidence = () => {
   removeAllImpossibleCSS();
-  
+
   emf = false;
   $(`#emf-svg`).removeClass('active');
   $(`#emf-svg`).addClass('inactive');
@@ -251,7 +309,7 @@ let checkEvidenceGhostMatch = () => {
       `It's a ${ghostPossibilities[0][1]}!!`;
   } else {
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
-    ghostGuessString = 'IMPOSSIBRUUUU';
+    ghostGuessString = config.conclusionStrings.tooMuchEvidence;
   }
 
   return ghostGuessString;

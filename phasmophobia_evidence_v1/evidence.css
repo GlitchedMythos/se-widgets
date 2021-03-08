@@ -20,8 +20,8 @@
 }
 
 .evidence {
-  max-width: 65%;
-  height: 100%;
+  width: {{evidencePixelSize}}px;
+  height: {{evidencePixelSize}}px;
   margin: auto auto;
 }
 
