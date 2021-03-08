@@ -68,51 +68,51 @@ window.addEventListener('onWidgetLoad', function (obj) {
   };
   config.ghosts = {
     "banshee": {
-      "conclusion": fieldData['bansheeString'],
+      "conclusion": createGhostConclusionString(fieldData['bansheeString'], 'Banshee'),
       "evidence": banshee
     },
     "demon": {
-      "conclusion": fieldData['demonString'],
+      "conclusion": createGhostConclusionString(fieldData['demonString'], 'Demon'),
       "evidence": banshee
     },
     "jinn": {
-      "conclusion": fieldData['jinnString'],
+      "conclusion": createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
       "evidence": banshee
     },
     "mare": {
-      "conclusion": fieldData['mareString'],
+      "conclusion": createGhostConclusionString(fieldData['mareString'], 'Mare'),
       "evidence": banshee
     },
     "oni": {
-      "conclusion": fieldData['oniString'],
+      "conclusion": createGhostConclusionString(fieldData['oniString'], 'Oni'),
       "evidence": banshee
     },
     "phantom": {
-      "conclusion": fieldData['phantomString'],
+      "conclusion": createGhostConclusionString(fieldData['phantomString'], 'Phantom'),
       "evidence": banshee
     },
     "poltergeist": {
-      "conclusion": fieldData['poltergeistString'],
+      "conclusion": createGhostConclusionString(fieldData['poltergeistString'], 'Poltergeist'),
       "evidence": banshee
     },
     "revenant": {
-      "conclusion": fieldData['revenantString'],
+      "conclusion": createGhostConclusionString(fieldData['revenantString'], 'Revenant'),
       "evidence": banshee
     },
     "shade": {
-      "conclusion": fieldData['shadeString'],
+      "conclusion": createGhostConclusionString(fieldData['shadeString'], 'Shade'),
       "evidence": banshee
     },
     "spirit": {
-      "conclusion": fieldData['spiritString'],
+      "conclusion": createGhostConclusionString(fieldData['spiritString'], 'Spirit'),
       "evidence": banshee
     },
     "wraith": {
-      "conclusion": fieldData['wraithString'],
+      "conclusion": createGhostConclusionString(fieldData['wraithString'], 'Wraith'),
       "evidence": banshee
     },
     "yurei": {
-      "conclusion": fieldData['yureiString'],
+      "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
       "evidence": banshee
     }
   }
@@ -429,7 +429,9 @@ let updateGhostGuess = (guessText) => {
   (guessText) ? $('#conclusion').html('No clue... yet') : $('#conclusion').html(checkEvidenceGhostMatch());
 }
 
-
+let createGhostConclusionString = (conclusionString, ghostType) => {
+  reutrn (conclusionString) ? conclusionString : `It's a ${ghostType}!!`;
+}
 
 
 
