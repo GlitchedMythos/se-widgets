@@ -319,7 +319,7 @@ let checkEvidenceGhostMatch = () => {
 
     ghostGuessString = (ghostPossibilityStrings.length == 0) ?
       'UH OH... no match?!' :
-      `It's a ${ghostPossibilities[0].type}!!`;
+      ghostPossibilities[0].conclusion;
   } // Too much evidence
   else {
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
