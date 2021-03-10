@@ -47,6 +47,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
   freezingCommand = fieldData['freezingCommand'];
   greyOutInvalidEvidence = fieldData['greyOutInvalidEvidence'];
 
+  config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
   config.evidencePixelSize = fieldData['evidencePixelSize'];
   config.nameStrings = {
     noNameString: (fieldData['noNameString']) ?
@@ -147,7 +148,7 @@ window.addEventListener('onEventReceived', function (obj) {
   // Check if a moderator
   let badges = data.badges;
   let i = badges.findIndex(x =>
-    x.type === 'moderator' || x.type === 'broadcaster');
+    x.type === 'moderator' || x.type === 'broadcaster' || (config.allowVIPS && x.type === 'vip'));
   if (i == -1) {
     console.log('Not a mod');
     return;

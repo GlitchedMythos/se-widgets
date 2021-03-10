@@ -65,6 +65,16 @@
     "value": true,
     "group": "Optionals"
   },
+  "allowVIPS": {
+    "type": "dropdown",
+    "label": "Allow VIPS to use commands",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
   "backgroundColor": {
     "type": "colorpicker",
     "label": "Background Color",
