@@ -14,6 +14,11 @@
   font-size: {{nameFontSize}};
 }
 
+.objective {
+  color: {{nameColor}};
+  font-size: {{nameFontSize}};
+}
+
 .conclusion {
   color: {{conclusionColor}};
   font-size: {{conclusionFontSize}};
@@ -39,7 +44,7 @@
 
 .svg-container {
   height: auto; 
-  width: 100%;
+  padding: 0 0.25rem;
 }
 
 .divider-color > * + * {
@@ -70,5 +75,5 @@
 
 @keyframes fade {
   0%,100% { opacity: 0 }
-  50% { opacity: 1 }
+  30%,70% { opacity: 1 }
 }
