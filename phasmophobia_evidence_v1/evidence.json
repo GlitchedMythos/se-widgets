@@ -203,6 +203,12 @@
     "value": "New Ghostie...",
     "group": "Name Messages"
   },
+  "noOptionalObjectivesMessage": {
+    "type": "text",
+    "label": "No Optional Objectives Message",
+    "value": "Widget Author: GlitchedMythos",
+    "group": "Optional Objectives"
+  },
   "zeroEvidenceConclusionString": {
     "type": "text",
     "label": "Zero Evidence",

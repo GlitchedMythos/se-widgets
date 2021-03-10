@@ -51,7 +51,10 @@ window.addEventListener('onWidgetLoad', function (obj) {
   config.evidencePixelSize = fieldData['evidencePixelSize'];
   config.nameStrings = {
     noNameString: (fieldData['noNameString']) ?
-    fieldData['noNameString'] : 'A New Ghostie'
+      fieldData['noNameString'] : 'A New Ghostie'
+  }
+  config.optionalObj = {
+    noOptionalString: fieldData['noOptionalObjectivesMessage']
   }
   config.conclusionStrings = {
     zeroEvidenceConclusionString: (fieldData['zeroEvidenceConclusionString']) ?
@@ -453,8 +456,75 @@ let createGhostConclusionString = (conclusionString, ghostType) => {
   return (conclusionString) ? conclusionString : `It's a ${ghostType}!!`;
 }
 
+let createOptionalObjectivesString = (optObjString) => {
+  let optObj = "";
 
+  if (optObjString.length === 3) {
 
+  } else {
+    optObj = config.optionalObj.noOptionalString;
+  }
 
+  return optObj;
+}
+
+let getOptObj = (obj) => {
+  let optObj = ""
+
+  switch (obj.toLowerCase()) {
+    case 'mo':
+    case 'motion':
+      optObj = "Motion"
+      break;
+    case 'sa':
+    case `salt`:
+      optObj = "Salt"
+      break;
+    case 'ph':
+    case 'photo':
+      optObj = "Photo"
+      break;
+    case 'ev':
+    case 'event':
+      optObj = "Event"
+      break;
+    case 'em':
+    case 'emf':
+      optObj = "EMF"
+      break;
+    case 'cr':
+    case 'crucifix':
+      optObj = "Crucifix"
+      break;
+    case 'sm':
+    case 'smudge':
+      optObj = "Smudge"
+      break;
+    case 'pa':
+    case 'parabolic':
+    case 'mic':
+      optObj = "Parabolic"
+      break;
+    case 'es':
+    case 'escape':
+    case 'hunt':
+      optObj = "Escape"
+      break;
+    case 'ze':
+    case '0%':
+    case 'zero':
+    case 'sanity':
+      optObj = "0% Sanity"
+      break;
+    case 'ca':
+    case 'candle':
+      optObj = "Candle"
+      break;
+    default:
+      break;
+  }
+
+  return optObj;
+}
 
 
