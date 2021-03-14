@@ -61,7 +61,9 @@ window.addEventListener('onWidgetLoad', function (obj) {
   config.evidencePixelSize = fieldData['evidencePixelSize'];
   config.nameStrings = {
     noNameString: (fieldData['noNameString']) ?
-      fieldData['noNameString'] : 'A New Ghostie'
+      fieldData['noNameString'] : 'A New Ghostie',
+    ghostNameString: (fieldData['ghostNameString']) ?
+      fieldData['ghostNameString'] : 'Name: [name]'
   }
   config.optionalObj = {
     noOptionalString: fieldData['noOptionalObjectivesMessage']
@@ -158,6 +160,23 @@ window.addEventListener('onWidgetLoad', function (obj) {
     $(`#conclusion`).addClass('hidden');
   }
 
+  let useGradientBorder = (fieldData['useGradientBorder'] === 'yes') ? true : false;
+  let useAnimatedBorder = (fieldData['useAnimatedBorder'] === 'yes') ? true : false;
+
+  if (useGradientBorder) {
+    $('#phas-dashboard').addClass('animated-box');
+
+    if (useAnimatedBorder) {
+      $('#phas-dashboard').addClass('in');
+      $('#phas-dashboard').addClass('animated-box-300');
+    } else {
+      $('#phas-dashboard').addClass('animated-box-100');
+    }
+  } else {
+    $('#phas-dashboard').addClass('phas-border');
+  }
+
+
   resetEvidence();
   updateGhostGuess();
 });
@@ -201,7 +220,8 @@ window.addEventListener('onEventReceived', function (obj) {
     case "{{nameCommand}}":
       newName = data.text.split(' ').slice(1).join(' ');
 
-      $("#name").html(`Name: ${newName}`);
+      resetName(newName);
+
       break;
     case "{{emfCommand}}":
       toggleSVG('emf-svg');
@@ -280,7 +300,10 @@ let toggleStrikethrough = (optionalID) => {
 }
 
 let resetName = (newName) => {
-  $("#name").html(`${(newName) ? `Name: ${newName}` : config.nameStrings.noNameString}`);
+  let nameString = '' + config.nameStrings.ghostNameString;
+  nameString = nameString.replace(/\[name\]/g, newName);
+  console.log('the new name string:', nameString, newName);
+  $("#name").html(`${(newName) ? nameString : config.nameStrings.noNameString}`);
 }
 
 let resetEvidence = () => {

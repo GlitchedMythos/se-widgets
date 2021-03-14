@@ -192,11 +192,11 @@
     "label": "Choose a border type:",
     "value": "border-solid",
     "options": {
-      "border-solid": "Solid Border",
-      "border-dashed": "Dashed Border",
-      "border-dotted": "Dotted Border",
-      "border-double": "Double Border",
-      "border-none": "No Border"
+      "solid": "Solid Border",
+      "dashed": "Dashed Border",
+      "dotted": "Dotted Border",
+      "double": "Double Border",
+      "none": "No Border"
     },
     "group": "Theming - Border"
   },
@@ -211,6 +211,62 @@
     "label": "Enter a border radius:",
     "value": 0,
     "group": "Theming - Border"
+  },
+  "useGradientBorder": {
+    "type": "dropdown",
+    "label": "Use Gradient Border?",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Theming - Gradient Border"
+  },
+  "useAnimatedBorder": {
+    "type": "dropdown",
+    "label": "Animate Border?",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderColor": {
+    "type": "colorpicker",
+    "label": "Border Color",
+    "value": "rgba(0, 255, 255, 1)",
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderColorTwo": {
+    "type": "colorpicker",
+    "label": "Border Color Two",
+    "value": "rgba(255, 0, 255, 1)",
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderColorThree": {
+    "type": "colorpicker",
+    "label": "Border Color Three",
+    "value": "rgba(255, 0, 255, 1)",
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderAngle": {
+    "type": "number",
+    "label": "Border Angle",
+    "value": 0,
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderWidth": {
+    "type": "number",
+    "label": "Enter a border width:",
+    "value": 4,
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderRadius": {
+    "type": "number",
+    "label": "Enter a border radius:",
+    "value": 0,
+    "group": "Theming - Gradient Border"
   },
   "dividerColor": {
     "type": "colorpicker",
@@ -271,6 +327,12 @@
     "type": "text",
     "label": "No Ghost Name Message",
     "value": "New Ghostie...",
+    "group": "Name Messages"
+  },
+  "ghostNameString": {
+    "type": "text",
+    "label": "Ghost Name: [name]",
+    "value": "Name: [name]",
     "group": "Name Messages"
   },
   "noOptionalObjectivesMessage": {
