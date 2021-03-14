@@ -6,7 +6,11 @@ let commands,
   fingerprintsCommand,
   orbsCommand,
   writingCommand,
-  freezingCommand;
+  freezingCommand,
+  optionalObjectivesCommand,
+  toggleOptObjOne,
+  toggleOptObjTwo,
+  toggleOptObjThree;
 
 let emf,
   spiritBox,
@@ -16,6 +20,8 @@ let emf,
   freezing;
 
 let greyOutInvalidEvidence;
+
+let config = {};
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
@@ -32,23 +38,10 @@ let phantom = '110010',
   spirit = '001101';
 demon = '011100';
 
-let ghosts = [
-  [phantom, 'Phantom'],
-  [banshee, 'Banshee'],
-  [jinn, 'Jinn'],
-  [revenant, 'Revenant'],
-  [shade, 'Shade'],
-  [oni, 'Oni'],
-  [wraith, 'Wraith'],
-  [mare, 'Mare'],
-  [yurei, 'Yurei'],
-  [poltergeist, 'Poltergeist'],
-  [spirit, 'Spirit'],
-  [demon, 'Demon']
-];
-
 window.addEventListener('onWidgetLoad', function (obj) {
   const fieldData = obj.detail.fieldData;
+  console.log('the field data', fieldData)
+
   resetCommand = fieldData['resetCommand'];
   nameCommand = fieldData['nameCommand'];
   emfCommand = fieldData['emfCommand'];
@@ -57,7 +50,83 @@ window.addEventListener('onWidgetLoad', function (obj) {
   orbsCommand = fieldData['orbsCommand'];
   writingCommand = fieldData['writingCommand'];
   freezingCommand = fieldData['freezingCommand'];
-  greyOutInvalidEvidence = fieldData['greyOutInvalidEvidence'];
+  optionalObjectivesCommand = fieldData['optionalObjectivesCommand'];
+  toggleOptObjOne = fieldData['toggleOptObjOne'];
+  toggleOptObjTwo = fieldData['toggleOptObjTwo'];
+  toggleOptObjThree = fieldData['toggleOptObjThree'];
+
+  greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
+
+  config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
+  config.evidencePixelSize = fieldData['evidencePixelSize'];
+  config.nameStrings = {
+    noNameString: (fieldData['noNameString']) ?
+      fieldData['noNameString'] : 'A New Ghostie',
+    ghostNameString: (fieldData['ghostNameString']) ?
+      fieldData['ghostNameString'] : 'Name: [name]'
+  }
+  config.optionalObj = {
+    noOptionalString: fieldData['noOptionalObjectivesMessage']
+  }
+  config.conclusionStrings = {
+    zeroEvidenceConclusionString: (fieldData['zeroEvidenceConclusionString']) ?
+      fieldData['zeroEvidenceConclusionString'] : 'Waiting for Evidence',
+    oneEvidenceConclusionString: (fieldData['oneEvidenceConclusionString']) ?
+      fieldData['oneEvidenceConclusionString'] : 'Not sure yet...',
+    tooMuchEvidence: (fieldData['impossibleConclusionString']) ?
+      fieldData['impossibleConclusionString'] : 'Too Much Evidence'
+  };
+  config.ghosts = [
+    {
+      "type": 'Banshee',
+      "conclusion": createGhostConclusionString(fieldData['bansheeString'], 'Banshee'),
+      "evidence": '110001'
+    }, {
+      "type": "Demon",
+      "conclusion": createGhostConclusionString(fieldData['demonString'], 'Demon'),
+      "evidence": '011100'
+    }, {
+      "type": "Jinn",
+      "conclusion": createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
+      "evidence": '101010'
+    }, {
+      "type": "Mare",
+      "conclusion": createGhostConclusionString(fieldData['mareString'], 'Mare'),
+      "evidence": '011010'
+    }, {
+      "type": "Oni",
+      "conclusion": createGhostConclusionString(fieldData['oniString'], 'Oni'),
+      "evidence": '101100'
+    }, {
+      "type": "Phantom",
+      "conclusion": createGhostConclusionString(fieldData['phantomString'], 'Phantom'),
+      "evidence": '110010'
+    }, {
+      "type": "Poltergeist",
+      "conclusion": createGhostConclusionString(fieldData['poltergeistString'], 'Poltergeist'),
+      "evidence": '001011'
+    }, {
+      "type": "Revenant",
+      "conclusion": createGhostConclusionString(fieldData['revenantString'], 'Revenant'),
+      "evidence": '100101'
+    }, {
+      "type": "Shade",
+      "conclusion": createGhostConclusionString(fieldData['shadeString'], 'Shade'),
+      "evidence": '100110'
+    }, {
+      "type": "Spirit",
+      "conclusion": createGhostConclusionString(fieldData['spiritString'], 'Spirit'),
+      "evidence": '001101'
+    }, {
+      "type": "Wraith",
+      "conclusion": createGhostConclusionString(fieldData['wraithString'], 'Wraith'),
+      "evidence": '011001'
+    }, {
+      "type": "Yurei",
+      "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
+      "evidence": '010110'
+    }
+  ];
 
   commands = [
     resetCommand,
@@ -67,19 +136,46 @@ window.addEventListener('onWidgetLoad', function (obj) {
     fingerprintsCommand,
     orbsCommand,
     writingCommand,
-    freezingCommand
+    freezingCommand,
+    optionalObjectivesCommand,
+    toggleOptObjOne,
+    toggleOptObjTwo,
+    toggleOptObjThree,
+    '!version'
   ];
-  
-  let displayName = fieldData['displayName'];
-  let displayConclusion = fieldData['displayConclusion'];
-  
+
+  let displayName = (fieldData['displayName'] === 'yes') ? true : false;
+  let displayOptionalObjectives = (fieldData['displayOptionalObjectives'] === 'yes') ? true : false;
+  let displayConclusion = (fieldData['displayConclusion'] === 'yes') ? true : false;
+
   if (!displayName) {
-   $(`#name`).addClass('hidden');
+    $(`#name`).addClass('hidden');
   }
-  
+
+  if (!displayOptionalObjectives) {
+    $(`#optional-obj`).addClass(`hidden`);
+  }
+
   if (!displayConclusion) {
-   $(`#conclusion`).addClass('hidden'); 
+    $(`#conclusion`).addClass('hidden');
   }
+
+  let useGradientBorder = (fieldData['useGradientBorder'] === 'yes') ? true : false;
+  let useAnimatedBorder = (fieldData['useAnimatedBorder'] === 'yes') ? true : false;
+
+  if (useGradientBorder) {
+    $('#phas-dashboard').addClass('animated-box');
+
+    if (useAnimatedBorder) {
+      $('#phas-dashboard').addClass('in');
+      $('#phas-dashboard').addClass('animated-box-300');
+    } else {
+      $('#phas-dashboard').addClass('animated-box-100');
+    }
+  } else {
+    $('#phas-dashboard').addClass('phas-border');
+  }
+
 
   resetEvidence();
   updateGhostGuess();
@@ -93,7 +189,7 @@ window.addEventListener('onEventReceived', function (obj) {
   // Check if a moderator
   let badges = data.badges;
   let i = badges.findIndex(x =>
-    x.type === 'moderator' || x.type === 'broadcaster');
+    x.type === 'moderator' || x.type === 'broadcaster' || (config.allowVIPS && x.type === 'vip'));
   if (i == -1) {
     console.log('Not a mod');
     return;
@@ -110,7 +206,6 @@ window.addEventListener('onEventReceived', function (obj) {
 
   console.log('COMMAND: ' + givenCommand);
 
-  let evidenceText;
   let newName;
 
   switch (givenCommand) {
@@ -125,7 +220,8 @@ window.addEventListener('onEventReceived', function (obj) {
     case "{{nameCommand}}":
       newName = data.text.split(' ').slice(1).join(' ');
 
-      $("#name").html(`Name: ${newName}`);
+      resetName(newName);
+
       break;
     case "{{emfCommand}}":
       toggleSVG('emf-svg');
@@ -157,6 +253,23 @@ window.addEventListener('onEventReceived', function (obj) {
       freezing = !freezing;
       updateGhostGuess();
       break;
+    case "{{optionalObjectivesCommand}}":
+      updateOptionalObjectives(data.text);
+      break;
+    case "{{toggleOptObjOne}}":
+      toggleStrikethrough("objective-one");
+      break;
+    case "{{toggleOptObjTwo}}":
+      toggleStrikethrough("objective-two");
+      break;
+    case "{{toggleOptObjThree}}":
+      toggleStrikethrough("objective-three");
+      break;
+    case "!version":
+      $('#version').addClass('elementToFadeInAndOut');
+      setTimeout(() => {
+        $('#version').removeClass('elementToFadeInAndOut');
+      }, 5000);
   }
 });
 
@@ -174,9 +287,28 @@ let toggleSVG = (svgID) => {
   }
 }
 
+let toggleStrikethrough = (optionalID) => {
+  let optionalObj = $(`#${optionalID}`);
+  let classList = optionalObj.attr("class");
+  let classArray = classList.split(/\s+/);
+
+  if (classArray.includes('strikethrough')) {
+    optionalObj.removeClass('strikethrough');
+  } else {
+    optionalObj.addClass('strikethrough');
+  }
+}
+
+let resetName = (newName) => {
+  let nameString = '' + config.nameStrings.ghostNameString;
+  nameString = nameString.replace(/\[name\]/g, newName);
+  console.log('the new name string:', nameString, newName);
+  $("#name").html(`${(newName) ? nameString : config.nameStrings.noNameString}`);
+}
+
 let resetEvidence = () => {
   removeAllImpossibleCSS();
-  
+
   emf = false;
   $(`#emf-svg`).removeClass('active');
   $(`#emf-svg`).addClass('inactive');
@@ -202,14 +334,19 @@ let resetEvidence = () => {
   $(`#freezing-svg`).addClass('inactive');
 }
 
-let resetName = (newName) => {
-  $("#name").html(`${(newName) ? `Name: ${newName}` : 'New Ghost...'}`);
+let resetOptional = () => {
+  $('#optional-obj-container').addClass('hidden');
+  $('#no-opt-objectives-container').removeClass('hidden');
+  $('#optional-one').removeClass('strikethrough');
+  $('#optional-two').removeClass('strikethrough');
+  $('#optional-three').removeClass('strikethrough');
 }
 
 let resetGhost = (newName) => {
   resetName(newName);
   resetEvidence();
-  updateGhostGuess('No clue... yet');
+  resetOptional();
+  updateGhostGuess(config.conclusionStrings.zeroEvidenceConclusionString);
 }
 
 let numOfTrueEvidence = () => {
@@ -227,31 +364,45 @@ let numOfTrueEvidence = () => {
 
 let checkEvidenceGhostMatch = () => {
   let evidenceString = createEvidenceString();
-  console.log('THE EVIDENCE STRING', evidenceString);
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
   let ghostGuessString = '';
 
-  if (numOfTrueEvidence < 2) {
-    ghostGuessString = 'Not sure yet...';
+  // 0  Piece of Evidence
+  if (numOfTrueEvidence < 1) {
+    ghostGuessString = config.conclusionStrings.zeroEvidenceConclusionString;
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
-  } else if (numOfTrueEvidence == 2) {
+  }
+  // 1  Piece of Evidence
+  else if (numOfTrueEvidence == 1) {
+    ghostGuessString = config.conclusionStrings.oneEvidenceConclusionString;
+    if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
+  } // 2 Pieces of Evidence
+  else if (numOfTrueEvidence == 2) {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
     if (greyOutInvalidEvidence) {
-      invalidEvidenceUpdate(evidenceString, ghostPossibilities);
+      invalidEvidenceUpdate(ghostPossibilities);
     }
-    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost[1]);
+    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
     console.log('the ghost possibiilties', ghostPossibilityStrings);
     ghostGuessString = `Could be a ` + ghostPossibilityStrings.join(', ');
-  } else if (numOfTrueEvidence == 3) {
-    if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
+  } // Exact match
+  else if (numOfTrueEvidence == 3) {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
-    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost[1]);
+    let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
+
+    if (!greyOutInvalidEvidence) {
+      removeAllImpossibleCSS()
+    } else {
+      invalidEvidenceUpdate(ghostPossibilities);
+    }
+
     ghostGuessString = (ghostPossibilityStrings.length == 0) ?
       'UH OH... no match?!' :
-      `It's a ${ghostPossibilities[0][1]}!!`;
-  } else {
+      ghostPossibilities[0].conclusion;
+  } // Too much evidence
+  else {
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
-    ghostGuessString = 'IMPOSSIBRUUUU';
+    ghostGuessString = config.conclusionStrings.tooMuchEvidence;
   }
 
   return ghostGuessString;
@@ -284,18 +435,23 @@ let getGhostPossibilities = (evidenceString) => {
   const possibleGhosts = [];
   const numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
 
-  for (let i = 0; i < ghosts.length; i++) {
+  for (let i = 0; i < config.ghosts.length; i++) {
     let evidenceMatch = 0;
-    console.log('GHOST: ', ghosts[i]);
+    let ghostToCheck = config.ghosts[i];
+    console.log('Checking ', ghostToCheck.type, ghostToCheck.evidence);
+
     for (let j = 0; j < evidenceString.length; j++) {
+      console.log(i, j);
       if (evidenceString.charAt(j) == '1') {
-        if (evidenceString.charAt(j) == ghosts[i][0].charAt(j)) {
+        if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
           evidenceMatch = evidenceMatch + 1;
         }
+        console.log('Have a true evidence', evidenceString.charAt(j), ghostToCheck.evidence.charAt(j), 'evidence: ', evidenceMatch, 'numtrue: ', numOfTrueEvidence);
       }
     }
+
     if (evidenceMatch == numOfTrueEvidence && evidenceMatch > 1) {
-      possibleGhosts.push(ghosts[i]);
+      possibleGhosts.push(config.ghosts[i]);
     }
   }
 
@@ -304,8 +460,9 @@ let getGhostPossibilities = (evidenceString) => {
   return possibleGhosts;
 }
 
-let invalidEvidenceUpdate = (evidenceString, possibleGhosts) => {
+let invalidEvidenceUpdate = (possibleGhosts) => {
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
+  // Addition shorthand prior to impossibleEvidence converts the string to a number
   // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
   if (+impossibleEvidence[0] == 0) {
     $(`#emf-svg`).addClass('impossible');
@@ -356,14 +513,13 @@ let removeAllImpossibleCSS = () => {
 let getImpossibleEvidence = (possibleGhosts) => {
   let impossibleEvidenceString = '000000'; // If it stays a 0, we know it can't match any of the ghosts
   for (let i = 0; i < possibleGhosts.length; i++) {
-    console.log('going through ghost', possibleGhosts[i])
+    console.log('going through ghost', possibleGhosts[i].type)
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
-      console.log('values: ', `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}`, `${+impossibleEvidenceString[k]}`, `${+possibleGhosts[i][0][k]}`);
-      impossibleEvidenceString = impossibleEvidenceString.substr(0, k) + `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}` + impossibleEvidenceString.substr(k + 1);
-      impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}` // possibleGhosts[ghost][ghost evidence string][position in evidence string]
+      console.log('values: ', `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}`, `${+impossibleEvidenceString[k]}`, `${+possibleGhosts[i].evidence[k]}`);
+      impossibleEvidenceString = impossibleEvidenceString.substr(0, k) + `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` + impossibleEvidenceString.substr(k + 1);
+      impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` // possibleGhosts[ghost][ghost evidence string][position in evidence string]
     }
   }
-  console.log(impossibleEvidenceString);
   return impossibleEvidenceString;
 }
 
@@ -371,10 +527,106 @@ let updateGhostGuess = (guessText) => {
   (guessText) ? $('#conclusion').html('No clue... yet') : $('#conclusion').html(checkEvidenceGhostMatch());
 }
 
+let createGhostConclusionString = (conclusionString, ghostType) => {
+  return (conclusionString) ? conclusionString : `It's a ${ghostType}!!`;
+}
 
+let createOptionalObjectivesString = (optObjString) => {
+  let optObj = "";
 
+  if (optObjString.length === 3) {
 
+  } else {
+    optObj = config.optionalObj.noOptionalString;
+  }
 
+  return optObj;
+}
 
+let updateOptionalObjectives = (command) => {
+  let commandSplit = command.split(' ');
+  let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
+
+  let optObjectives = [];
+
+  if (optObjCommands.length === 3) {
+    for (let i = 0; i < optObjCommands.length; i++) {
+      let objectiveString = getOptObj(optObjCommands[i]);
+      if (objectiveString) {
+        optObjectives.push(objectiveString);
+      }
+    }
+  }
+
+  console.log('OptionalObj: ', optObjCommands, optObjectives)
+
+  if (optObjectives.length === 3) {
+    $('#optional-obj-container').removeClass('hidden');
+    $('#no-opt-objectives-container').addClass('hidden');
+    $('#objective-one').html(optObjectives[0]);
+    $('#objective-two').html(optObjectives[1]);
+    $('#objective-three').html(optObjectives[2]);
+  }
+}
+
+let getOptObj = (obj) => {
+  let optObj = ""
+
+  switch (obj.toLowerCase()) {
+    case 'mo':
+    case 'motion':
+      optObj = "Motion"
+      break;
+    case 'sa':
+    case `salt`:
+      optObj = "Salt"
+      break;
+    case 'ph':
+    case 'photo':
+      optObj = "Photo"
+      break;
+    case 'ev':
+    case 'event':
+      optObj = "Event"
+      break;
+    case 'em':
+    case 'emf':
+      optObj = "EMF"
+      break;
+    case 'cr':
+    case 'crucifix':
+      optObj = "Crucifix"
+      break;
+    case 'sm':
+    case 'smudge':
+      optObj = "Smudge"
+      break;
+    case 'pa':
+    case 'parabolic':
+    case 'mic':
+      optObj = "Parabolic"
+      break;
+    case 'es':
+    case 'escape':
+      optObj = "Escape"
+      break;
+    case 'hunt':
+    case 'hu':
+      optObj = "Smudge(Hunt)"
+      break;
+    case 'san':
+    case 'sanity':
+      optObj = "<25% Sanity"
+      break;
+    case 'ca':
+    case 'candle':
+      optObj = "Candle"
+      break;
+    default:
+      break;
+  }
+
+  return optObj;
+}
 
 

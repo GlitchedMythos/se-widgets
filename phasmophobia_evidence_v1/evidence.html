@@ -13,15 +13,15 @@ I play quite a bit of Phasmophobia, but also a bunch of other games too!
 Happy ghost hunting!
 And I hope you don't get hunted yourself! :D -->
 
-<div class="phas-dashboard text-left {{dividerWidth}} divider-color {{dividerType}} phas-border {{borderType}} {{borderWidth}} p-1 h-screen flex flex-col"
+<div class="phas-dashboard text-left {{dividerWidth}} divider-color {{dividerType}} p-1 h-screen flex flex-col"
     id="phas-dashboard">
     <div class="name pb-0.5 flex-1" id="name">
-        A New Ghostie...
+        {{noNameString}}
     </div>
 
     <div class="p-0.5 flex-grow">
         <div class="flex flex-grow flex-col h-full">
-            <div class="flex flex-grow flex-row justify-between">
+            <div class="flex flex-grow flex-row flex-wrap justify-between">
                 <!-- EMF 5 SVG  -->
                 <div class="svg-container">
                     <svg id="emf-svg" class="evidence inactive" version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -99,8 +99,6 @@ And I hope you don't get hunted yourself! :D -->
                         </g>
                     </svg>
                 </div>
-            </div>
-            <div class="flex flex-grow flex-row justify-between">
                 <div class="svg-container">
                     <!-- GHOST ORBS SVG -->
                     <svg id="orbs-svg" class="evidence inactive" version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +244,22 @@ c-12 -20 -14 -14 -5 12 4 9 9 14 11 11 3 -2 0 -13 -6 -23z m-20 -50 c-12 -20
         </div>
     </div>
 
-    <div class="conclusion pt-0.5 flex-1" id="conclusion">
-        The ghost could be...
+    <div class="optional-obj py-0.5" id="optional-obj">
+      <div class="flex-1 flex justify-around hidden" id="optional-obj-container">
+        <div class="objective" id="objective-one">Motion</div>
+        <div class="objective" id="objective-two">Crucifix</div>
+        <div class="objective" id="objective-three">Photo</div>
+      </div>
+      <div class="objective" id="no-opt-objectives-container">
+        {{noOptionalObjectivesMessage}}
+      </div>
     </div>
+
+    <div class="conclusion pt-0.5 flex-1" id="conclusion">
+        {{zeroEvidenceConclusionString}}
+    </div>
+</div>
+
+<div class="phas-dashboard phas-version text-left {{dividerWidth}} divider-color {{dividerType}} phas-border {{borderType}} p-1 h-screen flex flex-col" id="version">
+    <h1>TESTING</h1>
 </div>

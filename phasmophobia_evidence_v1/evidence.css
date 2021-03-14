@@ -14,14 +14,19 @@
   font-size: {{nameFontSize}};
 }
 
+.objective {
+  color: {{objectivesColor}};
+  font-size: {{objectivesFontSize}};
+}
+
 .conclusion {
   color: {{conclusionColor}};
   font-size: {{conclusionFontSize}};
 }
 
 .evidence {
-  max-width: 65%;
-  height: 100%;
+  width: {{evidencePixelSize}}px;
+  height: {{evidencePixelSize}}px;
   margin: auto auto;
 }
 
@@ -37,15 +42,129 @@
   fill: {{evidenceImpossible}};
 }
 
+.strikethrough {
+  position: relative;
+}
+
+.strikethrough::after {
+  border-bottom: {{objectivesStrikethroughSize}} solid {{objectivesStrikethroughColor}};
+  content: "";
+  left: 0;
+  margin-top: calc({{objectivesStrikethroughSize}} / 2 * -1);
+  margin-left: -10px;
+  margin-right: -10px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
 .svg-container {
   height: auto; 
-  width: 100%;
+  padding: 0 0.25rem;
 }
 
 .divider-color > * + * {
-  border-color: {{dividerColor}} 
+  border-color: {{dividerColor}} ;
 }
 
 .phas-border {
-  border-color: {{borderColor}}
+  border-color: {{borderColor}};
+  border-width: {{borderWidth}}px;
+  border-radius: {{borderRadius}}px;
+  border-style: {{borderType}};
+}
+
+.phas-version {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: grey;
+  opacity: 0;
+}
+
+.elementToFadeInAndOut {
+  opacity: 1;
+  animation: fade 5s linear;
+  animation-iteration-count: 1;
+}
+
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  30%,70% { opacity: 1 }
+}
+
+.animated-box {
+  border-radius: {{animatedBorderRadius}}px;
+}
+
+.animated-box h1 {
+  font-weight: 200;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.animated-box p {
+  font-weight: 200;
+}
+
+/* The animation starts here */
+.animated-box {
+  position: relative;
+  border-radius: {{animatedBorderRadius}}px;
+}
+
+.animated-box:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: {{animatedBorderRadius}}px;
+  background: linear-gradient({{animatedBorderAngle}}deg, {{animatedBorderColor}}, {{animatedBorderColorTwo}}, {{animatedBorderColorThree}});
+  clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
+}
+
+.animated-box-100:after {
+  background-size: 100% 100%;
+}
+
+.animated-box-300:after {
+  background-size: 300% 300%;
+}
+
+.animated-box.in:after {
+  animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation 4s ease-in-out infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 15% 0%;
+  }
+  50% {
+    background-position: 85% 100%;
+  }
+  100% {
+    background-position: 15% 0%;
+  }
+}
+
+@keyframes frame-enter {
+  0% {
+    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
+  }
+  25% {
+    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), calc(100% - {{animatedBorderWidth}}px) 100%, 100% 100%, 100% 0%, 0% 0%);
+  }
+  50% {
+    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, 100% 0%, 0% 0%);
+  }
+  75% {
+    -webkit-clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px 0%, 0% 0%);
+  }
+  100% {
+    -webkit-clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, 0% 100%);
+  }
 }
