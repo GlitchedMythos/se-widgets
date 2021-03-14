@@ -35,8 +35,8 @@ let phantom = '110010',
   mare = '011010',
   yurei = '010110',
   poltergeist = '001011',
-  spirit = '001101';
-demon = '011100';
+  spirit = '001101',
+  demon = '011100';
 
 window.addEventListener('onWidgetLoad', function (obj) {
   const fieldData = obj.detail.fieldData;
