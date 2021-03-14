@@ -42,6 +42,22 @@
   fill: {{evidenceImpossible}};
 }
 
+.strikethrough {
+  position: relative;
+}
+
+.strikethrough::after {
+  border-bottom: {{objectivesStrikethroughSize}} solid {{objectivesStrikethroughColor}};
+  content: "";
+  left: 0;
+  margin-top: calc({{objectivesStrikethroughSize}} / 2 * -1);
+  margin-left: -10px;
+  margin-right: -10px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
 .svg-container {
   height: auto; 
   padding: 0 0.25rem;

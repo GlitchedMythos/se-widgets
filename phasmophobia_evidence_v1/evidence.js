@@ -7,7 +7,10 @@ let commands,
   orbsCommand,
   writingCommand,
   freezingCommand,
-  optionalObjectivesCommand;
+  optionalObjectivesCommand,
+  toggleOptObjOne,
+  toggleOptObjTwo,
+  toggleOptObjThree;
 
 let emf,
   spiritBox,
@@ -48,6 +51,9 @@ window.addEventListener('onWidgetLoad', function (obj) {
   writingCommand = fieldData['writingCommand'];
   freezingCommand = fieldData['freezingCommand'];
   optionalObjectivesCommand = fieldData['optionalObjectivesCommand'];
+  toggleOptObjOne = fieldData['toggleOptObjOne'];
+  toggleOptObjTwo = fieldData['toggleOptObjTwo'];
+  toggleOptObjThree = fieldData['toggleOptObjThree'];
 
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
@@ -130,6 +136,9 @@ window.addEventListener('onWidgetLoad', function (obj) {
     writingCommand,
     freezingCommand,
     optionalObjectivesCommand,
+    toggleOptObjOne,
+    toggleOptObjTwo,
+    toggleOptObjThree,
     '!version'
   ];
 
@@ -227,6 +236,15 @@ window.addEventListener('onEventReceived', function (obj) {
     case "{{optionalObjectivesCommand}}":
       updateOptionalObjectives(data.text);
       break;
+    case "{{toggleOptObjOne}}":
+      toggleStrikethrough("objective-one");
+      break;
+    case "{{toggleOptObjTwo}}":
+      toggleStrikethrough("objective-two");
+      break;
+    case "{{toggleOptObjThree}}":
+      toggleStrikethrough("objective-three");
+      break;
     case "!version":
       $('#version').addClass('elementToFadeInAndOut');
       setTimeout(() => {
@@ -246,6 +264,18 @@ let toggleSVG = (svgID) => {
   } else {
     svg.removeClass('active');
     svg.addClass('inactive');
+  }
+}
+
+let toggleStrikethrough = (optionalID) => {
+  let optionalObj = $(`#${optionalID}`);
+  let classList = optionalObj.attr("class");
+  let classArray = classList.split(/\s+/);
+
+  if (classArray.includes('strikethrough')) {
+    optionalObj.removeClass('strikethrough');
+  } else {
+    optionalObj.addClass('strikethrough');
   }
 }
 
@@ -283,7 +313,10 @@ let resetEvidence = () => {
 
 let resetOptional = () => {
   $('#optional-obj-container').addClass('hidden');
-    $('#no-opt-objectives-container').removeClass('hidden');
+  $('#no-opt-objectives-container').removeClass('hidden');
+  $('#optional-one').removeClass('strikethrough');
+  $('#optional-two').removeClass('strikethrough');
+  $('#optional-three').removeClass('strikethrough');
 }
 
 let resetGhost = (newName) => {
@@ -494,9 +527,9 @@ let updateOptionalObjectives = (command) => {
   let optObjectives = [];
 
   if (optObjCommands.length === 3) {
-    for(let i = 0; i < optObjCommands.length; i++) {
+    for (let i = 0; i < optObjCommands.length; i++) {
       let objectiveString = getOptObj(optObjCommands[i]);
-      if (objectiveString) { 
+      if (objectiveString) {
         optObjectives.push(objectiveString);
       }
     }

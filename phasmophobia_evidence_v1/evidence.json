@@ -53,6 +53,24 @@
     "value": "!oo",
     "group": "Commands"
   },
+  "toggleOptObjOne": {
+    "type": "string",
+    "label": "Toggle Optional Objective One",
+    "value": "!o1",
+    "group": "Commands"
+  },
+  "toggleOptObjTwo": {
+    "type": "string",
+    "label": "Toggle Optional Objective Two",
+    "value": "!o2",
+    "group": "Commands"
+  },
+  "toggleOptObjThree": {
+    "type": "string",
+    "label": "Toggle Optional Objective Three",
+    "value": "!o3",
+    "group": "Commands"
+  },
   "displayName": {
     "type": "dropdown",
     "label": "Display Name",
@@ -129,7 +147,7 @@
   },
   "objectivesColor": {
     "type": "colorpicker",
-    "label": "Objectives Color",
+    "label": "Objectives Text Color",
     "value": "rgba(0,172,255,1)",
     "group": "Theming"
   },
@@ -137,6 +155,18 @@
     "type": "fontSize",
     "label": "Objectives Font Size",
     "value": "16px",
+    "group": "Theming"
+  },
+  "objectivesStrikethroughSize": {
+    "type": "fontSize",
+    "label": "Objectives Strikethrough Size",
+    "value": "5px",
+    "group": "Theming"
+  },
+  "objectivesStrikethroughColor": {
+    "type": "colorpicker",
+    "label": "Objectives Strikethrough Color",
+    "value": "rgba(255,0,0,1)",
     "group": "Theming"
   },
   "conclusionColor": {
