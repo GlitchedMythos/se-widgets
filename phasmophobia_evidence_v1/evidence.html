@@ -244,12 +244,15 @@ c-12 -20 -14 -14 -5 12 4 9 9 14 11 11 3 -2 0 -13 -6 -23z m-20 -50 c-12 -20
         </div>
     </div>
 
-    <div class="optional-obj py-0.5 flex-1 flex justify-between" id="optional-obj">
+    <div class="optional-obj py-0.5" id="optional-obj">
+      <div class="flex-1 flex justify-around hidden" id="optional-obj-container">
         <div class="objective" id="objective-one">Motion</div>
-        <div class="objective">-</div>
         <div class="objective" id="objective-two">Crucifix</div>
-        <div class="objective">-</div>
         <div class="objective" id="objective-three">Photo</div>
+      </div>
+      <div class="objective" id="no-opt-objectives-container">
+        {{noOptionalObjectivesMessage}}
+      </div>
     </div>
 
     <div class="conclusion pt-0.5 flex-1" id="conclusion">

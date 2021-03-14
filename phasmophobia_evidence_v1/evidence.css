@@ -15,8 +15,8 @@
 }
 
 .objective {
-  color: {{nameColor}};
-  font-size: {{nameFontSize}};
+  color: {{objectivesColor}};
+  font-size: {{objectivesFontSize}};
 }
 
 .conclusion {

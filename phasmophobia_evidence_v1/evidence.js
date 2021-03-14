@@ -6,7 +6,8 @@ let commands,
   fingerprintsCommand,
   orbsCommand,
   writingCommand,
-  freezingCommand;
+  freezingCommand,
+  optionalObjectivesCommand;
 
 let emf,
   spiritBox,
@@ -37,6 +38,7 @@ demon = '011100';
 window.addEventListener('onWidgetLoad', function (obj) {
   const fieldData = obj.detail.fieldData;
   console.log('the field data', fieldData)
+
   resetCommand = fieldData['resetCommand'];
   nameCommand = fieldData['nameCommand'];
   emfCommand = fieldData['emfCommand'];
@@ -45,7 +47,9 @@ window.addEventListener('onWidgetLoad', function (obj) {
   orbsCommand = fieldData['orbsCommand'];
   writingCommand = fieldData['writingCommand'];
   freezingCommand = fieldData['freezingCommand'];
-  greyOutInvalidEvidence = fieldData['greyOutInvalidEvidence'];
+  optionalObjectivesCommand = fieldData['optionalObjectivesCommand'];
+
+  greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
   config.evidencePixelSize = fieldData['evidencePixelSize'];
@@ -125,14 +129,20 @@ window.addEventListener('onWidgetLoad', function (obj) {
     orbsCommand,
     writingCommand,
     freezingCommand,
+    optionalObjectivesCommand,
     '!version'
   ];
 
-  let displayName = fieldData['displayName'];
-  let displayConclusion = fieldData['displayConclusion'];
+  let displayName = (fieldData['displayName'] === 'yes') ? true : false;
+  let displayOptionalObjectives = (fieldData['displayOptionalObjectives'] === 'yes') ? true : false;
+  let displayConclusion = (fieldData['displayConclusion'] === 'yes') ? true : false;
 
   if (!displayName) {
     $(`#name`).addClass('hidden');
+  }
+
+  if (!displayOptionalObjectives) {
+    $(`#optional-obj`).addClass(`hidden`);
   }
 
   if (!displayConclusion) {
@@ -214,6 +224,9 @@ window.addEventListener('onEventReceived', function (obj) {
       freezing = !freezing;
       updateGhostGuess();
       break;
+    case "{{optionalObjectivesCommand}}":
+      updateOptionalObjectives(data.text);
+      break;
     case "!version":
       $('#version').addClass('elementToFadeInAndOut');
       setTimeout(() => {
@@ -234,6 +247,10 @@ let toggleSVG = (svgID) => {
     svg.removeClass('active');
     svg.addClass('inactive');
   }
+}
+
+let resetName = (newName) => {
+  $("#name").html(`${(newName) ? `Name: ${newName}` : config.nameStrings.noNameString}`);
 }
 
 let resetEvidence = () => {
@@ -264,13 +281,15 @@ let resetEvidence = () => {
   $(`#freezing-svg`).addClass('inactive');
 }
 
-let resetName = (newName) => {
-  $("#name").html(`${(newName) ? `Name: ${newName}` : config.nameStrings.noNameString}`);
+let resetOptional = () => {
+  $('#optional-obj-container').addClass('hidden');
+    $('#no-opt-objectives-container').removeClass('hidden');
 }
 
 let resetGhost = (newName) => {
   resetName(newName);
   resetEvidence();
+  resetOptional();
   updateGhostGuess(config.conclusionStrings.zeroEvidenceConclusionString);
 }
 
@@ -468,6 +487,32 @@ let createOptionalObjectivesString = (optObjString) => {
   return optObj;
 }
 
+let updateOptionalObjectives = (command) => {
+  let commandSplit = command.split(' ');
+  let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
+
+  let optObjectives = [];
+
+  if (optObjCommands.length === 3) {
+    for(let i = 0; i < optObjCommands.length; i++) {
+      let objectiveString = getOptObj(optObjCommands[i]);
+      if (objectiveString) { 
+        optObjectives.push(objectiveString);
+      }
+    }
+  }
+
+  console.log('OptionalObj: ', optObjCommands, optObjectives)
+
+  if (optObjectives.length === 3) {
+    $('#optional-obj-container').removeClass('hidden');
+    $('#no-opt-objectives-container').addClass('hidden');
+    $('#objective-one').html(optObjectives[0]);
+    $('#objective-two').html(optObjectives[1]);
+    $('#objective-three').html(optObjectives[2]);
+  }
+}
+
 let getOptObj = (obj) => {
   let optObj = ""
 
@@ -507,14 +552,15 @@ let getOptObj = (obj) => {
       break;
     case 'es':
     case 'escape':
-    case 'hunt':
       optObj = "Escape"
       break;
-    case 'ze':
-    case '0%':
-    case 'zero':
+    case 'hunt':
+    case 'hu':
+      optObj = "Smudge(Hunt)"
+      break;
+    case 'san':
     case 'sanity':
-      optObj = "0% Sanity"
+      optObj = "<25% Sanity"
       break;
     case 'ca':
     case 'candle':

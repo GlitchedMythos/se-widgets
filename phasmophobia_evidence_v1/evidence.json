@@ -6,7 +6,7 @@
     "group": "Commands"
   },
   "nameCommand": {
-   	"type": "string",
+    "type": "string",
     "label": "Name Input Command",
     "value": "!ghostname",
     "group": "Commands"
@@ -47,28 +47,56 @@
     "value": "!gt",
     "group": "Commands"
   },
+  "optionalObjectivesCommand": {
+    "type": "string",
+    "label": "Optional Objectives Command",
+    "value": "!oo",
+    "group": "Commands"
+  },
   "displayName": {
-    "type": "checkbox",
-    "label": "Display Name (may require save and refresh)",
-    "value": true,
+    "type": "dropdown",
+    "label": "Display Name",
+    "value": "Yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
     "group": "Optionals"
   },
   "displayConclusion": {
-    "type": "checkbox",
-    "label": "Display Conclusion (may require save and refresh)",
-    "value": true,
+    "type": "dropdown",
+    "label": "Display Conclusion",
+    "value": "Yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayOptionalObjectives": {
+    "type": "dropdown",
+    "label": "Display Optional Objectives",
+    "value": "Yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
     "group": "Optionals"
   },
   "greyOutInvalidEvidence": {
-    "type": "checkbox",
+    "type": "dropdown",
     "label": "Grey Out Invalid Evidence",
-    "value": true,
+    "value": "Yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
     "group": "Optionals"
   },
   "allowVIPS": {
     "type": "dropdown",
     "label": "Allow VIPS to use commands",
-    "value": "no",
+    "value": "No",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -79,6 +107,48 @@
     "type": "colorpicker",
     "label": "Background Color",
     "value": "rgba(0,0,0,.5)",
+    "group": "Theming"
+  },
+  "fontFamily": {
+    "type": "googleFont",
+    "label": "Font",
+    "value": "Sail",
+    "group": "Theming"
+  },
+  "nameColor": {
+    "type": "colorpicker",
+    "label": "Name Color",
+    "value": "rgba(0,172,255,1)",
+    "group": "Theming"
+  },
+  "nameFontSize": {
+    "type": "fontSize",
+    "label": "Name Font Size",
+    "value": "16px",
+    "group": "Theming"
+  },
+  "objectivesColor": {
+    "type": "colorpicker",
+    "label": "Objectives Color",
+    "value": "rgba(0,172,255,1)",
+    "group": "Theming"
+  },
+  "objectivesFontSize": {
+    "type": "fontSize",
+    "label": "Objectives Font Size",
+    "value": "16px",
+    "group": "Theming"
+  },
+  "conclusionColor": {
+    "type": "colorpicker",
+    "label": "Conclusion Color",
+    "value": "rgba(0,172,255,1)",
+    "group": "Theming"
+  },
+  "conclusionFontSize": {
+    "type": "fontSize",
+    "label": "Conclusion Font Size",
+    "value": "16px",
     "group": "Theming"
   },
   "borderColor": {
@@ -142,36 +212,6 @@
       "divide-y-8": "8px"
     },
     "group": "Theming - Divider"
-  },
-  "fontFamily": {
-      "type": "googleFont",
-      "label": "Font",
-      "value": "Sail",
-    "group": "Theming"
-  },
-  "nameColor": {
-    "type": "colorpicker",
-    "label": "Name Color",
-    "value": "rgba(0,172,255,1)",
-    "group": "Theming"
-  },
-  "nameFontSize": {
-    "type": "fontSize",
-    "label": "Name Font Size",
-    "value": "16px",
-    "group": "Theming"
-  },
-  "conclusionColor": {
-    "type": "colorpicker",
-    "label": "Conclusion Color",
-    "value": "rgba(0,172,255,1)",
-    "group": "Theming"
-  },
-  "conclusionFontSize": {
-    "type": "fontSize",
-    "label": "Conclusion Font Size",
-    "value": "16px",
-    "group": "Theming"
   },
   "evidenceActive": {
     "type": "colorpicker",
