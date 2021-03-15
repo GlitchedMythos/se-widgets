@@ -86,16 +86,20 @@
   opacity: 0;
 }
 
-.elementToFadeInAndOut {
-  opacity: 1;
-  animation: fade 5s linear;
-  animation-iteration-count: 1;
+.version-item {
+  opacity: 0;
+  transition: 1s linear all;
 }
 
-@keyframes fade {
+.show-version-item {
+  opacity: 1;
+  transition: 1s linear all;
+}
+
+/* @keyframes fade {
   0%,100% { opacity: 0 }
   30%,70% { opacity: 1 }
-}
+} */
 
 .animated-box {
   border-radius: {{animatedBorderRadius}}px;

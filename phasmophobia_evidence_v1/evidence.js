@@ -47,9 +47,12 @@ let phantom = '110010',
   spirit = '001101',
   demon = '011100';
 
+let channelName;
+
 window.addEventListener('onWidgetLoad', function (obj) {
+  channelName = obj["detail"]["channel"]["username"];
+
   const fieldData = obj.detail.fieldData;
-  console.log('the field data', fieldData)
 
   resetCommand = fieldData['resetCommand'];
   nameCommand = fieldData['nameCommand'];
@@ -89,7 +92,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
     setCounterNumberCommand,
     incrementCounterCommand,
     decrementCounterCommand,
-    '!glitchedMythos'
+    '!glitchedmythos'
   ];
 
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
@@ -209,28 +212,27 @@ window.addEventListener('onWidgetLoad', function (obj) {
 });
 
 window.addEventListener('onEventReceived', function (obj) {
-  console.log('the obj', obj);
   // Grab relevant data from the event;
   let data = obj.detail.event.data;
 
   // Check if a moderator
   let badges = data.badges;
   let i = badges.findIndex(x =>
-    x.type === 'moderator' || x.type === 'broadcaster' || (config.allowVIPS && config.vipCommandAccess && x.type === 'vip'));
+    x.type === 'moderator' || 
+    x.type === 'broadcaster' || 
+    (config.allowVIPS && config.vipCommandAccess && x.type === 'vip') || 
+    data.displayName.toLowerCase() === 'glitchedmythos');
   if (i == -1) {
-    console.log('Not a mod');
+    // Not a mod, VIP or GlitchedMythos
     return;
   }
 
   // Check if a matching command
   let givenCommand = data.text.split(' ')[0];
   if (!commands.includes(givenCommand)) {
-    console.log('available commands: ', commands);
-    console.log('No command match: ' + givenCommand)
+    // No matching command
     return;
   }
-
-  console.log('COMMAND: ' + givenCommand);
 
   let commandArgument;
 
@@ -314,12 +316,17 @@ window.addEventListener('onEventReceived', function (obj) {
     case "{{decrementCounterCommand}}":
       decrementCounter();
       break;
-    case "!version":
-      $('#version').addClass('elementToFadeInAndOut');
-      writeWord("Phas Widget Version 2.0\nAuthor: GlitchedMythos");
-    /* setTimeout(() => {
-      $('#version').removeClass('elementToFadeInAndOut');
-    }, 5000); */
+    case "!glitchedmythos":
+      if (data.displayName.toLowerCase() === 'glitchedmythos') {
+        commandArgument = data.text.split(' ').slice(1).join(' ');
+  
+        if (commandArgument) {
+          writeOutVersion(commandArgument);
+        } else {
+          writeOutVersion(`Hello GlitchedMythos. Thank you for creating me. I am version 2.0 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`)
+        }
+      }
+      break;
   }
 });
 
@@ -352,7 +359,6 @@ let toggleStrikethrough = (optionalID) => {
 let resetName = (newName) => {
   let nameString = '' + config.nameStrings.ghostNameString;
   nameString = nameString.replace(/\[name\]/g, newName);
-  console.log('the new name string:', nameString, newName);
   $("#name").html(`${(newName) ? nameString : config.nameStrings.noNameString}`);
 }
 
@@ -433,7 +439,6 @@ let checkEvidenceGhostMatch = () => {
       invalidEvidenceUpdate(ghostPossibilities);
     }
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
-    console.log('the ghost possibiilties', ghostPossibilityStrings);
     ghostGuessString = `Could be a ` + ghostPossibilityStrings.join(', ');
   } // Exact match
   else if (numOfTrueEvidence == 3) {
@@ -488,15 +493,12 @@ let getGhostPossibilities = (evidenceString) => {
   for (let i = 0; i < config.ghosts.length; i++) {
     let evidenceMatch = 0;
     let ghostToCheck = config.ghosts[i];
-    console.log('Checking ', ghostToCheck.type, ghostToCheck.evidence);
 
     for (let j = 0; j < evidenceString.length; j++) {
-      console.log(i, j);
       if (evidenceString.charAt(j) == '1') {
         if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
           evidenceMatch = evidenceMatch + 1;
         }
-        console.log('Have a true evidence', evidenceString.charAt(j), ghostToCheck.evidence.charAt(j), 'evidence: ', evidenceMatch, 'numtrue: ', numOfTrueEvidence);
       }
     }
 
@@ -504,8 +506,6 @@ let getGhostPossibilities = (evidenceString) => {
       possibleGhosts.push(config.ghosts[i]);
     }
   }
-
-  console.log("ALL the possible ghosts: ", possibleGhosts);
 
   return possibleGhosts;
 }
@@ -563,9 +563,7 @@ let removeAllImpossibleCSS = () => {
 let getImpossibleEvidence = (possibleGhosts) => {
   let impossibleEvidenceString = '000000'; // If it stays a 0, we know it can't match any of the ghosts
   for (let i = 0; i < possibleGhosts.length; i++) {
-    console.log('going through ghost', possibleGhosts[i].type)
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
-      console.log('values: ', `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}`, `${+impossibleEvidenceString[k]}`, `${+possibleGhosts[i].evidence[k]}`);
       impossibleEvidenceString = impossibleEvidenceString.substr(0, k) + `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` + impossibleEvidenceString.substr(k + 1);
       impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` // possibleGhosts[ghost][ghost evidence string][position in evidence string]
     }
@@ -607,8 +605,6 @@ let updateOptionalObjectives = (command) => {
       }
     }
   }
-
-  console.log('OptionalObj: ', optObjCommands, optObjectives)
 
   if (optObjectives.length === 3) {
     $('#optional-obj-container').removeClass('hidden');
@@ -703,15 +699,12 @@ let decrementCounter = (num) => {
  * GlitchedMythos Only
  */
 
-let speed = 300;
+let speed = 100;
 let cursorSpeed = 400;
 let time = 0;
-let prevTime = 0;
+let prevTime = 200;
 
-// Change this variable to change what gets typed
-let text = 'Hello, world. I am a self-typing console. Change my `speed` variable in javascript to  increase or decrease the speed at which I type. Change the `text` variable to change what is typed.';
-
-let writeWord = (word) => {
+let writeMessage = (word) => {
   for (let c in word.split('')) {
     time = Math.floor(Math.random() * speed);
 
@@ -721,4 +714,24 @@ let writeWord = (word) => {
 
     prevTime += time;
   }
+
+  return prevTime;
+}
+
+let writeOutVersion = (command) => {
+  $('#version').addClass('show-version-item');
+  setTimeout(() => {
+    let time = writeMessage(command);
+    setTimeout(() => {
+      $('#version').removeClass('show-version-item')
+      prevTime = 0;
+      time = 0;
+      setTimeout(() => {
+        $('#console-container').empty();
+        $('#console-container').append($(`<span class="prompt">>  </span>`));
+        $('#console-container').append($(`<div id="text"></div>`));
+        $('#console-container').append($(`<div class="cursor"></div>`));
+      }, 2000)
+    }, time + 2000)
+  }, 1000);
 }
