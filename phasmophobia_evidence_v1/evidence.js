@@ -12,7 +12,11 @@ let commands,
   toggleOptObjTwo,
   toggleOptObjThree,
   vipToggleOnCommand,
-  vipToggleOffCommand;
+  vipToggleOffCommand,
+  setCounterNameCommand,
+  setCounterNumberCommand,
+  incrementCounterCommand,
+  decrementCounterCommand;
 
 let emf,
   spiritBox,
@@ -21,6 +25,9 @@ let emf,
   writing,
   freezing;
 
+let counter;
+
+// TODO: Move to config
 let greyOutInvalidEvidence;
 
 let config = {};
@@ -58,6 +65,10 @@ window.addEventListener('onWidgetLoad', function (obj) {
   toggleOptObjThree = fieldData['toggleOptObjThree'];
   vipToggleOnCommand = fieldData['vipToggleOnCommand'];
   vipToggleOffCommand = fieldData['vipToggleOffCommand'];
+  setCounterNameCommand = fieldData['setCounterNameCommand'];
+  setCounterNumberCommand = fieldData['setCounterNumberCommand'];
+  incrementCounterCommand = fieldData['incrementCounterCommand'];
+  decrementCounterCommand = fieldData['decrementCounterCommand'];
 
   commands = [
     resetCommand,
@@ -74,7 +85,10 @@ window.addEventListener('onWidgetLoad', function (obj) {
     toggleOptObjThree,
     vipToggleOnCommand,
     vipToggleOffCommand,
-    '!version',
+    setCounterNameCommand,
+    setCounterNumberCommand,
+    incrementCounterCommand,
+    decrementCounterCommand,
     '!glitchedMythos'
   ];
 
@@ -153,11 +167,16 @@ window.addEventListener('onWidgetLoad', function (obj) {
   ];
 
   let displayName = (fieldData['displayName'] === 'yes') ? true : false;
+  let displayCounter = (fieldData['displayCounter'] === 'yes') ? true : false;
   let displayOptionalObjectives = (fieldData['displayOptionalObjectives'] === 'yes') ? true : false;
   let displayConclusion = (fieldData['displayConclusion'] === 'yes') ? true : false;
 
   if (!displayName) {
     $(`#name`).addClass('hidden');
+  }
+
+  if (!displayCounter) {
+    $(`#counter-container`).addClass('hidden');
   }
 
   if (!displayOptionalObjectives) {
@@ -213,22 +232,21 @@ window.addEventListener('onEventReceived', function (obj) {
 
   console.log('COMMAND: ' + givenCommand);
 
-  let newName;
+  let commandArgument;
 
   switch (givenCommand) {
     case "{{resetCommand}}":
-      newName = data.text.split(' ').slice(1).join(' ');
-      if (newName.length > 0) {
-        resetGhost(newName);
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      if (commandArgument.length > 0) {
+        resetGhost(commandArgument);
       } else {
         resetGhost(null);
       }
       break;
     case "{{nameCommand}}":
-      newName = data.text.split(' ').slice(1).join(' ');
+      commandArgument = data.text.split(' ').slice(1).join(' ');
 
-      resetName(newName);
-
+      resetName(commandArgument);
       break;
     case "{{emfCommand}}":
       toggleSVG('emf-svg');
@@ -281,6 +299,20 @@ window.addEventListener('onEventReceived', function (obj) {
       if (x.type === 'moderator' || x.type === 'broadcaster') {
         config.vipCommandAccess = false;
       }
+      break;
+    case "{{setCounterNameCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      setCounterName(commandArgument);
+      break;
+    case "{{setCounterNumberCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      setCounterNumber(commandArgument);
+      break;
+    case "{{incrementCounterCommand}}":
+      incrementCounter();
+      break;
+    case "{{decrementCounterCommand}}":
+      decrementCounter();
       break;
     case "!version":
       $('#version').addClass('elementToFadeInAndOut');
@@ -646,6 +678,30 @@ let getOptObj = (obj) => {
 
   return optObj;
 }
+
+let setCounterName = (name) => {
+  $('#counter-name').html(name);
+}
+
+let setCounterNumber = (number) => {
+  let num = parseInt(number);
+
+  if (Number.isInteger(num)) {
+    $('#counter-number').html('' + num);
+  }
+}
+
+let incrementCounter = (num) => {
+  $('#counter-number').html(parseInt($('#counter-number').text()) + (num ? num : 1));
+}
+
+let decrementCounter = (num) => {
+  $('#counter-number').html(parseInt($('#counter-number').text()) - (num ? num : 1));
+}
+
+/**
+ * GlitchedMythos Only
+ */
 
 let speed = 300;
 let cursorSpeed = 400;

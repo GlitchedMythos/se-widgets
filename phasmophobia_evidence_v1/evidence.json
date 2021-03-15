@@ -71,6 +71,30 @@
     "value": "!o3",
     "group": "Commands"
   },
+  "setCounterNameCommand": {
+    "type": "string",
+    "label": "Set Counter Name Command",
+    "value": "!setcounter",
+    "group": "Commands"
+  },
+  "setCounterNumberCommand": {
+    "type": "string",
+    "label": "Set Counter Number Command",
+    "value": "!setcounternumber",
+    "group": "Commands"
+  },
+  "incrementCounterCommand": {
+    "type": "string",
+    "label": "Increment Counter Command",
+    "value": "!counterup",
+    "group": "Commands"
+  },
+  "decrementCounterCommand": {
+    "type": "string",
+    "label": "Decrement Counter Command",
+    "value": "!counterdown",
+    "group": "Commands"
+  },
   "displayName": {
     "type": "dropdown",
     "label": "Display Name",
@@ -84,6 +108,16 @@
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",
+    "value": "Yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayCounter": {
+    "type": "dropdown",
+    "label": "Display Counter",
     "value": "Yes",
     "options": {
       "yes": "Yes",
@@ -311,6 +345,18 @@
     },
     "group": "Theming - Divider"
   },
+  "counterFontColor": {
+    "type": "colorpicker",
+    "label": "Counter Color",
+    "value": "rgba(192,192,192,1)",
+    "group": "Theming - Counter"
+  },
+  "counterFontSize": {
+    "type": "number",
+    "label": "Counter Font Size",
+    "value": 24,
+    "group": "Theming - Counter"
+  },
   "evidenceActive": {
     "type": "colorpicker",
     "label": "Evidence - Active",
@@ -346,6 +392,12 @@
     "label": "Ghost Name: [name]",
     "value": "Name: [name]",
     "group": "Name Messages"
+  },
+  "counterDefaultString": {
+    "type": "text",
+    "label": "Counter Default Name",
+    "value": "Counter:",
+    "group": "Counter"
   },
   "noOptionalObjectivesMessage": {
     "type": "text",
