@@ -10,7 +10,28 @@ let commands,
   optionalObjectivesCommand,
   toggleOptObjOne,
   toggleOptObjTwo,
-  toggleOptObjThree;
+  toggleOptObjThree,
+  vipToggleOnCommand,
+  vipToggleOffCommand;
+
+commands = [
+  resetCommand,
+  nameCommand,
+  emfCommand,
+  spiritBoxCommand,
+  fingerprintsCommand,
+  orbsCommand,
+  writingCommand,
+  freezingCommand,
+  optionalObjectivesCommand,
+  toggleOptObjOne,
+  toggleOptObjTwo,
+  toggleOptObjThree,
+  vipToggleOnCommand,
+  vipToggleOffCommand,
+  '!version',
+  '!glitchedMythos'
+];
 
 let emf,
   spiritBox,
@@ -54,10 +75,13 @@ window.addEventListener('onWidgetLoad', function (obj) {
   toggleOptObjOne = fieldData['toggleOptObjOne'];
   toggleOptObjTwo = fieldData['toggleOptObjTwo'];
   toggleOptObjThree = fieldData['toggleOptObjThree'];
+  vipToggleOnCommand = fieldData['vipToggleOnCommand'];
+  vipToggleOffCommand = fieldData['vipToggleOffCommand'];
 
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
+  config.vipCommandAccess = (config.allowVIPS) ? true : false;
   config.evidencePixelSize = fieldData['evidencePixelSize'];
   config.nameStrings = {
     noNameString: (fieldData['noNameString']) ?
@@ -128,22 +152,6 @@ window.addEventListener('onWidgetLoad', function (obj) {
     }
   ];
 
-  commands = [
-    resetCommand,
-    nameCommand,
-    emfCommand,
-    spiritBoxCommand,
-    fingerprintsCommand,
-    orbsCommand,
-    writingCommand,
-    freezingCommand,
-    optionalObjectivesCommand,
-    toggleOptObjOne,
-    toggleOptObjTwo,
-    toggleOptObjThree,
-    '!version'
-  ];
-
   let displayName = (fieldData['displayName'] === 'yes') ? true : false;
   let displayOptionalObjectives = (fieldData['displayOptionalObjectives'] === 'yes') ? true : false;
   let displayConclusion = (fieldData['displayConclusion'] === 'yes') ? true : false;
@@ -189,14 +197,13 @@ window.addEventListener('onEventReceived', function (obj) {
   // Check if a moderator
   let badges = data.badges;
   let i = badges.findIndex(x =>
-    x.type === 'moderator' || x.type === 'broadcaster' || (config.allowVIPS && x.type === 'vip'));
+    x.type === 'moderator' || x.type === 'broadcaster' || (config.allowVIPS && config.vipCommandAccess && x.type === 'vip'));
   if (i == -1) {
     console.log('Not a mod');
     return;
   }
 
   // Check if a matching command
-
   let givenCommand = data.text.split(' ')[0];
   if (!commands.includes(givenCommand)) {
     console.log('available commands: ', commands);
@@ -265,11 +272,22 @@ window.addEventListener('onEventReceived', function (obj) {
     case "{{toggleOptObjThree}}":
       toggleStrikethrough("objective-three");
       break;
+    case "{{vipToggleOnCommand}}":
+      if (x.type === 'moderator' || x.type === 'broadcaster') {
+        config.vipCommandAccess = true;
+      }
+      break;
+    case "{{vipToggleOffCommand}}":
+      if (x.type === 'moderator' || x.type === 'broadcaster') {
+        config.vipCommandAccess = false;
+      }
+      break;
     case "!version":
       $('#version').addClass('elementToFadeInAndOut');
-      setTimeout(() => {
-        $('#version').removeClass('elementToFadeInAndOut');
-      }, 5000);
+      writeWord("Phas Widget Version 2.0\nAuthor: GlitchedMythos");
+    /* setTimeout(() => {
+      $('#version').removeClass('elementToFadeInAndOut');
+    }, 5000); */
   }
 });
 
@@ -629,4 +647,22 @@ let getOptObj = (obj) => {
   return optObj;
 }
 
+let speed = 300;
+let cursorSpeed = 400;
+let time = 0;
+let prevTime = 0;
 
+// Change this variable to change what gets typed
+let text = 'Hello, world. I am a self-typing console. Change my `speed` variable in javascript to  increase or decrease the speed at which I type. Change the `text` variable to change what is typed.';
+
+let writeWord = (word) => {
+  for (let c in word.split('')) {
+    time = Math.floor(Math.random() * speed);
+
+    setTimeout(() => {
+      $('#text').before(word[c]);
+    }, (prevTime + time));
+
+    prevTime += time;
+  }
+}

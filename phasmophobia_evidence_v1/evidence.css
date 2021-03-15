@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family={fontFamily}:100,300,400,500,700,900&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro: 400, 300);
+
 * {
   font: normal 76px/1 {{fontFamily}}, Helvetica, sans-serif;
   -o-text-overflow: ellipsis;
@@ -167,4 +169,38 @@
   100% {
     -webkit-clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, 0% 100%);
   }
+}
+
+/* CSS FOR GLITCHED ALERT */
+#console-container {
+  display: inline-block;
+  width: 95%;
+  max-width: 95%;
+  float: right;
+  font-size: 24px;
+  font-family: 'Source Code Pro', 'Inconsolata', monospace;
+}
+
+#text {
+  display: inline-block;
+  margin: .8em 0;
+  font-size: 18px;
+}
+
+.cursor {
+  display: inline-block;
+  height: 24px;
+  width: 8px;
+  background: #11f930; 
+  margin-left: -12px;
+}
+
+.prompt {
+  color: #11f930;
+  height: 24px;
+  font-size: 24px;
+}
+
+.hide {
+  display: none;
 }
