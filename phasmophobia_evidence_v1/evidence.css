@@ -204,3 +204,8 @@
 .hide {
   display: none;
 }
+
+.counter-theme {
+  font-size: 16px;
+  color: white;
+}

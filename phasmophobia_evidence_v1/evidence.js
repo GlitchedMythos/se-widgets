@@ -14,25 +14,6 @@ let commands,
   vipToggleOnCommand,
   vipToggleOffCommand;
 
-commands = [
-  resetCommand,
-  nameCommand,
-  emfCommand,
-  spiritBoxCommand,
-  fingerprintsCommand,
-  orbsCommand,
-  writingCommand,
-  freezingCommand,
-  optionalObjectivesCommand,
-  toggleOptObjOne,
-  toggleOptObjTwo,
-  toggleOptObjThree,
-  vipToggleOnCommand,
-  vipToggleOffCommand,
-  '!version',
-  '!glitchedMythos'
-];
-
 let emf,
   spiritBox,
   fingerprints,
@@ -77,6 +58,25 @@ window.addEventListener('onWidgetLoad', function (obj) {
   toggleOptObjThree = fieldData['toggleOptObjThree'];
   vipToggleOnCommand = fieldData['vipToggleOnCommand'];
   vipToggleOffCommand = fieldData['vipToggleOffCommand'];
+
+  commands = [
+    resetCommand,
+    nameCommand,
+    emfCommand,
+    spiritBoxCommand,
+    fingerprintsCommand,
+    orbsCommand,
+    writingCommand,
+    freezingCommand,
+    optionalObjectivesCommand,
+    toggleOptObjOne,
+    toggleOptObjTwo,
+    toggleOptObjThree,
+    vipToggleOnCommand,
+    vipToggleOffCommand,
+    '!version',
+    '!glitchedMythos'
+  ];
 
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
@@ -353,11 +353,11 @@ let resetEvidence = () => {
 }
 
 let resetOptional = () => {
+  $('#objective-one').removeClass('strikethrough');
+  $('#objective-two').removeClass('strikethrough');
+  $('#objective-three').removeClass('strikethrough');
   $('#optional-obj-container').addClass('hidden');
   $('#no-opt-objectives-container').removeClass('hidden');
-  $('#optional-one').removeClass('strikethrough');
-  $('#optional-two').removeClass('strikethrough');
-  $('#optional-three').removeClass('strikethrough');
 }
 
 let resetGhost = (newName) => {
