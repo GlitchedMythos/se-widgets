@@ -41,7 +41,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Escape | "es" "escape" |
 | Smudge Ghost (During Hunt) | "hu" "hunt" |
 | <25% Sanity | "san "sanity" |
-| Candle | "ca" "can" |
+| Candle | "ca" "candle" |
 
 ## Example Usage:
 
