@@ -1,5 +1,8 @@
 # Welcome to Phasmophobia Evidence V2
 
+I made this widget for anyone who uses StreamElements that plays Phasmophobia. To see how the widget works, please click the video below:
+
+[![Video showing how to use and edit the widget](http://img.youtube.com/vi/OIZgBi3ZI9s/0.jpg)](https://youtu.be/OIZgBi3ZI9s)
 
 # Example Commands
 
