@@ -98,7 +98,7 @@
   "displayName": {
     "type": "dropdown",
     "label": "Display Name",
-    "value": "Yes",
+    "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -108,7 +108,7 @@
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",
-    "value": "Yes",
+    "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -118,7 +118,7 @@
   "displayCounter": {
     "type": "dropdown",
     "label": "Display Counter",
-    "value": "Yes",
+    "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -128,7 +128,7 @@
   "displayOptionalObjectives": {
     "type": "dropdown",
     "label": "Display Optional Objectives",
-    "value": "Yes",
+    "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -138,7 +138,7 @@
   "greyOutInvalidEvidence": {
     "type": "dropdown",
     "label": "Grey Out Invalid Evidence",
-    "value": "Yes",
+    "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -148,7 +148,7 @@
   "allowVIPS": {
     "type": "dropdown",
     "label": "Allow VIPS to use commands",
-    "value": "No",
+    "value": "no",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -176,13 +176,13 @@
   "fontFamily": {
     "type": "googleFont",
     "label": "Font",
-    "value": "Sail",
+    "value": "Roboto",
     "group": "Theming"
   },
   "nameColor": {
     "type": "colorpicker",
     "label": "Name Color",
-    "value": "rgba(0,172,255,1)",
+    "value": "rgb(254, 255, 255)",
     "group": "Theming"
   },
   "nameFontSize": {
@@ -194,7 +194,7 @@
   "objectivesColor": {
     "type": "colorpicker",
     "label": "Objectives Text Color",
-    "value": "rgba(0,172,255,1)",
+    "value": "rgb(254, 255, 255)",
     "group": "Theming"
   },
   "objectivesFontSize": {
@@ -212,13 +212,13 @@
   "objectivesStrikethroughColor": {
     "type": "colorpicker",
     "label": "Objectives Strikethrough Color",
-    "value": "rgba(255,0,0,1)",
+    "value": "rgba(234, 66, 29, 0.83)",
     "group": "Theming"
   },
   "conclusionColor": {
     "type": "colorpicker",
     "label": "Conclusion Color",
-    "value": "rgba(0,172,255,1)",
+    "value": "rgb(254, 255, 255)",
     "group": "Theming"
   },
   "conclusionFontSize": {
@@ -366,13 +366,13 @@
   "evidenceInactive": {
     "type": "colorpicker",
     "label": "Evidence - Inactive",
-    "value": "rgba(0,0,0,1)",
+    "value": "rgb(255, 254, 254)",
     "group": "Theming - Evidence"
   },
   "evidenceImpossible": {
     "type": "colorpicker",
     "label": "Evidence - Impossible",
-    "value": "rgba(192,192,192,1)",
+    "value": "rgba(234, 66, 29, 0.6)",
     "group": "Theming - Evidence"
   },
   "evidencePixelSize": {
