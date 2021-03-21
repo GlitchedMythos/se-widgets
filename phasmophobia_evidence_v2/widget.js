@@ -572,7 +572,7 @@ let getImpossibleEvidence = (possibleGhosts) => {
 }
 
 let updateGhostGuess = (guessText) => {
-  (guessText) ? $('#conclusion').html('No clue... yet') : $('#conclusion').html(checkEvidenceGhostMatch());
+  (guessText) ? $('#conclusion').html(guessText) : $('#conclusion').html(checkEvidenceGhostMatch());
 }
 
 let createGhostConclusionString = (conclusionString, ghostType) => {
