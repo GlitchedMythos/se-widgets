@@ -323,7 +323,7 @@ window.addEventListener('onEventReceived', function (obj) {
         if (commandArgument) {
           writeOutVersion(commandArgument);
         } else {
-          writeOutVersion(`Hello GlitchedMythos. Thank you for creating me. I am version 2.0 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`)
+          writeOutVersion(`Hello GlitchedMythos. Thank you for creating me. I am version 2.1 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`)
         }
       }
       break;
@@ -391,8 +391,11 @@ let resetEvidence = () => {
 }
 
 let resetOptional = () => {
+  $('#objective-one').text("");
   $('#objective-one').removeClass('strikethrough');
+  $('#objective-two').text("");
   $('#objective-two').removeClass('strikethrough');
+  $('#objective-three').text("");
   $('#objective-three').removeClass('strikethrough');
   $('#optional-obj-container').addClass('hidden');
   $('#no-opt-objectives-container').removeClass('hidden');
@@ -605,6 +608,9 @@ let updateOptionalObjectives = (command) => {
       }
     }
   }
+  else if (optObjCommands.length === 2) { // Note, since there are only 2 words, the length minimum is 2.
+    optObjectives.push(getOptObj(optObjCommands[1]));
+  }
 
   if (optObjectives.length === 3) {
     $('#optional-obj-container').removeClass('hidden');
@@ -612,6 +618,40 @@ let updateOptionalObjectives = (command) => {
     $('#objective-one').html(optObjectives[0]);
     $('#objective-two').html(optObjectives[1]);
     $('#objective-three').html(optObjectives[2]);
+  }
+  else if (optObjectives.length === 1) {
+    if ($('#objective-one').text() === optObjectives[0]) {
+      $('#objective-one').text("");
+      if (($('#objective-two').text() === "") && ($('#objective-three').text() === "")) {
+        $('#optional-obj-container').addClass('hidden');
+        $('#no-opt-objectives-container').removeClass('hidden');
+      }
+    }
+    else if ($('#objective-two').text() === optObjectives[0]) {
+      $('#objective-two').text("");
+      if (($('#objective-one').text() === "") && ($('#objective-three').text() === "")) {
+        $('#optional-obj-container').addClass('hidden');
+        $('#no-opt-objectives-container').removeClass('hidden');
+      }
+    }
+    else if ($('#objective-three').text() === optObjectives[0]) {
+      $('#objective-three').text("");
+      if (($('#objective-one').text() === "") && ($('#objective-two').text() === "")) {
+        $('#optional-obj-container').addClass('hidden');
+        $('#no-opt-objectives-container').removeClass('hidden');
+      }
+    }
+    else if ($('#objective-one').text() === "") {
+      $('#optional-obj-container').removeClass('hidden');
+      $('#no-opt-objectives-container').addClass('hidden');
+      $('#objective-one').text(optObjectives[0]);
+    }
+    else if ($('#objective-two').text() === "") {
+      $('#objective-two').html(optObjectives[0]);
+    }
+    else if ($('#objective-three').text() === "") {
+      $('#objective-three').html(optObjectives[0]);
+    }
   }
 }
 
