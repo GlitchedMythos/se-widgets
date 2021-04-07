@@ -51,7 +51,7 @@ To get `Salt Photo Event`
 
 To get `Crucifix Motion Salt`
 
-    !oo cr photo ev
+    !oo cr motion sa
 
 
 # How to Add to StreamElements?!?
