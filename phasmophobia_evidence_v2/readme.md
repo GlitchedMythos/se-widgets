@@ -51,7 +51,7 @@ To get `Salt Photo Event`
 
 To get `Crucifix Motion Salt`
 
-    !oo cr photo ev
+    !oo cr motion sa
 
 Individual Objectives can be used and can be toggled on and off
 
