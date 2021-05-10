@@ -145,6 +145,17 @@
     },
     "group": "Optionals"
   },
+  "fullEvidence": {
+    "type": "dropdown",
+    "label": "Evidence Color after Completion",
+    "value": "impossible",
+    "options": {
+      "impossible": "Impossible Color",
+      "inactive": "Inactive Color",
+      "hidden": "Hidden from Widget"
+    },
+    "group": "Optionals"
+  },
   "allowVIPS": {
     "type": "dropdown",
     "label": "Allow VIPS to use commands",
