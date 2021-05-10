@@ -95,6 +95,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
     '!glitchedmythos'
   ];
 
+  greyOutType = fieldData['fullEvidence'];
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
@@ -323,7 +324,7 @@ window.addEventListener('onEventReceived', function (obj) {
         if (commandArgument) {
           writeOutVersion(commandArgument);
         } else {
-          writeOutVersion(`Hello GlitchedMythos. Thank you for creating me. I am version 2.1 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`)
+          writeOutVersion(`Hello GlitchedMythos. Thank you for creating me. I am version 3.0 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`)
         }
       }
       break;
@@ -368,26 +369,32 @@ let resetEvidence = () => {
   emf = false;
   $(`#emf-svg`).removeClass('active');
   $(`#emf-svg`).addClass('inactive');
+  $(`#emf-svg`).removeClass('evidencehidden');
 
   spiritBox = false;
   $(`#spirit-box-svg`).removeClass('active');
   $(`#spirit-box-svg`).addClass('inactive');
+  $(`#spirit-box-svg`).removeClass('evidencehidden');
 
   fingerprints = false;
   $(`#fingerprints-svg`).removeClass('active');
   $(`#fingerprints-svg`).addClass('inactive');
+  $(`#fingerprints-svg`).removeClass('evidencehidden');
 
   orbs = false;
   $(`#orbs-svg`).removeClass('active');
   $(`#orbs-svg`).addClass('inactive');
+  $(`#orbs-svg`).removeClass('evidencehidden');
 
   writing = false;
   $(`#writing-svg`).removeClass('active');
   $(`#writing-svg`).addClass('inactive');
+  $(`#writing-svg`).removeClass('evidencehidden');
 
   freezing = false;
   $(`#freezing-svg`).removeClass('active');
   $(`#freezing-svg`).addClass('inactive');
+  $(`#freezing-svg`).removeClass('evidencehidden');
 }
 
 let resetOptional = () => {
@@ -448,7 +455,7 @@ let checkEvidenceGhostMatch = () => {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
 
-    if (!greyOutInvalidEvidence) {
+    if (greyOutType === "inactive") {
       removeAllImpossibleCSS()
     } else {
       invalidEvidenceUpdate(ghostPossibilities);
@@ -518,39 +525,103 @@ let invalidEvidenceUpdate = (possibleGhosts) => {
   // Addition shorthand prior to impossibleEvidence converts the string to a number
   // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
   if (+impossibleEvidence[0] == 0) {
-    $(`#emf-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#emf-svg`).addClass('evidencehidden');
+      } else if (greyOutType === 'impossible') {
+        $(`#emf-svg`).addClass('impossible');
+      }
+      else {
+        $(`#emf-svg`).removeClass('impossible');
+        $(`#emf-svg`).removeClass('evidencehidden');
+      }
+    } else {
+      $(`#emf-svg`).addClass('impossible');
+      $(`#emf-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#emf-svg`).removeClass('impossible');
+    $(`#emf-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[1] == 0) {
-    $(`#freezing-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#freezing-svg`).addClass('evidencehidden');
+      } else {
+        $(`#freezing-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#freezing-svg`).addClass('impossible');
+      $(`#freezing-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#freezing-svg`).removeClass('impossible');
+    $(`#freezing-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[2] == 0) {
-    $(`#spirit-box-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#spirit-box-svg`).addClass('evidencehidden');
+      } else {
+        $(`#spirit-box-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#spirit-box-svg`).addClass('impossible');
+      $(`#spirit-box-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#spirit-box-svg`).removeClass('impossible');
+    $(`#spirit-box-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[3] == 0) {
-    $(`#writing-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#writing-svg`).addClass('evidencehidden');
+      } else {
+        $(`#writing-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#writing-svg`).addClass('impossible');
+      $(`#writing-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#writing-svg`).removeClass('impossible');
+    $(`#writing-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[4] == 0) {
-    $(`#orbs-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#orbs-svg`).addClass('evidencehidden');
+      } else {
+        $(`#orbs-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#orbs-svg`).addClass('impossible');
+      $(`#orbs-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#orbs-svg`).removeClass('impossible');
+    $(`#orbs-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[5] == 0) {
-    $(`#fingerprints-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#fingerprints-svg`).addClass('evidencehidden');
+      } else {
+        $(`#fingerprints-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#fingerprints-svg`).addClass('impossible');
+      $(`#fingerprints-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#fingerprints-svg`).removeClass('impossible');
+    $(`#fingerprints-svg`).removeClass('evidencehidden');
   }
 }
 
