@@ -44,6 +44,10 @@
   fill: {{evidenceImpossible}};
 }
 
+.hiddenevidence {
+  opacity: 0%;
+}
+
 .strikethrough {
   position: relative;
 }
