@@ -2,13 +2,13 @@
   "resetCommand": {
     "type": "string",
     "label": "Name Reset Command",
-    "value": "!ghostreset",
+    "value": "!gr",
     "group": "Commands"
   },
   "nameCommand": {
     "type": "string",
     "label": "Name Input Command",
-    "value": "!ghostname",
+    "value": "!gn",
     "group": "Commands"
   },
   "emfCommand": {
