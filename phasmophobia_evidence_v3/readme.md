@@ -1,4 +1,4 @@
-# Welcome to Phasmophobia Evidence V2.1
+# Welcome to Phasmophobia Evidence V3.0
 
 I made this widget for anyone who uses StreamElements that plays Phasmophobia. To see how the widget works, please click the video below:
 
