@@ -17,7 +17,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Toggle Orbs | !go | Change Ghost Orbs to opposite of current state |
 | Toggle Ghost Writing | !gw | Change Ghost Writing to opposite of current state |
 | Toggle Freezing Temps | !gt | Change Freezing Temps to opposite of current state |
-| Optional Objectives | !oo "a" "b" "c"<br />!oo "a" | Set the optional objectives. Replace a, b or c with the objective you'd like below |
+| Optional Objectives | !oo "a" "b" "c"<br />!oo "a" | Set the optional objectives. Replace a, b or c with the objective you'd like below<br />**NOTE**: Using single objectives requires updating code manually if using one-click installer |
 | Toggle Optional Objective 1 | !o1 | Toggles Optional Objective 1 from being marked or not |
 | Toggle Optional Objective 2 | !o2 | Toggles Optional Objective 2 from being marked or not |
 | Toggle Optional Objective 3 | !o3 | Toggles Optional Objective 3 from being marked or not |
@@ -53,7 +53,7 @@ To get `Crucifix Motion Salt`
 
     !oo cr motion sa
 
-Individual Objectives can be used and can be toggled on and off
+Individual Objectives can be used and can be toggled on and off. **NOTE**: Using single objectives requires updating the *html* and *js* files manually from the github if using one-click installer.
 
 To get `Smudge`
 
