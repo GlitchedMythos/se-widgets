@@ -1,18 +1,18 @@
 .object {
-    height: 35px;
-    font-size: {{fontSize}}px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    width: 100%;
-  }
-  
-  #items-container {
-    border: 2px;
-    border-radius: 0 0 16px 16px;
-    border-color: white;
-    border-style: solid;
-    overflow: hidden;
-    margin-left: 700px;
-    margin-right: 50px;
-    width: 375px;
-  }
+  height: 35px;
+  font-size: {{fontSize}}px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 100%;
+}
+
+#items-container {
+  border: 2px;
+  border-radius: 0 0 16px 16px;
+  border-color: white;
+  border-style: solid;
+  overflow: hidden;
+  margin-left: 700px;
+  margin-right: 50px;
+  width: 375px;
+}
