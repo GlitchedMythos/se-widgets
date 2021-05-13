@@ -57,6 +57,7 @@ const nextItem = () => {
   if(isEmpty($("#items-container"))) {
       $("#items-container").removeClass("hidden");
   }
+  console.log('next item');
   let item = currentPhasList.splice(
     Math.floor(Math.random() * currentPhasList.length),
     1
