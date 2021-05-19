@@ -44,6 +44,10 @@
   fill: {{evidenceImpossible}};
 }
 
+.evidencehidden {
+  opacity: 0;
+}
+
 .strikethrough {
   position: relative;
 }
@@ -142,7 +146,7 @@
 }
 
 .animated-box.in:after {
-  animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation 4s ease-in-out infinite;
+  animation: frame-enter .5s forwards ease-in-out reverse, gradient-animation 5s ease-in-out infinite;
 }
 
 @keyframes gradient-animation {
@@ -212,4 +216,9 @@
 .counter-theme {
   font-size: {{counterFontSize}}px;
   color: {{counterFontColor}};
+}
+
+.map-theme {
+  font-size: {{mapFontSize}}px;
+  color: {{mapFontColor}};
 }
