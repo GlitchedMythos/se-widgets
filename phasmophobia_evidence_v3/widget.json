@@ -2,13 +2,25 @@
   "resetCommand": {
     "type": "string",
     "label": "Name Reset Command",
-    "value": "!ghostreset",
+    "value": "!gr",
     "group": "Commands"
   },
   "nameCommand": {
     "type": "string",
     "label": "Name Input Command",
-    "value": "!ghostname",
+    "value": "!gn",
+    "group": "Commands"
+  },
+  "firstnameCommand": {
+    "type": "string",
+    "label": "First Name Input Command",
+    "value": "!gfn",
+    "group": "Commands"
+  },
+  "surnameCommand": {
+    "type": "string",
+    "label": "Surname Input Command",
+    "value": "!gsn",
     "group": "Commands"
   },
   "emfCommand": {
@@ -71,6 +83,18 @@
     "value": "!o3",
     "group": "Commands"
   },
+  "mapNameCommand": {
+    "type": "string",
+    "label": "Set Map Command",
+    "value": "!gmap",
+    "group": "Commands"
+  },
+  "mapDiffCommand": {
+    "type": "string",
+    "label": "Set Difficulty Command",
+    "value": "!gdiff",
+    "group": "Commands"
+  },
   "setCounterNameCommand": {
     "type": "string",
     "label": "Set Counter Name Command",
@@ -105,6 +129,16 @@
     },
     "group": "Optionals"
   },
+  "autoCapitalize": {
+    "type": "dropdown",
+    "label": "Auto Capitalize Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",
@@ -118,6 +152,16 @@
   "displayCounter": {
     "type": "dropdown",
     "label": "Display Counter",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayMap": {
+    "type": "dropdown",
+    "label": "Display Map Name",
     "value": "yes",
     "options": {
       "yes": "Yes",
@@ -142,6 +186,17 @@
     "options": {
       "yes": "Yes",
       "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "fullEvidence": {
+    "type": "dropdown",
+    "label": "Evidence Color after Completion",
+    "value": "impossible",
+    "options": {
+      "impossible": "Impossible Color",
+      "inactive": "Inactive Color",
+      "hidden": "Hidden from Widget"
     },
     "group": "Optionals"
   },
@@ -357,6 +412,18 @@
     "value": 24,
     "group": "Theming - Counter"
   },
+  "mapFontColor": {
+    "type": "colorpicker",
+    "label": "Map Name Color",
+    "value": "rgba(192,192,192,1)",
+    "group": "Theming - Map Name"
+  },
+  "mapFontSize": {
+    "type": "number",
+    "label": "Map Name Font Size",
+    "value": 24,
+    "group": "Theming - Map Name"
+  },
   "evidenceActive": {
     "type": "colorpicker",
     "label": "Evidence - Active",
@@ -391,6 +458,12 @@
     "type": "text",
     "label": "Ghost Name: [name]",
     "value": "Name: [name]",
+    "group": "Name Messages"
+  },
+  "noMapString": {
+    "type": "text",
+    "label": "No Map Selected",
+    "value": "No Map Selected...",
     "group": "Name Messages"
   },
   "counterDefaultString": {
@@ -492,6 +565,18 @@
   "yureiString": {
     "type": "text",
     "label": "Yurei - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "yokaiString": {
+    "type": "text",
+    "label": "Yokai - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "hantuString": {
+    "type": "text",
+    "label": "Hantu - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   }
