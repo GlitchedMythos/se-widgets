@@ -11,6 +11,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Name Reset | !gr | Reset the ghost |
 | Name Reset| !gr "name" | Reset the ghost with the name |
 | Name Input | !gn "name" | Change name to "name" |
+| Name Input<br />(Stream Deck) | !gfn "name"<br />!gsn "name" | Change either first or last name to "name" |
 | Toggle EMF | !ge | Change EMF to opposite of current state |
 | Toggle Spirit Box | !gs | Change Spirit Box to opposite of current state |
 | Toggle Fingerprints | !gf | Change Fingerprints to opposite of current state |
@@ -21,6 +22,8 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Toggle Optional Objective 1 | !o1 | Toggles Optional Objective 1 from being marked or not |
 | Toggle Optional Objective 2 | !o2 | Toggles Optional Objective 2 from being marked or not |
 | Toggle Optional Objective 3 | !o3 | Toggles Optional Objective 3 from being marked or not |
+| Map Input | !gm "map" | Set the map name. Replace with a command from the map list below |
+| Difficulty Input | !gd "difficulty" | Set the map name. Replace with a command from the map list below |
 | Set Counter Name | !setcounter "phrase" | Set's the phrase before the number in the counter |
 | Set Counter Number | !setcounternumber "num" | Set's the number in the counter to the number input |
 | Increment the counter by 1 | !counterup | Adds one to the counter number |
@@ -37,7 +40,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | EMF | "em" "emf" |
 | Crucifix | "cr" "crucifix" |
 | Smudge Ghost (NON-Hunt) | "sm" "smudge" |
-| Parabolic Microphone | "pa" "parabolic" "mic" |
+| Parabolic Microphone<br />Note: Not In Game | "pa" "parabolic" "mic" |
 | Escape | "es" "escape" |
 | Smudge Ghost (During Hunt) | "hu" "hunt" |
 | <25% Sanity | "san "sanity" |
@@ -58,6 +61,45 @@ Individual Objectives can be used and can be toggled on and off
 To get `Smudge`
 
     !oo sm
+
+# Map Names and Difficulties
+
+| Map | Possible Phrases |
+|--|--|
+| Tanglewood | "ta" "tangle" "tanglewood" |
+| Edgefield | "ed" "edge" "edgefield" |
+| Ridgeview | "ri" "ridge" "ridgeview" |
+| Grafton | "gr" "grafton" |
+| Bleasdale | "bl" "bleasdale" |
+| High School | "hi" "high" "school" "brown" "brownstone" |
+| Prison | "pr" "prison" |
+| Asylum | "as" "asylum" |
+
+| Difficulty | Possible Phrases |
+|--|--|
+| Amateur | "am" "amateur" |
+| Intermediate | "int" "intermediate" |
+| Professional | "pro" "professional" |
+
+## Example Usage:
+
+To get `Grafton Farmhouse`
+
+    !gm gr
+
+To get `Brownstone High School`
+
+    !gm school
+
+To get `Professional` Difficulty
+
+    !gd pro
+
+Both Map and Difficulty can be combined in one map command
+
+To get `Asylum Intermediate`
+
+    !gm as int
 
 # How to Add to StreamElements?!?
 
