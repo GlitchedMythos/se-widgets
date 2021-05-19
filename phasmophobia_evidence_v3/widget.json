@@ -11,6 +11,18 @@
     "value": "!gn",
     "group": "Commands"
   },
+  "FirstnameCommand": {
+    "type": "string",
+    "label": "First Name Command (StreamDeck)",
+    "value": "!gfn",
+    "group": "Commands"
+  },
+  "SurnameCommand": {
+    "type": "string",
+    "label": "Surname Input  (StreamDeck)",
+    "value": "!gsn",
+    "group": "Commands"
+  },
   "emfCommand": {
     "type": "string",
     "label": "EMF Toggle Command",
