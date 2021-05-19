@@ -15,8 +15,14 @@ And I hope you don't get hunted yourself! :D -->
 
 <div class="phas-dashboard text-left {{dividerWidth}} divider-color {{dividerType}} p-1 h-screen flex flex-col"
     id="phas-dashboard">
-    <div class="name pb-0.5 flex-1" id="name">
-        {{noNameString}}
+    <div class="flex-row">
+        <div class="name pb-0.5 flex-1" id="name">
+            {{noNameString}}
+        </div>
+        <div class="flex flex-row" id="map-container">
+            <div class="map-theme mr-0.5 pb-0.5" id="map-name">{{noMapString}}</div>
+            <div class="map-theme" id="map-difficulty"></div>
+        </div>
     </div>
 
     <div class="py-0.5 flex-grow">
