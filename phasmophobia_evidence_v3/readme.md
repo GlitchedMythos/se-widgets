@@ -11,6 +11,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Name Reset | !gr | Reset the ghost |
 | Name Reset| !gr "name" | Reset the ghost with the name |
 | Name Input | !gn "name" | Change name to "name" |
+| Name Input (Stream Deck) | !gfn "First Name"<br />!gsn "Last Name" | Change first name or last name (surname) to "First Name" or "Last Name"<br />Note, this is meant for use with a Stream Deck and will require a list of Ghost Names |
 | Toggle EMF | !ge | Change EMF to opposite of current state |
 | Toggle Spirit Box | !gs | Change Spirit Box to opposite of current state |
 | Toggle Fingerprints | !gf | Change Fingerprints to opposite of current state |
