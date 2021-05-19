@@ -115,7 +115,6 @@ window.addEventListener('onWidgetLoad', function (obj) {
   greyOutType = fieldData['fullEvidence'];
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
   autoCapitalizeName = (fieldData['autoCapitalize'] === 'yes') ? true : false;
-  console.log(autoCapitalizeName);
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
   config.vipCommandAccess = (config.allowVIPS) ? true : false;
