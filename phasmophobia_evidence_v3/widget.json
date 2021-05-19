@@ -86,13 +86,13 @@
   "mapNameCommand": {
     "type": "string",
     "label": "Set Map Command",
-    "value": "!gmap",
+    "value": "!gm",
     "group": "Commands"
   },
   "mapDiffCommand": {
     "type": "string",
     "label": "Set Difficulty Command",
-    "value": "!gdiff",
+    "value": "!gd",
     "group": "Commands"
   },
   "setCounterNameCommand": {
