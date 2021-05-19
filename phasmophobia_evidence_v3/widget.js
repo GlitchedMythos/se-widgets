@@ -1,6 +1,8 @@
 let commands,
   resetCommand,
   nameCommand,
+  FirstnameCommand,
+  SurnameCommand,
   emfCommand,
   spiritBoxCommand,
   fingerprintsCommand,
@@ -26,6 +28,7 @@ let emf,
   freezing;
 
 let counter;
+var fullName;
 
 // TODO: Move to config
 let greyOutInvalidEvidence;
@@ -56,6 +59,8 @@ window.addEventListener('onWidgetLoad', function (obj) {
 
   resetCommand = fieldData['resetCommand'];
   nameCommand = fieldData['nameCommand'];
+  FirstnameCommand = fieldData['FirstnameCommand'];
+  SurnameCommand = fieldData['SurnameCommand'];
   emfCommand = fieldData['emfCommand'];
   spiritBoxCommand = fieldData['spiritBoxCommand'];
   fingerprintsCommand = fieldData['fingerprintsCommand'];
@@ -76,6 +81,8 @@ window.addEventListener('onWidgetLoad', function (obj) {
   commands = [
     resetCommand,
     nameCommand,
+    FirstnameCommand,
+    SurnameCommand,
     emfCommand,
     spiritBoxCommand,
     fingerprintsCommand,
@@ -251,6 +258,14 @@ window.addEventListener('onEventReceived', function (obj) {
 
       resetName(commandArgument);
       break;
+    case "{{FirstnameCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      firstName(commandArgument);
+      break;
+    case "{{SurnameCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      surName(commandArgument);
+      break;
     case "{{emfCommand}}":
       toggleSVG('emf-svg');
       emf = !emf;
@@ -358,9 +373,18 @@ let toggleStrikethrough = (optionalID) => {
 }
 
 let resetName = (newName) => {
+  fullName = "";
   let nameString = '' + config.nameStrings.ghostNameString;
   nameString = nameString.replace(/\[name\]/g, newName);
   $("#name").html(`${(newName) ? nameString : config.nameStrings.noNameString}`);
+}
+let firstName = (newName) => {
+  fullName = newName;
+  $("#name").html(`${(newName) ? fullName : config.nameStrings.noNameString}`);
+}
+let surName = (newName) => {
+  fullName = fullName.split(" ")[0] + " " + newName;
+  $("#name").html(`${(fullName) ? fullName : config.nameStrings.noNameString}`);
 }
 
 let resetEvidence = () => {
@@ -461,13 +485,29 @@ let checkEvidenceGhostMatch = () => {
       invalidEvidenceUpdate(ghostPossibilities);
     }
 
-    ghostGuessString = (ghostPossibilityStrings.length == 0) ?
-      'UH OH... no match?!' :
-      ghostPossibilities[0].conclusion;
+    if (ghostPossibilityStrings.length == 0) {
+      ghostGuessString = 'UH OH... no match?!';
+      $(`#emf-svg`).removeClass('evidencehidden');
+      $(`#spirit-box-svg`).removeClass('evidencehidden');
+      $(`#fingerprints-svg`).removeClass('evidencehidden');
+      $(`#orbs-svg`).removeClass('evidencehidden');
+      $(`#writing-svg`).removeClass('evidencehidden');
+      $(`#freezing-svg`).removeClass('evidencehidden');
+    }
+      else {
+        ghostGuessString = ghostPossibilities[0].conclusion;
+      }
+    
   } // Too much evidence
   else {
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
     ghostGuessString = config.conclusionStrings.tooMuchEvidence;
+    $(`#emf-svg`).removeClass('evidencehidden');
+    $(`#spirit-box-svg`).removeClass('evidencehidden');
+    $(`#fingerprints-svg`).removeClass('evidencehidden');
+    $(`#orbs-svg`).removeClass('evidencehidden');
+    $(`#writing-svg`).removeClass('evidencehidden');
+    $(`#freezing-svg`).removeClass('evidencehidden');
   }
 
   return ghostGuessString;
