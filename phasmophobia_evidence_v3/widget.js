@@ -1,6 +1,8 @@
 let commands,
   resetCommand,
   nameCommand,
+  firstnameCommand,
+  surnameCommand,
   emfCommand,
   spiritBoxCommand,
   fingerprintsCommand,
@@ -13,6 +15,8 @@ let commands,
   toggleOptObjThree,
   vipToggleOnCommand,
   vipToggleOffCommand,
+  mapNameCommand,
+  mapDiffCommand,
   setCounterNameCommand,
   setCounterNumberCommand,
   incrementCounterCommand,
@@ -27,8 +31,11 @@ let emf,
 
 let counter;
 
+var fullName;
+
 // TODO: Move to config
 let greyOutInvalidEvidence;
+let autoCapitalizeName;
 
 let config = {};
 
@@ -46,6 +53,8 @@ let phantom = '110010',
   poltergeist = '001011',
   spirit = '001101',
   demon = '011100';
+//  yokai = '001110';
+//  hantu = '000111';
 
 let channelName;
 
@@ -56,6 +65,8 @@ window.addEventListener('onWidgetLoad', function (obj) {
 
   resetCommand = fieldData['resetCommand'];
   nameCommand = fieldData['nameCommand'];
+  firstnameCommand = fieldData['firstnameCommand'];
+  surnameCommand = fieldData['surnameCommand'];
   emfCommand = fieldData['emfCommand'];
   spiritBoxCommand = fieldData['spiritBoxCommand'];
   fingerprintsCommand = fieldData['fingerprintsCommand'];
@@ -68,6 +79,8 @@ window.addEventListener('onWidgetLoad', function (obj) {
   toggleOptObjThree = fieldData['toggleOptObjThree'];
   vipToggleOnCommand = fieldData['vipToggleOnCommand'];
   vipToggleOffCommand = fieldData['vipToggleOffCommand'];
+  mapNameCommand = fieldData['mapNameCommand'];
+  mapDiffCommand = fieldData['mapDiffCommand'];
   setCounterNameCommand = fieldData['setCounterNameCommand'];
   setCounterNumberCommand = fieldData['setCounterNumberCommand'];
   incrementCounterCommand = fieldData['incrementCounterCommand'];
@@ -76,6 +89,8 @@ window.addEventListener('onWidgetLoad', function (obj) {
   commands = [
     resetCommand,
     nameCommand,
+    firstnameCommand,
+    surnameCommand,
     emfCommand,
     spiritBoxCommand,
     fingerprintsCommand,
@@ -88,14 +103,19 @@ window.addEventListener('onWidgetLoad', function (obj) {
     toggleOptObjThree,
     vipToggleOnCommand,
     vipToggleOffCommand,
+    mapNameCommand,
+    mapDiffCommand,
     setCounterNameCommand,
     setCounterNumberCommand,
     incrementCounterCommand,
     decrementCounterCommand,
-    '!glitchedmythos'
+    '!glitchedmythos',
   ];
 
+  greyOutType = fieldData['fullEvidence'];
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
+  autoCapitalizeName = (fieldData['autoCapitalize'] === 'yes') ? true : false;
+  console.log(autoCapitalizeName);
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
   config.vipCommandAccess = (config.allowVIPS) ? true : false;
@@ -108,6 +128,10 @@ window.addEventListener('onWidgetLoad', function (obj) {
   }
   config.optionalObj = {
     noOptionalString: fieldData['noOptionalObjectivesMessage']
+  }
+  config.mapStrings = {
+    noMapString: (fieldData['noMapString']) ?
+      fieldData['noMapString'] : 'No Map Selected...'
   }
   config.conclusionStrings = {
     zeroEvidenceConclusionString: (fieldData['zeroEvidenceConclusionString']) ?
@@ -166,12 +190,21 @@ window.addEventListener('onWidgetLoad', function (obj) {
       "type": "Yurei",
       "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
       "evidence": '010110'
-    }
+    }/*, {
+      "type": "Yokai",
+      "conclusion": createGhostConclusionString(fieldData['yokaiString'], 'Yokai'),
+      "evidence": '001110'
+    }, {
+      "type": "Hantu",
+      "conclusion": createGhostConclusionString(fieldData['hantuString'], 'Hantu'),
+      "evidence": '000111'
+    }*/
   ];
 
   let displayName = (fieldData['displayName'] === 'yes') ? true : false;
   let displayCounter = (fieldData['displayCounter'] === 'yes') ? true : false;
   let displayOptionalObjectives = (fieldData['displayOptionalObjectives'] === 'yes') ? true : false;
+  let displayMapName = (fieldData['displayMap'] === 'yes') ? true : false;
   let displayConclusion = (fieldData['displayConclusion'] === 'yes') ? true : false;
 
   if (!displayName) {
@@ -183,7 +216,11 @@ window.addEventListener('onWidgetLoad', function (obj) {
   }
 
   if (!displayOptionalObjectives) {
-    $(`#optional-obj`).addClass(`hidden`);
+    $(`#optional-obj`).addClass('hidden');
+  }
+  
+  if (!displayMapName) {
+    $(`#map-container`).addClass('hidden');
   }
 
   if (!displayConclusion) {
@@ -229,14 +266,14 @@ window.addEventListener('onEventReceived', function (obj) {
 
   // Check if a matching command
   let givenCommand = data.text.split(' ')[0];
-  if (!commands.includes(givenCommand)) {
+  if (!commands.includes(givenCommand.toLowerCase())) {
     // No matching command
     return;
   }
 
   let commandArgument;
-
-  switch (givenCommand) {
+  
+  switch (givenCommand.toLowerCase()) {
     case "{{resetCommand}}":
       commandArgument = data.text.split(' ').slice(1).join(' ');
       if (commandArgument.length > 0) {
@@ -249,6 +286,14 @@ window.addEventListener('onEventReceived', function (obj) {
       commandArgument = data.text.split(' ').slice(1).join(' ');
 
       resetName(commandArgument);
+      break;
+    case "{{firstnameCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      firstName(commandArgument);
+      break;
+    case "{{surnameCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      surName(commandArgument);
       break;
     case "{{emfCommand}}":
       toggleSVG('emf-svg');
@@ -281,7 +326,7 @@ window.addEventListener('onEventReceived', function (obj) {
       updateGhostGuess();
       break;
     case "{{optionalObjectivesCommand}}":
-      updateOptionalObjectives(data.text);
+      updateOptionalObjectives(data.text.toLowerCase());
       break;
     case "{{toggleOptObjOne}}":
       toggleStrikethrough("objective-one");
@@ -301,6 +346,14 @@ window.addEventListener('onEventReceived', function (obj) {
       if (x.type === 'moderator' || x.type === 'broadcaster') {
         config.vipCommandAccess = false;
       }
+      break;
+    case "{{mapNameCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      setMapName(commandArgument);
+      break;
+    case "{{mapDiffCommand}}":
+      commandArgument = data.text.split(' ').slice(1).join(' ');
+      setMapDiff(commandArgument);
       break;
     case "{{setCounterNameCommand}}":
       commandArgument = data.text.split(' ').slice(1).join(' ');
@@ -323,7 +376,7 @@ window.addEventListener('onEventReceived', function (obj) {
         if (commandArgument) {
           writeOutVersion(commandArgument);
         } else {
-          writeOutVersion(`Hello GlitchedMythos. Thank you for creating me. I am version 2.1 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`)
+          writeOutVersion(`Hello GlitchedMythos. Thank you for creating me. I am version 3.0 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`)
         }
       }
       break;
@@ -357,9 +410,32 @@ let toggleStrikethrough = (optionalID) => {
 }
 
 let resetName = (newName) => {
+  let nameSplit = new Array();
+  fullName = "";
+  if (newName) {
+    nameSplit = newName.split(" ");
+    for (let i = 0; i < nameSplit.length; i++) {
+      nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substr(1).toLowerCase();
+    }
+  }
+  if (nameSplit!="") {
+    newName=nameSplit.join(" ");
+  }
   let nameString = '' + config.nameStrings.ghostNameString;
   nameString = nameString.replace(/\[name\]/g, newName);
-  $("#name").html(`${(newName) ? nameString : config.nameStrings.noNameString}`);
+  fullName = nameString;
+  //nameString = nameString.replace(/\[name\]/g, nameSplit.join(" "));
+  $("#name").html(`${(newName) ? fullName : config.nameStrings.noNameString}`);
+}
+
+let firstName = (newName) => {
+  fullName = newName;
+  $("#name").html(`${(newName) ? fullName : config.nameStrings.noNameString}`);
+}
+
+let surName = (newName) => {
+  fullName = fullName.split(" ")[0] + " " + newName;
+  $("#name").html(`${(fullName) ? fullName : config.nameStrings.noNameString}`);
 }
 
 let resetEvidence = () => {
@@ -368,26 +444,32 @@ let resetEvidence = () => {
   emf = false;
   $(`#emf-svg`).removeClass('active');
   $(`#emf-svg`).addClass('inactive');
+  $(`#emf-svg`).removeClass('evidencehidden');
 
   spiritBox = false;
   $(`#spirit-box-svg`).removeClass('active');
   $(`#spirit-box-svg`).addClass('inactive');
+  $(`#spirit-box-svg`).removeClass('evidencehidden');
 
   fingerprints = false;
   $(`#fingerprints-svg`).removeClass('active');
   $(`#fingerprints-svg`).addClass('inactive');
+  $(`#fingerprints-svg`).removeClass('evidencehidden');
 
   orbs = false;
   $(`#orbs-svg`).removeClass('active');
   $(`#orbs-svg`).addClass('inactive');
+  $(`#orbs-svg`).removeClass('evidencehidden');
 
   writing = false;
   $(`#writing-svg`).removeClass('active');
   $(`#writing-svg`).addClass('inactive');
+  $(`#writing-svg`).removeClass('evidencehidden');
 
   freezing = false;
   $(`#freezing-svg`).removeClass('active');
   $(`#freezing-svg`).addClass('inactive');
+  $(`#freezing-svg`).removeClass('evidencehidden');
 }
 
 let resetOptional = () => {
@@ -401,10 +483,16 @@ let resetOptional = () => {
   $('#no-opt-objectives-container').removeClass('hidden');
 }
 
+let resetMap = () => {
+  $("#map-name").html(config.mapStrings.noMapString);
+  $("#map-difficulty").html("");
+}
+
 let resetGhost = (newName) => {
   resetName(newName);
   resetEvidence();
   resetOptional();
+  resetMap();
   updateGhostGuess(config.conclusionStrings.zeroEvidenceConclusionString);
 }
 
@@ -423,7 +511,7 @@ let numOfTrueEvidence = () => {
 
 let checkEvidenceGhostMatch = () => {
   let evidenceString = createEvidenceString();
-  let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
+  var numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
   let ghostGuessString = '';
 
   // 0  Piece of Evidence
@@ -442,25 +530,45 @@ let checkEvidenceGhostMatch = () => {
       invalidEvidenceUpdate(ghostPossibilities);
     }
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
-    ghostGuessString = `Could be a ` + ghostPossibilityStrings.join(', ');
+    ghostGuessString = `Maybe: ` + ghostPossibilityStrings.join(', ');
   } // Exact match
   else if (numOfTrueEvidence == 3) {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
-
-    if (!greyOutInvalidEvidence) {
+    if (greyOutType === "inactive") {
       removeAllImpossibleCSS()
     } else {
       invalidEvidenceUpdate(ghostPossibilities);
     }
-
-    ghostGuessString = (ghostPossibilityStrings.length == 0) ?
-      'UH OH... no match?!' :
-      ghostPossibilities[0].conclusion;
+    if (ghostPossibilityStrings.length == 0) {
+      ghostGuessString = 'UH OH... no match?!';
+      $(`#emf-svg`).removeClass('impossible');
+      $(`#emf-svg`).removeClass('evidencehidden');
+      $(`#spirit-box-svg`).removeClass('impossible');
+      $(`#spirit-box-svg`).removeClass('evidencehidden');
+      $(`#fingerprints-svg`).removeClass('impossible');
+      $(`#fingerprints-svg`).removeClass('evidencehidden');
+      $(`#orbs-svg`).removeClass('impossible');
+      $(`#orbs-svg`).removeClass('evidencehidden');
+      $(`#writing-svg`).removeClass('impossible');
+      $(`#writing-svg`).removeClass('evidencehidden');
+      $(`#freezing-svg`).removeClass('impossible');
+      $(`#freezing-svg`).removeClass('evidencehidden');
+    }
+      else {
+        ghostGuessString = ghostPossibilities[0].conclusion;
+      }
+    
   } // Too much evidence
   else {
     if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
     ghostGuessString = config.conclusionStrings.tooMuchEvidence;
+    $(`#emf-svg`).removeClass('evidencehidden');
+    $(`#spirit-box-svg`).removeClass('evidencehidden');
+    $(`#fingerprints-svg`).removeClass('evidencehidden');
+    $(`#orbs-svg`).removeClass('evidencehidden');
+    $(`#writing-svg`).removeClass('evidencehidden');
+    $(`#freezing-svg`).removeClass('evidencehidden');
   }
 
   return ghostGuessString;
@@ -518,39 +626,103 @@ let invalidEvidenceUpdate = (possibleGhosts) => {
   // Addition shorthand prior to impossibleEvidence converts the string to a number
   // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
   if (+impossibleEvidence[0] == 0) {
-    $(`#emf-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#emf-svg`).addClass('evidencehidden');
+      } else if (greyOutType === 'impossible') {
+        $(`#emf-svg`).addClass('impossible');
+      }
+      else {
+        $(`#emf-svg`).removeClass('impossible');
+        $(`#emf-svg`).removeClass('evidencehidden');
+      }
+    } else {
+      $(`#emf-svg`).addClass('impossible');
+      $(`#emf-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#emf-svg`).removeClass('impossible');
+    $(`#emf-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[1] == 0) {
-    $(`#freezing-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#freezing-svg`).addClass('evidencehidden');
+      } else {
+        $(`#freezing-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#freezing-svg`).addClass('impossible');
+      $(`#freezing-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#freezing-svg`).removeClass('impossible');
+    $(`#freezing-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[2] == 0) {
-    $(`#spirit-box-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#spirit-box-svg`).addClass('evidencehidden');
+      } else {
+        $(`#spirit-box-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#spirit-box-svg`).addClass('impossible');
+      $(`#spirit-box-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#spirit-box-svg`).removeClass('impossible');
+    $(`#spirit-box-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[3] == 0) {
-    $(`#writing-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#writing-svg`).addClass('evidencehidden');
+      } else {
+        $(`#writing-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#writing-svg`).addClass('impossible');
+      $(`#writing-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#writing-svg`).removeClass('impossible');
+    $(`#writing-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[4] == 0) {
-    $(`#orbs-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#orbs-svg`).addClass('evidencehidden');
+      } else {
+        $(`#orbs-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#orbs-svg`).addClass('impossible');
+      $(`#orbs-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#orbs-svg`).removeClass('impossible');
+    $(`#orbs-svg`).removeClass('evidencehidden');
   }
 
   if (+impossibleEvidence[5] == 0) {
-    $(`#fingerprints-svg`).addClass('impossible');
+    if (numOfTrueEvidence() == 3) {
+      if (greyOutType === 'hidden') {
+        $(`#fingerprints-svg`).addClass('evidencehidden');
+      } else {
+        $(`#fingerprints-svg`).addClass('impossible');
+      }
+    } else {
+      $(`#fingerprints-svg`).addClass('impossible');
+      $(`#fingerprints-svg`).removeClass('evidencehidden');
+    }
   } else {
     $(`#fingerprints-svg`).removeClass('impossible');
+    $(`#fingerprints-svg`).removeClass('evidencehidden');
   }
 }
 
@@ -599,7 +771,7 @@ let updateOptionalObjectives = (command) => {
   let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
 
   let optObjectives = [];
-
+  
   if (optObjCommands.length === 3) {
     for (let i = 0; i < optObjCommands.length; i++) {
       let objectiveString = getOptObj(optObjCommands[i]);
@@ -608,7 +780,7 @@ let updateOptionalObjectives = (command) => {
       }
     }
   }
-  else if (optObjCommands.length === 2) { // Note, since there are only 2 words, the length minimum is 2.
+  else if (optObjCommands.length === 2) {
     optObjectives.push(getOptObj(optObjCommands[1]));
   }
 
@@ -702,7 +874,7 @@ let getOptObj = (obj) => {
       break;
     case 'san':
     case 'sanity':
-      optObj = "<25% Sanity"
+      optObj = "Sanity"
       break;
     case 'ca':
     case 'candle':
@@ -713,6 +885,77 @@ let getOptObj = (obj) => {
   }
 
   return optObj;
+}
+
+let setMapName = (name) => {
+  let map = ""
+  
+  let nameSplit = name.split(' ');
+  
+  switch (nameSplit[0].toLowerCase()) {
+    case 'ta':
+    case 'tangle':
+    case 'tanglewood':
+      map = "Tanglewood Street House"
+      break;
+    case 'ed':
+    case 'edge':
+    case 'edgefield':
+      map = "Edgefield Street House"
+      break;
+    case 'ri':
+    case 'ridge':
+    case 'ridgeview':
+      map = "Ridgeview Road House"
+      break;
+    case 'gr':
+    case 'grafton':
+      map = "Grafton Farmhouse"
+      break;
+    case 'bl':
+    case 'bleasdale':
+      map = "Bleasdale Farmhouse"
+      break;
+    case 'hi':
+    case 'high':
+    case 'school':
+    case 'brown':
+    case 'brownstone':
+      map = "Brownstone High School"
+      break;
+    case 'pr':
+    case 'prison':
+      map = "Prison"
+      break;
+    case 'as':
+    case 'asylum':
+      map = "Asylum"
+      break;
+  }
+  $('#map-name').html(map);
+  
+  if (nameSplit[1]) {
+    setMapDiff(nameSplit[1]);
+  }
+}
+
+let setMapDiff = (name) => {
+  let diff = ""
+  switch (name.toLowerCase()) {
+    case 'am':
+    case 'amateur':
+      diff = "Amateur"
+      break;
+    case 'int':
+    case 'intermediate':
+      diff = "Intermediate"
+      break;
+    case 'pro':
+    case 'professional':
+      diff = "Professional"
+      break;
+  }
+  $('#map-difficulty').html(diff);
 }
 
 let setCounterName = (name) => {
@@ -772,6 +1015,6 @@ let writeOutVersion = (command) => {
         $('#console-container').append($(`<div id="text"></div>`));
         $('#console-container').append($(`<div class="cursor"></div>`));
       }, 2000)
-    }, time + 2000)
+    }, time + 4000)
   }, 1000);
 }
