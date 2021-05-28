@@ -40,7 +40,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | EMF | "em" "emf" |
 | Crucifix | "cr" "crucifix" |
 | Smudge Ghost (NON-Hunt) | "sm" "smudge" |
-| Parabolic Microphone<br />Note: Not In Game | "pa" "parabolic" "mic" |
+| Parabolic Microphone<br />Note: Not Currently Enabled In Game | "pa" "parabolic" "mic" |
 | Escape | "es" "escape" |
 | Smudge Ghost (During Hunt) | "hu" "hunt" |
 | <25% Sanity | "san "sanity" |
