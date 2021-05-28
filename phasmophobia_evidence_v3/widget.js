@@ -52,9 +52,9 @@ let phantom = '110010',
   yurei = '010110',
   poltergeist = '001011',
   spirit = '001101',
-  demon = '011100';
-//  yokai = '001110';
-//  hantu = '000111';
+  demon = '011100',
+  yokai = '001110',
+  hantu = '000111';
 
 let channelName;
 
@@ -140,65 +140,119 @@ window.addEventListener('onWidgetLoad', function (obj) {
     tooMuchEvidence: (fieldData['impossibleConclusionString']) ?
       fieldData['impossibleConclusionString'] : 'Too Much Evidence'
   };
-  config.ghosts = [
-    {
-      "type": 'Banshee',
-      "conclusion": createGhostConclusionString(fieldData['bansheeString'], 'Banshee'),
-      "evidence": '110001'
-    }, {
-      "type": "Demon",
-      "conclusion": createGhostConclusionString(fieldData['demonString'], 'Demon'),
-      "evidence": '011100'
-    }, {
-      "type": "Jinn",
-      "conclusion": createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
-      "evidence": '101010'
-    }, {
-      "type": "Mare",
-      "conclusion": createGhostConclusionString(fieldData['mareString'], 'Mare'),
-      "evidence": '011010'
-    }, {
-      "type": "Oni",
-      "conclusion": createGhostConclusionString(fieldData['oniString'], 'Oni'),
-      "evidence": '101100'
-    }, {
-      "type": "Phantom",
-      "conclusion": createGhostConclusionString(fieldData['phantomString'], 'Phantom'),
-      "evidence": '110010'
-    }, {
-      "type": "Poltergeist",
-      "conclusion": createGhostConclusionString(fieldData['poltergeistString'], 'Poltergeist'),
-      "evidence": '001011'
-    }, {
-      "type": "Revenant",
-      "conclusion": createGhostConclusionString(fieldData['revenantString'], 'Revenant'),
-      "evidence": '100101'
-    }, {
-      "type": "Shade",
-      "conclusion": createGhostConclusionString(fieldData['shadeString'], 'Shade'),
-      "evidence": '100110'
-    }, {
-      "type": "Spirit",
-      "conclusion": createGhostConclusionString(fieldData['spiritString'], 'Spirit'),
-      "evidence": '001101'
-    }, {
-      "type": "Wraith",
-      "conclusion": createGhostConclusionString(fieldData['wraithString'], 'Wraith'),
-      "evidence": '011001'
-    }, {
-      "type": "Yurei",
-      "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
-      "evidence": '010110'
-    }/*, {
-      "type": "Yokai",
-      "conclusion": createGhostConclusionString(fieldData['yokaiString'], 'Yokai'),
-      "evidence": '001110'
-    }, {
-      "type": "Hantu",
-      "conclusion": createGhostConclusionString(fieldData['hantuString'], 'Hantu'),
-      "evidence": '000111'
-    }*/
-  ];
+  if (fieldData['betaBranch'] === 'yes') {
+    config.ghosts = [
+      {
+        "type": 'Banshee',
+        "conclusion": createGhostConclusionString(fieldData['bansheeString'], 'Banshee'),
+        "evidence": '110001'
+      }, {
+        "type": "Demon",
+        "conclusion": createGhostConclusionString(fieldData['demonString'], 'Demon'),
+        "evidence": '011100'
+      }, {
+        "type": "Jinn",
+        "conclusion": createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
+        "evidence": '101010'
+      }, {
+        "type": "Mare",
+        "conclusion": createGhostConclusionString(fieldData['mareString'], 'Mare'),
+        "evidence": '011010'
+      }, {
+        "type": "Oni",
+        "conclusion": createGhostConclusionString(fieldData['oniString'], 'Oni'),
+        "evidence": '101100'
+      }, {
+        "type": "Phantom",
+        "conclusion": createGhostConclusionString(fieldData['phantomString'], 'Phantom'),
+        "evidence": '110010'
+      }, {
+        "type": "Poltergeist",
+        "conclusion": createGhostConclusionString(fieldData['poltergeistString'], 'Poltergeist'),
+        "evidence": '001011'
+      }, {
+        "type": "Revenant",
+        "conclusion": createGhostConclusionString(fieldData['revenantString'], 'Revenant'),
+        "evidence": '100101'
+      }, {
+        "type": "Shade",
+        "conclusion": createGhostConclusionString(fieldData['shadeString'], 'Shade'),
+        "evidence": '100110'
+      }, {
+        "type": "Spirit",
+        "conclusion": createGhostConclusionString(fieldData['spiritString'], 'Spirit'),
+        "evidence": '001101'
+      }, {
+        "type": "Wraith",
+        "conclusion": createGhostConclusionString(fieldData['wraithString'], 'Wraith'),
+        "evidence": '011001'
+      }, {
+        "type": "Yurei",
+        "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
+        "evidence": '010110'
+      }, {
+        "type": "Yokai",
+        "conclusion": createGhostConclusionString(fieldData['yokaiString'], 'Yokai'),
+        "evidence": '001110'
+      }, {
+        "type": "Hantu",
+        "conclusion": createGhostConclusionString(fieldData['hantuString'], 'Hantu'),
+        "evidence": '000111'
+      }
+    ];
+  } else {
+    config.ghosts = [
+      {
+        "type": 'Banshee',
+        "conclusion": createGhostConclusionString(fieldData['bansheeString'], 'Banshee'),
+        "evidence": '110001'
+      }, {
+        "type": "Demon",
+        "conclusion": createGhostConclusionString(fieldData['demonString'], 'Demon'),
+        "evidence": '011100'
+      }, {
+        "type": "Jinn",
+        "conclusion": createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
+        "evidence": '101010'
+      }, {
+        "type": "Mare",
+        "conclusion": createGhostConclusionString(fieldData['mareString'], 'Mare'),
+        "evidence": '011010'
+      }, {
+        "type": "Oni",
+        "conclusion": createGhostConclusionString(fieldData['oniString'], 'Oni'),
+        "evidence": '101100'
+      }, {
+        "type": "Phantom",
+        "conclusion": createGhostConclusionString(fieldData['phantomString'], 'Phantom'),
+        "evidence": '110010'
+      }, {
+        "type": "Poltergeist",
+        "conclusion": createGhostConclusionString(fieldData['poltergeistString'], 'Poltergeist'),
+        "evidence": '001011'
+      }, {
+        "type": "Revenant",
+        "conclusion": createGhostConclusionString(fieldData['revenantString'], 'Revenant'),
+        "evidence": '100101'
+      }, {
+        "type": "Shade",
+        "conclusion": createGhostConclusionString(fieldData['shadeString'], 'Shade'),
+        "evidence": '100110'
+      }, {
+        "type": "Spirit",
+        "conclusion": createGhostConclusionString(fieldData['spiritString'], 'Spirit'),
+        "evidence": '001101'
+      }, {
+        "type": "Wraith",
+        "conclusion": createGhostConclusionString(fieldData['wraithString'], 'Wraith'),
+        "evidence": '011001'
+      }, {
+        "type": "Yurei",
+        "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
+        "evidence": '010110'
+      }
+    ];
+  }
 
   let displayName = (fieldData['displayName'] === 'yes') ? true : false;
   let displayCounter = (fieldData['displayCounter'] === 'yes') ? true : false;
