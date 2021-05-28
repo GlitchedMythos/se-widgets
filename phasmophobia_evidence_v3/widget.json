@@ -119,6 +119,16 @@
     "value": "!counterdown",
     "group": "Commands"
   },
+  "betaBranch": {
+    "type": "dropdown",
+    "label": "Beta Branch? (Yokai/Hantu)",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
   "displayName": {
     "type": "dropdown",
     "label": "Display Name",
