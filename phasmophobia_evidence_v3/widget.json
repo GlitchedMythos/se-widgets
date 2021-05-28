@@ -343,6 +343,15 @@
     },
     "group": "Theming - Gradient Border"
   },
+  "animationDuration": {
+    "type": "slider",
+    "label": "Animate Duration (sec)",
+    "value": "4",
+    "min": "1",
+    "max": "10",
+    "step": 0.5,
+    "group": "Theming - Gradient Border"
+  },
   "animatedBorderColor": {
     "type": "colorpicker",
     "label": "Border Color",
