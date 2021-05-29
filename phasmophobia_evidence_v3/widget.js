@@ -321,32 +321,32 @@ window.addEventListener("onEventReceived", function (obj) {
       break;
     case "{{emfCommand}}":
       toggleSVG("emf-svg");
-      toggleEvidence(emf);
+      emf = toggleEvidence(emf);
       updateGhostGuess();
       break;
     case "{{spiritBoxCommand}}":
       toggleSVG("spirit-box-svg");
-      toggleEvidence(spiritBox);
+      spiritBox = toggleEvidence(spiritBox);
       updateGhostGuess();
       break;
     case "{{fingerprintsCommand}}":
       toggleSVG("fingerprints-svg");
-      toggleEvidence(fingerprints);
+      fingerprints = toggleEvidence(fingerprints);
       updateGhostGuess();
       break;
     case "{{orbsCommand}}":
       toggleSVG("orbs-svg");
-      toggleEvidence(orbs);
+      orbs = toggleEvidence(orbs);
       updateGhostGuess();
       break;
     case "{{writingCommand}}":
       toggleSVG("writing-svg");
-      toggleEvidence(writing);
+      writing = toggleEvidence(writing);
       updateGhostGuess();
       break;
     case "{{freezingCommand}}":
       toggleSVG("freezing-svg");
-      toggleEvidence(freezing);
+      freezing = toggleEvidence(freezing);
       updateGhostGuess();
       break;
     case "{{optionalObjectivesCommand}}":
@@ -407,7 +407,7 @@ let toggleEvidence = (evidence) => {
   } else {
     evidence = EVIDENCE_ON;
   }
-  console.log('evidence toggled');
+  return evidence;
 };
 
 let toggleSVG = (svgID) => {
@@ -514,8 +514,11 @@ let numOfTrueEvidence = () => {
 };
 
 let checkEvidenceGhostMatch = () => {
+  console.log('pre create evidence string')
   let evidenceString = createEvidenceString();
+  console.log('post create evidence string')
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
+  console.log('post num of true evidence: ', numOfTrueEvidence)
   let ghostGuessString = "";
 
   // 0  Piece of Evidence
