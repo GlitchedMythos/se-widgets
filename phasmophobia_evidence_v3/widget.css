@@ -44,6 +44,10 @@
   fill: {{evidenceImpossible}};
 }
 
+.impossible-completed {
+  fill: {{evidenceImpossibleCompleted}}
+}
+
 .strikethrough {
   position: relative;
 }

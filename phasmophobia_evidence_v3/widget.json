@@ -135,9 +135,19 @@
     },
     "group": "Optionals"
   },
-  "greyOutInvalidEvidence": {
+  "markImpossibleEvidence": {
     "type": "dropdown",
-    "label": "Grey Out Invalid Evidence",
+    "label": "Mark Impossible Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "useEvidenceImpossibleCompleted": {
+    "type": "dropdown",
+    "label": "Use difference impossible color when complete:",
     "value": "yes",
     "options": {
       "yes": "Yes",
@@ -359,19 +369,25 @@
   },
   "evidenceActive": {
     "type": "colorpicker",
-    "label": "Evidence - Active",
+    "label": "Active Evidence",
     "value": "rgba(50,205,50 ,1 )",
     "group": "Theming - Evidence"
   },
   "evidenceInactive": {
     "type": "colorpicker",
-    "label": "Evidence - Inactive",
+    "label": "Inactive Evidence",
     "value": "rgb(255, 254, 254)",
     "group": "Theming - Evidence"
   },
   "evidenceImpossible": {
     "type": "colorpicker",
-    "label": "Evidence - Impossible",
+    "label": "Impossible Evidence",
+    "value": "rgba(234, 66, 29, 0.6)",
+    "group": "Theming - Evidence"
+  },
+  "evidenceImpossibleCompleted": {
+    "type": "colorpicker",
+    "label": "Complete Impossible Evidence",
     "value": "rgba(234, 66, 29, 0.6)",
     "group": "Theming - Evidence"
   },
