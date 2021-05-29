@@ -1,3 +1,5 @@
+const version = "3.0";
+
 let commands,
   resetCommand,
   nameCommand,
@@ -24,6 +26,12 @@ const EVIDENCE_IMPOSSIBLE = 2;
 const EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
 
 let userState = {
+  channelName: {
+    value: ""
+  },
+  counter: {
+    value: 0,
+  },
   evidence: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
@@ -31,9 +39,6 @@ let userState = {
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
-  },
-  counter: {
-    value: 0,
   },
 };
 
@@ -63,10 +68,8 @@ const BANSHEE = "110001",
   YOKAI = "001110",
   YUREI = "010110";
 
-let channelName;
-
 window.addEventListener("onWidgetLoad", function (obj) {
-  channelName = obj["detail"]["channel"]["username"];
+  userState.channelName.value = obj["detail"]["channel"]["username"];
 
   const fieldData = obj.detail.fieldData;
 
@@ -405,7 +408,7 @@ window.addEventListener("onEventReceived", function (obj) {
           writeOutVersion(commandArgument);
         } else {
           writeOutVersion(
-            `Hello GlitchedMythos. Thank you for creating me. I am version 2.1 of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${channelName} is absolutely AMAZING!`
+            `Hello GlitchedMythos. Thank you for creating me. I am version ${version} of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${userState.channelName.value} is absolutely AMAZING!`
           );
         }
       }
