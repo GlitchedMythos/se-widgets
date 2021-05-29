@@ -45,7 +45,9 @@ let phantom = '110010',
   yurei = '010110',
   poltergeist = '001011',
   spirit = '001101',
-  demon = '011100';
+  demon = '011100',
+  yokai = '001110',
+  hantu = '000111';
 
 let channelName;
 
@@ -121,51 +123,59 @@ window.addEventListener('onWidgetLoad', function (obj) {
     {
       "type": 'Banshee',
       "conclusion": createGhostConclusionString(fieldData['bansheeString'], 'Banshee'),
-      "evidence": '110001'
+      "evidence": banshee
     }, {
       "type": "Demon",
       "conclusion": createGhostConclusionString(fieldData['demonString'], 'Demon'),
-      "evidence": '011100'
+      "evidence": demon
+    }, {
+      "type": "Hantu",
+      "conclusion": createGhostConclusionString(fieldData['hantuString'], 'Hantu'),
+      "evidence": hantu
     }, {
       "type": "Jinn",
       "conclusion": createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
-      "evidence": '101010'
+      "evidence": jinn
     }, {
       "type": "Mare",
       "conclusion": createGhostConclusionString(fieldData['mareString'], 'Mare'),
-      "evidence": '011010'
+      "evidence": mare
     }, {
       "type": "Oni",
       "conclusion": createGhostConclusionString(fieldData['oniString'], 'Oni'),
-      "evidence": '101100'
+      "evidence": oni
     }, {
       "type": "Phantom",
       "conclusion": createGhostConclusionString(fieldData['phantomString'], 'Phantom'),
-      "evidence": '110010'
+      "evidence": phantom
     }, {
       "type": "Poltergeist",
       "conclusion": createGhostConclusionString(fieldData['poltergeistString'], 'Poltergeist'),
-      "evidence": '001011'
+      "evidence": poltergeist
     }, {
       "type": "Revenant",
       "conclusion": createGhostConclusionString(fieldData['revenantString'], 'Revenant'),
-      "evidence": '100101'
+      "evidence": revenant
     }, {
       "type": "Shade",
       "conclusion": createGhostConclusionString(fieldData['shadeString'], 'Shade'),
-      "evidence": '100110'
+      "evidence": shade
     }, {
       "type": "Spirit",
       "conclusion": createGhostConclusionString(fieldData['spiritString'], 'Spirit'),
-      "evidence": '001101'
+      "evidence": spirit
     }, {
       "type": "Wraith",
       "conclusion": createGhostConclusionString(fieldData['wraithString'], 'Wraith'),
-      "evidence": '011001'
+      "evidence": wraith
+    }, {
+      "type": "Yokai",
+      "conclusion": createGhostConclusionString(fieldData['yokaiString'], 'Yokai'),
+      "evidence": yokai
     }, {
       "type": "Yurei",
       "conclusion": createGhostConclusionString(fieldData['yureiString'], 'Yurei'),
-      "evidence": '010110'
+      "evidence": yurei
     }
   ];
 
@@ -686,11 +696,6 @@ let getOptObj = (obj) => {
     case 'sm':
     case 'smudge':
       optObj = "Smudge"
-      break;
-    case 'pa':
-    case 'parabolic':
-    case 'mic':
-      optObj = "Parabolic"
       break;
     case 'es':
     case 'escape':

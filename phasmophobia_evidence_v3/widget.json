@@ -435,6 +435,12 @@
     "value": "",
     "group": "Conclusion Messages"
   },
+  "hantuString": {
+    "type": "text",
+    "label": "Hantu - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
   "jinnString": {
     "type": "text",
     "label": "Jinn - Leave empty 4 default",
@@ -486,6 +492,12 @@
   "wraithString": {
     "type": "text",
     "label": "Wraith - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "yokaiString": {
+    "type": "text",
+    "label": "Yokai - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
