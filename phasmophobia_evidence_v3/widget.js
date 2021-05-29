@@ -100,16 +100,6 @@ window.addEventListener('onWidgetLoad', function (obj) {
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
-  config.evidencePixelSize = fieldData['evidencePixelSize'];
-  config.nameStrings = {
-    noNameString: (fieldData['noNameString']) ?
-      fieldData['noNameString'] : 'A New Ghostie',
-    ghostNameString: (fieldData['ghostNameString']) ?
-      fieldData['ghostNameString'] : 'Name: [name]'
-  }
-  config.optionalObj = {
-    noOptionalString: fieldData['noOptionalObjectivesMessage']
-  }
   config.conclusionStrings = {
     zeroEvidenceConclusionString: (fieldData['zeroEvidenceConclusionString']) ?
       fieldData['zeroEvidenceConclusionString'] : 'Waiting for Evidence',
@@ -118,6 +108,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
     tooMuchEvidence: (fieldData['impossibleConclusionString']) ?
       fieldData['impossibleConclusionString'] : 'Too Much Evidence'
   };
+  config.evidencePixelSize = fieldData['evidencePixelSize'];
   config.ghosts = [
     {
       "type": 'Banshee',
@@ -177,6 +168,15 @@ window.addEventListener('onWidgetLoad', function (obj) {
       "evidence": yurei
     }
   ];
+  config.nameStrings = {
+    noNameString: (fieldData['noNameString']) ?
+      fieldData['noNameString'] : 'A New Ghostie',
+    ghostNameString: (fieldData['ghostNameString']) ?
+      fieldData['ghostNameString'] : 'Name: [name]'
+  }
+  config.optionalObj = {
+    noOptionalString: fieldData['noOptionalObjectivesMessage']
+  }
 
   let displayName = (fieldData['displayName'] === 'yes') ? true : false;
   let displayCounter = (fieldData['displayCounter'] === 'yes') ? true : false;
