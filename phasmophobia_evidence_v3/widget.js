@@ -23,6 +23,20 @@ const EVIDENCE_ON = 1;
 const EVIDENCE_IMPOSSIBLE = 2;
 const EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
 
+let userState = {
+  evidence: {
+    emf: EVIDENCE_OFF,
+    spiritBox: EVIDENCE_OFF,
+    fingerprints: EVIDENCE_OFF,
+    orbs: EVIDENCE_OFF,
+    writing: EVIDENCE_OFF,
+    freezing: EVIDENCE_OFF,
+  },
+  counter: {
+    value: 0,
+  },
+};
+
 let emf = EVIDENCE_OFF,
   spiritBox = EVIDENCE_OFF,
   fingerprints = EVIDENCE_OFF,
@@ -30,26 +44,24 @@ let emf = EVIDENCE_OFF,
   writing = EVIDENCE_OFF,
   freezing = EVIDENCE_OFF;
 
-let counter;
-
 let config = {};
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
-let phantom = "110010",
-  banshee = "110001",
-  jinn = "101010",
-  revenant = "100101",
-  shade = "100110",
-  oni = "101100",
-  wraith = "011001",
-  mare = "011010",
-  yurei = "010110",
-  poltergeist = "001011",
-  spirit = "001101",
-  demon = "011100",
-  yokai = "001110",
-  hantu = "000111";
+const BANSHEE = "110001",
+  DEMON = "011100",
+  HANTU = "000111",
+  JINN = "101010",
+  MARE = "011010",
+  ONI = "101100",
+  PHANTOM = "110010",
+  POLTERGEIST = "001011",
+  REVENANT = "100101",
+  SHADE = "100110",
+  SPIRIT = "001101",
+  WRAITH = "011001",
+  YOKAI = "001110",
+  YUREI = "010110";
 
 let channelName;
 
@@ -119,7 +131,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["bansheeString"],
         "Banshee"
       ),
-      evidence: banshee,
+      evidence: BANSHEE,
     },
     {
       type: "Demon",
@@ -127,7 +139,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["demonString"],
         "Demon"
       ),
-      evidence: demon,
+      evidence: DEMON,
     },
     {
       type: "Hantu",
@@ -135,22 +147,22 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["hantuString"],
         "Hantu"
       ),
-      evidence: hantu,
+      evidence: HANTU,
     },
     {
       type: "Jinn",
       conclusion: createGhostConclusionString(fieldData["jinnString"], "Jinn"),
-      evidence: jinn,
+      evidence: JINN,
     },
     {
       type: "Mare",
       conclusion: createGhostConclusionString(fieldData["mareString"], "Mare"),
-      evidence: mare,
+      evidence: MARE,
     },
     {
       type: "Oni",
       conclusion: createGhostConclusionString(fieldData["oniString"], "Oni"),
-      evidence: oni,
+      evidence: ONI,
     },
     {
       type: "Phantom",
@@ -158,7 +170,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["phantomString"],
         "Phantom"
       ),
-      evidence: phantom,
+      evidence: PHANTOM,
     },
     {
       type: "Poltergeist",
@@ -166,7 +178,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["poltergeistString"],
         "Poltergeist"
       ),
-      evidence: poltergeist,
+      evidence: POLTERGEIST,
     },
     {
       type: "Revenant",
@@ -174,7 +186,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["revenantString"],
         "Revenant"
       ),
-      evidence: revenant,
+      evidence: REVENANT,
     },
     {
       type: "Shade",
@@ -182,7 +194,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["shadeString"],
         "Shade"
       ),
-      evidence: shade,
+      evidence: SHADE,
     },
     {
       type: "Spirit",
@@ -190,7 +202,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["spiritString"],
         "Spirit"
       ),
-      evidence: spirit,
+      evidence: SPIRIT,
     },
     {
       type: "Wraith",
@@ -198,7 +210,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["wraithString"],
         "Wraith"
       ),
-      evidence: wraith,
+      evidence: WRAITH,
     },
     {
       type: "Yokai",
@@ -206,7 +218,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["yokaiString"],
         "Yokai"
       ),
-      evidence: yokai,
+      evidence: YOKAI,
     },
     {
       type: "Yurei",
@@ -214,7 +226,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         fieldData["yureiString"],
         "Yurei"
       ),
-      evidence: yurei,
+      evidence: YUREI,
     },
   ];
   config.markImpossibleEvidence =
@@ -514,11 +526,11 @@ let numOfTrueEvidence = () => {
 };
 
 let checkEvidenceGhostMatch = () => {
-  console.log('pre create evidence string')
+  console.log("pre create evidence string");
   let evidenceString = createEvidenceString();
-  console.log('post create evidence string')
+  console.log("post create evidence string");
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
-  console.log('post num of true evidence: ', numOfTrueEvidence)
+  console.log("post num of true evidence: ", numOfTrueEvidence);
   let ghostGuessString = "";
 
   // 0  Piece of Evidence
