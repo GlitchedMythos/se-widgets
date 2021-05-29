@@ -1,5 +1,27 @@
 const version = "3.0";
 
+const EVIDENCE_OFF = 0;
+const EVIDENCE_ON = 1;
+const EVIDENCE_IMPOSSIBLE = 2;
+const EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
+
+// Order is important here:
+// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+const BANSHEE = "110001",
+  DEMON = "011100",
+  HANTU = "000111",
+  JINN = "101010",
+  MARE = "011010",
+  ONI = "101100",
+  PHANTOM = "110010",
+  POLTERGEIST = "001011",
+  REVENANT = "100101",
+  SHADE = "100110",
+  SPIRIT = "001101",
+  WRAITH = "011001",
+  YOKAI = "001110",
+  YUREI = "010110";
+
 let commands,
   resetCommand,
   nameCommand,
@@ -20,14 +42,9 @@ let commands,
   incrementCounterCommand,
   decrementCounterCommand;
 
-const EVIDENCE_OFF = 0;
-const EVIDENCE_ON = 1;
-const EVIDENCE_IMPOSSIBLE = 2;
-const EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
-
 let userState = {
   channelName: {
-    value: ""
+    value: "",
   },
   counter: {
     value: 0,
@@ -50,23 +67,6 @@ let emf = EVIDENCE_OFF,
   freezing = EVIDENCE_OFF;
 
 let config = {};
-
-// Order is important here:
-// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
-const BANSHEE = "110001",
-  DEMON = "011100",
-  HANTU = "000111",
-  JINN = "101010",
-  MARE = "011010",
-  ONI = "101100",
-  PHANTOM = "110010",
-  POLTERGEIST = "001011",
-  REVENANT = "100101",
-  SHADE = "100110",
-  SPIRIT = "001101",
-  WRAITH = "011001",
-  YOKAI = "001110",
-  YUREI = "010110";
 
 window.addEventListener("onWidgetLoad", function (obj) {
   userState.channelName.value = obj["detail"]["channel"]["username"];
@@ -289,8 +289,8 @@ window.addEventListener("onWidgetLoad", function (obj) {
     $("#phas-dashboard").addClass("phas-border");
   }
 
-  resetEvidence();
-  updateGhostGuess();
+  resetEvidence(userState.evidence);
+  updateGhostGuess(null, userstate.evidence);
 });
 
 window.addEventListener("onEventReceived", function (obj) {
@@ -324,9 +324,9 @@ window.addEventListener("onEventReceived", function (obj) {
     case "{{resetCommand}}":
       commandArgument = data.text.split(" ").slice(1).join(" ");
       if (commandArgument.length > 0) {
-        resetGhost(commandArgument);
+        resetGhost(commandArgument, userState.evidence);
       } else {
-        resetGhost(null);
+        resetGhost(null, userState.evidence);
       }
       break;
     case "{{nameCommand}}":
@@ -335,34 +335,22 @@ window.addEventListener("onEventReceived", function (obj) {
       resetName(commandArgument);
       break;
     case "{{emfCommand}}":
-      toggleSVG("emf-svg");
-      emf = toggleEvidence(emf);
-      updateGhostGuess();
+      toggleEMF(userState.evidence);
       break;
     case "{{spiritBoxCommand}}":
-      toggleSVG("spirit-box-svg");
-      spiritBox = toggleEvidence(spiritBox);
-      updateGhostGuess();
+      toggleSpiritBox(userState.evidence);
       break;
     case "{{fingerprintsCommand}}":
-      toggleSVG("fingerprints-svg");
-      fingerprints = toggleEvidence(fingerprints);
-      updateGhostGuess();
+      toggleFingerprints(userState.evidence);
       break;
     case "{{orbsCommand}}":
-      toggleSVG("orbs-svg");
-      orbs = toggleEvidence(orbs);
-      updateGhostGuess();
+      toggleOrbs(userState.evidence);
       break;
     case "{{writingCommand}}":
-      toggleSVG("writing-svg");
-      writing = toggleEvidence(writing);
-      updateGhostGuess();
+      toggleWriting(userState.evidence);
       break;
     case "{{freezingCommand}}":
-      toggleSVG("freezing-svg");
-      freezing = toggleEvidence(freezing);
-      updateGhostGuess();
+      toggleFreezing(userState.evidence);
       break;
     case "{{optionalObjectivesCommand}}":
       updateOptionalObjectives(data.text);
@@ -416,121 +404,63 @@ window.addEventListener("onEventReceived", function (obj) {
   }
 });
 
-let toggleEvidence = (evidence) => {
-  if (evidence === EVIDENCE_ON) {
-    evidence = EVIDENCE_OFF;
-  } else {
-    evidence = EVIDENCE_ON;
-  }
-  return evidence;
+/*******************************************************
+ *                  COMMAND FUNCTIONS                  *
+ *******************************************************/
+
+const toggleEMF = (evidence) => {
+  toggleSVG("emf-svg");
+  evidence.emf = toggleEvidence(evidence.emf);
+  updateGhostGuess(null, evidence);
 };
 
-let toggleSVG = (svgID) => {
-  let svg = $(`#${svgID}`);
-  let classList = svg.attr("class");
-  let classArray = classList.split(/\s+/);
-
-  if (classArray.includes("inactive")) {
-    svg.removeClass("inactive");
-    svg.addClass("active");
-  } else {
-    svg.removeClass("active");
-    svg.addClass("inactive");
-  }
+const toggleSpiritBox = (evidence) => {
+  toggleSVG("spirit-box-svg");
+  evidence.spiritBox = toggleEvidence(evidence.spiritBox);
+  updateGhostGuess(null, evidence);
 };
 
-let toggleStrikethrough = (optionalID) => {
-  let optionalObj = $(`#${optionalID}`);
-  let classList = optionalObj.attr("class");
-  let classArray = classList.split(/\s+/);
-
-  if (classArray.includes("strikethrough")) {
-    optionalObj.removeClass("strikethrough");
-  } else {
-    optionalObj.addClass("strikethrough");
-  }
+const toggleFingerprints = (evidence) => {
+  toggleSVG("fingerprints-svg");
+  evidence.fingerprints = toggleEvidence(evidence.fingerprints);
+  updateGhostGuess(null, userState.evidence);
 };
 
-let resetName = (newName) => {
-  let nameString = "" + config.nameStrings.ghostNameString;
-  nameString = nameString.replace(/\[name\]/g, newName);
-  $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
+const toggleOrbs = (evidence) => {
+  toggleSVG("orbs-svg");
+  evidence.orbs = toggleEvidence(evidence.orbs);
+  updateGhostGuess(null, userState.evidence);
 };
 
-let resetEvidence = () => {
-  removeAllImpossibleCSS();
-
-  emf = EVIDENCE_OFF;
-  $(`#emf-svg`).removeClass("active");
-  $(`#emf-svg`).addClass("inactive");
-
-  spiritBox = EVIDENCE_OFF;
-  $(`#spirit-box-svg`).removeClass("active");
-  $(`#spirit-box-svg`).addClass("inactive");
-
-  fingerprints = EVIDENCE_OFF;
-  $(`#fingerprints-svg`).removeClass("active");
-  $(`#fingerprints-svg`).addClass("inactive");
-
-  orbs = EVIDENCE_OFF;
-  $(`#orbs-svg`).removeClass("active");
-  $(`#orbs-svg`).addClass("inactive");
-
-  writing = EVIDENCE_OFF;
-  $(`#writing-svg`).removeClass("active");
-  $(`#writing-svg`).addClass("inactive");
-
-  freezing = EVIDENCE_OFF;
-  $(`#freezing-svg`).removeClass("active");
-  $(`#freezing-svg`).addClass("inactive");
+const toggleWriting = (evidence) => {
+  toggleSVG("writing-svg");
+  evidence.writing = toggleEvidence(evidence.writing);
+  updateGhostGuess(null, userState.evidence);
 };
 
-let resetOptional = () => {
-  $("#objective-one").text("");
-  $("#objective-one").removeClass("strikethrough");
-  $("#objective-two").text("");
-  $("#objective-two").removeClass("strikethrough");
-  $("#objective-three").text("");
-  $("#objective-three").removeClass("strikethrough");
-  $("#optional-obj-container").addClass("hidden");
-  $("#no-opt-objectives-container").removeClass("hidden");
+const toggleFreezing = (evidence) => {
+  toggleSVG("freezing-svg");
+  evidence.freezing = toggleEvidence(evidence.freezing);
+  updateGhostGuess(null, userState.evidence);
 };
 
-let resetGhost = (newName) => {
+/*******************************************************
+ *                  LOGIC FUNCTIONS                    *
+ *******************************************************/
+
+let resetGhost = (newName, evidence) => {
   resetName(newName);
-  resetEvidence();
+  resetEvidence(evidence);
   resetOptional();
-  updateGhostGuess(config.conclusionStrings.zeroEvidenceConclusionString);
+  updateGhostGuess(
+    config.conclusionStrings.zeroEvidenceConclusionString,
+    evidence
+  );
 };
 
-let numOfTrueEvidence = () => {
-  let num = 0;
-
-  if (emf === EVIDENCE_ON) {
-    num = num + 1;
-  }
-  if (spiritBox === EVIDENCE_ON) {
-    num = num + 1;
-  }
-  if (fingerprints === EVIDENCE_ON) {
-    num = num + 1;
-  }
-  if (orbs === EVIDENCE_ON) {
-    num = num + 1;
-  }
-  if (writing === EVIDENCE_ON) {
-    num = num + 1;
-  }
-  if (freezing === EVIDENCE_ON) {
-    num = num + 1;
-  }
-
-  return num;
-};
-
-let checkEvidenceGhostMatch = () => {
+let checkEvidenceGhostMatch = (evidence) => {
   console.log("pre create evidence string");
-  let evidenceString = createEvidenceString();
+  let evidenceString = createEvidenceString(evidence);
   console.log("post create evidence string");
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
   console.log("post num of true evidence: ", numOfTrueEvidence);
@@ -581,147 +511,6 @@ let checkEvidenceGhostMatch = () => {
   }
 
   return ghostGuessString;
-};
-
-let createEvidenceString = () => {
-  let evidenceString = "";
-
-  evidenceString =
-    emf === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    freezing === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    spiritBox === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    writing === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    orbs === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    fingerprints === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-
-  return evidenceString;
-};
-
-let numOfTrueEvidenceInString = (evidenceString) => {
-  let index,
-    count = 0;
-  for (index = 0; index < evidenceString.length; ++index) {
-    count = evidenceString.charAt(index) == "1" ? count + 1 : count;
-  }
-
-  return count;
-};
-
-let getGhostPossibilities = (evidenceString) => {
-  // List of ghosts returns [<evidenceString>, <Name>]
-  const possibleGhosts = [];
-  const numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
-
-  for (let i = 0; i < config.ghosts.length; i++) {
-    let evidenceMatch = 0;
-    let ghostToCheck = config.ghosts[i];
-
-    for (let j = 0; j < evidenceString.length; j++) {
-      if (evidenceString.charAt(j) == "1") {
-        if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
-          evidenceMatch = evidenceMatch + 1;
-        }
-      }
-    }
-
-    if (evidenceMatch == numOfTrueEvidence && evidenceMatch > 1) {
-      possibleGhosts.push(config.ghosts[i]);
-    }
-  }
-
-  return possibleGhosts;
-};
-
-let invalidEvidenceUpdate = (possibleGhosts) => {
-  let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
-  // Addition shorthand prior to impossibleEvidence converts the string to a number
-  // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
-  if (+impossibleEvidence[0] == 0) {
-    $(`#emf-svg`).addClass("impossible");
-  } else {
-    $(`#emf-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[1] == 0) {
-    $(`#freezing-svg`).addClass("impossible");
-  } else {
-    $(`#freezing-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[2] == 0) {
-    $(`#spirit-box-svg`).addClass("impossible");
-  } else {
-    $(`#spirit-box-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[3] == 0) {
-    $(`#writing-svg`).addClass("impossible");
-  } else {
-    $(`#writing-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[4] == 0) {
-    $(`#orbs-svg`).addClass("impossible");
-  } else {
-    $(`#orbs-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[5] == 0) {
-    $(`#fingerprints-svg`).addClass("impossible");
-  } else {
-    $(`#fingerprints-svg`).removeClass("impossible");
-  }
-};
-
-let removeAllImpossibleCSS = () => {
-  $(`#emf-svg`).removeClass("impossible");
-  $(`#freezing-svg`).removeClass("impossible");
-  $(`#spirit-box-svg`).removeClass("impossible");
-  $(`#writing-svg`).removeClass("impossible");
-  $(`#orbs-svg`).removeClass("impossible");
-  $(`#fingerprints-svg`).removeClass("impossible");
-};
-
-let getImpossibleEvidence = (possibleGhosts) => {
-  let impossibleEvidenceString = "000000"; // If it stays a 0, we know it can't match any of the ghosts
-  for (let i = 0; i < possibleGhosts.length; i++) {
-    for (let k = 0; k < impossibleEvidenceString.length; k++) {
-      impossibleEvidenceString =
-        impossibleEvidenceString.substr(0, k) +
-        `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` +
-        impossibleEvidenceString.substr(k + 1);
-      impossibleEvidenceString[k] = `${
-        +impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
-      }`; // possibleGhosts[ghost][ghost evidence string][position in evidence string]
-    }
-  }
-  return impossibleEvidenceString;
-};
-
-let updateGhostGuess = (guessText) => {
-  guessText
-    ? $("#conclusion").html(guessText)
-    : $("#conclusion").html(checkEvidenceGhostMatch());
-};
-
-let createGhostConclusionString = (conclusionString, ghostType) => {
-  return conclusionString ? conclusionString : `It's a ${ghostType}!!`;
-};
-
-let createOptionalObjectivesString = (optObjString) => {
-  let optObj = "";
-
-  if (optObjString.length === 3) {
-  } else {
-    optObj = config.optionalObj.noOptionalString;
-  }
-
-  return optObj;
 };
 
 let updateOptionalObjectives = (command) => {
@@ -788,6 +577,112 @@ let updateOptionalObjectives = (command) => {
   }
 };
 
+/*******************************************************
+ *                  HELPER FUNCTIONS                   *
+ *******************************************************/
+
+let toggleEvidence = (evidence) => {
+  if (evidence === EVIDENCE_ON) {
+    evidence = EVIDENCE_OFF;
+  } else {
+    evidence = EVIDENCE_ON;
+  }
+  return evidence;
+};
+
+let createEvidenceString = (evidence) => {
+  let evidenceString = "";
+
+  evidenceString =
+    evidence.emf === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
+  evidenceString =
+    evidence.freezing === EVIDENCE_ON
+      ? evidenceString + "1"
+      : evidenceString + "0";
+  evidenceString =
+    evidence.spiritBox === EVIDENCE_ON
+      ? evidenceString + "1"
+      : evidenceString + "0";
+  evidenceString =
+    evidence.writing === EVIDENCE_ON
+      ? evidenceString + "1"
+      : evidenceString + "0";
+  evidenceString =
+    evidence.orbs === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
+  evidenceString =
+    evidence.fingerprints === EVIDENCE_ON
+      ? evidenceString + "1"
+      : evidenceString + "0";
+
+  return evidenceString;
+};
+
+let numOfTrueEvidenceInString = (evidenceString) => {
+  let index,
+    count = 0;
+  for (index = 0; index < evidenceString.length; ++index) {
+    count = evidenceString.charAt(index) == "1" ? count + 1 : count;
+  }
+
+  return count;
+};
+
+let getGhostPossibilities = (evidenceString) => {
+  // List of ghosts returns [<evidenceString>, <Name>]
+  const possibleGhosts = [];
+  const numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
+
+  for (let i = 0; i < config.ghosts.length; i++) {
+    let evidenceMatch = 0;
+    let ghostToCheck = config.ghosts[i];
+
+    for (let j = 0; j < evidenceString.length; j++) {
+      if (evidenceString.charAt(j) == "1") {
+        if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
+          evidenceMatch = evidenceMatch + 1;
+        }
+      }
+    }
+
+    if (evidenceMatch == numOfTrueEvidence && evidenceMatch > 1) {
+      possibleGhosts.push(config.ghosts[i]);
+    }
+  }
+
+  return possibleGhosts;
+};
+
+let getImpossibleEvidence = (possibleGhosts) => {
+  let impossibleEvidenceString = "000000"; // If it stays a 0, we know it can't match any of the ghosts
+  for (let i = 0; i < possibleGhosts.length; i++) {
+    for (let k = 0; k < impossibleEvidenceString.length; k++) {
+      impossibleEvidenceString =
+        impossibleEvidenceString.substr(0, k) +
+        `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` +
+        impossibleEvidenceString.substr(k + 1);
+      impossibleEvidenceString[k] = `${
+        +impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
+      }`; // possibleGhosts[ghost][ghost evidence string][position in evidence string]
+    }
+  }
+  return impossibleEvidenceString;
+};
+
+let createGhostConclusionString = (conclusionString, ghostType) => {
+  return conclusionString ? conclusionString : `It's a ${ghostType}!!`;
+};
+
+let createOptionalObjectivesString = (optObjString) => {
+  let optObj = "";
+
+  if (optObjString.length === 3) {
+  } else {
+    optObj = config.optionalObj.noOptionalString;
+  }
+
+  return optObj;
+};
+
 let getOptObj = (obj) => {
   let optObj = "";
 
@@ -841,6 +736,137 @@ let getOptObj = (obj) => {
   }
 
   return optObj;
+};
+
+/*******************************************************
+ *             DOM MANIPULATING FUNCTIONS              *
+ *******************************************************/
+
+let toggleSVG = (svgID) => {
+  let svg = $(`#${svgID}`);
+  let classList = svg.attr("class");
+  let classArray = classList.split(/\s+/);
+
+  if (classArray.includes("inactive")) {
+    svg.removeClass("inactive");
+    svg.addClass("active");
+  } else {
+    svg.removeClass("active");
+    svg.addClass("inactive");
+  }
+};
+
+let toggleStrikethrough = (optionalID) => {
+  let optionalObj = $(`#${optionalID}`);
+  let classList = optionalObj.attr("class");
+  let classArray = classList.split(/\s+/);
+
+  if (classArray.includes("strikethrough")) {
+    optionalObj.removeClass("strikethrough");
+  } else {
+    optionalObj.addClass("strikethrough");
+  }
+};
+
+let resetName = (newName) => {
+  let nameString = "" + config.nameStrings.ghostNameString;
+  nameString = nameString.replace(/\[name\]/g, newName);
+  $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
+};
+
+let resetEvidence = (evidence) => {
+  removeAllImpossibleCSS();
+
+  evidence.emf = EVIDENCE_OFF;
+  $(`#emf-svg`).removeClass("active");
+  $(`#emf-svg`).addClass("inactive");
+
+  spiritBox = EVIDENCE_OFF;
+  $(`#spirit-box-svg`).removeClass("active");
+  $(`#spirit-box-svg`).addClass("inactive");
+
+  fingerprints = EVIDENCE_OFF;
+  $(`#fingerprints-svg`).removeClass("active");
+  $(`#fingerprints-svg`).addClass("inactive");
+
+  orbs = EVIDENCE_OFF;
+  $(`#orbs-svg`).removeClass("active");
+  $(`#orbs-svg`).addClass("inactive");
+
+  writing = EVIDENCE_OFF;
+  $(`#writing-svg`).removeClass("active");
+  $(`#writing-svg`).addClass("inactive");
+
+  freezing = EVIDENCE_OFF;
+  $(`#freezing-svg`).removeClass("active");
+  $(`#freezing-svg`).addClass("inactive");
+};
+
+let resetOptional = () => {
+  $("#objective-one").text("");
+  $("#objective-one").removeClass("strikethrough");
+  $("#objective-two").text("");
+  $("#objective-two").removeClass("strikethrough");
+  $("#objective-three").text("");
+  $("#objective-three").removeClass("strikethrough");
+  $("#optional-obj-container").addClass("hidden");
+  $("#no-opt-objectives-container").removeClass("hidden");
+};
+
+let invalidEvidenceUpdate = (possibleGhosts) => {
+  let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
+  // Addition shorthand prior to impossibleEvidence converts the string to a number
+  // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+  if (+impossibleEvidence[0] == 0) {
+    $(`#emf-svg`).addClass("impossible");
+  } else {
+    $(`#emf-svg`).removeClass("impossible");
+  }
+
+  if (+impossibleEvidence[1] == 0) {
+    $(`#freezing-svg`).addClass("impossible");
+  } else {
+    $(`#freezing-svg`).removeClass("impossible");
+  }
+
+  if (+impossibleEvidence[2] == 0) {
+    $(`#spirit-box-svg`).addClass("impossible");
+  } else {
+    $(`#spirit-box-svg`).removeClass("impossible");
+  }
+
+  if (+impossibleEvidence[3] == 0) {
+    $(`#writing-svg`).addClass("impossible");
+  } else {
+    $(`#writing-svg`).removeClass("impossible");
+  }
+
+  if (+impossibleEvidence[4] == 0) {
+    $(`#orbs-svg`).addClass("impossible");
+  } else {
+    $(`#orbs-svg`).removeClass("impossible");
+  }
+
+  if (+impossibleEvidence[5] == 0) {
+    $(`#fingerprints-svg`).addClass("impossible");
+  } else {
+    $(`#fingerprints-svg`).removeClass("impossible");
+  }
+};
+
+let removeAllImpossibleCSS = () => {
+  $(`#emf-svg`).removeClass("impossible");
+  $(`#freezing-svg`).removeClass("impossible");
+  $(`#spirit-box-svg`).removeClass("impossible");
+  $(`#writing-svg`).removeClass("impossible");
+  $(`#orbs-svg`).removeClass("impossible");
+  $(`#fingerprints-svg`).removeClass("impossible");
+};
+
+let updateGhostGuess = (guessText, evidence) => {
+  guessText
+    ? $("#conclusion").html(guessText)
+    : $("#conclusion").html(checkEvidenceGhostMatch(evidence));
 };
 
 let setCounterName = (name) => {
