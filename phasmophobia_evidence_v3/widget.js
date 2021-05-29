@@ -100,7 +100,6 @@ window.addEventListener('onWidgetLoad', function (obj) {
   greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
-  config.vipCommandAccess = (config.allowVIPS) ? true : false;
   config.evidencePixelSize = fieldData['evidencePixelSize'];
   config.nameStrings = {
     noNameString: (fieldData['noNameString']) ?
@@ -230,7 +229,7 @@ window.addEventListener('onEventReceived', function (obj) {
   let i = badges.findIndex(x =>
     x.type === 'moderator' || 
     x.type === 'broadcaster' || 
-    (config.allowVIPS && config.vipCommandAccess && x.type === 'vip') || 
+    (config.allowVIPS && x.type === 'vip') || 
     data.displayName.toLowerCase() === 'glitchedmythos');
   if (i == -1) {
     // Not a mod, VIP or GlitchedMythos
@@ -304,12 +303,12 @@ window.addEventListener('onEventReceived', function (obj) {
       break;
     case "{{vipToggleOnCommand}}":
       if (x.type === 'moderator' || x.type === 'broadcaster') {
-        config.vipCommandAccess = true;
+        config.allowVIPS = true;
       }
       break;
     case "{{vipToggleOffCommand}}":
       if (x.type === 'moderator' || x.type === 'broadcaster') {
-        config.vipCommandAccess = false;
+        config.allowVIPS = false;
       }
       break;
     case "{{setCounterNameCommand}}":
