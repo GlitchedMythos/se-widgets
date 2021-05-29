@@ -27,9 +27,6 @@ let emf,
 
 let counter;
 
-// TODO: Move to config
-let greyOutInvalidEvidence;
-
 let config = {};
 
 // Order is important here:
@@ -96,8 +93,6 @@ window.addEventListener('onWidgetLoad', function (obj) {
     decrementCounterCommand,
     '!glitchedmythos'
   ];
-
-  greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
 
   config.allowVIPS = (fieldData['allowVIPS'] === 'yes') ? true : false;
   config.conclusionStrings = {
@@ -168,6 +163,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
       "evidence": yurei
     }
   ];
+  config.greyOutInvalidEvidence = (fieldData['greyOutInvalidEvidence'] === 'yes') ? true : false;
   config.nameStrings = {
     noNameString: (fieldData['noNameString']) ?
       fieldData['noNameString'] : 'A New Ghostie',
@@ -438,16 +434,16 @@ let checkEvidenceGhostMatch = () => {
   // 0  Piece of Evidence
   if (numOfTrueEvidence < 1) {
     ghostGuessString = config.conclusionStrings.zeroEvidenceConclusionString;
-    if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
+    if (config.greyOutInvalidEvidence) { removeAllImpossibleCSS() }
   }
   // 1  Piece of Evidence
   else if (numOfTrueEvidence == 1) {
     ghostGuessString = config.conclusionStrings.oneEvidenceConclusionString;
-    if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
+    if (config.greyOutInvalidEvidence) { removeAllImpossibleCSS() }
   } // 2 Pieces of Evidence
   else if (numOfTrueEvidence == 2) {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
-    if (greyOutInvalidEvidence) {
+    if (config.greyOutInvalidEvidence) {
       invalidEvidenceUpdate(ghostPossibilities);
     }
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
@@ -457,7 +453,7 @@ let checkEvidenceGhostMatch = () => {
     let ghostPossibilities = getGhostPossibilities(evidenceString);
     let ghostPossibilityStrings = ghostPossibilities.map(ghost => ghost.type);
 
-    if (!greyOutInvalidEvidence) {
+    if (!config.greyOutInvalidEvidence) {
       removeAllImpossibleCSS()
     } else {
       invalidEvidenceUpdate(ghostPossibilities);
@@ -468,7 +464,7 @@ let checkEvidenceGhostMatch = () => {
       ghostPossibilities[0].conclusion;
   } // Too much evidence
   else {
-    if (greyOutInvalidEvidence) { removeAllImpossibleCSS() }
+    if (config.greyOutInvalidEvidence) { removeAllImpossibleCSS() }
     ghostGuessString = config.conclusionStrings.tooMuchEvidence;
   }
 
