@@ -72,9 +72,9 @@ let emf = EVIDENCE_OFF,
 
 let config = {};
 
-const runCommandWithPermission = (permission, data, state, command) => {
+const runCommandWithPermission = (permission, data, command, commandArgs) => {
   if (hasPermission(permission, getUserLevelFromData(data))) {
-    command(data, state);
+    command(...commandArgs);
   }
 };
 
@@ -116,11 +116,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
   const fieldData = obj.detail.fieldData;
 
   nameCommand = fieldData["nameCommand"];
-  spiritBoxCommand = fieldData["spiritBoxCommand"];
-  fingerprintsCommand = fieldData["fingerprintsCommand"];
-  orbsCommand = fieldData["orbsCommand"];
-  writingCommand = fieldData["writingCommand"];
-  freezingCommand = fieldData["freezingCommand"];
   optionalObjectivesCommand = fieldData["optionalObjectivesCommand"];
   toggleOptObjOne = fieldData["toggleOptObjOne"];
   toggleOptObjTwo = fieldData["toggleOptObjTwo"];
@@ -134,30 +129,57 @@ window.addEventListener("onWidgetLoad", function (obj) {
 
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
-      runCommandWithPermission(
-        modOrVIPPermission(config),
-        data,
-        userState,
-        _resetGhost
-      );
+      runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
+        data.text,
+        userState.evidence,
+      ]);
     },
     [fieldData["emfCommand"]]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
+        userState.evidence,
+      ]);
+    },
+    [fieldData["spiritBoxCommand"]]: (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
-        userState,
-        _toggleEMF
+        _toggleSpiritBox,
+        [userState.evidence]
+      );
+    },
+    [fieldData["fingerprintsCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleFingerprints,
+        [userState.evidence]
+      );
+    },
+    [fieldData["orbsCommand"]]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
+        userState.evidence,
+      ]);
+    },
+    [fieldData["writingCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleWriting,
+        [userState.evidence]
+      );
+    },
+    [fieldData["freezingCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleFreezing,
+        [userState.evidence]
       );
     },
   };
 
   commands = [
     nameCommand,
-    spiritBoxCommand,
-    fingerprintsCommand,
-    orbsCommand,
-    writingCommand,
-    freezingCommand,
     optionalObjectivesCommand,
     toggleOptObjOne,
     toggleOptObjTwo,
@@ -389,21 +411,6 @@ window.addEventListener("onEventReceived", function (obj) {
 
       resetName(commandArgument);
       break;
-    case "{{spiritBoxCommand}}":
-      _toggleSpiritBox(userState.evidence);
-      break;
-    case "{{fingerprintsCommand}}":
-      _toggleFingerprints(userState.evidence);
-      break;
-    case "{{orbsCommand}}":
-      _toggleOrbs(userState.evidence);
-      break;
-    case "{{writingCommand}}":
-      _toggleWriting(userState.evidence);
-      break;
-    case "{{freezingCommand}}":
-      _toggleFreezing(userState.evidence);
-      break;
     case "{{optionalObjectivesCommand}}":
       updateOptionalObjectives(data.text);
       break;
@@ -460,19 +467,19 @@ window.addEventListener("onEventReceived", function (obj) {
  *                  COMMAND FUNCTIONS                  *
  *******************************************************/
 
-const _resetGhost = (data, state) => {
-  let commandArgument = data.text.split(" ").slice(1).join(" ");
+const _resetGhost = (command, evidence) => {
+  let commandArgument = command.split(" ").slice(1).join(" ");
   if (commandArgument.length > 0) {
-    resetGhost(commandArgument, state.evidence);
+    resetGhost(commandArgument, evidence);
   } else {
-    resetGhost(null, state.evidence);
+    resetGhost(null, evidence);
   }
 };
 
-const _toggleEMF = (data, state) => {
+const _toggleEMF = (evidence) => {
   toggleSVG("emf-svg");
   evidence.emf = toggleEvidence(evidence.emf);
-  updateGhostGuess(null, state.evidence);
+  updateGhostGuess(null, evidence);
 };
 
 const _toggleSpiritBox = (evidence) => {
