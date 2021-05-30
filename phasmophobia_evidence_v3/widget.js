@@ -1,9 +1,14 @@
 const version = "3.0";
 
-const EVIDENCE_OFF = 0;
-const EVIDENCE_ON = 1;
-const EVIDENCE_IMPOSSIBLE = 2;
-const EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
+const EVIDENCE_OFF = 0,
+  EVIDENCE_ON = 1,
+  EVIDENCE_IMPOSSIBLE = 2,
+  EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
+
+const PERMISSION_GLITCHED = 0,
+  PERMISSION_BROADCASTER = 1,
+  PERMISSION_MOD = 2,
+  PERMISSION_VIP = 3;
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
@@ -25,7 +30,6 @@ const BANSHEE = "110001",
 let commands,
   resetCommand,
   nameCommand,
-  emfCommand,
   spiritBoxCommand,
   fingerprintsCommand,
   orbsCommand,
@@ -68,14 +72,50 @@ let emf = EVIDENCE_OFF,
 
 let config = {};
 
+const runCommandWithPermission = (permission, data, state, command) => {
+  if (hasPermission(permission, getUserLevelFromData(data))) {
+    command(data, state);
+  }
+};
+
+const getUserLevelFromData = (data) => {
+  let level = 999;
+  let badges = data.badges;
+  let badgeLevel = 999;
+
+  for (let i = 0; i < badges.length; i++) {
+    if (data.displayName.toLowerCase() === "glitchedmythos") {
+      badgeLevel = PERMISSION_GLITCHED;
+    } else if (badges[i].type === "broadcaster") {
+      badgeLevel = PERMISSION_BROADCASTER;
+    } else if (badges[i].type === "moderator") {
+      badgeLevel = PERMISSION_MOD;
+    } else if (badges[i].type === "vip") {
+      badgeLevel = PERMISSION_VIP;
+    }
+  }
+
+  level = badgeLevel < level ? badgeLevel : level;
+
+  return level;
+};
+
+// If user level is equal to or less than permission level, then they have permission
+const hasPermission = (permission, userLevel) => {
+  return userLevel <= permission;
+};
+
+// For commands where VIP's are allowed to help
+const modOrVIPPermission = (configuration) => {
+  return configuration.allowVIPS ? PERMISSION_VIP : PERMISSION_MOD;
+};
+
 window.addEventListener("onWidgetLoad", function (obj) {
   userState.channelName.value = obj["detail"]["channel"]["username"];
 
   const fieldData = obj.detail.fieldData;
 
-  resetCommand = fieldData["resetCommand"];
   nameCommand = fieldData["nameCommand"];
-  emfCommand = fieldData["emfCommand"];
   spiritBoxCommand = fieldData["spiritBoxCommand"];
   fingerprintsCommand = fieldData["fingerprintsCommand"];
   orbsCommand = fieldData["orbsCommand"];
@@ -92,10 +132,27 @@ window.addEventListener("onWidgetLoad", function (obj) {
   incrementCounterCommand = fieldData["incrementCounterCommand"];
   decrementCounterCommand = fieldData["decrementCounterCommand"];
 
+  config.commands = {
+    [fieldData["resetCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        userState,
+        _resetGhost
+      );
+    },
+    [fieldData["emfCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        userState,
+        _toggleEMF
+      );
+    },
+  };
+
   commands = [
-    resetCommand,
     nameCommand,
-    emfCommand,
     spiritBoxCommand,
     fingerprintsCommand,
     orbsCommand,
@@ -290,7 +347,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   }
 
   resetEvidence(userState.evidence);
-  updateGhostGuess(null, userstate.evidence);
+  updateGhostGuess(null, userState.evidence);
 });
 
 window.addEventListener("onEventReceived", function (obj) {
@@ -313,44 +370,39 @@ window.addEventListener("onEventReceived", function (obj) {
 
   // Check if a matching command
   let givenCommand = data.text.split(" ")[0];
-  if (!commands.includes(givenCommand)) {
-    // No matching command
-    return;
-  }
+  // if (!commands.includes(givenCommand)) {
+  //   // No matching command
+  //   return;
+  // }
 
   let commandArgument;
 
+  if (config.commands[givenCommand]) {
+    config.commands[givenCommand](data);
+  } else {
+    console.log("No Command Exists");
+  }
+
   switch (givenCommand) {
-    case "{{resetCommand}}":
-      commandArgument = data.text.split(" ").slice(1).join(" ");
-      if (commandArgument.length > 0) {
-        resetGhost(commandArgument, userState.evidence);
-      } else {
-        resetGhost(null, userState.evidence);
-      }
-      break;
     case "{{nameCommand}}":
       commandArgument = data.text.split(" ").slice(1).join(" ");
 
       resetName(commandArgument);
       break;
-    case "{{emfCommand}}":
-      toggleEMF(userState.evidence);
-      break;
     case "{{spiritBoxCommand}}":
-      toggleSpiritBox(userState.evidence);
+      _toggleSpiritBox(userState.evidence);
       break;
     case "{{fingerprintsCommand}}":
-      toggleFingerprints(userState.evidence);
+      _toggleFingerprints(userState.evidence);
       break;
     case "{{orbsCommand}}":
-      toggleOrbs(userState.evidence);
+      _toggleOrbs(userState.evidence);
       break;
     case "{{writingCommand}}":
-      toggleWriting(userState.evidence);
+      _toggleWriting(userState.evidence);
       break;
     case "{{freezingCommand}}":
-      toggleFreezing(userState.evidence);
+      _toggleFreezing(userState.evidence);
       break;
     case "{{optionalObjectivesCommand}}":
       updateOptionalObjectives(data.text);
@@ -408,37 +460,46 @@ window.addEventListener("onEventReceived", function (obj) {
  *                  COMMAND FUNCTIONS                  *
  *******************************************************/
 
-const toggleEMF = (evidence) => {
-  toggleSVG("emf-svg");
-  evidence.emf = toggleEvidence(evidence.emf);
-  updateGhostGuess(null, evidence);
+const _resetGhost = (data, state) => {
+  let commandArgument = data.text.split(" ").slice(1).join(" ");
+  if (commandArgument.length > 0) {
+    resetGhost(commandArgument, state.evidence);
+  } else {
+    resetGhost(null, state.evidence);
+  }
 };
 
-const toggleSpiritBox = (evidence) => {
+const _toggleEMF = (data, state) => {
+  toggleSVG("emf-svg");
+  evidence.emf = toggleEvidence(evidence.emf);
+  updateGhostGuess(null, state.evidence);
+};
+
+const _toggleSpiritBox = (evidence) => {
   toggleSVG("spirit-box-svg");
   evidence.spiritBox = toggleEvidence(evidence.spiritBox);
   updateGhostGuess(null, evidence);
 };
 
-const toggleFingerprints = (evidence) => {
+const _toggleFingerprints = (evidence) => {
   toggleSVG("fingerprints-svg");
   evidence.fingerprints = toggleEvidence(evidence.fingerprints);
   updateGhostGuess(null, userState.evidence);
 };
 
-const toggleOrbs = (evidence) => {
+const _toggleOrbs = (evidence) => {
   toggleSVG("orbs-svg");
   evidence.orbs = toggleEvidence(evidence.orbs);
   updateGhostGuess(null, userState.evidence);
 };
 
-const toggleWriting = (evidence) => {
+const _toggleWriting = (evidence) => {
   toggleSVG("writing-svg");
   evidence.writing = toggleEvidence(evidence.writing);
   updateGhostGuess(null, userState.evidence);
 };
 
-const toggleFreezing = (evidence) => {
+const _toggleFreezing = (evidence) => {
   toggleSVG("freezing-svg");
   evidence.freezing = toggleEvidence(evidence.freezing);
   updateGhostGuess(null, userState.evidence);
