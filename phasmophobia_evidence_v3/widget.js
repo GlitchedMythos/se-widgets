@@ -28,13 +28,7 @@ const BANSHEE = "110001",
   YUREI = "010110";
 
 let commands,
-  resetCommand,
   nameCommand,
-  spiritBoxCommand,
-  fingerprintsCommand,
-  orbsCommand,
-  writingCommand,
-  freezingCommand,
   optionalObjectivesCommand,
   toggleOptObjOne,
   toggleOptObjTwo,
