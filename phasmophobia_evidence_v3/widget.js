@@ -27,9 +27,32 @@ const BANSHEE = "110001",
   YOKAI = "001110",
   YUREI = "010110";
 
+const OPTIONAL_OBJECTIVES = {
+  ca: "Candle",
+  candle: "Candle",
+  cr: "Crucifix",
+  crucifix: "Crucifix",
+  em: "EMF",
+  emf: "EMF",
+  es: "Escape",
+  escape: "Escape",
+  ev: "Event",
+  event: "Event",
+  hu: "Smudge(Hunt)",
+  hunt: "Smudge(Hunt)",
+  mo: "Motion",
+  motion: "Motion",
+  ph: "Photo",
+  photo: "Photo",
+  sa: "Salt",
+  salt: "Salt",
+  san: "<25% Sanity",
+  sanity: "<25% Sanity",
+  sm: "Smudge",
+  smudge: "Smudge",
+};
+
 let commands,
-  nameCommand,
-  optionalObjectivesCommand,
   toggleOptObjOne,
   toggleOptObjTwo,
   toggleOptObjThree,
@@ -41,12 +64,8 @@ let commands,
   decrementCounterCommand;
 
 let userState = {
-  channelName: {
-    value: "",
-  },
-  counter: {
-    value: 0,
-  },
+  channelName: "",
+  counter: 0,
   evidence: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
@@ -54,6 +73,12 @@ let userState = {
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
+  },
+  ghostName: "",
+  optionalObjectives: {
+    objectiveOne: "",
+    objectiveTwo: "",
+    objectiveThree: "",
   },
 };
 
@@ -105,12 +130,10 @@ const modOrVIPPermission = (configuration) => {
 };
 
 window.addEventListener("onWidgetLoad", function (obj) {
-  userState.channelName.value = obj["detail"]["channel"]["username"];
+  userState.channelName = obj["detail"]["channel"]["username"];
 
   const fieldData = obj.detail.fieldData;
 
-  nameCommand = fieldData["nameCommand"];
-  optionalObjectivesCommand = fieldData["optionalObjectivesCommand"];
   toggleOptObjOne = fieldData["toggleOptObjOne"];
   toggleOptObjTwo = fieldData["toggleOptObjTwo"];
   toggleOptObjThree = fieldData["toggleOptObjThree"];
@@ -127,6 +150,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
         data.text,
         userState.evidence,
       ]);
+    },
+    [fieldData["nameCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setGhostName,
+        [data.text]
+      );
     },
     [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
@@ -170,11 +201,17 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState.evidence]
       );
     },
+    [fieldData["optionalObjectivesCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setOptionalObjectives,
+        [data.text]
+      );
+    },
   };
 
   commands = [
-    nameCommand,
-    optionalObjectivesCommand,
     toggleOptObjOne,
     toggleOptObjTwo,
     toggleOptObjThree,
@@ -386,10 +423,6 @@ window.addEventListener("onEventReceived", function (obj) {
 
   // Check if a matching command
   let givenCommand = data.text.split(" ")[0];
-  // if (!commands.includes(givenCommand)) {
-  //   // No matching command
-  //   return;
-  // }
 
   let commandArgument;
 
@@ -400,14 +433,6 @@ window.addEventListener("onEventReceived", function (obj) {
   }
 
   switch (givenCommand) {
-    case "{{nameCommand}}":
-      commandArgument = data.text.split(" ").slice(1).join(" ");
-
-      resetName(commandArgument);
-      break;
-    case "{{optionalObjectivesCommand}}":
-      updateOptionalObjectives(data.text);
-      break;
     case "{{toggleOptObjOne}}":
       toggleStrikethrough("objective-one");
       break;
@@ -449,7 +474,7 @@ window.addEventListener("onEventReceived", function (obj) {
           writeOutVersion(commandArgument);
         } else {
           writeOutVersion(
-            `Hello GlitchedMythos. Thank you for creating me. I am version ${version} of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${userState.channelName.value} is absolutely AMAZING!`
+            `Hello GlitchedMythos. Thank you for creating me. I am version ${version} of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${userState.channelName} is absolutely AMAZING!`
           );
         }
       }
@@ -468,6 +493,10 @@ const _resetGhost = (command, evidence) => {
   } else {
     resetGhost(null, evidence);
   }
+};
+
+const _setGhostName = (command) => {
+  resetName(command.split(" ").slice(1).join(" "));
 };
 
 const _toggleEMF = (evidence) => {
@@ -504,6 +533,13 @@ const _toggleFreezing = (evidence) => {
   toggleSVG("freezing-svg");
   evidence.freezing = toggleEvidence(evidence.freezing);
   updateGhostGuess(null, userState.evidence);
+};
+
+const _setOptionalObjectives = (command) => {
+  let commandSplit = command.split(" ");
+  let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
+
+  updateOptionalObjectives(...optObjCommands);
 };
 
 /*******************************************************
@@ -575,10 +611,12 @@ let checkEvidenceGhostMatch = (evidence) => {
   return ghostGuessString;
 };
 
-let updateOptionalObjectives = (command) => {
-  let commandSplit = command.split(" ");
-  let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
-
+/**
+ * TODO: Refactor for readability. The if/else blocks are hard to understand. Separate logic and UI components of code
+ * TODO: Add in The__Squall's single optional objective update
+ */
+let updateOptionalObjectives = (optionalOne, optionalTwo, optionalThree) => {
+  let optObjCommands = [optionalOne, optionalTwo, optionalThree];
   let optObjectives = [];
 
   if (optObjCommands.length === 3) {
@@ -746,58 +784,7 @@ let createOptionalObjectivesString = (optObjString) => {
 };
 
 let getOptObj = (obj) => {
-  let optObj = "";
-
-  switch (obj.toLowerCase()) {
-    case "mo":
-    case "motion":
-      optObj = "Motion";
-      break;
-    case "sa":
-    case `salt`:
-      optObj = "Salt";
-      break;
-    case "ph":
-    case "photo":
-      optObj = "Photo";
-      break;
-    case "ev":
-    case "event":
-      optObj = "Event";
-      break;
-    case "em":
-    case "emf":
-      optObj = "EMF";
-      break;
-    case "cr":
-    case "crucifix":
-      optObj = "Crucifix";
-      break;
-    case "sm":
-    case "smudge":
-      optObj = "Smudge";
-      break;
-    case "es":
-    case "escape":
-      optObj = "Escape";
-      break;
-    case "hunt":
-    case "hu":
-      optObj = "Smudge(Hunt)";
-      break;
-    case "san":
-    case "sanity":
-      optObj = "<25% Sanity";
-      break;
-    case "ca":
-    case "candle":
-      optObj = "Candle";
-      break;
-    default:
-      break;
-  }
-
-  return optObj;
+  return OPTIONAL_OBJECTIVES[obj];
 };
 
 /*******************************************************
