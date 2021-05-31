@@ -53,19 +53,19 @@
     "value": "!oo",
     "group": "Commands"
   },
-  "toggleOptObjOne": {
+  "toggleOptObjOneCommand": {
     "type": "string",
     "label": "Toggle Optional Objective One",
     "value": "!o1",
     "group": "Commands"
   },
-  "toggleOptObjTwo": {
+  "toggleOptObjTwoCommand": {
     "type": "string",
     "label": "Toggle Optional Objective Two",
     "value": "!o2",
     "group": "Commands"
   },
-  "toggleOptObjThree": {
+  "toggleOptObjThreeCommand": {
     "type": "string",
     "label": "Toggle Optional Objective Three",
     "value": "!o3",
@@ -93,6 +93,18 @@
     "type": "string",
     "label": "Decrement Counter Command",
     "value": "!counterdown",
+    "group": "Commands"
+  },
+  "vipToggleOnCommand": {
+    "type": "string",
+    "label": "Toggle Allowing VIPS on",
+    "value": "!vipon",
+    "group": "Commands"
+  },
+  "vipToggleOffCommand": {
+    "type": "string",
+    "label": "Toggle Allowing VIPS off",
+    "value": "!vipoff",
     "group": "Commands"
   },
   "displayName": {
@@ -163,18 +175,6 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Optionals"
-  },
-  "vipToggleOnCommand": {
-    "type": "string",
-    "label": "Toggle Allowing VIPS on",
-    "value": "!vipon",
-    "group": "Optionals"
-  },
-  "vipToggleOffCommand": {
-    "type": "string",
-    "label": "Toggle Allowing VIPS off",
-    "value": "!vipoff",
     "group": "Optionals"
   },
   "backgroundColor": {

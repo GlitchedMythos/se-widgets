@@ -1,17 +1,9 @@
 const version = "3.0";
 
-const EVIDENCE_OFF = 0,
-  EVIDENCE_ON = 1,
-  EVIDENCE_IMPOSSIBLE = 2,
-  EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
-
-const PERMISSION_GLITCHED = 0,
-  PERMISSION_BROADCASTER = 1,
-  PERMISSION_MOD = 2,
-  PERMISSION_VIP = 3;
-
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+// 1 is true
+// 0 is false
 const BANSHEE = "110001",
   DEMON = "011100",
   HANTU = "000111",
@@ -52,17 +44,19 @@ const OPTIONAL_OBJECTIVES = {
   smudge: "Smudge",
 };
 
-let commands,
-  toggleOptObjOne,
-  toggleOptObjTwo,
-  toggleOptObjThree,
-  vipToggleOnCommand,
-  vipToggleOffCommand,
-  setCounterNameCommand,
-  setCounterNumberCommand,
-  incrementCounterCommand,
-  decrementCounterCommand;
+// Constants for displaying evidence on the widget
+const EVIDENCE_OFF = 0,
+  EVIDENCE_ON = 1,
+  EVIDENCE_IMPOSSIBLE = 2,
+  EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
 
+  // Permission levels for commands
+const PERMISSION_GLITCHED = 0,
+  PERMISSION_BROADCASTER = 1,
+  PERMISSION_MOD = 2,
+  PERMISSION_VIP = 3;
+
+  // TODO: Move all widget and user state to here
 let userState = {
   channelName: "",
   counter: 0,
@@ -82,15 +76,12 @@ let userState = {
   },
 };
 
-let emf = EVIDENCE_OFF,
-  spiritBox = EVIDENCE_OFF,
-  fingerprints = EVIDENCE_OFF,
-  orbs = EVIDENCE_OFF,
-  writing = EVIDENCE_OFF,
-  freezing = EVIDENCE_OFF;
-
 let config = {};
 
+/*
+ ? Maybe this should take in an array of permissions?
+ * Would be able to expand on this by adding train conductor badges, founders, etc.
+ */
 const runCommandWithPermission = (permission, data, command, commandArgs) => {
   if (hasPermission(permission, getUserLevelFromData(data))) {
     command(...commandArgs);
@@ -134,22 +125,17 @@ window.addEventListener("onWidgetLoad", function (obj) {
 
   const fieldData = obj.detail.fieldData;
 
-  toggleOptObjOne = fieldData["toggleOptObjOne"];
-  toggleOptObjTwo = fieldData["toggleOptObjTwo"];
-  toggleOptObjThree = fieldData["toggleOptObjThree"];
-  vipToggleOnCommand = fieldData["vipToggleOnCommand"];
-  vipToggleOffCommand = fieldData["vipToggleOffCommand"];
-  setCounterNameCommand = fieldData["setCounterNameCommand"];
-  setCounterNumberCommand = fieldData["setCounterNumberCommand"];
-  incrementCounterCommand = fieldData["incrementCounterCommand"];
-  decrementCounterCommand = fieldData["decrementCounterCommand"];
-
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
-        data.text,
-        userState.evidence,
-      ]);
+      runCommandWithPermission(
+        modOrVIPPermission(config), 
+        data, 
+        _resetGhost, 
+        [
+          data.text,
+          userState.evidence,
+        ]
+      );
     },
     [fieldData["nameCommand"]]: (data) => {
       runCommandWithPermission(
@@ -209,12 +195,83 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text]
       );
     },
+    [fieldData["toggleOptObjOneCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleOptionalObjective,
+        ["objective-one"]
+      );
+    },
+    [fieldData["toggleOptObjTwoCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleOptionalObjective,
+        ["objective-two"]
+      );
+    },
+    [fieldData["toggleOptObjThreeCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleOptionalObjective,
+        ["objective-three"]
+      );
+    },
+    [fieldData["vipToggleOnCommand"]]: (data) => {
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleOptionalObjective, [
+        true,
+      ]);
+    },
+    [fieldData["vipToggleOffCommand"]]: (data) => {
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleOptionalObjective, [
+        true,
+      ]);
+    },
+    [fieldData["setCounterNameCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setCounterName,
+        [data.text]
+      );
+    },
+    [fieldData["setCounterNumberCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setCounterNumber,
+        [data.text]
+      );
+    },
+    [fieldData["incrementCounterCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _incrementCounter,
+        []
+      );
+    },
+    [fieldData["decrementCounterCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _decrementCounter,
+        []
+      );
+    },
+    "!glitchedmythos": (data) => {
+      runCommandWithPermission(
+        PERMISSION_GLITCHED,
+        data,
+        _glitchedMythos,
+        [data.text]
+      );
+    },
   };
 
   commands = [
-    toggleOptObjOne,
-    toggleOptObjTwo,
-    toggleOptObjThree,
     vipToggleOnCommand,
     vipToggleOffCommand,
     setCounterNameCommand,
@@ -431,55 +488,6 @@ window.addEventListener("onEventReceived", function (obj) {
   } else {
     console.log("No Command Exists");
   }
-
-  switch (givenCommand) {
-    case "{{toggleOptObjOne}}":
-      toggleStrikethrough("objective-one");
-      break;
-    case "{{toggleOptObjTwo}}":
-      toggleStrikethrough("objective-two");
-      break;
-    case "{{toggleOptObjThree}}":
-      toggleStrikethrough("objective-three");
-      break;
-    case "{{vipToggleOnCommand}}":
-      if (x.type === "moderator" || x.type === "broadcaster") {
-        config.allowVIPS = true;
-      }
-      break;
-    case "{{vipToggleOffCommand}}":
-      if (x.type === "moderator" || x.type === "broadcaster") {
-        config.allowVIPS = false;
-      }
-      break;
-    case "{{setCounterNameCommand}}":
-      commandArgument = data.text.split(" ").slice(1).join(" ");
-      setCounterName(commandArgument);
-      break;
-    case "{{setCounterNumberCommand}}":
-      commandArgument = data.text.split(" ").slice(1).join(" ");
-      setCounterNumber(commandArgument);
-      break;
-    case "{{incrementCounterCommand}}":
-      incrementCounter();
-      break;
-    case "{{decrementCounterCommand}}":
-      decrementCounter();
-      break;
-    case "!glitchedmythos":
-      if (data.displayName.toLowerCase() === "glitchedmythos") {
-        commandArgument = data.text.split(" ").slice(1).join(" ");
-
-        if (commandArgument) {
-          writeOutVersion(commandArgument);
-        } else {
-          writeOutVersion(
-            `Hello GlitchedMythos. Thank you for creating me. I am version ${version} of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${userState.channelName} is absolutely AMAZING!`
-          );
-        }
-      }
-      break;
-  }
 });
 
 /*******************************************************
@@ -540,6 +548,44 @@ const _setOptionalObjectives = (command) => {
   let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
 
   updateOptionalObjectives(...optObjCommands);
+};
+
+const _toggleOptionalObjective = (objectiveID) => {
+  toggleStrikethrough(objectiveID);
+};
+
+const _toggleVIPAccessibility = (canUseVIP) => {
+  toggleVIPAccessibility(canUseVIP);
+};
+
+const _setCounterName = (command) => {
+  commandArgument = command.split(" ").slice(1).join(" ");
+  setCounterName(commandArgument);
+};
+
+const _setCounterNumber = (command) => {
+  commandArgument = command.split(" ").slice(1).join(" ");
+  setCounterNumber(commandArgument);
+};
+
+const _incrementCounter = () => {
+  incrementCounter();
+};
+
+const _decrementCounter = () => {
+  decrementCounter();
+};
+
+const _glitchedMythos = (command) => {
+  commandArgument = command.split(" ").slice(1).join(" ");
+
+  if (commandArgument) {
+    writeOutVersion(commandArgument);
+  } else {
+    writeOutVersion(
+      `Hello GlitchedMythos. Thank you for creating me. I am version ${version} of your widget. I think everyone should check you out at twitch.tv/glitchedmythos. Also ${userState.channelName} is absolutely AMAZING!`
+    );
+  }
 };
 
 /*******************************************************
@@ -690,6 +736,14 @@ let toggleEvidence = (evidence) => {
   return evidence;
 };
 
+const toggleVIPAccessibility = (canUseVIP) => {
+  if (canUseVIP !== undefined && canUseVIP !== null) {
+    config.allowVIPS = canUseVIP;
+  } else {
+    config.allowVIPS = !config.allowVIPS;
+  }
+};
+
 let createEvidenceString = (evidence) => {
   let evidenceString = "";
 
@@ -784,7 +838,7 @@ let createOptionalObjectivesString = (optObjString) => {
 };
 
 let getOptObj = (obj) => {
-  return OPTIONAL_OBJECTIVES[obj];
+  return OPTIONAL_OBJECTIVES[obj.toLowerCase()];
 };
 
 /*******************************************************
