@@ -271,16 +271,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
   };
 
-  commands = [
-    vipToggleOnCommand,
-    vipToggleOffCommand,
-    setCounterNameCommand,
-    setCounterNumberCommand,
-    incrementCounterCommand,
-    decrementCounterCommand,
-    "!glitchedmythos",
-  ];
-
   config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
   config.conclusionStrings = {
     zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
