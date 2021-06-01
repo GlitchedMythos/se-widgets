@@ -644,13 +644,12 @@ const updateSingleOptionalObjective = (
   objective
 ) => {
   console.log('updateSingleOptionalObjective: ', optionalObjectives, objective)
-  if (optionalObjectives.length < 3) {
-    optionalObjectives.push(getOptObjectiveString(objective));
-  } else {
-    console.log('pre oo: ', optionalObjectives);
-    optionalObjectives = optionalObjectives.filter(oo => oo !== getOptObjectiveString(objective));
-    console.log('post oo: ', optionalObjectives);
-  }
+  let objectiveString = getOptObjectiveString(objective);
+  if (optionalObjectives.includes(objectiveString)) {
+    optionalObjectives = optionalObjectives.filter(oo => oo !== objectiveString);
+  } else if (optionalObjectives.length < 3) {
+    optionalObjectives.push(objectiveString);
+  } 
   return optionalObjectives;
 };
 
@@ -660,7 +659,7 @@ const updateFullOptionalObjectives = (
   objectiveTwo,
   objectiveThree
 ) => {
-  
+
 };
 
 const updateOptionalObjectives_old = (
