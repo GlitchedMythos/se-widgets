@@ -50,13 +50,13 @@ const EVIDENCE_OFF = 0,
   EVIDENCE_IMPOSSIBLE = 2,
   EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
 
-  // Permission levels for commands
+// Permission levels for commands
 const PERMISSION_GLITCHED = 0,
   PERMISSION_BROADCASTER = 1,
   PERMISSION_MOD = 2,
   PERMISSION_VIP = 3;
 
-  // TODO: Move all widget and user state to here
+// TODO: Move all widget and user state to here
 let userState = {
   channelName: "",
   counter: 0,
@@ -69,11 +69,7 @@ let userState = {
     freezing: EVIDENCE_OFF,
   },
   ghostName: "",
-  optionalObjectives: {
-    objectiveOne: "",
-    objectiveTwo: "",
-    objectiveThree: "",
-  },
+  optionalObjectives: [],
 };
 
 let config = {};
@@ -127,15 +123,10 @@ window.addEventListener("onWidgetLoad", function (obj) {
 
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
-      runCommandWithPermission(
-        modOrVIPPermission(config), 
-        data, 
-        _resetGhost, 
-        [
-          data.text,
-          userState.evidence,
-        ]
-      );
+      runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
+        data.text,
+        userState.evidence,
+      ]);
     },
     [fieldData["nameCommand"]]: (data) => {
       runCommandWithPermission(
@@ -192,7 +183,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _setOptionalObjectives,
-        [data.text]
+        [data.text, userState]
       );
     },
     [fieldData["toggleOptObjOneCommand"]]: (data) => {
@@ -262,12 +253,9 @@ window.addEventListener("onWidgetLoad", function (obj) {
       );
     },
     "!glitchedmythos": (data) => {
-      runCommandWithPermission(
-        PERMISSION_GLITCHED,
-        data,
-        _glitchedMythos,
-        [data.text]
-      );
+      runCommandWithPermission(PERMISSION_GLITCHED, data, _glitchedMythos, [
+        data.text,
+      ]);
     },
   };
 
@@ -531,11 +519,20 @@ const _toggleFreezing = (evidence) => {
   updateGhostGuess(null, userState.evidence);
 };
 
-const _setOptionalObjectives = (command) => {
+const _setOptionalObjectives = (command, state) => {
   let commandSplit = command.split(" ");
   let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
+  optObjCommands = optObjCommands.slice(1);
 
-  updateOptionalObjectives(...optObjCommands);
+  console.log("optObjCommands: ", optObjCommands)
+
+  if (optObjCommands.length === 1) {
+    state.optionalObjectives = updateSingleOptionalObjective(state.optionalObjectives, optObjCommands[0]);
+  } else {
+    state.optionalObjectives = updateFullOptionalObjectives(state.optionalObjectives, ...optObjCommands);
+  }
+
+  updateDashboardDOM(state.optionalObjectives);
 };
 
 const _toggleOptionalObjective = (objectiveID) => {
@@ -642,24 +639,48 @@ const checkEvidenceGhostMatch = (evidence) => {
   return ghostGuessString;
 };
 
-/**
- * TODO: Refactor for readability. The if/else blocks are hard to understand. Separate logic and UI components of code
- * TODO: Add in The__Squall's single optional objective update
- */
- const updateOptionalObjectives = (optionalOne, optionalTwo, optionalThree) => {
+const updateSingleOptionalObjective = (
+  optionalObjectives,
+  objective
+) => {
+  console.log('updateSingleOptionalObjective: ', optionalObjectives, objective)
+  if (optionalObjectives.length < 3) {
+    optionalObjectives.push(getOptObjectiveString(objective));
+  } else {
+    console.log('pre oo: ', optionalObjectives);
+    optionalObjectives = optionalObjectives.filter(oo => oo !== getOptObjectiveString(objective));
+    console.log('post oo: ', optionalObjectives);
+  }
+  return optionalObjectives;
+};
+
+const updateFullOptionalObjectives = (
+  state,
+  objectiveOne,
+  objectiveTwo,
+  objectiveThree
+) => {
+  
+};
+
+const updateOptionalObjectives_old = (
+  optionalOne,
+  optionalTwo,
+  optionalThree
+) => {
   let optObjCommands = [optionalOne, optionalTwo, optionalThree];
   let optObjectives = [];
 
   if (optObjCommands.length === 3) {
     for (let i = 0; i < optObjCommands.length; i++) {
-      let objectiveString = getOptObj(optObjCommands[i]);
+      let objectiveString = getOptObjectiveString(optObjCommands[i]);
       if (objectiveString) {
         optObjectives.push(objectiveString);
       }
     }
   } else if (optObjCommands.length === 2) {
     // Note, since there are only 2 words, the length minimum is 2.
-    optObjectives.push(getOptObj(optObjCommands[1]));
+    optObjectives.push(getOptObjectiveString(optObjCommands[1]));
   }
 
   if (optObjectives.length === 3) {
@@ -712,7 +733,7 @@ const checkEvidenceGhostMatch = (evidence) => {
  *                  HELPER FUNCTIONS                   *
  *******************************************************/
 
- const toggleEvidence = (evidence) => {
+const toggleEvidence = (evidence) => {
   if (evidence === EVIDENCE_ON) {
     evidence = EVIDENCE_OFF;
   } else {
@@ -822,15 +843,42 @@ const createOptionalObjectivesString = (optObjString) => {
   return optObj;
 };
 
-let getOptObj = (obj) => {
+const getOptObjectiveString = (obj) => {
   return OPTIONAL_OBJECTIVES[obj.toLowerCase()];
 };
+
+const getNumberString = (num) => {
+  const numStrings = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+  return numStrings[num];
+}
 
 /*******************************************************
  *             DOM MANIPULATING FUNCTIONS              *
  *******************************************************/
 
- const toggleSVG = (svgID) => {
+const updateDashboardDOM = (optionalObjectives) => {
+  updateOptionalObjectivesDOM(optionalObjectives);
+};
+
+const updateOptionalObjectivesDOM = (optionalObjectives) => {
+  console.log('optional objectives: ', optionalObjectives);
+  $("#optional-obj-container").removeClass("hidden");
+  $("#optional-obj-container").empty();
+  $("#no-opt-objectives-container").addClass("hidden");
+  
+  if (optionalObjectives.length < 1) {
+    console.log('< 1')
+    $("#optional-obj-container").addClass("hidden");
+    $("#no-opt-objectives-container").removeClass("hidden");
+  } else {
+    console.log('other')
+    for(let i = 0; i < optionalObjectives.length; i++) {
+      $('#optional-obj-container').append(`<div class="objective" id="objective-${getNumberString(i + 1)}">${optionalObjectives[i]}</div>`)
+    }
+  }
+};
+
+const toggleSVG = (svgID) => {
   let svg = $(`#${svgID}`);
   let classList = svg.attr("class");
   let classArray = classList.split(/\s+/);
