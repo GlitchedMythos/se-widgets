@@ -142,6 +142,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // Field data from Stream Elements from the overlay settings the user set
   const fieldData = obj.detail.fieldData;
 
+  console.log("set up commands");
   // Sets up all the commands for the widget
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
@@ -281,6 +282,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
   };
 
+  console.log("set up config");
   // Configuration based on user choices
   config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
   config.conclusionStrings = {
@@ -415,6 +417,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   config.useEvidenceImpossibleCompleted =
     fieldData["useEvidenceImpossibleCompleted"] === "yes" ? true : false;
 
+  console.log("config complete");
   // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
@@ -461,7 +464,9 @@ window.addEventListener("onWidgetLoad", function (obj) {
     config.conclusionStrings.zeroEvidenceConclusionString;
 
   resetGhost(null, userState);
+  console.log("reset ghost complete");
   updateDashboardDOM(userState);
+  console.log("complete on widget load");
 });
 
 window.addEventListener("onEventReceived", function (obj) {
@@ -554,8 +559,6 @@ const _setOptionalObjectives = (command, state) => {
   } else {
     state.optionalObjectives = updateFullOptionalObjectives(...optObjCommands);
   }
-
-  updateDashboardDOM(state.optionalObjectives);
 };
 
 const _toggleOptionalObjective = (objectiveID) => {
@@ -630,7 +633,7 @@ const calculateGhostEvidenceDisplay = (state) => {
   console.log("checkEvidenceGhostMatch: ", state);
   // We do a deep copy to ensure there are no references
   console.log("evidence json: ", JSON.stringify(state.evidence));
-  console.log("parsed json: ", JSON.parse(JSON.stringify(state.evidence)))
+  console.log("parsed json: ", JSON.parse(JSON.stringify(state.evidence)));
   let evidenceDisplay = JSON.parse(JSON.stringify(state.evidence));
   let evidenceString = createEvidenceString(evidenceDisplay);
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
@@ -640,35 +643,19 @@ const calculateGhostEvidenceDisplay = (state) => {
   if (numOfTrueEvidence < 2) {
     evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay);
   } else if (numOfTrueEvidence === 2) {
-    evidenceDisplay = calculateDoubleGhostEvidence(evidenceDisplay, evidenceString)
+    evidenceDisplay = calculateDoubleGhostEvidence(
+      evidenceDisplay,
+      evidenceString
+    );
+  } else if (numOfTrueEvidence === 3) {
+    evidenceDisplay = calculateTripleGhostEvidence(
+      evidenceDisplay,
+      evidenceString
+    );
+  } else if (numOfTrueEvidence > 3) {
+    evidenceDisplay = calculateBadEvidence(evidenceDisplay);
   }
   state.evidenceDisplay = evidenceDisplay;
-
-  console.log("Calculated evidenceDisplay: ", state.evidence, evidenceDisplay);
-
-  // // 0  Piece of Evidence
-  // // 1  Piece of Evidence
-  // } // Exact match
-  // else if (numOfTrueEvidence == 3) {
-  //   let ghostPossibilities = getGhostPossibilities(evidenceString);
-  //   let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
-
-  //   if (!config.markImpossibleEvidence) {
-  //     removeAllImpossibleCSS();
-  //   } else {
-  //     invalidEvidenceUpdate(ghostPossibilities);
-  //   }
-
-  //   state.conclusionString =
-  //     ghostPossibilityStrings.length == 0
-  //       ? "UH OH... no match?!"
-  //       : ghostPossibilities[0].conclusion;
-  // } // Too much evidence
-  // else {
-  //   state.conclusionString = config.conclusionStrings.tooMuchEvidence;
-  // }
-
-  // return state;
 };
 
 const calculateSingleGhostEvidence = (evidence) => {
@@ -680,10 +667,10 @@ const calculateSingleGhostEvidence = (evidence) => {
   }
 
   return evidence;
-}
+};
 
 const calculateDoubleGhostEvidence = (evidence, evidenceString) => {
-  console.log('evidenceDispaly Pre: ', evidence);
+  console.log("evidenceDispaly Pre: ", evidence);
   let possibleGhosts = getGhostPossibilities(evidenceString);
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
 
@@ -712,12 +699,50 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString) => {
   if (+impossibleEvidence[5] == 0) {
     evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
   }
-  console.log('evidenceDispaly Post: ', evidence);
+  console.log("evidenceDispaly Post: ", evidence);
+
+  return evidence;
+};
+
+const calculateTripleGhostEvidence = (evidence, evidenceString) => {
+  let possibleGhosts = getGhostPossibilities(evidenceString);
+
+  if (possibleGhosts.length === 0) {
+    console.log('IF **********')
+    for (const val in evidence) {
+      if (evidence[val] === EVIDENCE_ON) {
+        evidence[val] = EVIDENCE_IMPOSSIBLE;
+      } else {
+        evidence[val] = EVIDENCE_OFF;
+      }
+    }
+  } else {
+    console.log('ELSE **********')
+    for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
+      console.log('evidence name in dom we are using', EVIDENCE_NAMES_IN_DOM[i])
+      if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON) {
+        console.log('it is on')
+        evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
+      }
+    }
+  }
+
+  console.log('the calculated triple evidence', evidence, possibleGhosts)
+
+  return evidence;
+};
+
+const calculateBadEvidence = (evidence) => {
+  for(let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
+    if(evidence[EVIDENCE_NAMES_IN_DOM[i]] === EVIDENCE_ON) {
+      evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_IMPOSSIBLE;
+    } else {
+      evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_OFF;
+    }
+  }
 
   return evidence;
 }
-
-const calculateTripleGhostEvidence = (evidence)
 
 const updateSingleOptionalObjective = (optionalObjectives, objective) => {
   console.log("updateSingleOptionalObjective: ", optionalObjectives, objective);
@@ -902,7 +927,7 @@ const updateNameDOM = (newName) => {
 };
 
 const updateEvidenceDOM = (evidence) => {
-  console.log()
+  console.log();
   resetEvidenceDOM();
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
