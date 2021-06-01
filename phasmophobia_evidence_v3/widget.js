@@ -521,15 +521,15 @@ const _toggleFreezing = (evidence) => {
 
 const _setOptionalObjectives = (command, state) => {
   let commandSplit = command.split(" ");
-  let optObjCommands = commandSplit.slice(Math.max(commandSplit.length - 3, 0)); // Grabs only the last 3 commands
-  optObjCommands = optObjCommands.slice(1);
+  let optObjCommands = commandSplit.slice(1);
+  optObjCommands = optObjCommands.slice(Math.max(optObjCommands.length - 3, 0)); // Grabs only the last 3 commands
 
   console.log("optObjCommands: ", optObjCommands)
 
   if (optObjCommands.length === 1) {
     state.optionalObjectives = updateSingleOptionalObjective(state.optionalObjectives, optObjCommands[0]);
   } else {
-    state.optionalObjectives = updateFullOptionalObjectives(state.optionalObjectives, ...optObjCommands);
+    state.optionalObjectives = updateFullOptionalObjectives(...optObjCommands);
   }
 
   updateDashboardDOM(state.optionalObjectives);
@@ -654,78 +654,16 @@ const updateSingleOptionalObjective = (
 };
 
 const updateFullOptionalObjectives = (
-  state,
   objectiveOne,
   objectiveTwo,
   objectiveThree
 ) => {
+  let optionalObjectives = [];
+  optionalObjectives.push(getOptObjectiveString(objectiveOne));
+  optionalObjectives.push(getOptObjectiveString(objectiveTwo));
+  optionalObjectives.push(getOptObjectiveString(objectiveThree));
 
-};
-
-const updateOptionalObjectives_old = (
-  optionalOne,
-  optionalTwo,
-  optionalThree
-) => {
-  let optObjCommands = [optionalOne, optionalTwo, optionalThree];
-  let optObjectives = [];
-
-  if (optObjCommands.length === 3) {
-    for (let i = 0; i < optObjCommands.length; i++) {
-      let objectiveString = getOptObjectiveString(optObjCommands[i]);
-      if (objectiveString) {
-        optObjectives.push(objectiveString);
-      }
-    }
-  } else if (optObjCommands.length === 2) {
-    // Note, since there are only 2 words, the length minimum is 2.
-    optObjectives.push(getOptObjectiveString(optObjCommands[1]));
-  }
-
-  if (optObjectives.length === 3) {
-    $("#optional-obj-container").removeClass("hidden");
-    $("#no-opt-objectives-container").addClass("hidden");
-    $("#objective-one").html(optObjectives[0]);
-    $("#objective-two").html(optObjectives[1]);
-    $("#objective-three").html(optObjectives[2]);
-  } else if (optObjectives.length === 1) {
-    if ($("#objective-one").text() === optObjectives[0]) {
-      $("#objective-one").text("");
-      if (
-        $("#objective-two").text() === "" &&
-        $("#objective-three").text() === ""
-      ) {
-        $("#optional-obj-container").addClass("hidden");
-        $("#no-opt-objectives-container").removeClass("hidden");
-      }
-    } else if ($("#objective-two").text() === optObjectives[0]) {
-      $("#objective-two").text("");
-      if (
-        $("#objective-one").text() === "" &&
-        $("#objective-three").text() === ""
-      ) {
-        $("#optional-obj-container").addClass("hidden");
-        $("#no-opt-objectives-container").removeClass("hidden");
-      }
-    } else if ($("#objective-three").text() === optObjectives[0]) {
-      $("#objective-three").text("");
-      if (
-        $("#objective-one").text() === "" &&
-        $("#objective-two").text() === ""
-      ) {
-        $("#optional-obj-container").addClass("hidden");
-        $("#no-opt-objectives-container").removeClass("hidden");
-      }
-    } else if ($("#objective-one").text() === "") {
-      $("#optional-obj-container").removeClass("hidden");
-      $("#no-opt-objectives-container").addClass("hidden");
-      $("#objective-one").text(optObjectives[0]);
-    } else if ($("#objective-two").text() === "") {
-      $("#objective-two").html(optObjectives[0]);
-    } else if ($("#objective-three").text() === "") {
-      $("#objective-three").html(optObjectives[0]);
-    }
-  }
+  return optionalObjectives;
 };
 
 /*******************************************************
