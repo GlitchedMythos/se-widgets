@@ -471,8 +471,6 @@ window.addEventListener("onEventReceived", function (obj) {
   // Check if a matching command
   let givenCommand = data.text.split(" ")[0];
 
-  let commandArgument;
-
   if (config.commands[givenCommand]) {
     config.commands[givenCommand](data);
   } else {
@@ -582,7 +580,7 @@ const _glitchedMythos = (command) => {
  *                  LOGIC FUNCTIONS                    *
  *******************************************************/
 
-let resetGhost = (newName, evidence) => {
+const resetGhost = (newName, evidence) => {
   resetName(newName);
   resetEvidence(evidence);
   resetOptional();
@@ -592,12 +590,9 @@ let resetGhost = (newName, evidence) => {
   );
 };
 
-let checkEvidenceGhostMatch = (evidence) => {
-  console.log("pre create evidence string");
+const checkEvidenceGhostMatch = (evidence) => {
   let evidenceString = createEvidenceString(evidence);
-  console.log("post create evidence string");
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
-  console.log("post num of true evidence: ", numOfTrueEvidence);
   let ghostGuessString = "";
 
   // 0  Piece of Evidence
@@ -651,7 +646,7 @@ let checkEvidenceGhostMatch = (evidence) => {
  * TODO: Refactor for readability. The if/else blocks are hard to understand. Separate logic and UI components of code
  * TODO: Add in The__Squall's single optional objective update
  */
-let updateOptionalObjectives = (optionalOne, optionalTwo, optionalThree) => {
+ const updateOptionalObjectives = (optionalOne, optionalTwo, optionalThree) => {
   let optObjCommands = [optionalOne, optionalTwo, optionalThree];
   let optObjectives = [];
 
@@ -717,7 +712,7 @@ let updateOptionalObjectives = (optionalOne, optionalTwo, optionalThree) => {
  *                  HELPER FUNCTIONS                   *
  *******************************************************/
 
-let toggleEvidence = (evidence) => {
+ const toggleEvidence = (evidence) => {
   if (evidence === EVIDENCE_ON) {
     evidence = EVIDENCE_OFF;
   } else {
@@ -734,7 +729,7 @@ const toggleVIPAccessibility = (canUseVIP) => {
   }
 };
 
-let createEvidenceString = (evidence) => {
+const createEvidenceString = (evidence) => {
   let evidenceString = "";
 
   evidenceString =
@@ -761,7 +756,7 @@ let createEvidenceString = (evidence) => {
   return evidenceString;
 };
 
-let numOfTrueEvidenceInString = (evidenceString) => {
+const numOfTrueEvidenceInString = (evidenceString) => {
   let index,
     count = 0;
   for (index = 0; index < evidenceString.length; ++index) {
@@ -771,7 +766,7 @@ let numOfTrueEvidenceInString = (evidenceString) => {
   return count;
 };
 
-let getGhostPossibilities = (evidenceString) => {
+const getGhostPossibilities = (evidenceString) => {
   // List of ghosts returns [<evidenceString>, <Name>]
   const possibleGhosts = [];
   const numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
@@ -796,7 +791,7 @@ let getGhostPossibilities = (evidenceString) => {
   return possibleGhosts;
 };
 
-let getImpossibleEvidence = (possibleGhosts) => {
+const getImpossibleEvidence = (possibleGhosts) => {
   let impossibleEvidenceString = "000000"; // If it stays a 0, we know it can't match any of the ghosts
   for (let i = 0; i < possibleGhosts.length; i++) {
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
@@ -812,11 +807,11 @@ let getImpossibleEvidence = (possibleGhosts) => {
   return impossibleEvidenceString;
 };
 
-let createGhostConclusionString = (conclusionString, ghostType) => {
+const createGhostConclusionString = (conclusionString, ghostType) => {
   return conclusionString ? conclusionString : `It's a ${ghostType}!!`;
 };
 
-let createOptionalObjectivesString = (optObjString) => {
+const createOptionalObjectivesString = (optObjString) => {
   let optObj = "";
 
   if (optObjString.length === 3) {
@@ -835,7 +830,7 @@ let getOptObj = (obj) => {
  *             DOM MANIPULATING FUNCTIONS              *
  *******************************************************/
 
-let toggleSVG = (svgID) => {
+ const toggleSVG = (svgID) => {
   let svg = $(`#${svgID}`);
   let classList = svg.attr("class");
   let classArray = classList.split(/\s+/);
@@ -849,7 +844,7 @@ let toggleSVG = (svgID) => {
   }
 };
 
-let toggleStrikethrough = (optionalID) => {
+const toggleStrikethrough = (optionalID) => {
   let optionalObj = $(`#${optionalID}`);
   let classList = optionalObj.attr("class");
   let classArray = classList.split(/\s+/);
@@ -861,41 +856,41 @@ let toggleStrikethrough = (optionalID) => {
   }
 };
 
-let resetName = (newName) => {
+const resetName = (newName) => {
   let nameString = "" + config.nameStrings.ghostNameString;
   nameString = nameString.replace(/\[name\]/g, newName);
   $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
 };
 
-let resetEvidence = (evidence) => {
+const resetEvidence = (evidence) => {
   removeAllImpossibleCSS();
 
   evidence.emf = EVIDENCE_OFF;
   $(`#emf-svg`).removeClass("active");
   $(`#emf-svg`).addClass("inactive");
 
-  spiritBox = EVIDENCE_OFF;
+  evidence.spiritBox = EVIDENCE_OFF;
   $(`#spirit-box-svg`).removeClass("active");
   $(`#spirit-box-svg`).addClass("inactive");
 
-  fingerprints = EVIDENCE_OFF;
+  evidence.fingerprints = EVIDENCE_OFF;
   $(`#fingerprints-svg`).removeClass("active");
   $(`#fingerprints-svg`).addClass("inactive");
 
-  orbs = EVIDENCE_OFF;
+  evidence.orbs = EVIDENCE_OFF;
   $(`#orbs-svg`).removeClass("active");
   $(`#orbs-svg`).addClass("inactive");
 
-  writing = EVIDENCE_OFF;
+  evidence.writing = EVIDENCE_OFF;
   $(`#writing-svg`).removeClass("active");
   $(`#writing-svg`).addClass("inactive");
 
-  freezing = EVIDENCE_OFF;
+  evidence.freezing = EVIDENCE_OFF;
   $(`#freezing-svg`).removeClass("active");
   $(`#freezing-svg`).addClass("inactive");
 };
 
-let resetOptional = () => {
+const resetOptional = () => {
   $("#objective-one").text("");
   $("#objective-one").removeClass("strikethrough");
   $("#objective-two").text("");
@@ -906,7 +901,7 @@ let resetOptional = () => {
   $("#no-opt-objectives-container").removeClass("hidden");
 };
 
-let invalidEvidenceUpdate = (possibleGhosts) => {
+const invalidEvidenceUpdate = (possibleGhosts) => {
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
   // Addition shorthand prior to impossibleEvidence converts the string to a number
   // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
@@ -947,7 +942,7 @@ let invalidEvidenceUpdate = (possibleGhosts) => {
   }
 };
 
-let removeAllImpossibleCSS = () => {
+const removeAllImpossibleCSS = () => {
   $(`#emf-svg`).removeClass("impossible");
   $(`#freezing-svg`).removeClass("impossible");
   $(`#spirit-box-svg`).removeClass("impossible");
@@ -956,17 +951,17 @@ let removeAllImpossibleCSS = () => {
   $(`#fingerprints-svg`).removeClass("impossible");
 };
 
-let updateGhostGuess = (guessText, evidence) => {
+const updateGhostGuess = (guessText, evidence) => {
   guessText
     ? $("#conclusion").html(guessText)
     : $("#conclusion").html(checkEvidenceGhostMatch(evidence));
 };
 
-let setCounterName = (name) => {
+const setCounterName = (name) => {
   $("#counter-name").html(name);
 };
 
-let setCounterNumber = (number) => {
+const setCounterNumber = (number) => {
   let num = parseInt(number);
 
   if (Number.isInteger(num)) {
@@ -974,13 +969,13 @@ let setCounterNumber = (number) => {
   }
 };
 
-let incrementCounter = (num) => {
+const incrementCounter = (num) => {
   $("#counter-number").html(
     parseInt($("#counter-number").text()) + (num ? num : 1)
   );
 };
 
-let decrementCounter = (num) => {
+const decrementCounter = (num) => {
   $("#counter-number").html(
     parseInt($("#counter-number").text()) - (num ? num : 1)
   );
@@ -995,7 +990,7 @@ let cursorSpeed = 400;
 let time = 0;
 let prevTime = 200;
 
-let writeMessage = (word) => {
+const writeMessage = (word) => {
   for (let c in word.split("")) {
     time = Math.floor(Math.random() * speed);
 
@@ -1009,7 +1004,7 @@ let writeMessage = (word) => {
   return prevTime;
 };
 
-let writeOutVersion = (command) => {
+const writeOutVersion = (command) => {
   $("#version").addClass("show-version-item");
   setTimeout(() => {
     let time = writeMessage(command);
