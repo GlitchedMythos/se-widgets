@@ -51,6 +51,15 @@ const EVIDENCE_OFF = 0,
   EVIDENCE_IMPOSSIBLE = 2,
   EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
 
+const EVIDENCE_NAMES_IN_DOM = [
+  "emf",
+  "spiritBox",
+  "fingerprints",
+  "orbs",
+  "writing",
+  "freezing",
+];
+
 // Permission levels for commands
 const PERMISSION_GLITCHED = 0,
   PERMISSION_BROADCASTER = 1,
@@ -69,7 +78,15 @@ let userState = {
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
   },
-  ghostGuessString: "",
+  evidenceDisplay: {
+    emf: EVIDENCE_OFF,
+    spiritBox: EVIDENCE_OFF,
+    fingerprints: EVIDENCE_OFF,
+    orbs: EVIDENCE_OFF,
+    writing: EVIDENCE_OFF,
+    freezing: EVIDENCE_OFF,
+  },
+  conclusionString: "",
   ghostName: "",
   optionalObjectives: [],
 };
@@ -81,9 +98,12 @@ let config = {};
  * Would be able to expand on this by adding train conductor badges, founders, etc.
  */
 const runCommandWithPermission = (permission, data, command, commandArgs) => {
+  console.log("running command");
   if (hasPermission(permission, getUserLevelFromData(data))) {
     command(...commandArgs);
   }
+  console.log("updating dom");
+  updateDashboardDOM(userState);
 };
 
 const getUserLevelFromData = (data) => {
@@ -119,15 +139,15 @@ const modOrVIPPermission = (configuration) => {
 };
 
 window.addEventListener("onWidgetLoad", function (obj) {
-  userState.channelName = obj["detail"]["channel"]["username"];
-
+  // Field data from Stream Elements from the overlay settings the user set
   const fieldData = obj.detail.fieldData;
 
+  // Sets up all the commands for the widget
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
         data.text,
-        userState.evidence,
+        userState,
       ]);
     },
     [fieldData["nameCommand"]]: (data) => {
@@ -135,12 +155,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _setGhostName,
-        [data.text]
+        [data.text, userState]
       );
     },
     [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
-        userState.evidence,
+        userState,
       ]);
     },
     [fieldData["spiritBoxCommand"]]: (data) => {
@@ -148,7 +168,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleSpiritBox,
-        [userState.evidence]
+        [userState]
       );
     },
     [fieldData["fingerprintsCommand"]]: (data) => {
@@ -156,12 +176,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleFingerprints,
-        [userState.evidence]
+        [userState]
       );
     },
     [fieldData["orbsCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
-        userState.evidence,
+        userState,
       ]);
     },
     [fieldData["writingCommand"]]: (data) => {
@@ -169,7 +189,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleWriting,
-        [userState.evidence]
+        [userState]
       );
     },
     [fieldData["freezingCommand"]]: (data) => {
@@ -177,7 +197,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleFreezing,
-        [userState.evidence]
+        [userState]
       );
     },
     [fieldData["optionalObjectivesCommand"]]: (data) => {
@@ -261,6 +281,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
   };
 
+  // Configuration based on user choices
   config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
   config.conclusionStrings = {
     zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
@@ -273,7 +294,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
       ? fieldData["impossibleConclusionString"]
       : "Too Much Evidence",
   };
-  config.evidencePixelSize = fieldData["evidencePixelSize"];
   config.ghosts = [
     {
       type: "Banshee",
@@ -395,6 +415,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   config.useEvidenceImpossibleCompleted =
     fieldData["useEvidenceImpossibleCompleted"] === "yes" ? true : false;
 
+  // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
   let displayOptionalObjectives =
@@ -436,8 +457,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
     $("#phas-dashboard").addClass("phas-border");
   }
 
-  resetEvidence(userState.evidence);
-  updateGhostGuessDOM(null, userState.evidence);
+  userState.conclusionString =
+    config.conclusionStrings.zeroEvidenceConclusionString;
+
+  resetGhost(null, userState);
+  updateDashboardDOM(userState);
 });
 
 window.addEventListener("onEventReceived", function (obj) {
@@ -472,53 +496,47 @@ window.addEventListener("onEventReceived", function (obj) {
  *                  COMMAND FUNCTIONS                  *
  *******************************************************/
 
-const _resetGhost = (command, evidence) => {
+const _resetGhost = (command, state) => {
   let commandArgument = command.split(" ").slice(1).join(" ");
   if (commandArgument.length > 0) {
-    resetGhost(commandArgument, evidence);
+    resetGhost(commandArgument, state);
   } else {
-    resetGhost(null, evidence);
+    resetGhost(null, state);
   }
 };
 
-const _setGhostName = (command) => {
-  resetName(command.split(" ").slice(1).join(" "));
+const _setGhostName = (command, state) => {
+  state.ghostName = command.split(" ").slice(1).join(" ");
 };
 
-const _toggleEMF = (evidence) => {
-  toggleSVG("emf-svg");
-  evidence.emf = toggleEvidence(evidence.emf);
-  updateGhostGuessDOM(null, evidence);
+const _toggleEMF = (state) => {
+  state.evidence.emf = toggleEvidence(state.evidence.emf);
+  calculateGhostEvidenceDisplay(state);
 };
 
-const _toggleSpiritBox = (evidence) => {
-  toggleSVG("spiritBox-svg");
-  evidence.spiritBox = toggleEvidence(evidence.spiritBox);
-  updateGhostGuessDOM(null, evidence);
+const _toggleSpiritBox = (state) => {
+  state.evidence.spiritBox = toggleEvidence(state.evidence.spiritBox);
+  calculateGhostEvidenceDisplay(state);
 };
 
-const _toggleFingerprints = (evidence) => {
-  toggleSVG("fingerprints-svg");
-  evidence.fingerprints = toggleEvidence(evidence.fingerprints);
-  updateGhostGuessDOM(null, userState.evidence);
+const _toggleFingerprints = (state) => {
+  state.evidence.fingerprints = toggleEvidence(state.evidence.fingerprints);
+  calculateGhostEvidenceDisplay(state);
 };
 
-const _toggleOrbs = (evidence) => {
-  toggleSVG("orbs-svg");
-  evidence.orbs = toggleEvidence(evidence.orbs);
-  updateGhostGuessDOM(null, userState.evidence);
+const _toggleOrbs = (state) => {
+  state.evidence.orbs = toggleEvidence(state.evidence.orbs);
+  calculateGhostEvidenceDisplay(state);
 };
 
-const _toggleWriting = (evidence) => {
-  toggleSVG("writing-svg");
-  evidence.writing = toggleEvidence(evidence.writing);
-  updateGhostGuessDOM(null, userState.evidence);
+const _toggleWriting = (state) => {
+  state.evidence.writing = toggleEvidence(state.evidence.writing);
+  calculateGhostEvidenceDisplay(state);
 };
 
-const _toggleFreezing = (evidence) => {
-  toggleSVG("freezing-svg");
-  evidence.freezing = toggleEvidence(evidence.freezing);
-  updateGhostGuessDOM(null, userState.evidence);
+const _toggleFreezing = (state) => {
+  state.evidence.freezing = toggleEvidence(state.evidence.freezing);
+  calculateGhostEvidenceDisplay(state);
 };
 
 const _setOptionalObjectives = (command, state) => {
@@ -581,68 +599,125 @@ const _glitchedMythos = (command) => {
 /*******************************************************
  *                  LOGIC FUNCTIONS                    *
  *******************************************************/
-
-const resetGhost = (newName, evidence) => {
-  resetName(newName);
-  resetEvidence(evidence);
-  resetOptional();
-  updateGhostGuessDOM(
-    config.conclusionStrings.zeroEvidenceConclusionString,
-    evidence
-  );
+const resetGhost = (newName, state) => {
+  resetName(newName, state);
+  resetEvidence(state.evidence);
+  resetOptionalObjectives([], state);
 };
 
-const checkEvidenceGhostMatch = (evidence) => {
-  let evidenceString = createEvidenceString(evidence);
+const resetName = (newName, state) => {
+  state.ghostName = newName;
+};
+
+const resetOptionalObjectives = (optionalObjectives, state) => {
+  if (optionalObjectives) {
+    state.optionalObjectives = optionalObjectives;
+  } else {
+    state.optionalObjectives = [];
+  }
+};
+
+const resetEvidence = (evidence) => {
+  evidence.emf = EVIDENCE_OFF;
+  evidence.spiritBox = EVIDENCE_OFF;
+  evidence.fingerprints = EVIDENCE_OFF;
+  evidence.orbs = EVIDENCE_OFF;
+  evidence.writing = EVIDENCE_OFF;
+  evidence.freezing = EVIDENCE_OFF;
+};
+
+const calculateGhostEvidenceDisplay = (state) => {
+  console.log("checkEvidenceGhostMatch: ", state);
+  // We do a deep copy to ensure there are no references
+  console.log("evidence json: ", JSON.stringify(state.evidence));
+  console.log("parsed json: ", JSON.parse(JSON.stringify(state.evidence)))
+  let evidenceDisplay = JSON.parse(JSON.stringify(state.evidence));
+  let evidenceString = createEvidenceString(evidenceDisplay);
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
-  let ghostGuessString = "";
 
-  // 0  Piece of Evidence
-  if (numOfTrueEvidence < 1) {
-    ghostGuessString = config.conclusionStrings.zeroEvidenceConclusionString;
-    if (config.markImpossibleEvidence) {
-      removeAllImpossibleCSS();
-    }
+  console.log("checkEvidenceGhostMatch: ", evidenceString, numOfTrueEvidence);
+
+  if (numOfTrueEvidence < 2) {
+    evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay);
+  } else if (numOfTrueEvidence === 2) {
+    evidenceDisplay = calculateDoubleGhostEvidence(evidenceDisplay, evidenceString)
   }
-  // 1  Piece of Evidence
-  else if (numOfTrueEvidence == 1) {
-    ghostGuessString = config.conclusionStrings.oneEvidenceConclusionString;
-    if (config.markImpossibleEvidence) {
-      removeAllImpossibleCSS();
-    }
-  } // 2 Pieces of Evidence
-  else if (numOfTrueEvidence == 2) {
-    let ghostPossibilities = getGhostPossibilities(evidenceString);
-    if (config.markImpossibleEvidence) {
-      invalidEvidenceUpdate(ghostPossibilities);
-    }
-    let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
-    ghostGuessString = `Could be a ` + ghostPossibilityStrings.join(", ");
-  } // Exact match
-  else if (numOfTrueEvidence == 3) {
-    let ghostPossibilities = getGhostPossibilities(evidenceString);
-    let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
+  state.evidenceDisplay = evidenceDisplay;
 
-    if (!config.markImpossibleEvidence) {
-      removeAllImpossibleCSS();
-    } else {
-      invalidEvidenceUpdate(ghostPossibilities);
-    }
+  console.log("Calculated evidenceDisplay: ", state.evidence, evidenceDisplay);
 
-    ghostGuessString =
-      ghostPossibilityStrings.length == 0
-        ? "UH OH... no match?!"
-        : ghostPossibilities[0].conclusion;
-  } // Too much evidence
-  else {
-    if (config.markImpossibleEvidence) {
-      removeAllImpossibleCSS();
-    }
-    ghostGuessString = config.conclusionStrings.tooMuchEvidence;
-  }
+  // // 0  Piece of Evidence
+  // // 1  Piece of Evidence
+  // } // Exact match
+  // else if (numOfTrueEvidence == 3) {
+  //   let ghostPossibilities = getGhostPossibilities(evidenceString);
+  //   let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
 
-  return ghostGuessString;
+  //   if (!config.markImpossibleEvidence) {
+  //     removeAllImpossibleCSS();
+  //   } else {
+  //     invalidEvidenceUpdate(ghostPossibilities);
+  //   }
+
+  //   state.conclusionString =
+  //     ghostPossibilityStrings.length == 0
+  //       ? "UH OH... no match?!"
+  //       : ghostPossibilities[0].conclusion;
+  // } // Too much evidence
+  // else {
+  //   state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+  // }
+
+  // return state;
 };
+
+const calculateSingleGhostEvidence = (evidence) => {
+  // Here we need to ensure there is no impossible evidence
+  for (let i = 0; i < EVIDENCE_NAMES_IN_DOM; i++) {
+    if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON) {
+      evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_OFF;
+    }
+  }
+
+  return evidence;
+}
+
+const calculateDoubleGhostEvidence = (evidence, evidenceString) => {
+  console.log('evidenceDispaly Pre: ', evidence);
+  let possibleGhosts = getGhostPossibilities(evidenceString);
+  let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
+
+  // Addition shorthand prior to impossibleEvidence converts the string to a number
+  // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+  if (+impossibleEvidence[0] == 0) {
+    evidence.emf = EVIDENCE_IMPOSSIBLE;
+  }
+
+  if (+impossibleEvidence[1] == 0) {
+    evidence.freezing = EVIDENCE_IMPOSSIBLE;
+  }
+
+  if (+impossibleEvidence[2] == 0) {
+    evidence.spiritBox = EVIDENCE_IMPOSSIBLE;
+  }
+
+  if (+impossibleEvidence[3] == 0) {
+    evidence.writing = EVIDENCE_IMPOSSIBLE;
+  }
+
+  if (+impossibleEvidence[4] == 0) {
+    evidence.orbs = EVIDENCE_IMPOSSIBLE;
+  }
+
+  if (+impossibleEvidence[5] == 0) {
+    evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
+  }
+  console.log('evidenceDispaly Post: ', evidence);
+
+  return evidence;
+}
+
+const calculateTripleGhostEvidence = (evidence)
 
 const updateSingleOptionalObjective = (optionalObjectives, objective) => {
   console.log("updateSingleOptionalObjective: ", optionalObjectives, objective);
@@ -808,12 +883,48 @@ const getNumberString = (num) => {
  *             DOM MANIPULATING FUNCTIONS              *
  *******************************************************/
 
-const updateDashboardDOM = (optionalObjectives) => {
-  updateOptionalObjectivesDOM(optionalObjectives);
+const updateDashboardDOM = (state) => {
+  console.log("Current State PreDomUpdate: ", state);
+  updateNameDOM(state.ghostName);
+  updateEvidenceDOM(state.evidenceDisplay);
+  updateOptionalObjectivesDOM(state.optionalObjectives);
+};
+
+const updateNameDOM = (newName) => {
+  let nameString = "" + config.nameStrings.ghostNameString;
+
+  /**
+   * Replaces "[name]" with the name of the ghost, allowing the user to paramaterize
+   * the name for things such as "Name: [name]" === "Name: John Doe"
+   */
+  nameString = nameString.replace(/\[name\]/g, newName);
+  $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
+};
+
+const updateEvidenceDOM = (evidence) => {
+  console.log()
+  resetEvidenceDOM();
+  for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
+    switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
+      case EVIDENCE_ON:
+        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("active");
+        break;
+      case EVIDENCE_IMPOSSIBLE:
+        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("impossible");
+        break;
+      case EVIDENCE_COMPLETE_IMPOSSIBLE:
+        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("impossible-completed");
+        break;
+      case EVIDENCE_OFF:
+      default:
+        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("inactive");
+        break;
+    }
+  }
 };
 
 const updateOptionalObjectivesDOM = (optionalObjectives) => {
-  resetOptional();
+  resetOptionalDOM();
 
   if (optionalObjectives.length > 0) {
     $("#optional-obj-container").removeClass("hidden");
@@ -827,6 +938,12 @@ const updateOptionalObjectivesDOM = (optionalObjectives) => {
       );
     }
   }
+};
+
+const resetOptionalDOM = () => {
+  $("#optional-obj-container").empty();
+  $("#optional-obj-container").addClass("hidden");
+  $("#no-opt-objectives-container").removeClass("hidden");
 };
 
 const toggleSVG = (svgID) => {
@@ -855,46 +972,13 @@ const toggleStrikethrough = (optionalID) => {
   }
 };
 
-const resetName = (newName) => {
-  let nameString = "" + config.nameStrings.ghostNameString;
-  // Replaces "[name]" with the name of the ghost, allowing the user to paramaterize
-  // the name for things such as "Name: [name]" === "Name: John Doe"
-  nameString = nameString.replace(/\[name\]/g, newName);
-  $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
-};
-
-const resetEvidence = (evidence) => {
-  removeAllImpossibleCSS();
-
-  evidence.emf = EVIDENCE_OFF;
-  $(`#emf-svg`).removeClass("active");
-  $(`#emf-svg`).addClass("inactive");
-
-  evidence.spiritBox = EVIDENCE_OFF;
-  $(`#spiritBox-svg`).removeClass("active");
-  $(`#spiritBox-svg`).addClass("inactive");
-
-  evidence.fingerprints = EVIDENCE_OFF;
-  $(`#fingerprints-svg`).removeClass("active");
-  $(`#fingerprints-svg`).addClass("inactive");
-
-  evidence.orbs = EVIDENCE_OFF;
-  $(`#orbs-svg`).removeClass("active");
-  $(`#orbs-svg`).addClass("inactive");
-
-  evidence.writing = EVIDENCE_OFF;
-  $(`#writing-svg`).removeClass("active");
-  $(`#writing-svg`).addClass("inactive");
-
-  evidence.freezing = EVIDENCE_OFF;
-  $(`#freezing-svg`).removeClass("active");
-  $(`#freezing-svg`).addClass("inactive");
-};
-
-const resetOptional = () => {
-  $("#optional-obj-container").empty();
-  $("#optional-obj-container").addClass("hidden");
-  $("#no-opt-objectives-container").removeClass("hidden");
+const resetEvidenceDOM = () => {
+  for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("active");
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("inactive");
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible");
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible-completed");
+  }
 };
 
 const invalidEvidenceUpdate = (possibleGhosts) => {
@@ -939,18 +1023,11 @@ const invalidEvidenceUpdate = (possibleGhosts) => {
 };
 
 const removeAllImpossibleCSS = () => {
-  $(`#emf-svg`).removeClass("impossible");
-  $(`#freezing-svg`).removeClass("impossible");
-  $(`#spiritBox-svg`).removeClass("impossible");
-  $(`#writing-svg`).removeClass("impossible");
-  $(`#orbs-svg`).removeClass("impossible");
-  $(`#fingerprints-svg`).removeClass("impossible");
+  throw Error("not longer implemented: ImpossibleCSS");
 };
 
-const updateGhostGuessDOM = (guessText, evidence) => {
-  guessText
-    ? $("#conclusion").html(guessText)
-    : $("#conclusion").html(checkEvidenceGhostMatch(evidence));
+const updateGhostGuessDOM = (guessText) => {
+  $("#conclusion").html(guessText);
 };
 
 const setCounterName = (name) => {
