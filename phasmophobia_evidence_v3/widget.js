@@ -98,11 +98,9 @@ let config = {};
  * Would be able to expand on this by adding train conductor badges, founders, etc.
  */
 const runCommandWithPermission = (permission, data, command, commandArgs) => {
-  console.log("running command");
   if (hasPermission(permission, getUserLevelFromData(data))) {
     command(...commandArgs);
   }
-  console.log("updating dom");
   updateDashboardDOM(userState);
 };
 
@@ -142,7 +140,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // Field data from Stream Elements from the overlay settings the user set
   const fieldData = obj.detail.fieldData;
 
-  console.log("set up commands");
   // Sets up all the commands for the widget
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
@@ -282,7 +279,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
   };
 
-  console.log("set up config");
   // Configuration based on user choices
   config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
   config.conclusionStrings = {
@@ -417,7 +413,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
   config.useEvidenceImpossibleCompleted =
     fieldData["useEvidenceImpossibleCompleted"] === "yes" ? true : false;
 
-  console.log("config complete");
   // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
@@ -464,28 +459,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
     config.conclusionStrings.zeroEvidenceConclusionString;
 
   resetGhost(null, userState);
-  console.log("reset ghost complete");
   updateDashboardDOM(userState);
-  console.log("complete on widget load");
 });
 
 window.addEventListener("onEventReceived", function (obj) {
   // Grab relevant data from the event;
   let data = obj.detail.event.data;
-
-  // Check if a moderator
-  let badges = data.badges;
-  let i = badges.findIndex(
-    (x) =>
-      x.type === "moderator" ||
-      x.type === "broadcaster" ||
-      (config.allowVIPS && x.type === "vip") ||
-      data.displayName.toLowerCase() === "glitchedmythos"
-  );
-  if (i == -1) {
-    // Not a mod, VIP or GlitchedMythos
-    return;
-  }
 
   // Check if a matching command
   let givenCommand = data.text.split(" ")[0];
@@ -493,7 +472,7 @@ window.addEventListener("onEventReceived", function (obj) {
   if (config.commands[givenCommand]) {
     config.commands[givenCommand](data);
   } else {
-    console.log("No Command Exists");
+    console.log("No command exists");
   }
 });
 
@@ -517,39 +496,43 @@ const _setGhostName = (command, state) => {
 const _toggleEMF = (state) => {
   state.evidence.emf = toggleEvidence(state.evidence.emf);
   calculateGhostEvidenceDisplay(state);
+  determineConclusionMessage(state);
 };
 
 const _toggleSpiritBox = (state) => {
   state.evidence.spiritBox = toggleEvidence(state.evidence.spiritBox);
   calculateGhostEvidenceDisplay(state);
+  determineConclusionMessage(state);
 };
 
 const _toggleFingerprints = (state) => {
   state.evidence.fingerprints = toggleEvidence(state.evidence.fingerprints);
   calculateGhostEvidenceDisplay(state);
+  determineConclusionMessage(state);
 };
 
 const _toggleOrbs = (state) => {
   state.evidence.orbs = toggleEvidence(state.evidence.orbs);
   calculateGhostEvidenceDisplay(state);
+  determineConclusionMessage(state);
 };
 
 const _toggleWriting = (state) => {
   state.evidence.writing = toggleEvidence(state.evidence.writing);
   calculateGhostEvidenceDisplay(state);
+  determineConclusionMessage(state);
 };
 
 const _toggleFreezing = (state) => {
   state.evidence.freezing = toggleEvidence(state.evidence.freezing);
   calculateGhostEvidenceDisplay(state);
+  determineConclusionMessage(state);
 };
 
 const _setOptionalObjectives = (command, state) => {
   let commandSplit = command.split(" ");
   let optObjCommands = commandSplit.slice(1);
   optObjCommands = optObjCommands.slice(Math.max(optObjCommands.length - 3, 0)); // Grabs only the last 3 commands
-
-  console.log("optObjCommands: ", optObjCommands);
 
   if (optObjCommands.length === 1) {
     state.optionalObjectives = updateSingleOptionalObjective(
@@ -668,7 +651,6 @@ const calculateSingleGhostEvidence = (evidence) => {
 };
 
 const calculateDoubleGhostEvidence = (evidence, evidenceString) => {
-  console.log("evidenceDispaly Pre: ", evidence);
   let possibleGhosts = getGhostPossibilities(evidenceString);
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
 
@@ -697,7 +679,6 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString) => {
   if (+impossibleEvidence[5] == 0) {
     evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
   }
-  console.log("evidenceDispaly Post: ", evidence);
 
   return evidence;
 };
@@ -706,7 +687,6 @@ const calculateTripleGhostEvidence = (evidence, evidenceString) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
 
   if (possibleGhosts.length === 0) {
-    console.log("IF **********");
     for (const val in evidence) {
       if (evidence[val] === EVIDENCE_ON) {
         evidence[val] = EVIDENCE_IMPOSSIBLE;
@@ -715,20 +695,12 @@ const calculateTripleGhostEvidence = (evidence, evidenceString) => {
       }
     }
   } else {
-    console.log("ELSE **********");
     for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-      console.log(
-        "evidence name in dom we are using",
-        EVIDENCE_NAMES_IN_DOM[i]
-      );
       if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON) {
-        console.log("it is on");
         evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
       }
     }
   }
-
-  console.log("the calculated triple evidence", evidence, possibleGhosts);
 
   return evidence;
 };
@@ -746,17 +718,14 @@ const calculateBadEvidence = (evidence) => {
 };
 
 const updateSingleOptionalObjective = (optionalObjectives, objective) => {
-  console.log("updateSingleOptionalObjective: ", optionalObjectives, objective);
   let objectiveString = getOptObjectiveString(objective);
 
   let oldOptionalObjective = optionalObjectives.findIndex(
-    (item) => (item.text = objectiveString)
+    (item) => item.text === objectiveString
   );
 
-    console.log('oldopt index', oldOptionalObjective, optionalObjectives)
-
   if (oldOptionalObjective >= 0) {
-    optionalObjectives = optionalObjectives.slice(oldOptionalObjective, 1);
+    optionalObjectives.splice(oldOptionalObjective, 1);
   } else if (optionalObjectives.length < 3) {
     optionalObjectives.push({ text: objectiveString, strike: false });
   }
@@ -783,6 +752,36 @@ const updateFullOptionalObjectives = (
   });
 
   return optionalObjectives;
+};
+
+const determineConclusionMessage = (state) => {
+  let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
+  let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(displayEvidenceString);
+
+  let userEvidenceString =  createEvidenceString(state.evidence);
+  let numberOfUserTrueEvidence = numOfTrueEvidenceInString(userEvidenceString);
+
+  if (numOfDisplayTrueEvidence < 1 && numberOfUserTrueEvidence < 1) {
+    state.conclusionString =
+      config.conclusionStrings.zeroEvidenceConclusionString;
+  } else if (numOfDisplayTrueEvidence === 1) {
+    state.conclusionString =
+      config.conclusionStrings.oneEvidenceConclusionString;
+  } else if (numOfDisplayTrueEvidence === 2) {
+    let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
+    let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
+    state.conclusionString = `Could be a ` + ghostPossibilityStrings.join(", ");
+  } else if (numOfDisplayTrueEvidence === 3) {
+    let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
+    let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
+
+    state.conclusionString =
+      ghostPossibilityStrings.length === 0
+        ? config.conclusionStrings.tooMuchEvidence
+        : ghostPossibilities[0].conclusion;
+  } else {
+    state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+  }
 };
 
 /*******************************************************
@@ -924,7 +923,6 @@ const getNumberString = (num) => {
  *******************************************************/
 
 const updateDashboardDOM = (state) => {
-  console.log("Current State PreDomUpdate: ", state);
   updateNameDOM(state.ghostName);
   updateEvidenceDOM(state.evidenceDisplay);
   updateOptionalObjectivesDOM(state.optionalObjectives);
@@ -945,7 +943,6 @@ const updateNameDOM = (newName) => {
 
 /** EVIDENCE RELATED DOM MANIPULATING FUNCTIONS */
 const updateEvidenceDOM = (evidence) => {
-  console.log();
   resetEvidenceDOM();
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
@@ -1020,6 +1017,7 @@ const updateConclusion = (conclusion) => {
   $("#conclusion").html(conclusion);
 };
 
+/** COUNTER RELATED DOM MANIPULATING FUNCTIONS */
 const setCounterName = (name) => {
   $("#counter-name").html(name);
 };
