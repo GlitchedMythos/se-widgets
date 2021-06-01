@@ -93,10 +93,6 @@ let userState = {
 
 let config = {};
 
-/*
- ? Maybe this should take in an array of permissions?
- * Would be able to expand on this by adding train conductor badges, founders, etc.
- */
 const runCommandWithPermission = (permission, data, command, commandArgs) => {
   if (hasPermission(permission, getUserLevelFromData(data))) {
     command(...commandArgs);
@@ -888,17 +884,6 @@ const getImpossibleEvidence = (possibleGhosts) => {
 
 const createGhostConclusionString = (conclusionString, ghostType) => {
   return conclusionString ? conclusionString : `It's a ${ghostType}!!`;
-};
-
-const createOptionalObjectivesString = (optObjString) => {
-  let optObj = "";
-
-  if (optObjString.length === 3) {
-  } else {
-    optObj = config.optionalObj.noOptionalString;
-  }
-
-  return optObj;
 };
 
 const getOptObjectiveString = (obj) => {
