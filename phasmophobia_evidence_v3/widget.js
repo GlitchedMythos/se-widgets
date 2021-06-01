@@ -524,10 +524,13 @@ const _setOptionalObjectives = (command, state) => {
   let optObjCommands = commandSplit.slice(1);
   optObjCommands = optObjCommands.slice(Math.max(optObjCommands.length - 3, 0)); // Grabs only the last 3 commands
 
-  console.log("optObjCommands: ", optObjCommands)
+  console.log("optObjCommands: ", optObjCommands);
 
   if (optObjCommands.length === 1) {
-    state.optionalObjectives = updateSingleOptionalObjective(state.optionalObjectives, optObjCommands[0]);
+    state.optionalObjectives = updateSingleOptionalObjective(
+      state.optionalObjectives,
+      optObjCommands[0]
+    );
   } else {
     state.optionalObjectives = updateFullOptionalObjectives(...optObjCommands);
   }
@@ -639,17 +642,16 @@ const checkEvidenceGhostMatch = (evidence) => {
   return ghostGuessString;
 };
 
-const updateSingleOptionalObjective = (
-  optionalObjectives,
-  objective
-) => {
-  console.log('updateSingleOptionalObjective: ', optionalObjectives, objective)
+const updateSingleOptionalObjective = (optionalObjectives, objective) => {
+  console.log("updateSingleOptionalObjective: ", optionalObjectives, objective);
   let objectiveString = getOptObjectiveString(objective);
   if (optionalObjectives.includes(objectiveString)) {
-    optionalObjectives = optionalObjectives.filter(oo => oo !== objectiveString);
+    optionalObjectives = optionalObjectives.filter(
+      (oo) => oo !== objectiveString
+    );
   } else if (optionalObjectives.length < 3) {
     optionalObjectives.push(objectiveString);
-  } 
+  }
   return optionalObjectives;
 };
 
@@ -785,9 +787,20 @@ const getOptObjectiveString = (obj) => {
 };
 
 const getNumberString = (num) => {
-  const numStrings = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+  const numStrings = [
+    "",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+  ];
   return numStrings[num];
-}
+};
 
 /*******************************************************
  *             DOM MANIPULATING FUNCTIONS              *
@@ -798,19 +811,18 @@ const updateDashboardDOM = (optionalObjectives) => {
 };
 
 const updateOptionalObjectivesDOM = (optionalObjectives) => {
-  console.log('optional objectives: ', optionalObjectives);
-  $("#optional-obj-container").removeClass("hidden");
-  $("#optional-obj-container").empty();
-  $("#no-opt-objectives-container").addClass("hidden");
-  
-  if (optionalObjectives.length < 1) {
-    console.log('< 1')
-    $("#optional-obj-container").addClass("hidden");
-    $("#no-opt-objectives-container").removeClass("hidden");
-  } else {
-    console.log('other')
-    for(let i = 0; i < optionalObjectives.length; i++) {
-      $('#optional-obj-container').append(`<div class="objective" id="objective-${getNumberString(i + 1)}">${optionalObjectives[i]}</div>`)
+  resetOptional();
+
+  if (optionalObjectives.length > 0) {
+    $("#optional-obj-container").removeClass("hidden");
+    $("#no-opt-objectives-container").addClass("hidden");
+
+    for (let i = 0; i < optionalObjectives.length; i++) {
+      $("#optional-obj-container").append(
+        `<div class="objective" id="objective-${getNumberString(i + 1)}">${
+          optionalObjectives[i]
+        }</div>`
+      );
     }
   }
 };
@@ -876,12 +888,7 @@ const resetEvidence = (evidence) => {
 };
 
 const resetOptional = () => {
-  $("#objective-one").text("");
-  $("#objective-one").removeClass("strikethrough");
-  $("#objective-two").text("");
-  $("#objective-two").removeClass("strikethrough");
-  $("#objective-three").text("");
-  $("#objective-three").removeClass("strikethrough");
+  $("#optional-obj-container").empty();
   $("#optional-obj-container").addClass("hidden");
   $("#no-opt-objectives-container").removeClass("hidden");
 };
