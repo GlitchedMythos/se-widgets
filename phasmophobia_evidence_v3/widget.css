@@ -13,17 +13,17 @@
 
 .name {
   color: {{nameColor}};
-  font-size: {{nameFontSize}};
+  font-size: {{nameFontSize}}px;
 }
 
 .objective {
   color: {{objectivesColor}};
-  font-size: {{objectivesFontSize}};
+  font-size: {{objectivesFontSize}}px;
 }
 
 .conclusion {
   color: {{conclusionColor}};
-  font-size: {{conclusionFontSize}};
+  font-size: {{conclusionFontSize}}px;
 }
 
 .evidence {
@@ -53,7 +53,7 @@
 }
 
 .strikethrough::after {
-  border-bottom: {{objectivesStrikethroughSize}} solid {{objectivesStrikethroughColor}};
+  border-bottom: {{objectivesStrikethroughSize}}px solid {{objectivesStrikethroughColor}};
   content: "";
   left: 0;
   margin-top: calc({{objectivesStrikethroughSize}} / 2 * -1);

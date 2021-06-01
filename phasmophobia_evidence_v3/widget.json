@@ -196,9 +196,9 @@
     "group": "Theming"
   },
   "nameFontSize": {
-    "type": "fontSize",
+    "type": "number",
     "label": "Name Font Size",
-    "value": "16px",
+    "value": "16",
     "group": "Theming"
   },
   "objectivesColor": {
@@ -208,15 +208,15 @@
     "group": "Theming"
   },
   "objectivesFontSize": {
-    "type": "fontSize",
+    "type": "number",
     "label": "Objectives Font Size",
-    "value": "16px",
+    "value": "16",
     "group": "Theming"
   },
   "objectivesStrikethroughSize": {
-    "type": "fontSize",
+    "type": "number",
     "label": "Objectives Strikethrough Size",
-    "value": "5px",
+    "value": "5",
     "group": "Theming"
   },
   "objectivesStrikethroughColor": {
@@ -232,9 +232,9 @@
     "group": "Theming"
   },
   "conclusionFontSize": {
-    "type": "fontSize",
+    "type": "number",
     "label": "Conclusion Font Size",
-    "value": "16px",
+    "value": "16",
     "group": "Theming"
   },
   "borderColor": {

@@ -588,6 +588,7 @@ const _glitchedMythos = (command) => {
 const resetGhost = (newName, state) => {
   resetName(newName, state);
   resetEvidence(state.evidence);
+  resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
   resetConclusion(state);
 };
@@ -613,7 +614,9 @@ const resetEvidence = (evidence) => {
   evidence.freezing = EVIDENCE_OFF;
 };
 
-const resetConclusion = (state) => {};
+const resetConclusion = (state) => {
+  state.conclusionString = config.conclusionStrings.zeroEvidenceConclusionString;
+};
 
 const calculateGhostEvidenceDisplay = (state) => {
   // We do a deep copy to ensure there are no references
