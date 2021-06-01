@@ -606,6 +606,7 @@ const resetGhost = (newName, state) => {
   resetName(newName, state);
   resetEvidence(state.evidence);
   resetOptionalObjectives([], state);
+  resetConclusion(state);
 };
 
 const resetName = (newName, state) => {
@@ -629,16 +630,13 @@ const resetEvidence = (evidence) => {
   evidence.freezing = EVIDENCE_OFF;
 };
 
+const resetConclusion = (state) => {};
+
 const calculateGhostEvidenceDisplay = (state) => {
-  console.log("checkEvidenceGhostMatch: ", state);
   // We do a deep copy to ensure there are no references
-  console.log("evidence json: ", JSON.stringify(state.evidence));
-  console.log("parsed json: ", JSON.parse(JSON.stringify(state.evidence)));
   let evidenceDisplay = JSON.parse(JSON.stringify(state.evidence));
   let evidenceString = createEvidenceString(evidenceDisplay);
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
-
-  console.log("checkEvidenceGhostMatch: ", evidenceString, numOfTrueEvidence);
 
   if (numOfTrueEvidence < 2) {
     evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay);
@@ -708,7 +706,7 @@ const calculateTripleGhostEvidence = (evidence, evidenceString) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
 
   if (possibleGhosts.length === 0) {
-    console.log('IF **********')
+    console.log("IF **********");
     for (const val in evidence) {
       if (evidence[val] === EVIDENCE_ON) {
         evidence[val] = EVIDENCE_IMPOSSIBLE;
@@ -717,24 +715,27 @@ const calculateTripleGhostEvidence = (evidence, evidenceString) => {
       }
     }
   } else {
-    console.log('ELSE **********')
+    console.log("ELSE **********");
     for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-      console.log('evidence name in dom we are using', EVIDENCE_NAMES_IN_DOM[i])
+      console.log(
+        "evidence name in dom we are using",
+        EVIDENCE_NAMES_IN_DOM[i]
+      );
       if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON) {
-        console.log('it is on')
+        console.log("it is on");
         evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
       }
     }
   }
 
-  console.log('the calculated triple evidence', evidence, possibleGhosts)
+  console.log("the calculated triple evidence", evidence, possibleGhosts);
 
   return evidence;
 };
 
 const calculateBadEvidence = (evidence) => {
-  for(let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-    if(evidence[EVIDENCE_NAMES_IN_DOM[i]] === EVIDENCE_ON) {
+  for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
+    if (evidence[EVIDENCE_NAMES_IN_DOM[i]] === EVIDENCE_ON) {
       evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_IMPOSSIBLE;
     } else {
       evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_OFF;
@@ -742,17 +743,22 @@ const calculateBadEvidence = (evidence) => {
   }
 
   return evidence;
-}
+};
 
 const updateSingleOptionalObjective = (optionalObjectives, objective) => {
   console.log("updateSingleOptionalObjective: ", optionalObjectives, objective);
   let objectiveString = getOptObjectiveString(objective);
-  if (optionalObjectives.includes(objectiveString)) {
-    optionalObjectives = optionalObjectives.filter(
-      (oo) => oo !== objectiveString
-    );
+
+  let oldOptionalObjective = optionalObjectives.findIndex(
+    (item) => (item.text = objectiveString)
+  );
+
+    console.log('oldopt index', oldOptionalObjective, optionalObjectives)
+
+  if (oldOptionalObjective >= 0) {
+    optionalObjectives = optionalObjectives.slice(oldOptionalObjective, 1);
   } else if (optionalObjectives.length < 3) {
-    optionalObjectives.push(objectiveString);
+    optionalObjectives.push({ text: objectiveString, strike: false });
   }
   return optionalObjectives;
 };
@@ -763,9 +769,18 @@ const updateFullOptionalObjectives = (
   objectiveThree
 ) => {
   let optionalObjectives = [];
-  optionalObjectives.push(getOptObjectiveString(objectiveOne));
-  optionalObjectives.push(getOptObjectiveString(objectiveTwo));
-  optionalObjectives.push(getOptObjectiveString(objectiveThree));
+  optionalObjectives.push({
+    text: getOptObjectiveString(objectiveOne),
+    strike: false,
+  });
+  optionalObjectives.push({
+    text: getOptObjectiveString(objectiveTwo),
+    strike: false,
+  });
+  optionalObjectives.push({
+    text: getOptObjectiveString(objectiveThree),
+    strike: false,
+  });
 
   return optionalObjectives;
 };
@@ -891,15 +906,15 @@ const getOptObjectiveString = (obj) => {
 const getNumberString = (num) => {
   const numStrings = [
     "",
-    "One",
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "Nine",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
   ];
   return numStrings[num];
 };
@@ -913,8 +928,10 @@ const updateDashboardDOM = (state) => {
   updateNameDOM(state.ghostName);
   updateEvidenceDOM(state.evidenceDisplay);
   updateOptionalObjectivesDOM(state.optionalObjectives);
+  updateConclusion(state.conclusionString);
 };
 
+/** NAME RELATED DOM MANIPULATING FUNCTIONS */
 const updateNameDOM = (newName) => {
   let nameString = "" + config.nameStrings.ghostNameString;
 
@@ -926,6 +943,7 @@ const updateNameDOM = (newName) => {
   $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
 };
 
+/** EVIDENCE RELATED DOM MANIPULATING FUNCTIONS */
 const updateEvidenceDOM = (evidence) => {
   console.log();
   resetEvidenceDOM();
@@ -948,6 +966,16 @@ const updateEvidenceDOM = (evidence) => {
   }
 };
 
+const resetEvidenceDOM = () => {
+  for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("active");
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("inactive");
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible");
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible-completed");
+  }
+};
+
+/** OPTIONAL OBJECTIVE RELATED DOM MANIPULATING FUNCTIONS */
 const updateOptionalObjectivesDOM = (optionalObjectives) => {
   resetOptionalDOM();
 
@@ -957,8 +985,10 @@ const updateOptionalObjectivesDOM = (optionalObjectives) => {
 
     for (let i = 0; i < optionalObjectives.length; i++) {
       $("#optional-obj-container").append(
-        `<div class="objective" id="objective-${getNumberString(i + 1)}">${
-          optionalObjectives[i]
+        `<div class="objective${
+          optionalObjectives[i].strike ? " strikethrough" : ""
+        }" id="objective-${getNumberString(i + 1)}">${
+          optionalObjectives[i].text
         }</div>`
       );
     }
@@ -971,88 +1001,23 @@ const resetOptionalDOM = () => {
   $("#no-opt-objectives-container").removeClass("hidden");
 };
 
-const toggleSVG = (svgID) => {
-  let svg = $(`#${svgID}`);
-  let classList = svg.attr("class");
-  let classArray = classList.split(/\s+/);
-
-  if (classArray.includes("inactive")) {
-    svg.removeClass("inactive");
-    svg.addClass("active");
-  } else {
-    svg.removeClass("active");
-    svg.addClass("inactive");
-  }
-};
-
 const toggleStrikethrough = (optionalID) => {
   let optionalObj = $(`#${optionalID}`);
-  let classList = optionalObj.attr("class");
-  let classArray = classList.split(/\s+/);
+  if (optionalObj) {
+    let classList = optionalObj.attr("class");
+    let classArray = classList.split(/\s+/);
 
-  if (classArray.includes("strikethrough")) {
-    optionalObj.removeClass("strikethrough");
-  } else {
-    optionalObj.addClass("strikethrough");
+    if (classArray.includes("strikethrough")) {
+      optionalObj.removeClass("strikethrough");
+    } else {
+      optionalObj.addClass("strikethrough");
+    }
   }
 };
 
-const resetEvidenceDOM = () => {
-  for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("active");
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("inactive");
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible");
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible-completed");
-  }
-};
-
-const invalidEvidenceUpdate = (possibleGhosts) => {
-  let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
-  // Addition shorthand prior to impossibleEvidence converts the string to a number
-  // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
-  if (+impossibleEvidence[0] == 0) {
-    $(`#emf-svg`).addClass("impossible");
-  } else {
-    $(`#emf-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[1] == 0) {
-    $(`#freezing-svg`).addClass("impossible");
-  } else {
-    $(`#freezing-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[2] == 0) {
-    $(`#spiritBox-svg`).addClass("impossible");
-  } else {
-    $(`#spiritBox-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[3] == 0) {
-    $(`#writing-svg`).addClass("impossible");
-  } else {
-    $(`#writing-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[4] == 0) {
-    $(`#orbs-svg`).addClass("impossible");
-  } else {
-    $(`#orbs-svg`).removeClass("impossible");
-  }
-
-  if (+impossibleEvidence[5] == 0) {
-    $(`#fingerprints-svg`).addClass("impossible");
-  } else {
-    $(`#fingerprints-svg`).removeClass("impossible");
-  }
-};
-
-const removeAllImpossibleCSS = () => {
-  throw Error("not longer implemented: ImpossibleCSS");
-};
-
-const updateGhostGuessDOM = (guessText) => {
-  $("#conclusion").html(guessText);
+/** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */
+const updateConclusion = (conclusion) => {
+  $("#conclusion").html(conclusion);
 };
 
 const setCounterName = (name) => {
