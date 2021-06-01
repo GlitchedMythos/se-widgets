@@ -21,6 +21,7 @@ const BANSHEE = "110001",
 
 const OPTIONAL_OBJECTIVES = {
   ca: "Candle",
+  can: "Candle",
   candle: "Candle",
   cr: "Crucifix",
   crucifix: "Crucifix",
@@ -68,6 +69,7 @@ let userState = {
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
   },
+  ghostGuessString: "",
   ghostName: "",
   optionalObjectives: [],
 };
@@ -435,7 +437,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   }
 
   resetEvidence(userState.evidence);
-  updateGhostGuess(null, userState.evidence);
+  updateGhostGuessDOM(null, userState.evidence);
 });
 
 window.addEventListener("onEventReceived", function (obj) {
@@ -486,37 +488,37 @@ const _setGhostName = (command) => {
 const _toggleEMF = (evidence) => {
   toggleSVG("emf-svg");
   evidence.emf = toggleEvidence(evidence.emf);
-  updateGhostGuess(null, evidence);
+  updateGhostGuessDOM(null, evidence);
 };
 
 const _toggleSpiritBox = (evidence) => {
-  toggleSVG("spirit-box-svg");
+  toggleSVG("spiritBox-svg");
   evidence.spiritBox = toggleEvidence(evidence.spiritBox);
-  updateGhostGuess(null, evidence);
+  updateGhostGuessDOM(null, evidence);
 };
 
 const _toggleFingerprints = (evidence) => {
   toggleSVG("fingerprints-svg");
   evidence.fingerprints = toggleEvidence(evidence.fingerprints);
-  updateGhostGuess(null, userState.evidence);
+  updateGhostGuessDOM(null, userState.evidence);
 };
 
 const _toggleOrbs = (evidence) => {
   toggleSVG("orbs-svg");
   evidence.orbs = toggleEvidence(evidence.orbs);
-  updateGhostGuess(null, userState.evidence);
+  updateGhostGuessDOM(null, userState.evidence);
 };
 
 const _toggleWriting = (evidence) => {
   toggleSVG("writing-svg");
   evidence.writing = toggleEvidence(evidence.writing);
-  updateGhostGuess(null, userState.evidence);
+  updateGhostGuessDOM(null, userState.evidence);
 };
 
 const _toggleFreezing = (evidence) => {
   toggleSVG("freezing-svg");
   evidence.freezing = toggleEvidence(evidence.freezing);
-  updateGhostGuess(null, userState.evidence);
+  updateGhostGuessDOM(null, userState.evidence);
 };
 
 const _setOptionalObjectives = (command, state) => {
@@ -584,7 +586,7 @@ const resetGhost = (newName, evidence) => {
   resetName(newName);
   resetEvidence(evidence);
   resetOptional();
-  updateGhostGuess(
+  updateGhostGuessDOM(
     config.conclusionStrings.zeroEvidenceConclusionString,
     evidence
   );
@@ -855,6 +857,8 @@ const toggleStrikethrough = (optionalID) => {
 
 const resetName = (newName) => {
   let nameString = "" + config.nameStrings.ghostNameString;
+  // Replaces "[name]" with the name of the ghost, allowing the user to paramaterize
+  // the name for things such as "Name: [name]" === "Name: John Doe"
   nameString = nameString.replace(/\[name\]/g, newName);
   $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
 };
@@ -867,8 +871,8 @@ const resetEvidence = (evidence) => {
   $(`#emf-svg`).addClass("inactive");
 
   evidence.spiritBox = EVIDENCE_OFF;
-  $(`#spirit-box-svg`).removeClass("active");
-  $(`#spirit-box-svg`).addClass("inactive");
+  $(`#spiritBox-svg`).removeClass("active");
+  $(`#spiritBox-svg`).addClass("inactive");
 
   evidence.fingerprints = EVIDENCE_OFF;
   $(`#fingerprints-svg`).removeClass("active");
@@ -910,9 +914,9 @@ const invalidEvidenceUpdate = (possibleGhosts) => {
   }
 
   if (+impossibleEvidence[2] == 0) {
-    $(`#spirit-box-svg`).addClass("impossible");
+    $(`#spiritBox-svg`).addClass("impossible");
   } else {
-    $(`#spirit-box-svg`).removeClass("impossible");
+    $(`#spiritBox-svg`).removeClass("impossible");
   }
 
   if (+impossibleEvidence[3] == 0) {
@@ -937,13 +941,13 @@ const invalidEvidenceUpdate = (possibleGhosts) => {
 const removeAllImpossibleCSS = () => {
   $(`#emf-svg`).removeClass("impossible");
   $(`#freezing-svg`).removeClass("impossible");
-  $(`#spirit-box-svg`).removeClass("impossible");
+  $(`#spiritBox-svg`).removeClass("impossible");
   $(`#writing-svg`).removeClass("impossible");
   $(`#orbs-svg`).removeClass("impossible");
   $(`#fingerprints-svg`).removeClass("impossible");
 };
 
-const updateGhostGuess = (guessText, evidence) => {
+const updateGhostGuessDOM = (guessText, evidence) => {
   guessText
     ? $("#conclusion").html(guessText)
     : $("#conclusion").html(checkEvidenceGhostMatch(evidence));
