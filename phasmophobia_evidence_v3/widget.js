@@ -1009,7 +1009,7 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
     if (optionalObjectives[1]) {
       $("#optional-obj-container").append($('<div>',
         {
-          class: `objective w-1/3 text-center${optionalObjectives[0].strike ? " strikethrough" : ""}`,
+          class: `objective w-1/3 text-center${optionalObjectives[1].strike ? " strikethrough" : ""}`,
           id:"objective-two",
           text:optionalObjectives[1]
         }));
@@ -1017,7 +1017,7 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
     if (optionalObjectives[2]) {
       $("#optional-obj-container").append($('<div>',
         {
-          class: `objective w-1/3 text-right${optionalObjectives[0].strike ? " strikethrough" : ""}`,
+          class: `objective w-1/3 text-right${optionalObjectives[2].strike ? " strikethrough" : ""}`,
           id:"objective-three",
           text:optionalObjectives[2]
         }));
