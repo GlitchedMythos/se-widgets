@@ -978,7 +978,7 @@ const updateOptionalObjectivesDOM = (optionalObjectives) => {
 
     for (let i = 0; i < optionalObjectives.length; i++) {
       $("#optional-obj-container").append(
-        `<div class="objective${
+        `<div class="objective p-0.5${
           optionalObjectives[i].strike ? " strikethrough" : ""
         }" id="objective-${getNumberString(i + 1)}">${
           optionalObjectives[i].text

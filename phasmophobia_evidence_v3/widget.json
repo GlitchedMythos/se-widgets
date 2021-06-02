@@ -201,30 +201,6 @@
     "value": "16",
     "group": "Theming"
   },
-  "objectivesColor": {
-    "type": "colorpicker",
-    "label": "Objectives Text Color",
-    "value": "rgb(254, 255, 255)",
-    "group": "Theming"
-  },
-  "objectivesFontSize": {
-    "type": "number",
-    "label": "Objectives Font Size",
-    "value": "16",
-    "group": "Theming"
-  },
-  "objectivesStrikethroughSize": {
-    "type": "number",
-    "label": "Objectives Strikethrough Size",
-    "value": "5",
-    "group": "Theming"
-  },
-  "objectivesStrikethroughColor": {
-    "type": "colorpicker",
-    "label": "Objectives Strikethrough Color",
-    "value": "rgba(234, 66, 29, 0.83)",
-    "group": "Theming"
-  },
   "conclusionColor": {
     "type": "colorpicker",
     "label": "Conclusion Color",
@@ -364,18 +340,6 @@
     },
     "group": "Theming - Divider"
   },
-  "counterFontColor": {
-    "type": "colorpicker",
-    "label": "Counter Color",
-    "value": "rgba(192,192,192,1)",
-    "group": "Theming - Counter"
-  },
-  "counterFontSize": {
-    "type": "number",
-    "label": "Counter Font Size",
-    "value": 24,
-    "group": "Theming - Counter"
-  },
   "evidenceActive": {
     "type": "colorpicker",
     "label": "Active Evidence",
@@ -405,6 +369,56 @@
     "label": "Evidence Pixel Size",
     "value": 50,
     "group": "Theming - Evidence"
+  },
+  "counterFontColor": {
+    "type": "colorpicker",
+    "label": "Counter Color",
+    "value": "rgba(192,192,192,1)",
+    "group": "Theming - Counter"
+  },
+  "counterFontSize": {
+    "type": "number",
+    "label": "Counter Font Size",
+    "value": 24,
+    "group": "Theming - Counter"
+  },
+  "objectivesColor": {
+    "type": "colorpicker",
+    "label": "Objectives Text Color",
+    "value": "rgb(254, 255, 255)",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesFontSize": {
+    "type": "number",
+    "label": "Objectives Font Size",
+    "value": "16",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesStrikethroughSize": {
+    "type": "number",
+    "label": "Objectives Strikethrough Size",
+    "value": "5",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesStrikethroughColor": {
+    "type": "colorpicker",
+    "label": "Objectives Strikethrough Color",
+    "value": "rgba(234, 66, 29, 0.83)",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesSpacing": {
+    "type": "dropdown",
+    "label": "Choose a spacing type for optional objectives:",
+    "value": "justify-around",
+    "options": {
+      "justify-start": "Left Align",
+      "justify-end": "Right Align",
+      "justify-center": "Center Align",
+      "justify-between": "Space Between",
+      "justify-around": "Space Around",
+      "justify-evenly": "Space Evenly"
+    },
+    "group": "Theming - Optional Objectives"
   },
   "noNameString": {
     "type": "text",
