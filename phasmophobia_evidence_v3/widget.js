@@ -410,6 +410,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   };
   config.optionalObj = {
     noOptionalString: fieldData["noOptionalObjectivesMessage"],
+    spacing: fieldData["objectivesSpacing"],
   };
   config.useEvidenceImpossibleCompleted =
     fieldData["useEvidenceImpossibleCompleted"] === "yes" ? true : false;
@@ -972,17 +973,50 @@ const resetEvidenceDOM = () => {
 const updateOptionalObjectivesDOM = (optionalObjectives) => {
   resetOptionalDOM();
 
+  if (config.optionalObj.spacing === "justify-evenly") {
+    updateOptionalObjectivesDOMEvenly(optionalObjectives);
+  } else {
+    if (optionalObjectives.length > 0) {
+      $("#optional-obj-container").removeClass("hidden");
+      $("#no-opt-objectives-container").addClass("hidden");
+
+      for (let i = 0; i < optionalObjectives.length; i++) {
+        $("#optional-obj-container").append(
+          `<div class="objective px-0.5${
+            optionalObjectives[i].strike ? " strikethrough" : ""
+          }" id="objective-${getNumberString(i + 1)}">${
+            optionalObjectives[i].text
+          }</div>`
+        );
+      }
+    }
+  }
+};
+
+const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
   if (optionalObjectives.length > 0) {
     $("#optional-obj-container").removeClass("hidden");
     $("#no-opt-objectives-container").addClass("hidden");
 
-    for (let i = 0; i < optionalObjectives.length; i++) {
+    if (optionalObjectives[0]) {
       $("#optional-obj-container").append(
-        `<div class="objective px-0.5${
-          optionalObjectives[i].strike ? " strikethrough" : ""
-        }" id="objective-${getNumberString(i + 1)}">${
-          optionalObjectives[i].text
-        }</div>`
+        `<div class="objective w-1/3 text-left${
+          optionalObjectives[0].strike ? " strikethrough" : ""
+        }" id="objective-One">${optionalObjectives[0].text}</div>`
+      );
+    }
+    if (optionalObjectives[1]) {
+      $("#optional-obj-container").append(
+        `<div class="objective w-1/3 text-center${
+          optionalObjectives[1].strike ? " strikethrough" : ""
+        }" id="objective-One">${optionalObjectives[1].text}</div>`
+      );
+    }
+    if (optionalObjectives[2]) {
+      $("#optional-obj-container").append(
+        `<div class="objective w-1/3 text-right${
+          optionalObjectives[2].strike ? " strikethrough" : ""
+        }" id="objective-One">${optionalObjectives[2].text}</div>`
       );
     }
   }
