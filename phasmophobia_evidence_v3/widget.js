@@ -1003,7 +1003,7 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
         {
          class: `objective w-1/3 text-left${optionalObjectives[0].strike ? " strikethrough" : ""}`,
           id:"objective-one",
-          text:optionalObjectives[0]
+          text:optionalObjectives[0].text
         }));
     }
     if (optionalObjectives[1]) {
@@ -1011,7 +1011,7 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
         {
           class: `objective w-1/3 text-center${optionalObjectives[1].strike ? " strikethrough" : ""}`,
           id:"objective-two",
-          text:optionalObjectives[1]
+          text:optionalObjectives[1].text
         }));
     }
     if (optionalObjectives[2]) {
@@ -1019,7 +1019,7 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
         {
           class: `objective w-1/3 text-right${optionalObjectives[2].strike ? " strikethrough" : ""}`,
           id:"objective-three",
-          text:optionalObjectives[2]
+          text:optionalObjectives[2].text
         }));
     }
   }
