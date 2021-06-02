@@ -56,12 +56,11 @@
   border-bottom: {{objectivesStrikethroughSize}}px solid {{objectivesStrikethroughColor}};
   content: "";
   left: 0;
-  margin-top: calc({{objectivesStrikethroughSize}} / 2 * -1);
   margin-left: -10px;
   margin-right: -10px;
   position: absolute;
   right: 0;
-  top: 50%;
+  top: calc(50% - {{objectivesStrikethroughSize}} / 2);
 }
 
 .svg-container {
