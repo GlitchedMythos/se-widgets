@@ -4,6 +4,7 @@ const version = "3.0";
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
 // 1 is true
 // 0 is false
+
 const BANSHEE = "110001",
   DEMON = "011100",
   HANTU = "000111",
@@ -942,19 +943,20 @@ const updateNameDOM = (newName) => {
 const updateEvidenceDOM = (evidence) => {
   resetEvidenceDOM();
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
+    let evidenceDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`)
     switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
       case EVIDENCE_ON:
-        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("active");
+        evidenceDom.addClass("active");
         break;
       case EVIDENCE_IMPOSSIBLE:
-        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("impossible");
+        evidenceDom.addClass("impossible");
         break;
       case EVIDENCE_COMPLETE_IMPOSSIBLE:
-        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("impossible-completed");
+        evidenceDom.addClass("impossible-completed");
         break;
       case EVIDENCE_OFF:
       default:
-        $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).addClass("inactive");
+        evidenceDom.addClass("inactive");
         break;
     }
   }
@@ -962,10 +964,13 @@ const updateEvidenceDOM = (evidence) => {
 
 const resetEvidenceDOM = () => {
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("active");
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("inactive");
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible");
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass("impossible-completed");
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass(
+      [
+        "active",
+        "inactive",
+        "impossible",
+        "impossible-completed"
+      ])
   }
 };
 
@@ -975,20 +980,15 @@ const updateOptionalObjectivesDOM = (optionalObjectives) => {
 
   if (config.optionalObj.spacing === "justify-evenly") {
     updateOptionalObjectivesDOMEvenly(optionalObjectives);
-  } else {
-    if (optionalObjectives.length > 0) {
-      $("#optional-obj-container").removeClass("hidden");
-      $("#no-opt-objectives-container").addClass("hidden");
-
-      for (let i = 0; i < optionalObjectives.length; i++) {
-        $("#optional-obj-container").append(
-          `<div class="objective px-0.5${
-            optionalObjectives[i].strike ? " strikethrough" : ""
-          }" id="objective-${getNumberString(i + 1)}">${
-            optionalObjectives[i].text
-          }</div>`
-        );
-      }
+  } else if (optionalObjectives.length > 0) {
+    $("#optional-obj-container").removeClass("hidden");
+    $("#no-opt-objectives-container").addClass("hidden");
+    for (let i = 0; i < optionalObjectives.length; i++) {
+      $("#optional-obj-container").append($('<div>',{
+        class:`objective px-0.5 ${optionalObjectives[i].strike ? " strikethrough" : ""}`,
+        id:`objective-${getNumberString(i + 1)}`,
+        text:optionalObjectives[i].text,
+        }));
     }
   }
 };
@@ -999,25 +999,28 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
     $("#no-opt-objectives-container").addClass("hidden");
 
     if (optionalObjectives[0]) {
-      $("#optional-obj-container").append(
-        `<div class="objective w-1/3 text-left${
-          optionalObjectives[0].strike ? " strikethrough" : ""
-        }" id="objective-One">${optionalObjectives[0].text}</div>`
-      );
+      $("#optional-obj-container").append($('<div>',
+        {
+         class: `objective w-1/3 text-left${optionalObjectives[0].strike ? " strikethrough" : ""}`,
+          id:"objective-one",
+          text:optionalObjectives[0]
+        }));
     }
     if (optionalObjectives[1]) {
-      $("#optional-obj-container").append(
-        `<div class="objective w-1/3 text-center${
-          optionalObjectives[1].strike ? " strikethrough" : ""
-        }" id="objective-One">${optionalObjectives[1].text}</div>`
-      );
+      $("#optional-obj-container").append($('<div>',
+        {
+          class: `objective w-1/3 text-center${optionalObjectives[0].strike ? " strikethrough" : ""}`,
+          id:"objective-two",
+          text:optionalObjectives[1]
+        }));
     }
     if (optionalObjectives[2]) {
-      $("#optional-obj-container").append(
-        `<div class="objective w-1/3 text-right${
-          optionalObjectives[2].strike ? " strikethrough" : ""
-        }" id="objective-One">${optionalObjectives[2].text}</div>`
-      );
+      $("#optional-obj-container").append($('<div>',
+        {
+          class: `objective w-1/3 text-right${optionalObjectives[0].strike ? " strikethrough" : ""}`,
+          id:"objective-three",
+          text:optionalObjectives[2]
+        }));
     }
   }
 };
@@ -1047,19 +1050,21 @@ const setCounterNumber = (number) => {
   let num = parseInt(number);
 
   if (Number.isInteger(num)) {
-    $("#counter-number").html("" + num);
+    $("#counter-number").text("" + num);
   }
 };
 
 const incrementCounter = (num) => {
-  $("#counter-number").html(
-    parseInt($("#counter-number").text()) + (num ? num : 1)
+  let counter=$("#counter-number")
+  counter.text(
+    parseInt(counter.text()) + (num ? num : 1)
   );
 };
 
 const decrementCounter = (num) => {
-  $("#counter-number").html(
-    parseInt($("#counter-number").text()) - (num ? num : 1)
+  let counter=$("#counter-number")
+  counter.text(
+    parseInt(dom.text()) - (num ? num : 1)
   );
 };
 
