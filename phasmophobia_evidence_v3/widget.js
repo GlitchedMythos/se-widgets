@@ -88,7 +88,12 @@ let userState = {
   },
   conclusionString: "",
   ghostName: "",
-  optionalObjectives: [],
+  optionalObjectives: [
+    // {
+    //   text: objective,
+    //   strike: true/false
+    // }
+  ],
 };
 
 let config = {};
@@ -207,7 +212,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleOptionalObjective,
-        ["objective-one"]
+        [0, userState] // The position in array
       );
     },
     [fieldData["toggleOptObjTwoCommand"]]: (data) => {
@@ -215,7 +220,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleOptionalObjective,
-        ["objective-two"]
+        [1, userState] // The position in array
       );
     },
     [fieldData["toggleOptObjThreeCommand"]]: (data) => {
@@ -223,7 +228,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleOptionalObjective,
-        ["objective-three"]
+        [2, userState] // The position in array
       );
     },
     [fieldData["vipToggleOnCommand"]]: (data) => {
@@ -540,8 +545,8 @@ const _setOptionalObjectives = (command, state) => {
   }
 };
 
-const _toggleOptionalObjective = (objectiveID) => {
-  toggleStrikethrough(objectiveID);
+const _toggleOptionalObjective = (objectiveNumber, state) => {
+  toggleStrikethrough(objectiveNumber, state);
 };
 
 const _toggleVIPAccessibility = (canUseVIP) => {
@@ -611,7 +616,8 @@ const resetEvidence = (evidence) => {
 };
 
 const resetConclusion = (state) => {
-  state.conclusionString = config.conclusionStrings.zeroEvidenceConclusionString;
+  state.conclusionString =
+    config.conclusionStrings.zeroEvidenceConclusionString;
 };
 
 const calculateGhostEvidenceDisplay = (state) => {
@@ -755,9 +761,11 @@ const updateFullOptionalObjectives = (
 
 const determineConclusionMessage = (state) => {
   let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
-  let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(displayEvidenceString);
+  let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(
+    displayEvidenceString
+  );
 
-  let userEvidenceString =  createEvidenceString(state.evidence);
+  let userEvidenceString = createEvidenceString(state.evidence);
   let numberOfUserTrueEvidence = numOfTrueEvidenceInString(userEvidenceString);
 
   if (numOfDisplayTrueEvidence < 1 && numberOfUserTrueEvidence < 1) {
@@ -986,18 +994,9 @@ const resetOptionalDOM = () => {
   $("#no-opt-objectives-container").removeClass("hidden");
 };
 
-const toggleStrikethrough = (optionalID) => {
-  let optionalObj = $(`#${optionalID}`);
-  if (optionalObj) {
-    let classList = optionalObj.attr("class");
-    let classArray = classList.split(/\s+/);
-
-    if (classArray.includes("strikethrough")) {
-      optionalObj.removeClass("strikethrough");
-    } else {
-      optionalObj.addClass("strikethrough");
-    }
-  }
+const toggleStrikethrough = (optionalNumber, state) => {
+  state.optionalObjectives[optionalNumber].strike =
+    !state.optionalObjectives[optionalNumber].strike;
 };
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */
