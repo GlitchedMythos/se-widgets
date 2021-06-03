@@ -570,8 +570,7 @@ const _setMapName = (command, state) => {
 };
 
 const _setDiffName = (command, state) => {
-  commandArgument = command.split(" ");
-  commandArgument = (commandArgument[1]) ? commandArgument[1] : commandArgument[0];
+  commandArgument = (command.length > 1) ? command.split(" ").slice(1).join(" ") : command;
   state.map.mapDiff = getDifficultyString(commandArgument);
 };
 
