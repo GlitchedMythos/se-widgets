@@ -11,6 +11,8 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Name Reset | !gr | Reset the ghost |
 | Name Reset| !gr "name" | Reset the ghost with the name |
 | Name Input | !gn "name" | Change name to "name" |
+| Map Input | !gm "map" | Set the map name. Replace with a command from the map list below |
+| Difficulty Input | !gd "difficulty" | Set the map name. Replace with a command from the map list below |
 | Toggle EMF | !ge | Change EMF to opposite of current state |
 | Toggle Spirit Box | !gs | Change Spirit Box to opposite of current state |
 | Toggle Fingerprints | !gf | Change Fingerprints to opposite of current state |
@@ -57,6 +59,45 @@ Individual Objectives can be used and can be toggled on and off
 To get `Smudge`
 
     !oo sm
+
+# Map Names and Difficulties
+
+| Map | Possible Phrases |
+|--|--|
+| Tanglewood | "ta" "tangle" "tanglewood" |
+| Edgefield | "ed" "edge" "edgefield" |
+| Ridgeview | "ri" "ridge" "ridgeview" |
+| Grafton | "gr" "grafton" |
+| Bleasdale | "bl" "bleasdale" |
+| High School | "hi" "hs" "high" "school" "brown" "brownstone" |
+| Prison | "pr" "prison" |
+| Asylum | "as" "asylum" |
+
+| Difficulty | Possible Phrases |
+|--|--|
+| Amateur | "a" "am" "amateur" |
+| Intermediate | "i" "int" "intermediate" |
+| Professional | "p" "pro" "professional" |
+
+## Example Usage:
+
+To get `Grafton Farmhouse`
+
+    !gm gr
+
+To get `Brownstone High School`
+
+    !gm school
+
+To get `Professional` Difficulty
+
+    !gd pro
+
+Both Map and Difficulty can be combined in one map command
+
+To get `Asylum Intermediate`
+
+    !gm as i
 
 # How to Add to StreamElements?!?
 
