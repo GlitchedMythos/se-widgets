@@ -667,9 +667,14 @@ const _glitchedMythos = (command) => {
 /*******************************************************
  *                  LOGIC FUNCTIONS                    *
  *******************************************************/
-const resetGhost = (newName, state) => {
+const resetGhost = (newGhost, state) => {
+  let thisGhost = (newGhost) ? newGhost.split(" ") : null;
+  let newName = (thisGhost && thisGhost.length > 0) ? 
+    thisGhost.slice(0,2).join(" ") : null;
+  let newMap = (thisGhost && thisGhost.length > 2) ? 
+    thisGhost.slice(2,4) : null;
   resetName(newName, state);
-  resetMapName(state);
+  resetMapName(newMap, state);
   resetEvidence(state.evidence);
   resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
@@ -680,10 +685,12 @@ const resetName = (newName, state) => {
   state.ghostName = newName;
 };
 
-const resetMapName = (state) => {
-  state.map.mapName =
+const resetMapName = (newMap, state) => {
+  state.map.mapName = (newMap && newMap.length > 0) ? 
+    getMapNameString(newMap[0]) : 
     config.mapNameStrings.noMapString;
-  state.map.mapDiff = "";
+  state.map.mapDiff = (newMap && newMap.length > 1) ? 
+    getDifficultyString(newMap[1]) : "";
 };
 
 const resetOptionalObjectives = (optionalObjectives, state) => {
