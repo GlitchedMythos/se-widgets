@@ -216,3 +216,8 @@
   font-size: {{counterFontSize}}px;
   color: {{counterFontColor}};
 }
+
+.map-theme {
+  font-size: {{mapFontSize}}px;
+  color: {{mapFontColor}};
+}

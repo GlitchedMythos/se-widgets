@@ -46,6 +46,44 @@ const OPTIONAL_OBJECTIVES = {
   smudge: "Smudge",
 };
 
+const MAP_LOCATIONS = {
+  ta: "Tanglewood Street House",
+  tangle: "Tanglewood Street House",
+  tanglewood: "Tanglewood Street House",
+  ed: "Edgefield Street House",
+  edge: "Edgefield Street House",
+  edgefield: "Edgefield Street House",
+  ri: "Ridgeview Road House",
+  ridge: "Ridgeview Road House",
+  ridgeview: "Ridgeview Road House",
+  gr: "Grafton Farmhouse",
+  grafton: "Grafton Farmhouse",
+  bl: "Bleasdale Farmhouse",
+  bleasdale: "Bleasdale Farmhouse",
+  hi: "Brownstone High School",
+  hs: "Brownstone High School",
+  high: "Brownstone High School",
+  school: "Brownstone High School",
+  brown: "Brownstone High School",
+  brownstone: "Brownstone High School",
+  pr: "Prison",
+  prison: "Prison",
+  as: "Asylum",
+  asylum: "Asylum",
+};
+
+const MAP_DIFFICULTY = {
+  a: "Amateur",
+  am: "Amateur",
+  amateur: "Amateur",
+  i: "Intermediate",
+  int: "Intermediate",
+  intermediate: "Intermediate",
+  p: "Professional",
+  pro: "Professional",
+  professional: "Professional",
+};
+
 // Constants for displaying evidence on the widget
 const EVIDENCE_OFF = 0,
   EVIDENCE_ON = 1,
@@ -89,6 +127,10 @@ let userState = {
   },
   conclusionString: "",
   ghostName: "",
+  map: {
+    mapName: "",
+    mapDiff: "",
+  },
   optionalObjectives: [
     // {
     //   text: objective,
@@ -155,6 +197,22 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _setGhostName,
+        [data.text, userState]
+      );
+    },
+    [fieldData["mapNameCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setMapName,
+        [data.text, userState]
+      );
+    },
+    [fieldData["mapDiffCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setDiffName,
         [data.text, userState]
       );
     },
@@ -409,6 +467,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
       ? fieldData["ghostNameString"]
       : "Name: [name]",
   };
+  config.mapNameStrings = {
+    noMapString: fieldData["noMapString"]
+      ? fieldData["noMapString"]
+      : "No Map Selected...",
+  };
   config.optionalObj = {
     noOptionalString: fieldData["noOptionalObjectivesMessage"],
     spacing: fieldData["objectivesSpacing"],
@@ -418,6 +481,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
 
   // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
+  let displayMap = fieldData["displayMap"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
   let displayOptionalObjectives =
     fieldData["displayOptionalObjectives"] === "yes" ? true : false;
@@ -427,7 +491,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
   if (!displayName) {
     $(`#name`).addClass("hidden");
   }
-
+  
+  if (!displayMap) {
+    $(`#map-container`).addClass("hidden");
+  }
+  
   if (!displayCounter) {
     $(`#counter-container`).addClass("hidden");
   }
@@ -472,8 +540,8 @@ window.addEventListener("onEventReceived", function (obj) {
   // Check if a matching command
   let givenCommand = data.text.split(" ")[0];
 
-  if (config.commands[givenCommand]) {
-    config.commands[givenCommand](data);
+  if (config.commands[givenCommand.toLowerCase()]) {
+    config.commands[givenCommand.toLowerCase()](data);
   } else {
     console.log("No command exists");
   }
@@ -494,6 +562,17 @@ const _resetGhost = (command, state) => {
 
 const _setGhostName = (command, state) => {
   state.ghostName = command.split(" ").slice(1).join(" ");
+};
+
+const _setMapName = (command, state) => {
+  commandArgument = command.split(" ").slice(1).join(" ");
+  state.map.mapName = getMapNameString(commandArgument);
+};
+
+const _setDiffName = (command, state) => {
+  commandArgument = command.split(" ");
+  commandArgument = (commandArgument[1]) ? commandArgument[1] : commandArgument[0];
+  state.map.mapDiff = getDifficultyString(commandArgument);
 };
 
 const _toggleEMF = (state) => {
@@ -590,6 +669,7 @@ const _glitchedMythos = (command) => {
  *******************************************************/
 const resetGhost = (newName, state) => {
   resetName(newName, state);
+  resetMapName(state);
   resetEvidence(state.evidence);
   resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
@@ -598,6 +678,12 @@ const resetGhost = (newName, state) => {
 
 const resetName = (newName, state) => {
   state.ghostName = newName;
+};
+
+const resetMapName = (state) => {
+  state.map.mapName =
+    config.mapNameStrings.noMapString;
+  state.map.mapDiff = "";
 };
 
 const resetOptionalObjectives = (optionalObjectives, state) => {
@@ -806,6 +892,16 @@ const toggleEvidence = (evidence) => {
   return evidence;
 };
 
+const getMapNameString = (map) => {
+  let mapSplit = map.split(' ');
+  if (mapSplit[1]) { _setDiffName(mapSplit[1], userState); }
+  updateMapName(MAP_LOCATIONS[mapSplit[0].toLowerCase()]);
+};
+
+const getDifficultyString = (difficulty) => {
+  updateMapDiff(MAP_DIFFICULTY[difficulty.toLowerCase()]);
+};
+
 const toggleVIPAccessibility = (canUseVIP) => {
   if (canUseVIP !== undefined && canUseVIP !== null) {
     config.allowVIPS = canUseVIP;
@@ -922,6 +1018,8 @@ const getNumberString = (num) => {
 
 const updateDashboardDOM = (state) => {
   updateNameDOM(state.ghostName);
+  updateMapName(state.map.mapName);
+  updateMapDiff(state.map.mapDiff);
   updateEvidenceDOM(state.evidenceDisplay);
   updateOptionalObjectivesDOM(state.optionalObjectives);
   updateConclusion(state.conclusionString);
@@ -1035,6 +1133,15 @@ const toggleStrikethrough = (optionalNumber, state) => {
   state.optionalObjectives[optionalNumber].strike =
     !state.optionalObjectives[optionalNumber].strike;
 };
+
+/** MAP RELATED DOM MANIPULATING FUNCTIONS */
+const updateMapName = (map) => {
+  $("#map-name").html(map);
+};
+
+const updateMapDiff = (diff) => {
+  $("#map-difficulty").html(diff);
+}
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */
 const updateConclusion = (conclusion) => {

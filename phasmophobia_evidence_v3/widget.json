@@ -11,6 +11,18 @@
     "value": "!gn",
     "group": "Commands"
   },
+  "mapNameCommand": {
+    "type": "string",
+    "label": "Set Map Command",
+    "value": "!gm",
+    "group": "Commands"
+  },
+  "mapDiffCommand": {
+    "type": "string",
+    "label": "Set Difficulty Command",
+    "value": "!gd",
+    "group": "Commands"
+  },
   "emfCommand": {
     "type": "string",
     "label": "EMF Toggle Command",
@@ -117,6 +129,16 @@
     },
     "group": "Optionals"
   },
+  "displayMap": {
+    "type": "dropdown",
+    "label": "Display Map Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",
@@ -199,6 +221,18 @@
     "type": "number",
     "label": "Name Font Size",
     "value": "16",
+    "group": "Theming"
+  },
+  "mapFontColor": {
+    "type": "colorpicker",
+    "label": "Map Name Color",
+    "value": "rgba(192,192,192,1)",
+    "group": "Theming"
+  },
+  "mapFontSize": {
+    "type": "number",
+    "label": "Map Name Font Size",
+    "value": "24",
     "group": "Theming"
   },
   "conclusionColor": {
@@ -431,6 +465,12 @@
     "label": "Ghost Name: [name]",
     "value": "Name: [name]",
     "group": "Name Messages"
+  },
+  "noMapString": {
+    "type": "text",
+    "label": "No Map Selected",
+    "value": "No Map Selected...",
+    "group": "Map Messages"
   },
   "counterDefaultString": {
     "type": "text",
