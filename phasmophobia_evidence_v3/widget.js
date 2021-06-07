@@ -200,6 +200,22 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState]
       );
     },
+    [fieldData["firstnameCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setGhostName,
+        [data.text, userState]
+      );
+    },
+    [fieldData["surnameCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setGhostSurName,
+        [data.text, userState]
+      );
+    },
     [fieldData["mapNameCommand"]]: (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
@@ -466,6 +482,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     ghostNameString: fieldData["ghostNameString"]
       ? fieldData["ghostNameString"]
       : "Name: [name]",
+    autoCapitalize: fieldData["autoCapitalize"]==="yes" ? true : false,
   };
   config.mapNameStrings = {
     noMapString: fieldData["noMapString"]
@@ -561,7 +578,37 @@ const _resetGhost = (command, state) => {
 };
 
 const _setGhostName = (command, state) => {
-  state.ghostName = command.split(" ").slice(1).join(" ");
+  fullName = "";
+  enteredName = command.split(" ").slice(1).join(" ");
+  if (enteredName) {
+    if (config.nameStrings.autoCapitalize) {
+      nameSplit = enteredName.split(" ");
+      for (let i = 0; i < nameSplit.length; i++) {
+        nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substr(1).toLowerCase();
+      }
+      fullName = nameSplit.join(" ");
+    } else {
+      fullName = command.split(" ").slice(1).join(" ");
+    }
+  }
+  state.ghostName = fullName;
+};
+
+const _setGhostSurName = (command, state) => {
+  fullName = state.ghostName.split(" ")[0];
+  enteredName = command.split(" ").slice(1).join(" ");
+  if (enteredName) {
+    if (config.nameStrings.autoCapitalize) {
+      nameSplit = enteredName.split(" ");
+      for (let i = 0; i < nameSplit.length; i++) {
+        nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substr(1).toLowerCase();
+      }
+      fullName = fullName + " " + nameSplit.join(" ");
+    } else {
+      fullName = fullName + " " + command.split(" ").slice(1).join(" ");
+    }
+  }
+  state.ghostName = fullName;
 };
 
 const _setMapName = (command, state) => {
@@ -677,7 +724,19 @@ const resetGhost = (newName, state) => {
 };
 
 const resetName = (newName, state) => {
-  state.ghostName = newName;
+  fullName = "";
+  if (newName) {
+    if (config.nameStrings.autoCapitalize) {
+      nameSplit = newName.split(" ");
+      for (let i = 0; i < nameSplit.length; i++) {
+        nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substr(1).toLowerCase();
+      }
+      fullName = nameSplit.join(" ");
+    } else {
+      fullName = newName;
+    }
+  }
+  state.ghostName = fullName;
 };
 
 const resetMapName = (state) => {
