@@ -11,6 +11,18 @@
     "value": "!gn",
     "group": "Commands"
   },
+  "firstnameCommand": {
+    "type": "string",
+    "label": "First Name Input Command",
+    "value": "!gfn",
+    "group": "Commands"
+  },
+  "surnameCommand": {
+    "type": "string",
+    "label": "Surname Input Command",
+    "value": "!gsn",
+    "group": "Commands"
+  },
   "mapNameCommand": {
     "type": "string",
     "label": "Set Map Command",
@@ -122,6 +134,16 @@
   "displayName": {
     "type": "dropdown",
     "label": "Display Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "autoCapitalize": {
+    "type": "dropdown",
+    "label": "Auto Capitalize Name",
     "value": "yes",
     "options": {
       "yes": "Yes",
