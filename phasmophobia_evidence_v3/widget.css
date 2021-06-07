@@ -60,7 +60,7 @@
   margin-right: -10px;
   position: absolute;
   right: 0;
-  top: calc(50% - {{objectivesStrikethroughSize}} / 2);
+  top: calc(50% - {{objectivesStrikethroughSize}}px / 2);
 }
 
 .svg-container {
