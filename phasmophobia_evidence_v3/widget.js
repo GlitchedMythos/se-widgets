@@ -669,9 +669,9 @@ const _glitchedMythos = (command) => {
  *******************************************************/
 const resetGhost = (newGhost, state) => {
   let thisGhost = (newGhost) ? newGhost.split(" ") : null;
-  let newName = (thisGhost && thisGhost.length > 0) ? 
+  let newName = (thisGhost && thisGhost.length > 0) ?
     thisGhost.slice(0,2).join(" ") : null;
-  let newMap = (thisGhost && thisGhost.length > 2) ? 
+  let newMap = (thisGhost && thisGhost.length > 2) ?
     thisGhost.slice(2,4) : null;
   resetName(newName, state);
   resetMapName(newMap, state);
@@ -686,10 +686,10 @@ const resetName = (newName, state) => {
 };
 
 const resetMapName = (newMap, state) => {
-  state.map.mapName = (newMap && newMap.length > 0) ? 
-    getMapNameString(newMap[0]) : 
+  state.map.mapName = (newMap && newMap.length > 0) ?
+    getMapNameString(newMap[0]) :
     config.mapNameStrings.noMapString;
-  state.map.mapDiff = (newMap && newMap.length > 1) ? 
+  state.map.mapDiff = (newMap && newMap.length > 1) ?
     getDifficultyString(newMap[1]) : "";
 };
 
