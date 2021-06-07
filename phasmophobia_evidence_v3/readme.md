@@ -11,6 +11,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Name Reset | !gr | Reset the ghost |
 | Name Reset| !gr "name" | Reset the ghost with the name |
 | Name Input | !gn "name" | Change name to "name" |
+| Name Input<br />(Stream Deck) | !gfn "name"<br />!gsn "name" | Change either first or last name to "name" |
 | Map Input | !gm "map" | Set the map name. Replace with a command from the map list below |
 | Difficulty Input | !gd "difficulty" | Set the map name. Replace with a command from the map list below |
 | Toggle EMF | !ge | Change EMF to opposite of current state |
