@@ -671,10 +671,23 @@ const _glitchedMythos = (command) => {
  *******************************************************/
 const resetGhost = (newGhost, state) => {
   let thisGhost = (newGhost) ? newGhost.split(" ") : null;
-  let newName = (thisGhost && thisGhost.length > 0) ?
-    thisGhost.slice(0,2).join(" ") : null;
-  let newMap = (thisGhost && thisGhost.length > 2) ?
-    thisGhost.slice(2,4) : null;
+  let newName = null;
+  let newMap = null;
+  if (newGhost) {
+    newName = thisGhost.slice(0,-2);
+    let mapCheck = thisGhost.slice(-2);
+    newMap = [];
+    for (let i = 0; i < mapCheck.length; i++) {
+      if ((MAP_LOCATIONS[mapCheck[i]]) || (MAP_DIFFICULTY[mapCheck[i]])) {
+        newMap.push(mapCheck[i]);
+      } else {
+        newName.push(mapCheck[i]);
+      }
+    }
+    newName = (newName.length>0) ? newName.join(" ") : null;
+    newMap = (newMap.length>0) ? newMap : null;
+  }
+  
   resetName(newName, state);
   resetMapName(newMap, state);
   resetEvidence(state.evidence);
@@ -688,15 +701,14 @@ const resetName = (newName, state) => {
 };
 
 const resetMapName = (newMap, state) => {
-  state.map.mapName = (newMap && newMap.length > 0) ?
-    getMapNameString(newMap[0]) :
-    config.mapNameStrings.noMapString;
-  if (newMap && newMap.length > 1) {
-    _setDiffName(newMap[1], state);
-  }
   if (newMap) {
+    state.map.mapName = getMapNameString(newMap[0]);
     $("#map-difficulty").removeClass("hidden");
+    if (newMap[1]) {
+      _setDiffName(newMap[1], state);
+    }
   } else {
+    state.map.mapName = config.mapNameStrings.noMapString;
     $("#map-difficulty").addClass("hidden");
   }
 };
