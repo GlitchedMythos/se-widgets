@@ -139,6 +139,18 @@
     },
     "group": "Optionals"
   },
+  "defaultMapDiff": {
+    "type": "dropdown",
+    "label": "Default Map Difficulty",
+    "value": "p",
+    "options": {
+      "p": "Professional",
+      "i": "Intermediate",
+      "a": "Amateur",
+      "": "None Set"
+    },
+    "group": "Optionals"
+  },
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",
