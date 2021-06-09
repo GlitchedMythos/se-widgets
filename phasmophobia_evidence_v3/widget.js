@@ -528,6 +528,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
 
   userState.conclusionString =
     config.conclusionStrings.zeroEvidenceConclusionString;
+  userState.map.mapDiff = (fieldData["defaultMapDiff"]) ? getDifficultyString(fieldData["defaultMapDiff"]) : "";
 
   resetGhost(null, userState);
   updateDashboardDOM(userState);
@@ -567,6 +568,7 @@ const _setGhostName = (command, state) => {
 const _setMapName = (command, state) => {
   commandArgument = command.split(" ").slice(1).join(" ");
   state.map.mapName = getMapNameString(commandArgument);
+  $("#map-difficulty").removeClass("hidden");
 };
 
 const _setDiffName = (command, state) => {
@@ -689,8 +691,14 @@ const resetMapName = (newMap, state) => {
   state.map.mapName = (newMap && newMap.length > 0) ?
     getMapNameString(newMap[0]) :
     config.mapNameStrings.noMapString;
-  state.map.mapDiff = (newMap && newMap.length > 1) ?
-    getDifficultyString(newMap[1]) : "";
+  if (newMap && newMap.length > 1) {
+    _setDiffName(newMap[1], state);
+  }
+  if (newMap) {
+    $("#map-difficulty").removeClass("hidden");
+  } else {
+    $("#map-difficulty").addClass("hidden");
+  }
 };
 
 const resetOptionalObjectives = (optionalObjectives, state) => {
