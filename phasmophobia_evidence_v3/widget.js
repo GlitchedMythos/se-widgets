@@ -204,7 +204,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
-        _setGhostName,
+        _setGhostFirstName,
         [data.text, userState]
       );
     },
@@ -578,37 +578,28 @@ const _resetGhost = (command, state) => {
 };
 
 const _setGhostName = (command, state) => {
-  fullName = "";
   enteredName = command.split(" ").slice(1).join(" ");
-  if (enteredName) {
-    if (config.nameStrings.autoCapitalize) {
-      nameSplit = enteredName.split(" ");
-      for (let i = 0; i < nameSplit.length; i++) {
-        nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substr(1).toLowerCase();
-      }
-      fullName = nameSplit.join(" ");
-    } else {
-      fullName = command.split(" ").slice(1).join(" ");
-    }
-  }
-  state.ghostName = fullName;
+  state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(enteredName) : enteredName; 
+};
+
+const _setGhostFirstName = (command, state) => {
+  enteredName = command.split(" ").slice(1).join(" ");
+  currentName = (state.ghostName) ? state.ghostName.split(" ") : "";
+  newName = (currentName[1]) ? enteredName + " " + currentName.slice(1).join(" ") : enteredName;
+  state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName;
 };
 
 const _setGhostSurName = (command, state) => {
-  fullName = state.ghostName.split(" ")[0];
   enteredName = command.split(" ").slice(1).join(" ");
-  if (enteredName) {
-    if (config.nameStrings.autoCapitalize) {
-      nameSplit = enteredName.split(" ");
-      for (let i = 0; i < nameSplit.length; i++) {
-        nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substr(1).toLowerCase();
-      }
-      fullName = fullName + " " + nameSplit.join(" ");
-    } else {
-      fullName = fullName + " " + command.split(" ").slice(1).join(" ");
-    }
+  currentName = (state.ghostName) ? state.ghostName.split(" ") : "";
+  if (currentName[1]) {
+    newName = currentName.slice(0,-1).join(" ") + " " + enteredName;
+  } else if (currentName[0]) {
+    newName = currentName[0] + " " + enteredName;
+  } else {
+    newName = enteredName;
   }
-  state.ghostName = fullName;
+  state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName;
 };
 
 const _setMapName = (command, state) => {
@@ -724,19 +715,7 @@ const resetGhost = (newName, state) => {
 };
 
 const resetName = (newName, state) => {
-  fullName = "";
-  if (newName) {
-    if (config.nameStrings.autoCapitalize) {
-      nameSplit = newName.split(" ");
-      for (let i = 0; i < nameSplit.length; i++) {
-        nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substr(1).toLowerCase();
-      }
-      fullName = nameSplit.join(" ");
-    } else {
-      fullName = newName;
-    }
-  }
-  state.ghostName = fullName;
+  state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName; 
 };
 
 const resetMapName = (state) => {
@@ -953,13 +932,18 @@ const toggleEvidence = (evidence) => {
 
 const getMapNameString = (map) => {
   let mapSplit = map.split(' ');
-  if (mapSplit[1]) { _setDiffName(mapSplit[1], userState); }
+  if (mapSplit[1]) { _setDiffName(mapSplit[1].toLowerCase(), userState); }
   updateMapName(MAP_LOCATIONS[mapSplit[0].toLowerCase()]);
 };
 
 const getDifficultyString = (difficulty) => {
   updateMapDiff(MAP_DIFFICULTY[difficulty.toLowerCase()]);
 };
+
+// Returns each first character capitalized
+const camelCase = (sentence) => {
+  return sentence.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+}
 
 const toggleVIPAccessibility = (canUseVIP) => {
   if (canUseVIP !== undefined && canUseVIP !== null) {
