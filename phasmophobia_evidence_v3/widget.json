@@ -173,6 +173,26 @@
     },
     "group": "Optionals"
   },
+  "displayBoner": {
+    "type": "dropdown",
+    "label": "Display Boner",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayOuija": {
+    "type": "dropdown",
+    "label": "Display Ouija",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",

@@ -512,6 +512,8 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
   let displayLocation = fieldData["displayLocation"] === "yes" ? true : false;
+  let displayBoner = fieldData["displayBoner"] === "yes" ? true : false;
+  let displayOuija = fieldData["displayOuija"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
   let displayOptionalObjectives =
     fieldData["displayOptionalObjectives"] === "yes" ? true : false;
@@ -524,6 +526,17 @@ window.addEventListener("onWidgetLoad", function (obj) {
   
   if (!displayLocation) {
     $(`#location-container`).addClass("hidden");
+  }
+
+  if(!displayBoner && !displayOuija) {
+    $(`#location-optionals`).addClass("hidden");
+  } else {
+    if(!displayBoner) {
+      $(`#boner-svg-container`).addClass("hidden");
+    }
+    if(!displayOuija) {
+      $(`#ouija-svg-container`).addClass("hidden");
+    }
   }
   
   if (!displayCounter) {
