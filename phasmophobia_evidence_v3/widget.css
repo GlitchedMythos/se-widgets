@@ -68,6 +68,34 @@
   padding: 0 0.25rem;
 }
 
+.boner-svg-container {
+  height: {{bonerIconHeight}}px;
+  width: {{bonerIconHeight}}px;
+  margin-left: 10px;
+}
+
+.boner-inactive {
+  fill: {{bonerIconInactiveColor}};
+}
+
+.boner-active {
+  fill: {{bonerIconActiveColor}};
+}
+
+.ouija-svg-container {
+  height: {{ouijaIconHeight}}px;
+  width: {{ouijaIconHeight}}px;
+  margin-left: 10px;
+}
+
+.ouija-inactive {
+  fill: {{ouijaIconInactiveColor}};
+}
+
+.ouija-active {
+  fill: {{ouijaIconActiveColor}};
+}
+
 .divider-color > * + * {
   border-color: {{dividerColor}} ;
 }

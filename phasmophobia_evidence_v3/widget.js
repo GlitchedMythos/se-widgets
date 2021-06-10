@@ -107,7 +107,9 @@ const PERMISSION_GLITCHED = 0,
 
 // TODO: Move all widget and user state to here
 let userState = {
+  boner: false,
   channelName: "",
+  conclusionString: "",
   counter: 0,
   evidence: {
     emf: EVIDENCE_OFF,
@@ -125,7 +127,6 @@ let userState = {
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
   },
-  conclusionString: "",
   ghostName: "",
   location: {
     locationName: "",
@@ -138,6 +139,7 @@ let userState = {
     //   strike: true/false
     // }
   ],
+  ouija: false
 };
 
 let config = {};
@@ -232,6 +234,16 @@ window.addEventListener("onWidgetLoad", function (obj) {
         _setDiffName,
         [data.text, userState]
       );
+    },
+    [fieldData["bonerCommand"]]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleBoner, [
+        userState,
+      ]);
+    },
+    [fieldData["ouijaCommand"]]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleOuija, [
+        userState,
+      ]);
     },
     [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
@@ -613,6 +625,14 @@ const _setDiffName = (command, state) => {
   commandArgument = (commandArgument[1]) ? commandArgument[1] : commandArgument[0];
   state.location.locationDiff = getDifficultyString(commandArgument);
 };
+
+const _toggleBoner = (state) => {
+  state.boner = !state.boner;
+}
+
+const _toggleOuija = (state) => {
+  state.ouija = !state.ouija;
+}
 
 const _toggleEMF = (state) => {
   state.evidence.emf = toggleEvidence(state.evidence.emf);
@@ -1066,6 +1086,8 @@ const updateDashboardDOM = (state) => {
   updateNameDOM(state.ghostName);
   updateLocationName(state.location.locationName);
   updateLocationDiff(state.location.locationDiff);
+  updateBoner(state.boner);
+  updateOuija(state.ouija);
   updateEvidenceDOM(state.evidenceDisplay);
   updateOptionalObjectivesDOM(state.optionalObjectives);
   updateConclusion(state.conclusionString);
@@ -1187,6 +1209,22 @@ const updateLocationName = (location) => {
 
 const updateLocationDiff = (diff) => {
   $("#location-difficulty").html(diff);
+}
+
+const updateBoner = (boner) => {
+  $(`#boner`).removeClass([
+    "boner-active",
+    "boner-inactive"
+  ]);
+  $(`#boner`).addClass(boner ? "boner-active" : "boner-inactive");
+}
+
+const updateOuija = (ouija) => {
+  $(`#ouija`).removeClass([
+    "ouija-active",
+    "ouija-inactive"
+  ]);
+  $(`#ouija`).addClass(ouija ? "ouija-active" : "ouija-inactive");
 }
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */

@@ -35,6 +35,18 @@
     "value": "!gd",
     "group": "Commands"
   },
+  "bonerCommand": {
+    "type": "string",
+    "label": "Set Boner Command",
+    "value": "!boner",
+    "group": "Commands"
+  },
+  "ouijaCommand": {
+    "type": "string",
+    "label": "Set Ouija Command",
+    "value": "!ouija",
+    "group": "Commands"
+  },
   "emfCommand": {
     "type": "string",
     "label": "EMF Toggle Command",
@@ -220,6 +232,56 @@
       "no": "No"
     },
     "group": "Optionals"
+  },
+  "locationSpacing": {
+    "type": "dropdown",
+    "label": "Choose a spacing type for location bar:",
+    "value": "justify-around",
+    "options": {
+      "justify-start": "Left Align",
+      "justify-end": "Right Align",
+      "justify-center": "Center Align",
+      "justify-between": "Space Between",
+      "justify-around": "Space Around",
+      "justify-evenly": "Space Evenly"
+    },
+    "group": "Bars - Location"
+  },
+  "bonerIconHeight": {
+    "type": "number",
+    "label": "Boner Icon Height",
+    "value": "35",
+    "group": "Bars - Location"
+  },
+  "bonerIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Boner Inactive Color",
+    "value": "rgba(255, 255, 255, 1)",
+    "group": "Bars - Location"
+  },
+  "bonerIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Boner Inactive Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Bars - Location"
+  },
+  "ouijaIconHeight": {
+    "type": "number",
+    "label": "Ouija Icon Height",
+    "value": "35",
+    "group": "Bars - Location"
+  },
+  "ouijaIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Ouija Inactive Color",
+    "value": "rgba(255, 255 , 255, 1)",
+    "group": "Bars - Location"
+  },
+  "ouijaIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Ouija Inactive Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Bars - Location"
   },
   "backgroundColor": {
     "type": "colorpicker",
