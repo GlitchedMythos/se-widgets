@@ -46,33 +46,33 @@ const OPTIONAL_OBJECTIVES = {
   smudge: "Smudge",
 };
 
-const MAP_LOCATIONS = {
-  ta: "Tanglewood Street House",
-  tangle: "Tanglewood Street House",
-  tanglewood: "Tanglewood Street House",
-  ed: "Edgefield Street House",
-  edge: "Edgefield Street House",
-  edgefield: "Edgefield Street House",
-  ri: "Ridgeview Road House",
-  ridge: "Ridgeview Road House",
-  ridgeview: "Ridgeview Road House",
-  gr: "Grafton Farmhouse",
-  grafton: "Grafton Farmhouse",
-  bl: "Bleasdale Farmhouse",
-  bleasdale: "Bleasdale Farmhouse",
-  hi: "Brownstone High School",
-  hs: "Brownstone High School",
-  high: "Brownstone High School",
-  school: "Brownstone High School",
-  brown: "Brownstone High School",
-  brownstone: "Brownstone High School",
+const LOCATIONS = {
+  ta: "Tanglewood",
+  tangle: "Tanglewood",
+  tanglewood: "Tanglewood",
+  ed: "Edgefield",
+  edge: "Edgefield",
+  edgefield: "Edgefield",
+  ri: "Ridgeview",
+  ridge: "Ridgeview",
+  ridgeview: "Ridgeview",
+  gr: "Grafton",
+  grafton: "Grafton",
+  bl: "Bleasdale",
+  bleasdale: "Bleasdale",
+  hi: "High School",
+  hs: "High School",
+  high: "High School",
+  school: "High School",
+  brown: "High School",
+  brownstone: "High School",
   pr: "Prison",
   prison: "Prison",
   as: "Asylum",
   asylum: "Asylum",
 };
 
-const MAP_DIFFICULTY = {
+const DIFFICULTY = {
   a: "Amateur",
   am: "Amateur",
   amateur: "Amateur",
@@ -127,11 +127,12 @@ let userState = {
   },
   conclusionString: "",
   ghostName: "",
-  map: {
-    mapName: "",
-    mapDiff: "",
+  location: {
+    locationName: "",
+    locationDiff: "",
   },
   optionalObjectives: [
+    // Object Format:
     // {
     //   text: objective,
     //   strike: true/false
@@ -216,15 +217,15 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData["mapNameCommand"]]: (data) => {
+    [fieldData["locationNameCommand"]]: (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
-        _setMapName,
+        _setLocationName,
         [data.text, userState]
       );
     },
-    [fieldData["mapDiffCommand"]]: (data) => {
+    [fieldData["locationDiffCommand"]]: (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -484,9 +485,9 @@ window.addEventListener("onWidgetLoad", function (obj) {
       : "Name: [name]",
     autoCapitalize: fieldData["autoCapitalize"]==="yes" ? true : false,
   };
-  config.mapNameStrings = {
-    noMapString: fieldData["noMapString"]
-      ? fieldData["noMapString"]
+  config.locationNameStrings = {
+    noLocationString: fieldData["noLocationString"]
+      ? fieldData["noLocationString"]
       : "No Map Selected...",
   };
   config.optionalObj = {
@@ -498,7 +499,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
 
   // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
-  let displayMap = fieldData["displayMap"] === "yes" ? true : false;
+  let displayLocation = fieldData["displayLocation"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
   let displayOptionalObjectives =
     fieldData["displayOptionalObjectives"] === "yes" ? true : false;
@@ -509,8 +510,8 @@ window.addEventListener("onWidgetLoad", function (obj) {
     $(`#name`).addClass("hidden");
   }
   
-  if (!displayMap) {
-    $(`#map-container`).addClass("hidden");
+  if (!displayLocation) {
+    $(`#location-container`).addClass("hidden");
   }
   
   if (!displayCounter) {
@@ -602,15 +603,15 @@ const _setGhostSurName = (command, state) => {
   state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName;
 };
 
-const _setMapName = (command, state) => {
+const _setLocationName = (command, state) => {
   commandArgument = command.split(" ").slice(1).join(" ");
-  state.map.mapName = getMapNameString(commandArgument);
+  state.location.locationName = getLocationNameString(commandArgument);
 };
 
 const _setDiffName = (command, state) => {
   commandArgument = command.split(" ");
   commandArgument = (commandArgument[1]) ? commandArgument[1] : commandArgument[0];
-  state.map.mapDiff = getDifficultyString(commandArgument);
+  state.location.locationDiff = getDifficultyString(commandArgument);
 };
 
 const _toggleEMF = (state) => {
@@ -707,7 +708,7 @@ const _glitchedMythos = (command) => {
  *******************************************************/
 const resetGhost = (newName, state) => {
   resetName(newName, state);
-  resetMapName(state);
+  resetLocationName(state);
   resetEvidence(state.evidence);
   resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
@@ -720,10 +721,10 @@ const resetName = (newName, state) => {
   }
 };
 
-const resetMapName = (state) => {
-  state.map.mapName =
-    config.mapNameStrings.noMapString;
-  state.map.mapDiff = "";
+const resetLocationName = (state) => {
+  state.location.locationName =
+    config.locationNameStrings.noLocationString;
+  state.location.locationDiff = "";
 };
 
 const resetOptionalObjectives = (optionalObjectives, state) => {
@@ -932,14 +933,14 @@ const toggleEvidence = (evidence) => {
   return evidence;
 };
 
-const getMapNameString = (map) => {
-  let mapSplit = map.split(' ');
-  if (mapSplit[1]) { _setDiffName(mapSplit[1].toLowerCase(), userState); }
-  updateMapName(MAP_LOCATIONS[mapSplit[0].toLowerCase()]);
+const getLocationNameString = (location) => {
+  let locationSplit = location.split(' ');
+  if (locationSplit[1]) { _setDiffName(locationSplit[1].toLowerCase(), userState); }
+  updateLocationName(LOCATIONS[locationSplit[0].toLowerCase()]);
 };
 
 const getDifficultyString = (difficulty) => {
-  updateMapDiff(MAP_DIFFICULTY[difficulty.toLowerCase()]);
+  updateLocationDiff(DIFFICULTY[difficulty.toLowerCase()]);
 };
 
 // Returns each first character capitalized
@@ -1063,8 +1064,8 @@ const getNumberString = (num) => {
 
 const updateDashboardDOM = (state) => {
   updateNameDOM(state.ghostName);
-  updateMapName(state.map.mapName);
-  updateMapDiff(state.map.mapDiff);
+  updateLocationName(state.location.locationName);
+  updateLocationDiff(state.location.locationDiff);
   updateEvidenceDOM(state.evidenceDisplay);
   updateOptionalObjectivesDOM(state.optionalObjectives);
   updateConclusion(state.conclusionString);
@@ -1179,13 +1180,13 @@ const toggleStrikethrough = (optionalNumber, state) => {
     !state.optionalObjectives[optionalNumber].strike;
 };
 
-/** MAP RELATED DOM MANIPULATING FUNCTIONS */
-const updateMapName = (map) => {
-  $("#map-name").html(map);
+/** LOCATION RELATED DOM MANIPULATING FUNCTIONS */
+const updateLocationName = (location) => {
+  $("#location-name").html(location);
 };
 
-const updateMapDiff = (diff) => {
-  $("#map-difficulty").html(diff);
+const updateLocationDiff = (diff) => {
+  $("#location-difficulty").html(diff);
 }
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */

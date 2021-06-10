@@ -217,7 +217,7 @@
   color: {{counterFontColor}};
 }
 
-.map-theme {
-  font-size: {{mapFontSize}}px;
-  color: {{mapFontColor}};
+.location-theme {
+  font-size: {{locationFontSize}}px;
+  color: {{locationFontColor}};
 }

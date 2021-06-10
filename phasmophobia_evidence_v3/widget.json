@@ -23,13 +23,13 @@
     "value": "!gsn",
     "group": "Commands"
   },
-  "mapNameCommand": {
+  "locationNameCommand": {
     "type": "string",
     "label": "Set Map Command",
     "value": "!gm",
     "group": "Commands"
   },
-  "mapDiffCommand": {
+  "locationDiffCommand": {
     "type": "string",
     "label": "Set Difficulty Command",
     "value": "!gd",
@@ -151,7 +151,7 @@
     },
     "group": "Optionals"
   },
-  "displayMap": {
+  "displayLocation": {
     "type": "dropdown",
     "label": "Display Map Name",
     "value": "yes",
@@ -245,13 +245,13 @@
     "value": "16",
     "group": "Theming"
   },
-  "mapFontColor": {
+  "locationFontColor": {
     "type": "colorpicker",
     "label": "Map Name Color",
     "value": "rgba(192,192,192,1)",
     "group": "Theming"
   },
-  "mapFontSize": {
+  "locationFontSize": {
     "type": "number",
     "label": "Map Name Font Size",
     "value": "24",
@@ -488,7 +488,7 @@
     "value": "Name: [name]",
     "group": "Name Messages"
   },
-  "noMapString": {
+  "noLocationString": {
     "type": "text",
     "label": "No Map Selected",
     "value": "No Map Selected...",
