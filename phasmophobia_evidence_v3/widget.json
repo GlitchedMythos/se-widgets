@@ -253,60 +253,10 @@
     },
     "group": "Optionals"
   },
-  "locationSpacing": {
-    "type": "dropdown",
-    "label": "Choose a spacing type for location bar:",
-    "value": "justify-around",
-    "options": {
-      "justify-start": "Left Align",
-      "justify-end": "Right Align",
-      "justify-center": "Center Align",
-      "justify-between": "Space Between",
-      "justify-around": "Space Around",
-      "justify-evenly": "Space Evenly"
-    },
-    "group": "Bars - Location"
-  },
-  "bonerIconHeight": {
-    "type": "number",
-    "label": "Boner Icon Height",
-    "value": "35",
-    "group": "Bars - Location"
-  },
-  "bonerIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Boner Inactive Color",
-    "value": "rgba(255, 255, 255, 1)",
-    "group": "Bars - Location"
-  },
-  "bonerIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Boner Inactive Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Bars - Location"
-  },
-  "ouijaIconHeight": {
-    "type": "number",
-    "label": "Ouija Icon Height",
-    "value": "35",
-    "group": "Bars - Location"
-  },
-  "ouijaIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Ouija Inactive Color",
-    "value": "rgba(255, 255 , 255, 1)",
-    "group": "Bars - Location"
-  },
-  "ouijaIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Ouija Inactive Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Bars - Location"
-  },
-  "backgroundColor": {
+  "dashboardBackgroundColor": {
     "type": "colorpicker",
     "label": "Background Color",
-    "value": "rgba(0,0,0,.5)",
+    "value": "rgba(0, 0, 0, 0.5)",
     "group": "Theming"
   },
   "fontFamily": {
@@ -318,31 +268,31 @@
   "nameColor": {
     "type": "colorpicker",
     "label": "Name Color",
-    "value": "rgb(254, 255, 255)",
+    "value": "rgb(255, 255, 255)",
     "group": "Theming"
   },
   "nameFontSize": {
     "type": "number",
     "label": "Name Font Size",
-    "value": "16",
+    "value": "24",
     "group": "Theming"
   },
   "locationFontColor": {
     "type": "colorpicker",
     "label": "Map Name Color",
-    "value": "rgba(192,192,192,1)",
+    "value": "rgb(255, 255, 255)",
     "group": "Theming"
   },
   "locationFontSize": {
     "type": "number",
     "label": "Map Name Font Size",
-    "value": "24",
+    "value": "16",
     "group": "Theming"
   },
   "conclusionColor": {
     "type": "colorpicker",
     "label": "Conclusion Color",
-    "value": "rgb(254, 255, 255)",
+    "value": "rgb(60, 251, 57)",
     "group": "Theming"
   },
   "conclusionFontSize": {
@@ -354,13 +304,13 @@
   "borderColor": {
     "type": "colorpicker",
     "label": "Border Color",
-    "value": "rgba(255, 255, 255, 1)",
+    "value": "rgb(255, 255, 255)",
     "group": "Theming - Border"
   },
   "borderType": {
     "type": "dropdown",
     "label": "Choose a border type:",
-    "value": "border-solid",
+    "value": "solid",
     "options": {
       "solid": "Solid Border",
       "dashed": "Dashed Border",
@@ -379,7 +329,7 @@
   "borderRadius": {
     "type": "number",
     "label": "Enter a border radius:",
-    "value": 0,
+    "value": 30,
     "group": "Theming - Border"
   },
   "useGradientBorder": {
@@ -395,7 +345,7 @@
   "useAnimatedBorder": {
     "type": "dropdown",
     "label": "Animate Border?",
-    "value": "no",
+    "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
@@ -413,20 +363,20 @@
   },
   "animatedBorderColor": {
     "type": "colorpicker",
-    "label": "Border Color",
-    "value": "rgba(0, 255, 255, 1)",
+    "label": "Border Color One",
+    "value": "rgb(255, 255, 255)",
     "group": "Theming - Gradient Border"
   },
   "animatedBorderColorTwo": {
     "type": "colorpicker",
     "label": "Border Color Two",
-    "value": "rgba(255, 0, 255, 1)",
+    "value": "rgb(248, 203, 248)",
     "group": "Theming - Gradient Border"
   },
   "animatedBorderColorThree": {
     "type": "colorpicker",
     "label": "Border Color Three",
-    "value": "rgba(255, 0, 255, 1)",
+    "value": "rgb(255, 0, 255)",
     "group": "Theming - Gradient Border"
   },
   "animatedBorderAngle": {
@@ -438,13 +388,13 @@
   "animatedBorderWidth": {
     "type": "number",
     "label": "Enter a border width:",
-    "value": 4,
+    "value": 10,
     "group": "Theming - Gradient Border"
   },
   "animatedBorderRadius": {
     "type": "number",
     "label": "Enter a border radius:",
-    "value": 0,
+    "value": 5,
     "group": "Theming - Gradient Border"
   },
   "dividerColor": {
@@ -456,7 +406,7 @@
   "dividerType": {
     "type": "dropdown",
     "label": "Choose a divider type:",
-    "value": "divide-solid",
+    "value": "divide-dashed",
     "options": {
       "divide-solid": "Solid Divider",
       "divide-dashed": "Dashed Divider",
@@ -468,7 +418,7 @@
   },
   "dividerWidth": {
     "type": "dropdown",
-    "label": "Choose a border width:",
+    "label": "Choose a divider width:",
     "value": "divide-y",
     "options": {
       "divide-y": "1px",
@@ -477,6 +427,56 @@
       "divide-y-8": "8px"
     },
     "group": "Theming - Divider"
+  },
+  "locationSpacing": {
+    "type": "dropdown",
+    "label": "Choose a spacing type for location bar:",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left Align",
+      "justify-end": "Right Align",
+      "justify-center": "Center Align",
+      "justify-between": "Space Between",
+      "justify-around": "Space Around",
+      "justify-evenly": "Space Evenly"
+    },
+    "group": "Theming - Location"
+  },
+  "bonerIconHeight": {
+    "type": "number",
+    "label": "Boner Icon Height",
+    "value": "30",
+    "group": "Theming - Location"
+  },
+  "bonerIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Boner Inactive Color",
+    "value": "rgba(255, 255, 255, 1)",
+    "group": "Theming - Location"
+  },
+  "bonerIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Boner Inactive Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Theming - Location"
+  },
+  "ouijaIconHeight": {
+    "type": "number",
+    "label": "Ouija Icon Height",
+    "value": "30",
+    "group": "Theming - Location"
+  },
+  "ouijaIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Ouija Inactive Color",
+    "value": "rgba(255, 255 , 255, 1)",
+    "group": "Theming - Location"
+  },
+  "ouijaIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Ouija Inactive Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Theming - Location"
   },
   "evidenceActive": {
     "type": "colorpicker",
@@ -487,7 +487,7 @@
   "evidenceInactive": {
     "type": "colorpicker",
     "label": "Inactive Evidence",
-    "value": "rgb(255, 254, 254)",
+    "value": "rgb(255, 255, 255)",
     "group": "Theming - Evidence"
   },
   "evidenceImpossible": {
@@ -499,7 +499,7 @@
   "evidenceImpossibleCompleted": {
     "type": "colorpicker",
     "label": "Complete Impossible Evidence",
-    "value": "rgba(234, 66, 29, 0.6)",
+    "value": "rgba(28, 69, 233, 0.3)",
     "group": "Theming - Evidence"
   },
   "evidencePixelSize": {
@@ -508,10 +508,16 @@
     "value": 50,
     "group": "Theming - Evidence"
   },
+  "evidenceMarginSize": {
+    "type": "number",
+    "label": "Evidence Horizontal Margin Size",
+    "value": 5,
+    "group": "Theming - Evidence"
+  },
   "counterFontColor": {
     "type": "colorpicker",
     "label": "Counter Color",
-    "value": "rgba(192,192,192,1)",
+    "value": "rgb(255, 255, 255)",
     "group": "Theming - Counter"
   },
   "counterFontSize": {
@@ -535,7 +541,7 @@
   "objectivesStrikethroughSize": {
     "type": "number",
     "label": "Objectives Strikethrough Size",
-    "value": "5",
+    "value": "6",
     "group": "Theming - Optional Objectives"
   },
   "objectivesStrikethroughColor": {
@@ -547,7 +553,7 @@
   "objectivesSpacing": {
     "type": "dropdown",
     "label": "Choose a spacing type for optional objectives:",
-    "value": "justify-around",
+    "value": "justify-between",
     "options": {
       "justify-start": "Left Align",
       "justify-end": "Right Align",

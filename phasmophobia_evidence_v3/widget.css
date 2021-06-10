@@ -8,7 +8,7 @@
 }
 
 .phas-dashboard {
-  background-color: {{backgroundColor}};
+  background-color: {{dashboardBackgroundColor}};
 }
 
 .name {
@@ -56,16 +56,14 @@
   border-bottom: {{objectivesStrikethroughSize}}px solid {{objectivesStrikethroughColor}};
   content: "";
   left: 0;
-  margin-left: -10px;
-  margin-right: -10px;
   position: absolute;
   right: 0;
   top: calc(50% - {{objectivesStrikethroughSize}}px / 2);
 }
 
-.svg-container {
+.evidence-svg-container {
   height: auto; 
-  padding: 0 0.25rem;
+  margin: 0 {{evidenceMarginSize}}px;
 }
 
 .boner-svg-container {
