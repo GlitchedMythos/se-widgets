@@ -535,6 +535,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
       $(`#boner-svg-container`).addClass("hidden");
     }
     if(!displayOuija) {
+      console.log('hide ouija')
       $(`#ouija-svg-container`).addClass("hidden");
     }
   }
