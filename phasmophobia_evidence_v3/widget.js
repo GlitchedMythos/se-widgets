@@ -743,6 +743,7 @@ const _glitchedMythos = (command) => {
 const resetGhost = (newName, state) => {
   resetName(newName, state);
   resetLocationName(state);
+  resetLocationOptionals(state);
   resetEvidence(state.evidence);
   resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
@@ -760,6 +761,11 @@ const resetLocationName = (state) => {
     config.locationNameStrings.noLocationString;
   state.location.locationDiff = "";
 };
+
+const resetLocationOptioanls = (state) => {
+  state.boner = false;
+  state.ouija = false;
+}
 
 const resetOptionalObjectives = (optionalObjectives, state) => {
   if (optionalObjectives) {
