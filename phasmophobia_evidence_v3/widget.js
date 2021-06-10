@@ -753,6 +753,8 @@ const resetGhost = (newName, state) => {
 const resetName = (newName, state) => {
   if (newName) {
     state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName; 
+  } else {
+    state.ghostName = (config.nameStrings.noNameString);
   }
 };
 
