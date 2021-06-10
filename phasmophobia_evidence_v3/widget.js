@@ -762,7 +762,7 @@ const resetLocationName = (state) => {
   state.location.locationDiff = "";
 };
 
-const resetLocationOptioanls = (state) => {
+const resetLocationOptionals = (state) => {
   state.boner = false;
   state.ouija = false;
 }
