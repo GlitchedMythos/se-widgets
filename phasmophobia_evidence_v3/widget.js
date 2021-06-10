@@ -1275,7 +1275,7 @@ const incrementCounter = (num) => {
 const decrementCounter = (num) => {
   let counter=$("#counter-number")
   counter.text(
-    parseInt(dom.text()) - (num ? num : 1)
+    parseInt(counter.text()) - (num ? num : 1)
   );
 };
 
