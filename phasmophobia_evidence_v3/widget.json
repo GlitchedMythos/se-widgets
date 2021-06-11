@@ -1,0 +1,709 @@
+{
+  "resetCommand": {
+    "type": "string",
+    "label": "Name Reset Command",
+    "value": "!gr",
+    "group": "Commands"
+  },
+  "nameCommand": {
+    "type": "string",
+    "label": "Name Input Command",
+    "value": "!gn",
+    "group": "Commands"
+  },
+  "firstnameCommand": {
+    "type": "string",
+    "label": "First Name Input Command",
+    "value": "!gfn",
+    "group": "Commands"
+  },
+  "surnameCommand": {
+    "type": "string",
+    "label": "Surname Input Command",
+    "value": "!gsn",
+    "group": "Commands"
+  },
+  "locationNameCommand": {
+    "type": "string",
+    "label": "Set Map Command",
+    "value": "!gm",
+    "group": "Commands"
+  },
+  "locationDiffCommand": {
+    "type": "string",
+    "label": "Set Difficulty Command",
+    "value": "!gd",
+    "group": "Commands"
+  },
+  "bonerCommand": {
+    "type": "string",
+    "label": "Set Boner Command",
+    "value": "!boner",
+    "group": "Commands"
+  },
+  "ouijaCommand": {
+    "type": "string",
+    "label": "Set Ouija Command",
+    "value": "!ouija",
+    "group": "Commands"
+  },
+  "emfCommand": {
+    "type": "string",
+    "label": "EMF Toggle Command",
+    "value": "!ge",
+    "group": "Commands"
+  },
+  "spiritBoxCommand": {
+    "type": "string",
+    "label": "Spirit Box Toggle Command",
+    "value": "!gs",
+    "group": "Commands"
+  },
+  "fingerprintsCommand": {
+    "type": "string",
+    "label": "Fingerprints Toggle Command",
+    "value": "!gf",
+    "group": "Commands"
+  },
+  "orbsCommand": {
+    "type": "string",
+    "label": "Ghost Orbs Toggle Command",
+    "value": "!go",
+    "group": "Commands"
+  },
+  "writingCommand": {
+    "type": "string",
+    "label": "Ghost Writing Toggle Command",
+    "value": "!gw",
+    "group": "Commands"
+  },
+  "freezingCommand": {
+    "type": "string",
+    "label": "Freezing Temps Toggle Command",
+    "value": "!gt",
+    "group": "Commands"
+  },
+  "optionalObjectivesCommand": {
+    "type": "string",
+    "label": "Optional Objectives Command",
+    "value": "!oo",
+    "group": "Commands"
+  },
+  "toggleOptObjOneCommand": {
+    "type": "string",
+    "label": "Toggle Optional Objective One",
+    "value": "!o1",
+    "group": "Commands"
+  },
+  "toggleOptObjTwoCommand": {
+    "type": "string",
+    "label": "Toggle Optional Objective Two",
+    "value": "!o2",
+    "group": "Commands"
+  },
+  "toggleOptObjThreeCommand": {
+    "type": "string",
+    "label": "Toggle Optional Objective Three",
+    "value": "!o3",
+    "group": "Commands"
+  },
+  "setCounterNameCommand": {
+    "type": "string",
+    "label": "Set Counter Name Command",
+    "value": "!setcounter",
+    "group": "Commands"
+  },
+  "setCounterNumberCommand": {
+    "type": "string",
+    "label": "Set Counter Number Command",
+    "value": "!setcounternumber",
+    "group": "Commands"
+  },
+  "incrementCounterCommand": {
+    "type": "string",
+    "label": "Increment Counter Command",
+    "value": "!counterup",
+    "group": "Commands"
+  },
+  "decrementCounterCommand": {
+    "type": "string",
+    "label": "Decrement Counter Command",
+    "value": "!counterdown",
+    "group": "Commands"
+  },
+  "vipToggleOnCommand": {
+    "type": "string",
+    "label": "Toggle Allowing VIPS on",
+    "value": "!vipon",
+    "group": "Commands"
+  },
+  "vipToggleOffCommand": {
+    "type": "string",
+    "label": "Toggle Allowing VIPS off",
+    "value": "!vipoff",
+    "group": "Commands"
+  },
+  "displayName": {
+    "type": "dropdown",
+    "label": "Display Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "autoCapitalize": {
+    "type": "dropdown",
+    "label": "Auto Capitalize Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayEvidence": {
+    "type": "dropdown",
+    "label": "Display Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayLocation": {
+    "type": "dropdown",
+    "label": "Display Map Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayBoner": {
+    "type": "dropdown",
+    "label": "Display Boner",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayOuija": {
+    "type": "dropdown",
+    "label": "Display Ouija",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayConclusion": {
+    "type": "dropdown",
+    "label": "Display Conclusion",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayCounter": {
+    "type": "dropdown",
+    "label": "Display Counter",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayOptionalObjectives": {
+    "type": "dropdown",
+    "label": "Display Optional Objectives",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "markImpossibleEvidence": {
+    "type": "dropdown",
+    "label": "Mark Impossible Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "useEvidenceImpossibleCompleted": {
+    "type": "dropdown",
+    "label": "Use different impossible color when complete:",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "allowVIPS": {
+    "type": "dropdown",
+    "label": "Allow VIPS to use commands",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "dashboardBackgroundColor": {
+    "type": "colorpicker",
+    "label": "Background Color",
+    "value": "rgba(0, 0, 0, 0.5)",
+    "group": "Theming"
+  },
+  "fontFamily": {
+    "type": "googleFont",
+    "label": "Font",
+    "value": "Roboto",
+    "group": "Theming"
+  },
+  "nameColor": {
+    "type": "colorpicker",
+    "label": "Name Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Theming"
+  },
+  "nameFontSize": {
+    "type": "number",
+    "label": "Name Font Size",
+    "value": "24",
+    "group": "Theming"
+  },
+  "locationFontColor": {
+    "type": "colorpicker",
+    "label": "Map Name Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Theming"
+  },
+  "locationFontSize": {
+    "type": "number",
+    "label": "Map Name Font Size",
+    "value": "16",
+    "group": "Theming"
+  },
+  "conclusionColor": {
+    "type": "colorpicker",
+    "label": "Conclusion Color",
+    "value": "rgb(60, 251, 57)",
+    "group": "Theming"
+  },
+  "conclusionFontSize": {
+    "type": "number",
+    "label": "Conclusion Font Size",
+    "value": "16",
+    "group": "Theming"
+  },
+  "borderColor": {
+    "type": "colorpicker",
+    "label": "Border Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Theming - Border"
+  },
+  "borderType": {
+    "type": "dropdown",
+    "label": "Choose a border type:",
+    "value": "solid",
+    "options": {
+      "solid": "Solid Border",
+      "dashed": "Dashed Border",
+      "dotted": "Dotted Border",
+      "double": "Double Border",
+      "none": "No Border"
+    },
+    "group": "Theming - Border"
+  },
+  "borderWidth": {
+    "type": "number",
+    "label": "Enter a border width:",
+    "value": 4,
+    "group": "Theming - Border"
+  },
+  "borderRadius": {
+    "type": "number",
+    "label": "Enter a border radius:",
+    "value": 30,
+    "group": "Theming - Border"
+  },
+  "useGradientBorder": {
+    "type": "dropdown",
+    "label": "Use Gradient Border?",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Theming - Gradient Border"
+  },
+  "useAnimatedBorder": {
+    "type": "dropdown",
+    "label": "Animate Border?",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Theming - Gradient Border"
+  },
+  "animationDuration": {
+    "type": "slider",
+    "label": "Animate Duration (sec)",
+    "value": "4",
+    "min": "1",
+    "max": "10",
+    "step": 0.5,
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderColor": {
+    "type": "colorpicker",
+    "label": "Border Color One",
+    "value": "rgb(255, 255, 255)",
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderColorTwo": {
+    "type": "colorpicker",
+    "label": "Border Color Two",
+    "value": "rgb(248, 203, 248)",
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderColorThree": {
+    "type": "colorpicker",
+    "label": "Border Color Three",
+    "value": "rgb(255, 0, 255)",
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderAngle": {
+    "type": "number",
+    "label": "Border Angle",
+    "value": 0,
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderWidth": {
+    "type": "number",
+    "label": "Enter a border width:",
+    "value": 10,
+    "group": "Theming - Gradient Border"
+  },
+  "animatedBorderRadius": {
+    "type": "number",
+    "label": "Enter a border radius:",
+    "value": 5,
+    "group": "Theming - Gradient Border"
+  },
+  "dividerColor": {
+    "type": "colorpicker",
+    "label": "Divider Color",
+    "value": "rgba(255, 255, 255, 1)",
+    "group": "Theming - Divider"
+  },
+  "dividerType": {
+    "type": "dropdown",
+    "label": "Choose a divider type:",
+    "value": "divide-dashed",
+    "options": {
+      "divide-solid": "Solid Divider",
+      "divide-dashed": "Dashed Divider",
+      "divide-dotted": "Dotted Divider",
+      "divide-double": "Double Divider",
+      "divide-none": "No Divider"
+    },
+    "group": "Theming - Divider"
+  },
+  "dividerWidth": {
+    "type": "dropdown",
+    "label": "Choose a divider width:",
+    "value": "divide-y",
+    "options": {
+      "divide-y": "1px",
+      "divide-y-2": "2px",
+      "divide-y-4": "4px",
+      "divide-y-8": "8px"
+    },
+    "group": "Theming - Divider"
+  },
+  "locationSpacing": {
+    "type": "dropdown",
+    "label": "Choose a spacing type for location bar:",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left Align",
+      "justify-end": "Right Align",
+      "justify-center": "Center Align",
+      "justify-between": "Space Between",
+      "justify-around": "Space Around",
+      "justify-evenly": "Space Evenly"
+    },
+    "group": "Theming - Location"
+  },
+  "bonerIconHeight": {
+    "type": "number",
+    "label": "Boner Icon Height",
+    "value": "30",
+    "group": "Theming - Location"
+  },
+  "bonerIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Boner Inactive Color",
+    "value": "rgba(255, 255, 255, 1)",
+    "group": "Theming - Location"
+  },
+  "bonerIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Boner Inactive Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Theming - Location"
+  },
+  "ouijaIconHeight": {
+    "type": "number",
+    "label": "Ouija Icon Height",
+    "value": "30",
+    "group": "Theming - Location"
+  },
+  "ouijaIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Ouija Inactive Color",
+    "value": "rgba(255, 255 , 255, 1)",
+    "group": "Theming - Location"
+  },
+  "ouijaIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Ouija Inactive Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Theming - Location"
+  },
+  "evidenceActive": {
+    "type": "colorpicker",
+    "label": "Active Evidence",
+    "value": "rgba(50,205,50 ,1 )",
+    "group": "Theming - Evidence"
+  },
+  "evidenceInactive": {
+    "type": "colorpicker",
+    "label": "Inactive Evidence",
+    "value": "rgb(255, 255, 255)",
+    "group": "Theming - Evidence"
+  },
+  "evidenceImpossible": {
+    "type": "colorpicker",
+    "label": "Impossible Evidence",
+    "value": "rgba(234, 66, 29, 0.6)",
+    "group": "Theming - Evidence"
+  },
+  "evidenceImpossibleCompleted": {
+    "type": "colorpicker",
+    "label": "Complete Impossible Evidence",
+    "value": "rgba(28, 69, 233, 0.3)",
+    "group": "Theming - Evidence"
+  },
+  "evidencePixelSize": {
+    "type": "number",
+    "label": "Evidence Pixel Size",
+    "value": 50,
+    "group": "Theming - Evidence"
+  },
+  "evidenceMarginSize": {
+    "type": "number",
+    "label": "Evidence Horizontal Margin Size",
+    "value": 5,
+    "group": "Theming - Evidence"
+  },
+  "counterFontColor": {
+    "type": "colorpicker",
+    "label": "Counter Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Theming - Counter"
+  },
+  "counterFontSize": {
+    "type": "number",
+    "label": "Counter Font Size",
+    "value": 24,
+    "group": "Theming - Counter"
+  },
+  "objectivesColor": {
+    "type": "colorpicker",
+    "label": "Objectives Text Color",
+    "value": "rgb(254, 255, 255)",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesFontSize": {
+    "type": "number",
+    "label": "Objectives Font Size",
+    "value": "16",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesStrikethroughSize": {
+    "type": "number",
+    "label": "Objectives Strikethrough Size",
+    "value": "6",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesStrikethroughColor": {
+    "type": "colorpicker",
+    "label": "Objectives Strikethrough Color",
+    "value": "rgba(234, 66, 29, 0.83)",
+    "group": "Theming - Optional Objectives"
+  },
+  "objectivesSpacing": {
+    "type": "dropdown",
+    "label": "Choose a spacing type for optional objectives:",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left Align",
+      "justify-end": "Right Align",
+      "justify-center": "Center Align",
+      "justify-between": "Space Between",
+      "justify-around": "Space Around",
+      "justify-evenly": "Space Evenly"
+    },
+    "group": "Theming - Optional Objectives"
+  },
+  "noNameString": {
+    "type": "text",
+    "label": "No Ghost Name Message",
+    "value": "New Ghostie...",
+    "group": "Name Messages"
+  },
+  "ghostNameString": {
+    "type": "text",
+    "label": "Ghost Name: [name]",
+    "value": "Name: [name]",
+    "group": "Name Messages"
+  },
+  "noLocationString": {
+    "type": "text",
+    "label": "No Map Selected",
+    "value": "No Map Selected...",
+    "group": "Map Messages"
+  },
+  "counterDefaultString": {
+    "type": "text",
+    "label": "Counter Default Name",
+    "value": "Counter:",
+    "group": "Counter"
+  },
+  "noOptionalObjectivesMessage": {
+    "type": "text",
+    "label": "No Optional Objectives Message",
+    "value": "Widget Author: GlitchedMythos",
+    "group": "Optional Objectives"
+  },
+  "zeroEvidenceConclusionString": {
+    "type": "text",
+    "label": "Zero Evidence",
+    "value": "Waiting for Evidence",
+    "group": "Conclusion Messages"
+  },
+  "oneEvidenceConclusionString": {
+    "type": "text",
+    "label": "One Evidence",
+    "value": "Not sure yet...",
+    "group": "Conclusion Messages"
+  },
+  "impossibleConclusionString": {
+    "type": "text",
+    "label": "Too much evidence entered",
+    "value": "It's over 9000!!",
+    "group": "Conclusion Messages"
+  },
+  "bansheeString": {
+    "type": "text",
+    "label": "Banshee - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "demonString": {
+    "type": "text",
+    "label": "Demon - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "hantuString": {
+    "type": "text",
+    "label": "Hantu - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "jinnString": {
+    "type": "text",
+    "label": "Jinn - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "mareString": {
+    "type": "text",
+    "label": "Mare - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "oniString": {
+    "type": "text",
+    "label": "Oni - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "phantomString": {
+    "type": "text",
+    "label": "Phantom - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "poltergeistString": {
+    "type": "text",
+    "label": "Poltergeist - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "revenantString": {
+    "type": "text",
+    "label": "Revenant - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "shadeString": {
+    "type": "text",
+    "label": "Shade - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "spiritString": {
+    "type": "text",
+    "label": "Spirit - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "wraithString": {
+    "type": "text",
+    "label": "Wraith - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "yokaiString": {
+    "type": "text",
+    "label": "Yokai - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "yureiString": {
+    "type": "text",
+    "label": "Yurei - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  }
+}

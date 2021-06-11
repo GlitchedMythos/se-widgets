@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css?family={fontFamily}:100,300,400,500,700,900&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro: 400, 300);
+
+* {
+  font: normal 76px/1 {{fontFamily}}, Helvetica, sans-serif;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.phas-dashboard {
+  background-color: {{dashboardBackgroundColor}};
+}
+
+.name {
+  color: {{nameColor}};
+  font-size: {{nameFontSize}}px;
+}
+
+.objective {
+  color: {{objectivesColor}};
+  font-size: {{objectivesFontSize}}px;
+}
+
+.conclusion {
+  color: {{conclusionColor}};
+  font-size: {{conclusionFontSize}}px;
+}
+
+.evidence {
+  width: {{evidencePixelSize}}px;
+  height: {{evidencePixelSize}}px;
+  margin: auto auto;
+}
+
+.inactive {
+  fill: {{evidenceInactive}};
+}
+
+.active {
+  fill: {{evidenceActive}};
+}
+
+.impossible {
+  fill: {{evidenceImpossible}};
+}
+
+.impossible-completed {
+  fill: {{evidenceImpossibleCompleted}}
+}
+
+.strikethrough {
+  position: relative;
+}
+
+.strikethrough::after {
+  border-bottom: {{objectivesStrikethroughSize}}px solid {{objectivesStrikethroughColor}};
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: calc(50% - {{objectivesStrikethroughSize}}px / 2);
+}
+
+.evidence-svg-container {
+  height: auto; 
+  margin: 0 {{evidenceMarginSize}}px;
+}
+
+.boner-svg-container {
+  height: {{bonerIconHeight}}px;
+  width: {{bonerIconHeight}}px;
+  margin-left: 10px;
+}
+
+.boner-inactive {
+  fill: {{bonerIconInactiveColor}};
+}
+
+.boner-active {
+  fill: {{bonerIconActiveColor}};
+}
+
+.ouija-svg-container {
+  height: {{ouijaIconHeight}}px;
+  width: {{ouijaIconHeight}}px;
+  margin-left: 10px;
+}
+
+.ouija-inactive {
+  fill: {{ouijaIconInactiveColor}};
+}
+
+.ouija-active {
+  fill: {{ouijaIconActiveColor}};
+}
+
+.divider-color > * + * {
+  border-color: {{dividerColor}} ;
+}
+
+.phas-border {
+  border-color: {{borderColor}};
+  border-width: {{borderWidth}}px;
+  border-radius: {{borderRadius}}px;
+  border-style: {{borderType}};
+}
+
+.phas-version {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: grey;
+  opacity: 0;
+}
+
+.version-item {
+  opacity: 0;
+  transition: 1s linear all;
+}
+
+.show-version-item {
+  opacity: 1;
+  transition: 1s linear all;
+}
+
+/* @keyframes fade {
+  0%,100% { opacity: 0 }
+  30%,70% { opacity: 1 }
+} */
+
+.animated-box {
+  border-radius: {{animatedBorderRadius}}px;
+}
+
+.animated-box h1 {
+  font-weight: 200;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.animated-box p {
+  font-weight: 200;
+}
+
+/* The animation starts here */
+.animated-box {
+  position: relative;
+  border-radius: {{animatedBorderRadius}}px;
+}
+
+.animated-box:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: {{animatedBorderRadius}}px;
+  background: linear-gradient({{animatedBorderAngle}}deg, {{animatedBorderColor}}, {{animatedBorderColorTwo}}, {{animatedBorderColorThree}});
+  clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
+}
+
+.animated-box-100:after {
+  background-size: 100% 100%;
+}
+
+.animated-box-300:after {
+  background-size: 300% 300%;
+}
+
+.animated-box.in:after {
+  animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation {{animationDuration}}s ease-in-out infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 15% 0%;
+  }
+  50% {
+    background-position: 85% 100%;
+  }
+  100% {
+    background-position: 15% 0%;
+  }
+}
+
+@keyframes frame-enter {
+  0% {
+    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
+  }
+  25% {
+    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), calc(100% - {{animatedBorderWidth}}px) 100%, 100% 100%, 100% 0%, 0% 0%);
+  }
+  50% {
+    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, 100% 0%, 0% 0%);
+  }
+  75% {
+    -webkit-clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px 0%, 0% 0%);
+  }
+  100% {
+    -webkit-clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, 0% 100%);
+  }
+}
+
+/* CSS FOR GLITCHED ALERT */
+#console-container {
+  display: inline-block;
+  width: 95%;
+  max-width: 95%;
+  float: right;
+  font-size: 24px;
+  font-family: 'Source Code Pro', 'Inconsolata', monospace;
+}
+
+#text {
+  display: inline-block;
+  margin: .8em 0;
+  font-size: 18px;
+}
+
+.cursor {
+  display: inline-block;
+  height: 24px;
+  width: 8px;
+  background: #11f930; 
+  margin-left: -12px;
+}
+
+.prompt {
+  color: #11f930;
+  height: 24px;
+  font-size: 24px;
+}
+
+.hide {
+  display: none;
+}
+
+.counter-theme {
+  font-size: {{counterFontSize}}px;
+  color: {{counterFontColor}};
+}
+
+.location-theme {
+  font-size: {{locationFontSize}}px;
+  color: {{locationFontColor}};
+}
