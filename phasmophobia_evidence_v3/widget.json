@@ -163,6 +163,16 @@
     },
     "group": "Optionals"
   },
+  "displayEvidence": {
+    "type": "dropdown",
+    "label": "Display Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
   "displayLocation": {
     "type": "dropdown",
     "label": "Display Map Name",
