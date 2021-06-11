@@ -541,7 +541,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
         $(`#boner-svg-container`).addClass("hidden");
       }
       if (!displayOuija) {
-        console.log("hide ouija");
         $(`#ouija-svg-container`).addClass("hidden");
       }
     }
@@ -925,14 +924,16 @@ const calculateBadEvidence = (evidence) => {
 const updateSingleOptionalObjective = (optionalObjectives, objective) => {
   let objectiveString = getOptObjectiveString(objective);
 
-  let oldOptionalObjective = optionalObjectives.findIndex(
-    (item) => item.text === objectiveString
-  );
+  if (objectiveString) {
+    let oldOptionalObjective = optionalObjectives.findIndex(
+      (item) => item.text === objectiveString
+    );
 
-  if (oldOptionalObjective >= 0) {
-    optionalObjectives.splice(oldOptionalObjective, 1);
-  } else if (optionalObjectives.length < 3) {
-    optionalObjectives.push({ text: objectiveString, strike: false });
+    if (oldOptionalObjective >= 0) {
+      optionalObjectives.splice(oldOptionalObjective, 1);
+    } else if (optionalObjectives.length < 3) {
+      optionalObjectives.push({ text: objectiveString, strike: false });
+    }
   }
   return optionalObjectives;
 };
@@ -943,18 +944,18 @@ const updateFullOptionalObjectives = (
   objectiveThree
 ) => {
   let optionalObjectives = [];
-  optionalObjectives.push({
-    text: getOptObjectiveString(objectiveOne),
-    strike: false,
-  });
-  optionalObjectives.push({
-    text: getOptObjectiveString(objectiveTwo),
-    strike: false,
-  });
-  optionalObjectives.push({
-    text: getOptObjectiveString(objectiveThree),
-    strike: false,
-  });
+  optionalObjectives = updateSingleOptionalObjective(
+    optionalObjectives,
+    objectiveOne
+  );
+  optionalObjectives = updateSingleOptionalObjective(
+    optionalObjectives,
+    objectiveTwo
+  );
+  optionalObjectives = updateSingleOptionalObjective(
+    optionalObjectives,
+    objectiveThree
+  );
 
   return optionalObjectives;
 };
