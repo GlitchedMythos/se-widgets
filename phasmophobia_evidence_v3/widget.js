@@ -783,7 +783,7 @@ const resetName = (newName, state) => {
       ? camelCase(newName)
       : newName;
   } else {
-    state.ghostName = config.nameStrings.noNameString;
+    state.ghostName = "";
   }
 };
 
