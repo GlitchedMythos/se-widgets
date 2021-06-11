@@ -2,7 +2,7 @@
 
 I made this widget for anyone who uses StreamElements that plays Phasmophobia. To see how the widget works, please click the video below:
 
-[![Video showing how to use and edit the widget](https://youtu.be/stYhlKtzIv0)
+[![Video showing how to use and edit the widget](http://img.youtube.com/vi/stYhlKtzIv0/0.jpg)](https://youtu.be/stYhlKtzIv0)
 
 # Example Commands
 
