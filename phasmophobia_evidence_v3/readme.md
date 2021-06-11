@@ -44,6 +44,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Smudge Ghost (NON-Hunt) | "sm" "smudge" |
 | Escape | "es" "escape" |
 | Smudge Ghost (During Hunt) | "hu" "hunt" |
+| Repel Ghost (During Hunt) - smudge during hunt | "re" "repel" |
 | <25% Sanity | "san "sanity" |
 | Candle | "ca" "candle" |
 

@@ -38,6 +38,8 @@ const OPTIONAL_OBJECTIVES = {
   motion: "Motion",
   ph: "Photo",
   photo: "Photo",
+  re: "Repel",
+  repel: "Repel",
   sa: "Salt",
   salt: "Salt",
   san: "<25% Sanity",
