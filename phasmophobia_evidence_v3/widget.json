@@ -235,7 +235,7 @@
   },
   "useEvidenceImpossibleCompleted": {
     "type": "dropdown",
-    "label": "Use difference impossible color when complete:",
+    "label": "Use different impossible color when complete:",
     "value": "yes",
     "options": {
       "yes": "Yes",

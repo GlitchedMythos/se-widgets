@@ -139,7 +139,7 @@ let userState = {
     //   strike: true/false
     // }
   ],
-  ouija: false
+  ouija: false,
 };
 
 let config = {};
@@ -228,12 +228,10 @@ window.addEventListener("onWidgetLoad", function (obj) {
       );
     },
     [fieldData["locationDiffCommand"]]: (data) => {
-      runCommandWithPermission(
-        modOrVIPPermission(config),
-        data,
-        _setDiffName,
-        [data.text, userState]
-      );
+      runCommandWithPermission(modOrVIPPermission(config), data, _setDiffName, [
+        data.text,
+        userState,
+      ]);
     },
     [fieldData["bonerCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleBoner, [
@@ -248,6 +246,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
         userState,
+        config,
       ]);
     },
     [fieldData["spiritBoxCommand"]]: (data) => {
@@ -255,7 +254,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleSpiritBox,
-        [userState]
+        [userState, config]
       );
     },
     [fieldData["fingerprintsCommand"]]: (data) => {
@@ -263,12 +262,13 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleFingerprints,
-        [userState]
+        [userState, config]
       );
     },
     [fieldData["orbsCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
         userState,
+        config,
       ]);
     },
     [fieldData["writingCommand"]]: (data) => {
@@ -276,7 +276,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleWriting,
-        [userState]
+        [userState, config]
       );
     },
     [fieldData["freezingCommand"]]: (data) => {
@@ -284,7 +284,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleFreezing,
-        [userState]
+        [userState, config]
       );
     },
     [fieldData["optionalObjectivesCommand"]]: (data) => {
@@ -486,8 +486,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: YUREI,
     },
   ];
-  config.markImpossibleEvidence =
-    fieldData["markImpossibleEvidence"] === "yes" ? true : false;
   config.nameStrings = {
     noNameString: fieldData["noNameString"]
       ? fieldData["noNameString"]
@@ -495,7 +493,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     ghostNameString: fieldData["ghostNameString"]
       ? fieldData["ghostNameString"]
       : "Name: [name]",
-    autoCapitalize: fieldData["autoCapitalize"]==="yes" ? true : false,
+    autoCapitalize: fieldData["autoCapitalize"] === "yes" ? true : false,
   };
   config.locationNameStrings = {
     noLocationString: fieldData["noLocationString"]
@@ -506,6 +504,8 @@ window.addEventListener("onWidgetLoad", function (obj) {
     noOptionalString: fieldData["noOptionalObjectivesMessage"],
     spacing: fieldData["objectivesSpacing"],
   };
+  config.markImpossibleEvidence =
+    fieldData["markImpossibleEvidence"] === "yes" ? true : false;
   config.useEvidenceImpossibleCompleted =
     fieldData["useEvidenceImpossibleCompleted"] === "yes" ? true : false;
 
@@ -523,23 +523,23 @@ window.addEventListener("onWidgetLoad", function (obj) {
   if (!displayName) {
     $(`#name`).addClass("hidden");
   }
-  
+
   if (!displayLocation) {
     $(`#location-container`).addClass("hidden");
   }
 
-  if(!displayBoner && !displayOuija) {
+  if (!displayBoner && !displayOuija) {
     $(`#location-optionals`).addClass("hidden");
   } else {
-    if(!displayBoner) {
+    if (!displayBoner) {
       $(`#boner-svg-container`).addClass("hidden");
     }
-    if(!displayOuija) {
-      console.log('hide ouija')
+    if (!displayOuija) {
+      console.log("hide ouija");
       $(`#ouija-svg-container`).addClass("hidden");
     }
   }
-  
+
   if (!displayCounter) {
     $(`#counter-container`).addClass("hidden");
   }
@@ -606,27 +606,35 @@ const _resetGhost = (command, state) => {
 
 const _setGhostName = (command, state) => {
   enteredName = command.split(" ").slice(1).join(" ");
-  state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(enteredName) : enteredName; 
+  state.ghostName = config.nameStrings.autoCapitalize
+    ? camelCase(enteredName)
+    : enteredName;
 };
 
 const _setGhostFirstName = (command, state) => {
   enteredName = command.split(" ").slice(1).join(" ");
-  currentName = (state.ghostName) ? state.ghostName.split(" ") : "";
-  newName = (currentName[1]) ? enteredName + " " + currentName.slice(1).join(" ") : enteredName;
-  state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName;
+  currentName = state.ghostName ? state.ghostName.split(" ") : "";
+  newName = currentName[1]
+    ? enteredName + " " + currentName.slice(1).join(" ")
+    : enteredName;
+  state.ghostName = config.nameStrings.autoCapitalize
+    ? camelCase(newName)
+    : newName;
 };
 
 const _setGhostSurName = (command, state) => {
   enteredName = command.split(" ").slice(1).join(" ");
-  currentName = (state.ghostName) ? state.ghostName.split(" ") : "";
+  currentName = state.ghostName ? state.ghostName.split(" ") : "";
   if (currentName[1]) {
-    newName = currentName.slice(0,-1).join(" ") + " " + enteredName;
+    newName = currentName.slice(0, -1).join(" ") + " " + enteredName;
   } else if (currentName[0]) {
     newName = currentName[0] + " " + enteredName;
   } else {
     newName = enteredName;
   }
-  state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName;
+  state.ghostName = config.nameStrings.autoCapitalize
+    ? camelCase(newName)
+    : newName;
 };
 
 const _setLocationName = (command, state) => {
@@ -636,51 +644,53 @@ const _setLocationName = (command, state) => {
 
 const _setDiffName = (command, state) => {
   commandArgument = command.split(" ");
-  commandArgument = (commandArgument[1]) ? commandArgument[1] : commandArgument[0];
+  commandArgument = commandArgument[1]
+    ? commandArgument[1]
+    : commandArgument[0];
   state.location.locationDiff = getDifficultyString(commandArgument);
 };
 
 const _toggleBoner = (state) => {
   state.boner = !state.boner;
-}
+};
 
 const _toggleOuija = (state) => {
   state.ouija = !state.ouija;
-}
+};
 
-const _toggleEMF = (state) => {
+const _toggleEMF = (state, config) => {
   state.evidence.emf = toggleEvidence(state.evidence.emf);
-  calculateGhostEvidenceDisplay(state);
+  calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
 };
 
-const _toggleSpiritBox = (state) => {
+const _toggleSpiritBox = (state, config) => {
   state.evidence.spiritBox = toggleEvidence(state.evidence.spiritBox);
-  calculateGhostEvidenceDisplay(state);
+  calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
 };
 
-const _toggleFingerprints = (state) => {
+const _toggleFingerprints = (state, config) => {
   state.evidence.fingerprints = toggleEvidence(state.evidence.fingerprints);
-  calculateGhostEvidenceDisplay(state);
+  calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
 };
 
-const _toggleOrbs = (state) => {
+const _toggleOrbs = (state, config) => {
   state.evidence.orbs = toggleEvidence(state.evidence.orbs);
-  calculateGhostEvidenceDisplay(state);
+  calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
 };
 
-const _toggleWriting = (state) => {
+const _toggleWriting = (state, config) => {
   state.evidence.writing = toggleEvidence(state.evidence.writing);
-  calculateGhostEvidenceDisplay(state);
+  calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
 };
 
-const _toggleFreezing = (state) => {
+const _toggleFreezing = (state, config) => {
   state.evidence.freezing = toggleEvidence(state.evidence.freezing);
-  calculateGhostEvidenceDisplay(state);
+  calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
 };
 
@@ -752,22 +762,23 @@ const resetGhost = (newName, state) => {
 
 const resetName = (newName, state) => {
   if (newName) {
-    state.ghostName = (config.nameStrings.autoCapitalize) ? camelCase(newName) : newName; 
+    state.ghostName = config.nameStrings.autoCapitalize
+      ? camelCase(newName)
+      : newName;
   } else {
-    state.ghostName = (config.nameStrings.noNameString);
+    state.ghostName = config.nameStrings.noNameString;
   }
 };
 
 const resetLocationName = (state) => {
-  state.location.locationName =
-    config.locationNameStrings.noLocationString;
+  state.location.locationName = config.locationNameStrings.noLocationString;
   state.location.locationDiff = "";
 };
 
 const resetLocationOptionals = (state) => {
   state.boner = false;
   state.ouija = false;
-}
+};
 
 const resetOptionalObjectives = (optionalObjectives, state) => {
   if (optionalObjectives) {
@@ -791,7 +802,7 @@ const resetConclusion = (state) => {
     config.conclusionStrings.zeroEvidenceConclusionString;
 };
 
-const calculateGhostEvidenceDisplay = (state) => {
+const calculateGhostEvidenceDisplay = (state, config) => {
   // We do a deep copy to ensure there are no references
   let evidenceDisplay = JSON.parse(JSON.stringify(state.evidence));
   let evidenceString = createEvidenceString(evidenceDisplay);
@@ -802,12 +813,14 @@ const calculateGhostEvidenceDisplay = (state) => {
   } else if (numOfTrueEvidence === 2) {
     evidenceDisplay = calculateDoubleGhostEvidence(
       evidenceDisplay,
-      evidenceString
+      evidenceString,
+      config
     );
   } else if (numOfTrueEvidence === 3) {
     evidenceDisplay = calculateTripleGhostEvidence(
       evidenceDisplay,
-      evidenceString
+      evidenceString,
+      config
     );
   } else if (numOfTrueEvidence > 3) {
     evidenceDisplay = calculateBadEvidence(evidenceDisplay);
@@ -826,40 +839,42 @@ const calculateSingleGhostEvidence = (evidence) => {
   return evidence;
 };
 
-const calculateDoubleGhostEvidence = (evidence, evidenceString) => {
+const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
 
-  // Addition shorthand prior to impossibleEvidence converts the string to a number
-  // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
-  if (+impossibleEvidence[0] == 0) {
-    evidence.emf = EVIDENCE_IMPOSSIBLE;
-  }
+  if (config.markImpossibleEvidence) {
+    // Addition shorthand prior to impossibleEvidence converts the string to a number
+    // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+    if (+impossibleEvidence[0] == 0) {
+      evidence.emf = EVIDENCE_IMPOSSIBLE;
+    }
 
-  if (+impossibleEvidence[1] == 0) {
-    evidence.freezing = EVIDENCE_IMPOSSIBLE;
-  }
+    if (+impossibleEvidence[1] == 0) {
+      evidence.freezing = EVIDENCE_IMPOSSIBLE;
+    }
 
-  if (+impossibleEvidence[2] == 0) {
-    evidence.spiritBox = EVIDENCE_IMPOSSIBLE;
-  }
+    if (+impossibleEvidence[2] == 0) {
+      evidence.spiritBox = EVIDENCE_IMPOSSIBLE;
+    }
 
-  if (+impossibleEvidence[3] == 0) {
-    evidence.writing = EVIDENCE_IMPOSSIBLE;
-  }
+    if (+impossibleEvidence[3] == 0) {
+      evidence.writing = EVIDENCE_IMPOSSIBLE;
+    }
 
-  if (+impossibleEvidence[4] == 0) {
-    evidence.orbs = EVIDENCE_IMPOSSIBLE;
-  }
+    if (+impossibleEvidence[4] == 0) {
+      evidence.orbs = EVIDENCE_IMPOSSIBLE;
+    }
 
-  if (+impossibleEvidence[5] == 0) {
-    evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
+    if (+impossibleEvidence[5] == 0) {
+      evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
+    }
   }
 
   return evidence;
 };
 
-const calculateTripleGhostEvidence = (evidence, evidenceString) => {
+const calculateTripleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
 
   if (possibleGhosts.length === 0) {
@@ -872,7 +887,10 @@ const calculateTripleGhostEvidence = (evidence, evidenceString) => {
     }
   } else {
     for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-      if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON) {
+      if (
+        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON &&
+        config.useEvidenceImpossibleCompleted
+      ) {
         evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
       }
     }
@@ -976,8 +994,10 @@ const toggleEvidence = (evidence) => {
 };
 
 const getLocationNameString = (location) => {
-  let locationSplit = location.split(' ');
-  if (locationSplit[1]) { _setDiffName(locationSplit[1].toLowerCase(), userState); }
+  let locationSplit = location.split(" ");
+  if (locationSplit[1]) {
+    _setDiffName(locationSplit[1].toLowerCase(), userState);
+  }
   updateLocationName(LOCATIONS[locationSplit[0].toLowerCase()]);
 };
 
@@ -987,8 +1007,10 @@ const getDifficultyString = (difficulty) => {
 
 // Returns each first character capitalized
 const camelCase = (sentence) => {
-  return sentence.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
-}
+  return sentence.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+    letter.toUpperCase()
+  );
+};
 
 const toggleVIPAccessibility = (canUseVIP) => {
   if (canUseVIP !== undefined && canUseVIP !== null) {
@@ -1131,7 +1153,7 @@ const updateNameDOM = (newName) => {
 const updateEvidenceDOM = (evidence) => {
   resetEvidenceDOM();
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-    let evidenceDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`)
+    let evidenceDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`);
     switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
       case EVIDENCE_ON:
         evidenceDom.addClass("active");
@@ -1152,13 +1174,12 @@ const updateEvidenceDOM = (evidence) => {
 
 const resetEvidenceDOM = () => {
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass(
-      [
-        "active",
-        "inactive",
-        "impossible",
-        "impossible-completed"
-      ])
+    $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass([
+      "active",
+      "inactive",
+      "impossible",
+      "impossible-completed",
+    ]);
   }
 };
 
@@ -1172,11 +1193,15 @@ const updateOptionalObjectivesDOM = (optionalObjectives) => {
     $("#optional-obj-container").removeClass("hidden");
     $("#no-opt-objectives-container").addClass("hidden");
     for (let i = 0; i < optionalObjectives.length; i++) {
-      $("#optional-obj-container").append($('<div>',{
-        class:`objective px-0.5 ${optionalObjectives[i].strike ? " strikethrough" : ""}`,
-        id:`objective-${getNumberString(i + 1)}`,
-        text:optionalObjectives[i].text,
-        }));
+      $("#optional-obj-container").append(
+        $("<div>", {
+          class: `objective px-0.5 ${
+            optionalObjectives[i].strike ? " strikethrough" : ""
+          }`,
+          id: `objective-${getNumberString(i + 1)}`,
+          text: optionalObjectives[i].text,
+        })
+      );
     }
   }
 };
@@ -1187,28 +1212,37 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
     $("#no-opt-objectives-container").addClass("hidden");
 
     if (optionalObjectives[0]) {
-      $("#optional-obj-container").append($('<div>',
-        {
-         class: `objective w-1/3 text-left${optionalObjectives[0].strike ? " strikethrough" : ""}`,
-          id:"objective-one",
-          text:optionalObjectives[0].text
-        }));
+      $("#optional-obj-container").append(
+        $("<div>", {
+          class: `objective w-1/3 text-left${
+            optionalObjectives[0].strike ? " strikethrough" : ""
+          }`,
+          id: "objective-one",
+          text: optionalObjectives[0].text,
+        })
+      );
     }
     if (optionalObjectives[1]) {
-      $("#optional-obj-container").append($('<div>',
-        {
-          class: `objective w-1/3 text-center${optionalObjectives[1].strike ? " strikethrough" : ""}`,
-          id:"objective-two",
-          text:optionalObjectives[1].text
-        }));
+      $("#optional-obj-container").append(
+        $("<div>", {
+          class: `objective w-1/3 text-center${
+            optionalObjectives[1].strike ? " strikethrough" : ""
+          }`,
+          id: "objective-two",
+          text: optionalObjectives[1].text,
+        })
+      );
     }
     if (optionalObjectives[2]) {
-      $("#optional-obj-container").append($('<div>',
-        {
-          class: `objective w-1/3 text-right${optionalObjectives[2].strike ? " strikethrough" : ""}`,
-          id:"objective-three",
-          text:optionalObjectives[2].text
-        }));
+      $("#optional-obj-container").append(
+        $("<div>", {
+          class: `objective w-1/3 text-right${
+            optionalObjectives[2].strike ? " strikethrough" : ""
+          }`,
+          id: "objective-three",
+          text: optionalObjectives[2].text,
+        })
+      );
     }
   }
 };
@@ -1231,23 +1265,17 @@ const updateLocationName = (location) => {
 
 const updateLocationDiff = (diff) => {
   $("#location-difficulty").html(diff);
-}
+};
 
 const updateBoner = (boner) => {
-  $(`#boner`).removeClass([
-    "boner-active",
-    "boner-inactive"
-  ]);
+  $(`#boner`).removeClass(["boner-active", "boner-inactive"]);
   $(`#boner`).addClass(boner ? "boner-active" : "boner-inactive");
-}
+};
 
 const updateOuija = (ouija) => {
-  $(`#ouija`).removeClass([
-    "ouija-active",
-    "ouija-inactive"
-  ]);
+  $(`#ouija`).removeClass(["ouija-active", "ouija-inactive"]);
   $(`#ouija`).addClass(ouija ? "ouija-active" : "ouija-inactive");
-}
+};
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */
 const updateConclusion = (conclusion) => {
@@ -1268,17 +1296,13 @@ const setCounterNumber = (number) => {
 };
 
 const incrementCounter = (num) => {
-  let counter=$("#counter-number")
-  counter.text(
-    parseInt(counter.text()) + (num ? num : 1)
-  );
+  let counter = $("#counter-number");
+  counter.text(parseInt(counter.text()) + (num ? num : 1));
 };
 
 const decrementCounter = (num) => {
-  let counter=$("#counter-number")
-  counter.text(
-    parseInt(counter.text()) - (num ? num : 1)
-  );
+  let counter = $("#counter-number");
+  counter.text(parseInt(counter.text()) - (num ? num : 1));
 };
 
 /**
