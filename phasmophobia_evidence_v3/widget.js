@@ -546,12 +546,16 @@ window.addEventListener("onWidgetLoad", function (obj) {
     }
   }
 
-  if (!displayEvidence) {
-    $(`#evidence-container`).addClass("hidden");
-  }
+  if (!displayEvidence && !displayCounter) {
+    $(`#evidence-and-counter-container`).addClass("hidden");
+  } else {
+    if (!displayEvidence) {
+      $(`#evidence-container`).addClass("hidden");
+    }
 
-  if (!displayCounter) {
-    $(`#counter-container`).addClass("hidden");
+    if (!displayCounter) {
+      $(`#counter-container`).addClass("hidden");
+    }
   }
 
   if (!displayOptionalObjectives) {
