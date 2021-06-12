@@ -466,7 +466,7 @@
   },
   "bonerIconActiveColor": {
     "type": "colorpicker",
-    "label": "Boner Inactive Color",
+    "label": "Boner Active Color",
     "value": "rgba(0, 230, 64, 1)",
     "group": "Theming - Location"
   },
@@ -484,7 +484,7 @@
   },
   "ouijaIconActiveColor": {
     "type": "colorpicker",
-    "label": "Ouija Inactive Color",
+    "label": "Ouija Active Color",
     "value": "rgba(0, 230, 64, 1)",
     "group": "Theming - Location"
   },
