@@ -535,6 +535,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   } else {
     if (!displayLocation) {
       $(`#location-name`).addClass("hidden");
+      $(`#location-difficulty`).addClass("hidden");
     }
 
     if (!displayBoner && !displayOuija) {
