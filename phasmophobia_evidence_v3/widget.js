@@ -325,13 +325,13 @@ window.addEventListener("onWidgetLoad", function (obj) {
       );
     },
     [fieldData["vipToggleOnCommand"]]: (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleOptionalObjective, [
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
         true,
       ]);
     },
     [fieldData["vipToggleOffCommand"]]: (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleOptionalObjective, [
-        true,
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
+        false,
       ]);
     },
     [fieldData["setCounterNameCommand"]]: (data) => {
