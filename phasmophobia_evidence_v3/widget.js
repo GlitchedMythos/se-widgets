@@ -325,13 +325,13 @@ window.addEventListener("onWidgetLoad", function (obj) {
       );
     },
     [fieldData["vipToggleOnCommand"]]: (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleOptionalObjective, [
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
         true,
       ]);
     },
     [fieldData["vipToggleOffCommand"]]: (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleOptionalObjective, [
-        true,
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
+        false,
       ]);
     },
     [fieldData["setCounterNameCommand"]]: (data) => {
@@ -535,6 +535,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   } else {
     if (!displayLocation) {
       $(`#location-name`).addClass("hidden");
+      $(`#location-difficulty`).addClass("hidden");
     }
 
     if (!displayBoner && !displayOuija) {
@@ -783,7 +784,7 @@ const resetName = (newName, state) => {
       ? camelCase(newName)
       : newName;
   } else {
-    state.ghostName = config.nameStrings.noNameString;
+    state.ghostName = "";
   }
 };
 
