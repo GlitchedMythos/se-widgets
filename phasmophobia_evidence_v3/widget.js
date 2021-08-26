@@ -399,7 +399,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
       ? fieldData["impossibleConclusionString"]
       : "Too Much Evidence",
   };
-  // TODO: Insert new ghosts
+
   config.ghosts = [
     {
       type: "Banshee",
@@ -418,6 +418,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: DEMON,
     },
     {
+      type: "Goryo",
+      conclusion: createGhostConclusionString(
+        fieldData["goryoString"],
+        "Goryo"
+      ),
+      evidence: GORYO,
+    },
+    {
       type: "Hantu",
       conclusion: createGhostConclusionString(
         fieldData["hantuString"],
@@ -434,6 +442,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
       type: "Mare",
       conclusion: createGhostConclusionString(fieldData["mareString"], "Mare"),
       evidence: MARE,
+    },
+    {
+      type: "Myling",
+      conclusion: createGhostConclusionString(fieldData["mylingString"], "Myling"),
+      evidence: MYLING,
     },
     {
       type: "Oni",
@@ -726,7 +739,11 @@ const _toggleFreezing = (state, config) => {
   determineConclusionMessage(state);
 };
 
-// TODO: Add New Evidence
+const _toggleDots = (state, config) => {
+  state.evidence.dots = toggleEvidence(state.evidence.dots);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
 
 const _setOptionalObjectives = (command, state) => {
   let commandSplit = command.split(" ");
@@ -831,6 +848,7 @@ const resetEvidence = (evidence) => {
   evidence.orbs = EVIDENCE_OFF;
   evidence.writing = EVIDENCE_OFF;
   evidence.freezing = EVIDENCE_OFF;
+  evidence.dots = EVIDENCE_OFF;
 };
 
 const resetConclusion = (state) => {
@@ -876,14 +894,13 @@ const calculateSingleGhostEvidence = (evidence) => {
   return evidence;
 };
 
-// TODO: Add new evidence
 const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
 
   if (config.markImpossibleEvidence) {
     // Addition shorthand prior to impossibleEvidence converts the string to a number
-    // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+    // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | Dots
     if (+impossibleEvidence[0] == 0) {
       evidence.emf = EVIDENCE_IMPOSSIBLE;
     }
@@ -906,6 +923,10 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
 
     if (+impossibleEvidence[5] == 0) {
       evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
+    }
+
+    if (+impossibleEvidence[6] == 0) {
+      evidence.dots = EVIDENCE_IMPOSSIBLE;
     }
   }
 
@@ -1062,7 +1083,6 @@ const toggleVIPAccessibility = (canUseVIP) => {
   }
 };
 
-// TODO: Add new evidence
 const createEvidenceString = (evidence) => {
   let evidenceString = "";
 
@@ -1084,6 +1104,10 @@ const createEvidenceString = (evidence) => {
     evidence.orbs === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
   evidenceString =
     evidence.fingerprints === EVIDENCE_ON
+      ? evidenceString + "1"
+      : evidenceString + "0";
+  evidenceString =
+    evidence.dots === EVIDENCE_ON
       ? evidenceString + "1"
       : evidenceString + "0";
 
@@ -1125,9 +1149,8 @@ const getGhostPossibilities = (evidenceString) => {
   return possibleGhosts;
 };
 
-// TODO: Update for impossible evidence addition (lengthen impossibleEvidenceString)
 const getImpossibleEvidence = (possibleGhosts) => {
-  let impossibleEvidenceString = "000000"; // If it stays a 0, we know it can't match any of the ghosts
+  let impossibleEvidenceString = "0000000"; // If it stays a 0, we know it can't match any of the ghosts
   for (let i = 0; i < possibleGhosts.length; i++) {
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
       impossibleEvidenceString =
