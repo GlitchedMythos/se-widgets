@@ -83,6 +83,12 @@
     "value": "!gt",
     "group": "Commands"
   },
+  "dotsCommand": {
+    "type": "string",
+    "label": "Dots Toggle Command",
+    "value": "!gd",
+    "group": "Commands"
+  },
   "optionalObjectivesCommand": {
     "type": "string",
     "label": "Optional Objectives Command",

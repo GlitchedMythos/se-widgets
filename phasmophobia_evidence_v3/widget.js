@@ -1,27 +1,27 @@
 const version = "3.0";
 
 // Order is important here:
-// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
 // 1 is true
 // 0 is false
 
-// TODO: Update Evidence
-const BANSHEE = "110001",
-  DEMON = "011100",
-  HANTU = "000111",
-  JINN = "101010",
-  MARE = "011010",
-  ONI = "101100",
-  PHANTOM = "110010",
-  POLTERGEIST = "001011",
-  REVENANT = "100101",
-  SHADE = "100110",
-  SPIRIT = "001101",
-  WRAITH = "011001",
-  YOKAI = "001110",
-  YUREI = "010110";
+const BANSHEE = "0000111",
+  DEMON =       "0101010",
+  GORYO =       "1000011",
+  HANTU =       "0100110",
+  JINN =        "1100010",
+  MARE =        "0011100",
+  MYLING =      "1001010",
+  ONI =         "1100001",
+  PHANTOM =     "0010011",
+  POLTERGEIST = "0011010",
+  REVENANT =    "0101100",
+  SHADE =       "1101000",
+  SPIRIT =      "1011000", // ONLY CORRECT ONE
+  WRAITH =      "1010001",
+  YOKAI =       "0010101",
+  YUREI =       "0100101";
 
-// TODO: Update Optional Objectives
 const OPTIONAL_OBJECTIVES = {
   ca: "Candle",
   can: "Candle",
@@ -50,7 +50,6 @@ const OPTIONAL_OBJECTIVES = {
   smudge: "Smudge",
 };
 
-// TODO: Update locations
 const LOCATIONS = {
   ta: "Tanglewood",
   tangle: "Tanglewood",
@@ -98,7 +97,6 @@ const EVIDENCE_OFF = 0,
   EVIDENCE_IMPOSSIBLE = 2,
   EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
 
-// TODO: Update Evidence Names
 const EVIDENCE_NAMES_IN_DOM = [
   "emf",
   "spiritBox",
@@ -106,6 +104,7 @@ const EVIDENCE_NAMES_IN_DOM = [
   "orbs",
   "writing",
   "freezing",
+  "dots"
 ];
 
 // Permission levels for commands
@@ -120,7 +119,6 @@ let userState = {
   channelName: "",
   conclusionString: "",
   counter: 0,
-  // TODO: Update Evidence to include new evidence
   evidence: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
@@ -128,14 +126,16 @@ let userState = {
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
+    dots: EVIDENCE_OFF
   },
   evidenceDisplay: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
-    fingerprints: EVIDENCE_OFF,
+    fingerprints: EVIDENCE,
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
+    dots: EVIDENCE_OFF
   },
   ghostName: "",
   location: {
@@ -297,7 +297,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
-    // TODO: Add new evidence command
+    [fieldData["dotsCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleDots,
+        [userState, config]
+      );
+    },
     [fieldData["optionalObjectivesCommand"]]: (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
