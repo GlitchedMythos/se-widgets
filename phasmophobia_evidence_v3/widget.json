@@ -83,6 +83,12 @@
     "value": "!gt",
     "group": "Commands"
   },
+  "dotsCommand": {
+    "type": "string",
+    "label": "Dots Toggle Command",
+    "value": "!gd",
+    "group": "Commands"
+  },
   "optionalObjectivesCommand": {
     "type": "string",
     "label": "Optional Objectives Command",
@@ -634,6 +640,12 @@
     "value": "",
     "group": "Conclusion Messages"
   },
+  "goryoString": {
+    "type": "text",
+    "label": "Goryo - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
   "hantuString": {
     "type": "text",
     "label": "Hantu - Leave empty 4 default",
@@ -649,6 +661,12 @@
   "mareString": {
     "type": "text",
     "label": "Mare - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "mylingString": {
+    "type": "text",
+    "label": "Myling - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },

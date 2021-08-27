@@ -1,24 +1,26 @@
-const version = "3.0";
+const version = "3.1";
 
 // Order is important here:
-// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
 // 1 is true
 // 0 is false
 
-const BANSHEE = "110001",
-  DEMON = "011100",
-  HANTU = "000111",
-  JINN = "101010",
-  MARE = "011010",
-  ONI = "101100",
-  PHANTOM = "110010",
-  POLTERGEIST = "001011",
-  REVENANT = "100101",
-  SHADE = "100110",
-  SPIRIT = "001101",
-  WRAITH = "011001",
-  YOKAI = "001110",
-  YUREI = "010110";
+const BANSHEE = "0000111",
+  DEMON =       "0101010",
+  GORYO =       "1000011",
+  HANTU =       "0100110",
+  JINN =        "1100010",
+  MARE =        "0011100",
+  MYLING =      "1001010",
+  ONI =         "1100001",
+  PHANTOM =     "0010011",
+  POLTERGEIST = "0011010",
+  REVENANT =    "0101100",
+  SHADE =       "1101000",
+  SPIRIT =      "1011000", // ONLY CORRECT ONE
+  WRAITH =      "1010001",
+  YOKAI =       "0010101",
+  YUREI =       "0100101";
 
 const OPTIONAL_OBJECTIVES = {
   ca: "Candle",
@@ -102,6 +104,7 @@ const EVIDENCE_NAMES_IN_DOM = [
   "orbs",
   "writing",
   "freezing",
+  "dots"
 ];
 
 // Permission levels for commands
@@ -123,6 +126,7 @@ let userState = {
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
+    dots: EVIDENCE_OFF
   },
   evidenceDisplay: {
     emf: EVIDENCE_OFF,
@@ -131,6 +135,7 @@ let userState = {
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
+    dots: EVIDENCE_OFF
   },
   ghostName: "",
   location: {
@@ -292,6 +297,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
+    [fieldData["dotsCommand"]]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleDots,
+        [userState, config]
+      );
+    },
     [fieldData["optionalObjectivesCommand"]]: (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
@@ -386,6 +399,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
       ? fieldData["impossibleConclusionString"]
       : "Too Much Evidence",
   };
+
   config.ghosts = [
     {
       type: "Banshee",
@@ -404,6 +418,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: DEMON,
     },
     {
+      type: "Goryo",
+      conclusion: createGhostConclusionString(
+        fieldData["goryoString"],
+        "Goryo"
+      ),
+      evidence: GORYO,
+    },
+    {
       type: "Hantu",
       conclusion: createGhostConclusionString(
         fieldData["hantuString"],
@@ -420,6 +442,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
       type: "Mare",
       conclusion: createGhostConclusionString(fieldData["mareString"], "Mare"),
       evidence: MARE,
+    },
+    {
+      type: "Myling",
+      conclusion: createGhostConclusionString(fieldData["mylingString"], "Myling"),
+      evidence: MYLING,
     },
     {
       type: "Oni",
@@ -712,6 +739,12 @@ const _toggleFreezing = (state, config) => {
   determineConclusionMessage(state);
 };
 
+const _toggleDots = (state, config) => {
+  state.evidence.dots = toggleEvidence(state.evidence.dots);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
 const _setOptionalObjectives = (command, state) => {
   let commandSplit = command.split(" ");
   let optObjCommands = commandSplit.slice(1);
@@ -772,6 +805,7 @@ const resetGhost = (newName, state) => {
   resetName(newName, state);
   resetLocationName(state);
   resetLocationOptionals(state);
+  // resetEvidence is called twice here as it is resetting state in two places.
   resetEvidence(state.evidence);
   resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
@@ -806,6 +840,7 @@ const resetOptionalObjectives = (optionalObjectives, state) => {
   }
 };
 
+// TODO: Update with new evidence
 const resetEvidence = (evidence) => {
   evidence.emf = EVIDENCE_OFF;
   evidence.spiritBox = EVIDENCE_OFF;
@@ -813,6 +848,7 @@ const resetEvidence = (evidence) => {
   evidence.orbs = EVIDENCE_OFF;
   evidence.writing = EVIDENCE_OFF;
   evidence.freezing = EVIDENCE_OFF;
+  evidence.dots = EVIDENCE_OFF;
 };
 
 const resetConclusion = (state) => {
@@ -820,6 +856,7 @@ const resetConclusion = (state) => {
     config.conclusionStrings.zeroEvidenceConclusionString;
 };
 
+// TODO: Ensure this still works with new/more evidence
 const calculateGhostEvidenceDisplay = (state, config) => {
   // We do a deep copy to ensure there are no references
   let evidenceDisplay = JSON.parse(JSON.stringify(state.evidence));
@@ -863,7 +900,7 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
 
   if (config.markImpossibleEvidence) {
     // Addition shorthand prior to impossibleEvidence converts the string to a number
-    // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints
+    // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | Dots
     if (+impossibleEvidence[0] == 0) {
       evidence.emf = EVIDENCE_IMPOSSIBLE;
     }
@@ -887,11 +924,16 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
     if (+impossibleEvidence[5] == 0) {
       evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
     }
+
+    if (+impossibleEvidence[6] == 0) {
+      evidence.dots = EVIDENCE_IMPOSSIBLE;
+    }
   }
 
   return evidence;
 };
 
+// TODO: Add/validate new evidence
 const calculateTripleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
 
@@ -968,6 +1010,7 @@ const updateFullOptionalObjectives = (
   return optionalObjectives;
 };
 
+// TODO: Ensure new ghosts work
 const determineConclusionMessage = (state) => {
   let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
   let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(
@@ -1063,6 +1106,10 @@ const createEvidenceString = (evidence) => {
     evidence.fingerprints === EVIDENCE_ON
       ? evidenceString + "1"
       : evidenceString + "0";
+  evidenceString =
+    evidence.dots === EVIDENCE_ON
+      ? evidenceString + "1"
+      : evidenceString + "0";
 
   return evidenceString;
 };
@@ -1103,7 +1150,7 @@ const getGhostPossibilities = (evidenceString) => {
 };
 
 const getImpossibleEvidence = (possibleGhosts) => {
-  let impossibleEvidenceString = "000000"; // If it stays a 0, we know it can't match any of the ghosts
+  let impossibleEvidenceString = "0000000"; // If it stays a 0, we know it can't match any of the ghosts
   for (let i = 0; i < possibleGhosts.length; i++) {
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
       impossibleEvidenceString =
@@ -1169,6 +1216,7 @@ const updateNameDOM = (newName) => {
   $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
 };
 
+// TODO: Validate working
 /** EVIDENCE RELATED DOM MANIPULATING FUNCTIONS */
 const updateEvidenceDOM = (evidence) => {
   resetEvidenceDOM();
@@ -1192,6 +1240,7 @@ const updateEvidenceDOM = (evidence) => {
   }
 };
 
+// TODO: Validate working
 const resetEvidenceDOM = () => {
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass([
