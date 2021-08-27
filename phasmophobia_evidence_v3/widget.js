@@ -1,4 +1,4 @@
-const version = "3.0";
+const version = "3.1";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -131,7 +131,7 @@ let userState = {
   evidenceDisplay: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
-    fingerprints: EVIDENCE,
+    fingerprints: EVIDENCE_OFF,
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
