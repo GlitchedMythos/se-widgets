@@ -26,13 +26,13 @@
   "locationNameCommand": {
     "type": "string",
     "label": "Set Map Command",
-    "value": "!gm",
+    "value": "!map",
     "group": "Commands"
   },
   "locationDiffCommand": {
     "type": "string",
     "label": "Set Difficulty Command",
-    "value": "!gd",
+    "value": "!diff",
     "group": "Commands"
   },
   "bonerCommand": {
