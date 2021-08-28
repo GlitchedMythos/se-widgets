@@ -115,26 +115,50 @@
   },
   "setCounterNameCommand": {
     "type": "string",
-    "label": "Set Counter Name Command",
+    "label": "Set Counter 1 Name Command",
     "value": "!setcounter",
     "group": "Commands"
   },
   "setCounterNumberCommand": {
     "type": "string",
-    "label": "Set Counter Number Command",
+    "label": "Set Counter 1 Number Command",
     "value": "!setcounternumber",
     "group": "Commands"
   },
   "incrementCounterCommand": {
     "type": "string",
-    "label": "Increment Counter Command",
+    "label": "Increment Counter 1 Command",
     "value": "!counterup",
     "group": "Commands"
   },
   "decrementCounterCommand": {
     "type": "string",
-    "label": "Decrement Counter Command",
+    "label": "Decrement Counter 1 Command",
     "value": "!counterdown",
+    "group": "Commands"
+  },
+  "setCounter2NameCommand": {
+    "type": "string",
+    "label": "Set Counter 2 Name Command",
+    "value": "!setcounter2",
+    "group": "Commands"
+  },
+  "setCounter2NumberCommand": {
+    "type": "string",
+    "label": "Set Counter 2 Number Command",
+    "value": "!setcounter2number",
+    "group": "Commands"
+  },
+  "incrementCounter2Command": {
+    "type": "string",
+    "label": "Increment Counter 2 Command",
+    "value": "!counter2up",
+    "group": "Commands"
+  },
+  "decrementCounter2Command": {
+    "type": "string",
+    "label": "Decrement Counter 2 Command",
+    "value": "!counter2down",
     "group": "Commands"
   },
   "vipToggleOnCommand": {
@@ -221,7 +245,17 @@
   },
   "displayCounter": {
     "type": "dropdown",
-    "label": "Display Counter",
+    "label": "Display Counter(s)",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
+  "displayCounter2": {
+    "type": "dropdown",
+    "label": "Display Counter 2",
     "value": "yes",
     "options": {
       "yes": "Yes",
@@ -290,7 +324,7 @@
   "nameFontSize": {
     "type": "number",
     "label": "Name Font Size",
-    "value": "24",
+    "value": 24,
     "group": "Theming"
   },
   "locationFontColor": {
@@ -302,7 +336,7 @@
   "locationFontSize": {
     "type": "number",
     "label": "Map Name Font Size",
-    "value": "16",
+    "value": 16,
     "group": "Theming"
   },
   "conclusionColor": {
@@ -314,7 +348,7 @@
   "conclusionFontSize": {
     "type": "number",
     "label": "Conclusion Font Size",
-    "value": "16",
+    "value": 16,
     "group": "Theming"
   },
   "borderColor": {
@@ -371,9 +405,9 @@
   "animationDuration": {
     "type": "slider",
     "label": "Animate Duration (sec)",
-    "value": "4",
-    "min": "1",
-    "max": "10",
+    "value": 4,
+    "min": 1,
+    "max": 10,
     "step": 0.5,
     "group": "Theming - Gradient Border"
   },
@@ -461,7 +495,7 @@
   "bonerIconHeight": {
     "type": "number",
     "label": "Boner Icon Height",
-    "value": "30",
+    "value": 30,
     "group": "Theming - Location"
   },
   "bonerIconInactiveColor": {
@@ -479,7 +513,7 @@
   "ouijaIconHeight": {
     "type": "number",
     "label": "Ouija Icon Height",
-    "value": "30",
+    "value": 30,
     "group": "Theming - Location"
   },
   "ouijaIconInactiveColor": {
@@ -551,13 +585,13 @@
   "objectivesFontSize": {
     "type": "number",
     "label": "Objectives Font Size",
-    "value": "16",
+    "value": 16,
     "group": "Theming - Optional Objectives"
   },
   "objectivesStrikethroughSize": {
     "type": "number",
     "label": "Objectives Strikethrough Size",
-    "value": "6",
+    "value": 6,
     "group": "Theming - Optional Objectives"
   },
   "objectivesStrikethroughColor": {
@@ -602,6 +636,12 @@
     "type": "text",
     "label": "Counter Default Name",
     "value": "Counter:",
+    "group": "Counter"
+  },
+  "counter2DefaultString": {
+    "type": "text",
+    "label": "Counter 2 Default Name",
+    "value": "Counter 2:",
     "group": "Counter"
   },
   "noOptionalObjectivesMessage": {
