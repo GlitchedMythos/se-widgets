@@ -567,7 +567,9 @@ window.addEventListener("onWidgetLoad", function (obj) {
       : "No Map Selected...",
   };
   config.optionalObj = {
-    noOptionalString: fieldData["noOptionalObjectivesMessage"],
+    noOptionalString: fieldData["noOptionalObjectivesMessage"]
+      ? fieldData["noOptionalObjectivesMessage"]
+      : "Widget Author: GlitchedMythos",
     spacing: fieldData["objectivesSpacing"],
   };
   config.markImpossibleEvidence =
