@@ -188,19 +188,19 @@
 
 @keyframes frame-enter {
   0% {
-    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
+    clip-path: polygon(0% 100%, {{borderWidth}}px 100%, {{borderWidth}}px {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, calc(100% - {{borderWidth}}px) calc(100% - {{borderWidth}}px), {{borderWidth}}px calc(100% - {{borderWidth}}px), {{borderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
   }
   25% {
-    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), calc(100% - {{animatedBorderWidth}}px) 100%, 100% 100%, 100% 0%, 0% 0%);
+    clip-path: polygon(0% 100%, {{borderWidth}}px 100%, {{borderWidth}}px {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, calc(100% - {{borderWidth}}px) calc(100% - {{borderWidth}}px), calc(100% - {{borderWidth}}px) calc(100% - {{borderWidth}}px), calc(100% - {{borderWidth}}px) 100%, 100% 100%, 100% 0%, 0% 0%);
   }
   50% {
-    clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, 100% 0%, 0% 0%);
+    clip-path: polygon(0% 100%, {{borderWidth}}px 100%, {{borderWidth}}px {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, 100% 0%, 0% 0%);
   }
   75% {
-    -webkit-clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, {{animatedBorderWidth}}px 0%, 0% 0%);
+    -webkit-clip-path: polygon(0% 100%, {{borderWidth}}px 100%, {{borderWidth}}px {{borderWidth}}px, {{borderWidth}}px {{borderWidth}}px, {{borderWidth}}px {{borderWidth}}px, {{borderWidth}}px {{borderWidth}}px, {{borderWidth}}px {{borderWidth}}px, {{borderWidth}}px {{borderWidth}}px, {{borderWidth}}px 0%, 0% 0%);
   }
   100% {
-    -webkit-clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px 100%, 0% 100%);
+    -webkit-clip-path: polygon(0% 100%, {{borderWidth}}px 100%, {{borderWidth}}px 100%, {{borderWidth}}px 100%, {{borderWidth}}px 100%, {{borderWidth}}px 100%, {{borderWidth}}px 100%, {{borderWidth}}px 100%, {{aborderWidth}}px 100%, 0% 100%);
   }
 }
 
