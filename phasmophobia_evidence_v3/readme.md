@@ -27,10 +27,10 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Toggle Optional Objective 1 | !o1 | Toggles Optional Objective 1 from being marked or not |
 | Toggle Optional Objective 2 | !o2 | Toggles Optional Objective 2 from being marked or not |
 | Toggle Optional Objective 3 | !o3 | Toggles Optional Objective 3 from being marked or not |
-| Set Counter Name | !setcounter "phrase" | Set's the phrase before the number in the counter |
-| Set Counter Number | !setcounternumber "num" | Set's the number in the counter to the number input |
-| Increment the counter by 1 | !counterup | Adds one to the counter number |
-| Decrement the counter by 1 | !counterdown | Subtracts one from the counter number |
+| Set Counter Name | !setcounter "phrase"<br />!setcounter2 "phrase" | Set's the phrase before the number in the counter |
+| Set Counter Number | !setcounternumber "num"<br />!setcounter2number "num" | Set's the number in the counter to the number input |
+| Increment the counter by 1 | !counterup<br />!counter2up | Adds one to the counter number |
+| Decrement the counter by 1 | !counterdown<br />!counter2down | Subtracts one from the counter number |
 
 # Optional Objectives
 
@@ -70,6 +70,7 @@ To get `Smudge`
 | Map | Possible Phrases |
 |--|--|
 | Tanglewood | "ta" "tangle" "tanglewood" |
+| Willow | "wi" "will" "willow" |
 | Edgefield | "ed" "edge" "edgefield" |
 | Ridgeview | "ri" "ridge" "ridgeview" |
 | Grafton | "gr" "grafton" |
