@@ -119,6 +119,7 @@ let userState = {
   channelName: "",
   conclusionString: "",
   counter: 0,
+  counter2: 0,
   evidence: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
@@ -195,6 +196,7 @@ const modOrVIPPermission = (configuration) => {
 
 window.addEventListener("onWidgetLoad", function (obj) {
   // Field data from Stream Elements from the overlay settings the user set
+  userState.channelName = obj["detail"]["channel"]["username"];
   const fieldData = obj.detail.fieldData;
 
   // Sets up all the commands for the widget
