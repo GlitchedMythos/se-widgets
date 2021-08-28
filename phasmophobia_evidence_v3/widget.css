@@ -131,7 +131,7 @@
 } */
 
 .animated-box {
-  border-radius: {{animatedBorderRadius}}px;
+  border-radius: {{borderRadius}}px;
 }
 
 .animated-box h1 {
@@ -147,7 +147,7 @@
 /* The animation starts here */
 .animated-box {
   position: relative;
-  border-radius: {{animatedBorderRadius}}px;
+  border-radius: {{borderRadius}}px;
 }
 
 .animated-box:after {
@@ -157,9 +157,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: {{animatedBorderRadius}}px;
+  border-radius: {{borderRadius}}px;
   background: linear-gradient({{animatedBorderAngle}}deg, {{animatedBorderColor}}, {{animatedBorderColorTwo}}, {{animatedBorderColorThree}});
-  clip-path: polygon(0% 100%, {{animatedBorderWidth}}px 100%, {{animatedBorderWidth}}px {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) {{animatedBorderWidth}}px, calc(100% - {{animatedBorderWidth}}px) calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px calc(100% - {{animatedBorderWidth}}px), {{animatedBorderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
+  clip-path: polygon(0% 100%, {{borderWidth}}px 100%, {{borderWidth}}px {{borderWidth}}px, calc(100% - {{borderWidth}}px) {{borderWidth}}px, calc(100% - {{borderWidth}}px) calc(100% - {{borderWidth}}px), {{borderWidth}}px calc(100% - {{borderWidth}}px), {{borderWidth}}px 100%, 100% 100%, 100% 0%, 0% 0%);
 }
 
 .animated-box-100:after {
