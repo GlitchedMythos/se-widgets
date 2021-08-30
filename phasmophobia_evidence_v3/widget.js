@@ -1,4 +1,4 @@
-const version = "3.1.1";
+const version = "3.4";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -106,6 +106,9 @@ const EVIDENCE_NAMES_IN_DOM = [
   "freezing",
   "dots"
 ];
+
+const COUNTER_1 = 1,
+  COUNTER_2 = 2;
 
 // Permission levels for commands
 const PERMISSION_GLITCHED = 0,
@@ -354,7 +357,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _setCounterName,
-        [1, data.text]
+        [COUNTER_1, data.text]
       );
     },
     [fieldData["setCounterNumberCommand"]]: (data) => {
@@ -362,7 +365,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _setCounterNumber,
-        [1, data.text]
+        [COUNTER_1, data.text]
       );
     },
     [fieldData["incrementCounterCommand"]]: (data) => {
@@ -370,7 +373,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _incrementCounter,
-        [1]
+        [COUNTER_1]
       );
     },
     [fieldData["decrementCounterCommand"]]: (data) => {
@@ -378,7 +381,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _decrementCounter,
-        [1]
+        [COUNTER_1]
       );
     },
     [fieldData["setCounter2NameCommand"]]: (data) => {
@@ -386,7 +389,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _setCounterName,
-        [2, data.text]
+        [COUNTER_2, data.text]
       );
     },
     [fieldData["setCounter2NumberCommand"]]: (data) => {
@@ -394,7 +397,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _setCounterNumber,
-        [2, data.text]
+        [COUNTER_2, data.text]
       );
     },
     [fieldData["incrementCounter2Command"]]: (data) => {
@@ -402,7 +405,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _incrementCounter,
-        [2]
+        [COUNTER_2]
       );
     },
     [fieldData["decrementCounter2Command"]]: (data) => {
@@ -410,7 +413,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _decrementCounter,
-        [2]
+        [COUNTER_2]
       );
     },
     "!glitchedmythos": (data) => {
