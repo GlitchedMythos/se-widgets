@@ -293,6 +293,16 @@
     },
     "group": "Optionals"
   },
+  "allowAll": {
+    "type": "dropdown",
+    "label": "Allow everyone to use commands",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optionals"
+  },
   "allowVIPS": {
     "type": "dropdown",
     "label": "Allow VIPS to use commands",
