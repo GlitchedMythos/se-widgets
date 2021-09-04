@@ -436,7 +436,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   }
 
   // Configuration based on user choices
-  config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
+  config.allowVIPS = fieldData["allowVIPS"] === "yes";
   config.conclusionStrings = {
     zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
       ? fieldData["zeroEvidenceConclusionString"]
