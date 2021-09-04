@@ -195,7 +195,7 @@ const hasPermission = (permission, userLevel) => {
 
 // For commands where VIP's are allowed to help
 const modOrVIPPermission = (configuration) => {
-  return configuration.allowVIPS ? PERMISSION_VIP : PERMISSION_MOD;
+  return configuration.allowAll ? PERMISSION_ALL : configuration.allowVIPS ? PERMISSION_VIP : PERMISSION_MOD;
 };
 
 window.addEventListener("onWidgetLoad", function (obj) {
@@ -436,6 +436,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   }
 
   // Configuration based on user choices
+  config.allowAll = fieldData["allowAll"] === "yes";
   config.allowVIPS = fieldData["allowVIPS"] === "yes";
   config.conclusionStrings = {
     zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
