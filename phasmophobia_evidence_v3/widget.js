@@ -202,15 +202,15 @@ window.addEventListener("onWidgetLoad", function (obj) {
   userState.channelName = obj["detail"]["channel"]["username"];
   const fieldData = obj.detail.fieldData;
 
-  // Sets up all the commands for the widget
-  config.commands = {
-    [fieldData["resetCommand"]]: (data) => {
+  // Declare lambdas (arrow functions) for each command key
+  const commands = {
+    "resetCommand": (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
         data.text,
         userState,
       ]);
     },
-    [fieldData["nameCommand"]]: (data) => {
+    "nameCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -218,7 +218,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData["firstnameCommand"]]: (data) => {
+    "firstnameCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -226,7 +226,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData["surnameCommand"]]: (data) => {
+    "surnameCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -234,7 +234,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData["locationNameCommand"]]: (data) => {
+    "locationNameCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -242,29 +242,29 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData["locationDiffCommand"]]: (data) => {
+    "locationDiffCommand": (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _setDiffName, [
         data.text,
         userState,
       ]);
     },
-    [fieldData["bonerCommand"]]: (data) => {
+    "bonerCommand": (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleBoner, [
         userState,
       ]);
     },
-    [fieldData["ouijaCommand"]]: (data) => {
+    "ouijaCommand": (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleOuija, [
         userState,
       ]);
     },
-    [fieldData["emfCommand"]]: (data) => {
+    "emfCommand": (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
         userState,
         config,
       ]);
     },
-    [fieldData["spiritBoxCommand"]]: (data) => {
+    "spiritBoxCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -272,7 +272,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
-    [fieldData["fingerprintsCommand"]]: (data) => {
+    "fingerprintsCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -280,13 +280,13 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
-    [fieldData["orbsCommand"]]: (data) => {
+    "orbsCommand": (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
         userState,
         config,
       ]);
     },
-    [fieldData["writingCommand"]]: (data) => {
+    "writingCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -294,7 +294,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
-    [fieldData["freezingCommand"]]: (data) => {
+    "freezingCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -302,7 +302,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
-    [fieldData["dotsCommand"]]: (data) => {
+    "dotsCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -310,7 +310,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
-    [fieldData["optionalObjectivesCommand"]]: (data) => {
+    "optionalObjectivesCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -318,7 +318,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData["toggleOptObjOneCommand"]]: (data) => {
+    "toggleOptObjOneCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -326,7 +326,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [0, userState] // The position in array
       );
     },
-    [fieldData["toggleOptObjTwoCommand"]]: (data) => {
+    "toggleOptObjTwoCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -334,7 +334,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [1, userState] // The position in array
       );
     },
-    [fieldData["toggleOptObjThreeCommand"]]: (data) => {
+    "toggleOptObjThreeCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -342,17 +342,17 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [2, userState] // The position in array
       );
     },
-    [fieldData["vipToggleOnCommand"]]: (data) => {
+    "vipToggleOnCommand": (data) => {
       runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
         true,
       ]);
     },
-    [fieldData["vipToggleOffCommand"]]: (data) => {
+    "vipToggleOffCommand": (data) => {
       runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
         false,
       ]);
     },
-    [fieldData["setCounterNameCommand"]]: (data) => {
+    "setCounterNameCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -360,7 +360,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_1, data.text]
       );
     },
-    [fieldData["setCounterNumberCommand"]]: (data) => {
+    "setCounterNumberCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -368,7 +368,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_1, data.text]
       );
     },
-    [fieldData["incrementCounterCommand"]]: (data) => {
+    "incrementCounterCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -376,7 +376,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_1]
       );
     },
-    [fieldData["decrementCounterCommand"]]: (data) => {
+    "decrementCounterCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -384,7 +384,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_1]
       );
     },
-    [fieldData["setCounter2NameCommand"]]: (data) => {
+    "setCounter2NameCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -392,7 +392,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_2, data.text]
       );
     },
-    [fieldData["setCounter2NumberCommand"]]: (data) => {
+    "setCounter2NumberCommand": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -400,7 +400,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_2, data.text]
       );
     },
-    [fieldData["incrementCounter2Command"]]: (data) => {
+    "incrementCounter2Command": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -408,7 +408,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_2]
       );
     },
-    [fieldData["decrementCounter2Command"]]: (data) => {
+    "decrementCounter2Command": (data) => {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
@@ -416,12 +416,23 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_2]
       );
     },
+  };
+
+  // Sets up all the commands for the widget
+  config.commands = {
     "!glitchedmythos": (data) => {
       runCommandWithPermission(PERMISSION_GLITCHED, data, _glitchedMythos, [
         data.text,
       ]);
     },
   };
+
+  // Register comma-delimited command names
+  for (const [key, func] of Object.entries(commands)) {
+    for (const command of fieldData[key].split(',')) {
+      config.commands[command] = func
+    }
+  }
 
   // Configuration based on user choices
   config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
