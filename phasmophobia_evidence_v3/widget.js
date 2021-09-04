@@ -343,6 +343,22 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [2, userState] // The position in array
       );
     },
+    "allToggleOnCommand": (data) => {
+      runCommandWithPermission(
+        PERMISSION_MOD,
+        data,
+        _toggleAllAccessibility,
+        [true]
+      );
+    },
+    "allToggleOffCommand": (data) => {
+      runCommandWithPermission(
+        PERMISSION_MOD,
+        data,
+        _toggleAllAccessibility,
+        [false]
+      );
+    },
     "vipToggleOnCommand": (data) => {
       runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
         true,
@@ -823,6 +839,10 @@ const _toggleOptionalObjective = (objectiveNumber, state) => {
   toggleStrikethrough(objectiveNumber, state);
 };
 
+const _toggleAllAccessibility = (canUseAll) => {
+  toggleAllAccessibility(canUseAll);
+};
+
 const _toggleVIPAccessibility = (canUseVIP) => {
   toggleVIPAccessibility(canUseVIP);
 };
@@ -1132,6 +1152,14 @@ const camelCase = (sentence) => {
   return sentence.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
     letter.toUpperCase()
   );
+};
+
+const toggleAllAccessibility = (canUseAll) => {
+  if (canUseAll !== undefined && canUseAll !== null) {
+    config.allowAll = canUseAll;
+  } else {
+    config.allowAll = !config.allowAll;
+  }
 };
 
 const toggleVIPAccessibility = (canUseVIP) => {

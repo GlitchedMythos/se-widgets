@@ -161,6 +161,18 @@
     "value": "!counter2down",
     "group": "Commands"
   },
+  "allToggleOnCommand": {
+    "type": "string",
+    "label": "Toggle Allowing Everyone on",
+    "value": "!everyon",
+    "group": "Commands"
+  },
+  "allToggleOffCommand": {
+    "type": "string",
+    "label": "Toggle Allowing Everyone off",
+    "value": "!everyoff",
+    "group": "Commands"
+  },
   "vipToggleOnCommand": {
     "type": "string",
     "label": "Toggle Allowing VIPS on",
