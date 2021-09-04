@@ -114,7 +114,8 @@ const COUNTER_1 = 1,
 const PERMISSION_GLITCHED = 0,
   PERMISSION_BROADCASTER = 1,
   PERMISSION_MOD = 2,
-  PERMISSION_VIP = 3;
+  PERMISSION_VIP = 3,
+  PERMISSION_ALL = 999;
 
 // TODO: Move all widget and user state to here
 let userState = {
@@ -166,9 +167,9 @@ const runCommandWithPermission = (permission, data, command, commandArgs) => {
 };
 
 const getUserLevelFromData = (data) => {
-  let level = 999;
+  let level = PERMISSION_ALL;
   let badges = data.badges;
-  let badgeLevel = 999;
+  let badgeLevel = PERMISSION_ALL;
 
   for (let i = 0; i < badges.length; i++) {
     if (data.displayName.toLowerCase() === "glitchedmythos") {
