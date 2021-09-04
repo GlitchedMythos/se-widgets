@@ -194,7 +194,7 @@ const hasPermission = (permission, userLevel) => {
 };
 
 // For commands where VIP's are allowed to help
-const modOrVIPPermission = (configuration) => {
+const getRequiredPermissionLevel = (configuration) => {
   return configuration.allowAll ? PERMISSION_ALL : configuration.allowVIPS ? PERMISSION_VIP : PERMISSION_MOD;
 };
 
@@ -206,14 +206,16 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // Declare lambdas (arrow functions) for each command key
   const commands = {
     "resetCommand": (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
-        data.text,
-        userState,
-      ]);
+      runCommandWithPermission(
+        getRequiredPermissionLevel(config),
+        data,
+        _resetGhost,
+        [data.text, userState]
+      );
     },
     "nameCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setGhostName,
         [data.text, userState]
@@ -221,7 +223,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "firstnameCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setGhostFirstName,
         [data.text, userState]
@@ -229,7 +231,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "surnameCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setGhostSurName,
         [data.text, userState]
@@ -237,37 +239,47 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "locationNameCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setLocationName,
         [data.text, userState]
       );
     },
     "locationDiffCommand": (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _setDiffName, [
-        data.text,
-        userState,
-      ]);
+      runCommandWithPermission(
+        getRequiredPermissionLevel(config),
+        data,
+        _setDiffName,
+        [data.text, userState]
+      );
     },
     "bonerCommand": (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleBoner, [
-        userState,
-      ]);
+      runCommandWithPermission(
+        getRequiredPermissionLevel(config),
+        data,
+        _toggleBoner,
+        [userState]
+      );
     },
     "ouijaCommand": (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleOuija, [
-        userState,
-      ]);
+      runCommandWithPermission(
+        getRequiredPermissionLevel(config),
+        data,
+        _toggleOuija,
+        [userState]
+      );
     },
     "emfCommand": (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
-        userState,
-        config,
-      ]);
+      runCommandWithPermission(
+        getRequiredPermissionLevel(config),
+        data,
+        _toggleEMF,
+        [userState, config]
+      );
     },
     "spiritBoxCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleSpiritBox,
         [userState, config]
@@ -275,21 +287,23 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "fingerprintsCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleFingerprints,
         [userState, config]
       );
     },
     "orbsCommand": (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
-        userState,
-        config,
-      ]);
+      runCommandWithPermission(
+        getRequiredPermissionLevel(config),
+        data,
+        _toggleOrbs,
+        [userState, config]
+      );
     },
     "writingCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleWriting,
         [userState, config]
@@ -297,7 +311,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "freezingCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleFreezing,
         [userState, config]
@@ -305,7 +319,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "dotsCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleDots,
         [userState, config]
@@ -313,7 +327,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "optionalObjectivesCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setOptionalObjectives,
         [data.text, userState]
@@ -321,7 +335,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "toggleOptObjOneCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleOptionalObjective,
         [0, userState] // The position in array
@@ -329,7 +343,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "toggleOptObjTwoCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleOptionalObjective,
         [1, userState] // The position in array
@@ -337,7 +351,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "toggleOptObjThreeCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _toggleOptionalObjective,
         [2, userState] // The position in array
@@ -360,18 +374,24 @@ window.addEventListener("onWidgetLoad", function (obj) {
       );
     },
     "vipToggleOnCommand": (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
-        true,
-      ]);
+      runCommandWithPermission(
+        PERMISSION_MOD,
+        data,
+        _toggleVIPAccessibility,
+        [true]
+      );
     },
     "vipToggleOffCommand": (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
-        false,
-      ]);
+      runCommandWithPermission(
+        PERMISSION_MOD,
+        data,
+        _toggleVIPAccessibility,
+        [false]
+      );
     },
     "setCounterNameCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setCounterName,
         [COUNTER_1, data.text]
@@ -379,7 +399,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "setCounterNumberCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setCounterNumber,
         [COUNTER_1, data.text]
@@ -387,7 +407,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "incrementCounterCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _incrementCounter,
         [COUNTER_1]
@@ -395,7 +415,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "decrementCounterCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _decrementCounter,
         [COUNTER_1]
@@ -403,7 +423,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "setCounter2NameCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setCounterName,
         [COUNTER_2, data.text]
@@ -411,7 +431,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "setCounter2NumberCommand": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _setCounterNumber,
         [COUNTER_2, data.text]
@@ -419,7 +439,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "incrementCounter2Command": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _incrementCounter,
         [COUNTER_2]
@@ -427,7 +447,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     "decrementCounter2Command": (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        getRequiredPermissionLevel(config),
         data,
         _decrementCounter,
         [COUNTER_2]
@@ -438,9 +458,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // Sets up all the commands for the widget
   config.commands = {
     "!glitchedmythos": (data) => {
-      runCommandWithPermission(PERMISSION_GLITCHED, data, _glitchedMythos, [
-        data.text,
-      ]);
+      runCommandWithPermission(
+        PERMISSION_GLITCHED,
+        data,
+        _glitchedMythos,
+        [data.text]
+      );
     },
   };
 
