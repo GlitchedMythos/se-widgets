@@ -91,6 +91,10 @@ const DIFFICULTY = {
   p: "Professional",
   pro: "Professional",
   professional: "Professional",
+  n: "Nightmare",
+  ni: "Nightmare",
+  night: "Nightmare",
+  nightmare: "Nightmare",
 };
 
 // Constants for displaying evidence on the widget
