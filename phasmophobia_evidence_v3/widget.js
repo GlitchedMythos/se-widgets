@@ -13,16 +13,16 @@ const BANSHEE = "0000111",
   MARE =        "0011100",
   MYLING =      "1001010",
   ONI =         "1100001",
+  ONRYO =       "0110100",
   PHANTOM =     "0010011",
   POLTERGEIST = "0011010",
   REVENANT =    "0101100",
   SHADE =       "1101000",
   SPIRIT =      "1011000",
+  TWINS =       "1110000",
   WRAITH =      "1010001",
   YOKAI =       "0010101",
-  YUREI =       "0100101",
-  TWINS =       "1110000",
-  ONRYO =       "0110100";
+  YUREI =       "0100101";
 
 const OPTIONAL_OBJECTIVES = {
   ca: "Candle",
@@ -493,6 +493,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: ONI,
     },
     {
+      type: "Onryo",
+      conclusion: createGhostConclusionString(
+        fieldData["onryoString"],
+        "Onryo"
+      ),
+      evidence: ONRYO,
+    },
+    {
       type: "Phantom",
       conclusion: createGhostConclusionString(
         fieldData["phantomString"],
@@ -533,6 +541,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: SPIRIT,
     },
     {
+      type: "The Twins",
+      conclusion: createGhostConclusionString(
+        fieldData["twinsString"],
+        "The Twins"
+      ),
+      evidence: TWINS,
+    },
+    {
       type: "Wraith",
       conclusion: createGhostConclusionString(
         fieldData["wraithString"],
@@ -555,22 +571,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "Yurei"
       ),
       evidence: YUREI,
-    },
-    {
-      type: "The Twins",
-      conclusion: createGhostConclusionString(
-        fieldData["twinsString"],
-        "The Twins"
-      ),
-      evidence: TWINS,
-    },
-    {
-      type: "Onryo",
-      conclusion: createGhostConclusionString(
-        fieldData["onryoString"],
-        "Onryo"
-      ),
-      evidence: ONRYO,
     },
   ];
   config.nameStrings = {

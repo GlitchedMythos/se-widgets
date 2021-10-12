@@ -716,6 +716,12 @@
     "value": "",
     "group": "Conclusion Messages"
   },
+  "onryoString": {
+    "type": "text",
+    "label": "Onryo - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
   "phantomString": {
     "type": "text",
     "label": "Phantom - Leave empty 4 default",
@@ -746,6 +752,12 @@
     "value": "",
     "group": "Conclusion Messages"
   },
+  "twinsString": {
+    "type": "text",
+    "label": "The Twins - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
   "wraithString": {
     "type": "text",
     "label": "Wraith - Leave empty 4 default",
@@ -761,18 +773,6 @@
   "yureiString": {
     "type": "text",
     "label": "Yurei - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "twinsString": {
-    "type": "text",
-    "label": "The Twins - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "onryoString": {
-    "type": "text",
-    "label": "Onryo - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   }
