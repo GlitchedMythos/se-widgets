@@ -763,5 +763,17 @@
     "label": "Yurei - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
+  },
+  "twinsString": {
+    "type": "text",
+    "label": "The Twins - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "onryoString": {
+    "type": "text",
+    "label": "Onryo - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
   }
 }

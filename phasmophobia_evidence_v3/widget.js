@@ -1,4 +1,4 @@
-const version = "3.4";
+const version = "3.5";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -20,7 +20,9 @@ const BANSHEE = "0000111",
   SPIRIT =      "1011000",
   WRAITH =      "1010001",
   YOKAI =       "0010101",
-  YUREI =       "0100101";
+  YUREI =       "0100101",
+  TWINS =       "1110000",
+  ONRYO =       "0110100";
 
 const OPTIONAL_OBJECTIVES = {
   ca: "Candle",
@@ -553,6 +555,22 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "Yurei"
       ),
       evidence: YUREI,
+    },
+    {
+      type: "The Twins",
+      conclusion: createGhostConclusionString(
+        fieldData["twinsString"],
+        "The Twins"
+      ),
+      evidence: TWINS,
+    },
+    {
+      type: "Onryo",
+      conclusion: createGhostConclusionString(
+        fieldData["onryoString"],
+        "Onryo"
+      ),
+      evidence: ONRYO,
     },
   ];
   config.nameStrings = {
