@@ -84,6 +84,7 @@ To get `Smudge`
 | Amateur | "a" "am" "amateur" |
 | Intermediate | "i" "int" "intermediate" |
 | Professional | "p" "pro" "professional" |
+| Nightmare | "n" "ni" "night" "nightmare" |
 
 ## Example Usage:
 
