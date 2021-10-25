@@ -12,10 +12,12 @@ const BANSHEE = "0000111",
   JINN =        "1100010",
   MARE =        "0011100",
   MYLING =      "1001010",
+  OBAKE =       "1000110",
   ONI =         "1100001",
   ONRYO =       "0110100",
   PHANTOM =     "0010011",
   POLTERGEIST = "0011010",
+  RAIJU =       "1000101",
   REVENANT =    "0101100",
   SHADE =       "1101000",
   SPIRIT =      "1011000",
@@ -79,6 +81,10 @@ const LOCATIONS = {
   prison: "Prison",
   as: "Asylum",
   asylum: "Asylum",
+  ma: "Maple Lodge Campsite",
+  maple: "Maple Lodge Campsite",
+  camp: "Maple Lodge Campsite",
+  campsite: "Maple Lodge Campsite",
 };
 
 const DIFFICULTY = {
@@ -492,6 +498,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: MYLING,
     },
     {
+      type: "Obake",
+      conclusion: createGhostConclusionString(fieldData["obakeString"], "Obake"),
+      evidence: OBAKE,
+    },
+    {
       type: "Oni",
       conclusion: createGhostConclusionString(fieldData["oniString"], "Oni"),
       evidence: ONI,
@@ -519,6 +530,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "Poltergeist"
       ),
       evidence: POLTERGEIST,
+    },
+    {
+      type: "Raiju",
+      conclusion: createGhostConclusionString(fieldData["raijuString"], "Raiju"),
+      evidence: RAIJU,
     },
     {
       type: "Revenant",
