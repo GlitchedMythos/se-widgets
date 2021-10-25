@@ -1,4 +1,4 @@
-const version = "3.4";
+const version = "3.5";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -12,12 +12,16 @@ const BANSHEE = "0000111",
   JINN =        "1100010",
   MARE =        "0011100",
   MYLING =      "1001010",
+  OBAKE =       "1000110",
   ONI =         "1100001",
+  ONRYO =       "0110100",
   PHANTOM =     "0010011",
   POLTERGEIST = "0011010",
+  RAIJU =       "1000101",
   REVENANT =    "0101100",
   SHADE =       "1101000",
   SPIRIT =      "1011000",
+  TWINS =       "1110000",
   WRAITH =      "1010001",
   YOKAI =       "0010101",
   YUREI =       "0100101";
@@ -77,6 +81,10 @@ const LOCATIONS = {
   prison: "Prison",
   as: "Asylum",
   asylum: "Asylum",
+  ma: "Maple Lodge Campsite",
+  maple: "Maple Lodge Campsite",
+  camp: "Maple Lodge Campsite",
+  campsite: "Maple Lodge Campsite",
 };
 
 const DIFFICULTY = {
@@ -89,6 +97,10 @@ const DIFFICULTY = {
   p: "Professional",
   pro: "Professional",
   professional: "Professional",
+  n: "Nightmare",
+  ni: "Nightmare",
+  night: "Nightmare",
+  nightmare: "Nightmare",
 };
 
 // Constants for displaying evidence on the widget
@@ -486,9 +498,22 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: MYLING,
     },
     {
+      type: "Obake",
+      conclusion: createGhostConclusionString(fieldData["obakeString"], "Obake"),
+      evidence: OBAKE,
+    },
+    {
       type: "Oni",
       conclusion: createGhostConclusionString(fieldData["oniString"], "Oni"),
       evidence: ONI,
+    },
+    {
+      type: "Onryo",
+      conclusion: createGhostConclusionString(
+        fieldData["onryoString"],
+        "Onryo"
+      ),
+      evidence: ONRYO,
     },
     {
       type: "Phantom",
@@ -505,6 +530,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "Poltergeist"
       ),
       evidence: POLTERGEIST,
+    },
+    {
+      type: "Raiju",
+      conclusion: createGhostConclusionString(fieldData["raijuString"], "Raiju"),
+      evidence: RAIJU,
     },
     {
       type: "Revenant",
@@ -529,6 +559,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "Spirit"
       ),
       evidence: SPIRIT,
+    },
+    {
+      type: "The Twins",
+      conclusion: createGhostConclusionString(
+        fieldData["twinsString"],
+        "The Twins"
+      ),
+      evidence: TWINS,
     },
     {
       type: "Wraith",

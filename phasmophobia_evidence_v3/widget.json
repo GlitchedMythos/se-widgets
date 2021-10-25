@@ -710,9 +710,21 @@
     "value": "",
     "group": "Conclusion Messages"
   },
+  "obakeString": {
+    "type": "text",
+    "label": "Obake - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
   "oniString": {
     "type": "text",
     "label": "Oni - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "onryoString": {
+    "type": "text",
+    "label": "Onryo - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
@@ -725,6 +737,12 @@
   "poltergeistString": {
     "type": "text",
     "label": "Poltergeist - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "raijuString": {
+    "type": "text",
+    "label": "Raiju - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
@@ -743,6 +761,12 @@
   "spiritString": {
     "type": "text",
     "label": "Spirit - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "twinsString": {
+    "type": "text",
+    "label": "The Twins - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
