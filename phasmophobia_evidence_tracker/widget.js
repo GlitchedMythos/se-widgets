@@ -107,7 +107,8 @@ const DIFFICULTY = {
 const EVIDENCE_OFF = 0,
   EVIDENCE_ON = 1,
   EVIDENCE_IMPOSSIBLE = 2,
-  EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
+  EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
+  EVIDENCE_NEGATIVE = 4;
 
 const EVIDENCE_NAMES_IN_DOM = [
   "emf",
@@ -319,6 +320,58 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleDots,
+        [userState, config]
+      );
+    },
+    [`${fieldData["emfCommand"]}x`]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _setEMFNegative, [
+        userState,
+        config,
+      ]);
+    },
+    [`${fieldData["spiritBoxCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setSpiritBoxNegative,
+        [userState, config]
+      );
+    },
+    [`${fieldData["fingerprintsCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setFingerprintsNegative,
+        [userState, config]
+      );
+    },
+    [`${fieldData["orbsCommand"]}x`]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _setOrbsNegative, [
+        userState,
+        config,
+      ]);
+    },
+    [`${fieldData["writingCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setWritingImpossible,
+        [userState, config]
+      );
+    },
+    [`${fieldData["freezingCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setFreezingImpossible,
+        [userState, config]
+      );
+    },
+    [`${fieldData["dotsCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setDotsImpossible,
         [userState, config]
       );
     },
@@ -829,6 +882,48 @@ const _toggleDots = (state, config) => {
   determineConclusionMessage(state);
 };
 
+const _setEMFNegative = (state, config) => {
+  state.evidence.emf = toggleEvidence(state.evidence.emf);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
+const _setSpiritBoxNegative = (state, config) => {
+  state.evidence.spiritBox = toggleEvidence(state.evidence.spiritBox);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
+const _setFingerprintsNegative = (state, config) => {
+  state.evidence.fingerprints = toggleEvidence(state.evidence.fingerprints);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
+const _setOrbsNegative = (state, config) => {
+  state.evidence.orbs = toggleEvidence(state.evidence.orbs);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
+const _setWritingNegative = (state, config) => {
+  state.evidence.writing = toggleEvidence(state.evidence.writing);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
+const _setFreezingNegative = (state, config) => {
+  state.evidence.freezing = toggleEvidence(state.evidence.freezing);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
+const _setDotsNegative = (state, config) => {
+  state.evidence.dots = toggleEvidence(state.evidence.dots);
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+};
+
 const _setOptionalObjectives = (command, state) => {
   let commandSplit = command.split(" ");
   let optObjCommands = commandSplit.slice(1);
@@ -970,7 +1065,9 @@ const calculateGhostEvidenceDisplay = (state, config) => {
 const calculateSingleGhostEvidence = (evidence) => {
   // Here we need to ensure there is no impossible evidence
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM; i++) {
-    if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON) {
+    if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
+      && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
+    ) {
       evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_OFF;
     }
   }
@@ -1131,6 +1228,9 @@ const determineConclusionMessage = (state) => {
  *                  HELPER FUNCTIONS                   *
  *******************************************************/
 
+// * This is set to always automatically set evidence to ON
+// * Except when ON, in which case it sets to OFF
+// * This is intentional behavior
 const toggleEvidence = (evidence) => {
   if (evidence === EVIDENCE_ON) {
     evidence = EVIDENCE_OFF;
@@ -1139,6 +1239,13 @@ const toggleEvidence = (evidence) => {
   }
   return evidence;
 };
+
+// * This is abstracted out for simplicity.
+const setEvidenceNegative = (evidence) => {
+  evidence = EVIDENCE_NEGATIVE;
+
+  return evidence;
+}
 
 const getLocationNameString = (location) => {
   let locationSplit = location.split(" ");
@@ -1170,33 +1277,35 @@ const toggleVIPAccessibility = (canUseVIP) => {
 const createEvidenceString = (evidence) => {
   let evidenceString = "";
 
-  evidenceString =
-    evidence.emf === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    evidence.freezing === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.spiritBox === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.writing === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.orbs === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    evidence.fingerprints === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.dots === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
+  evidenceString = addToEvidenceString(evidenceString, evidence.emf);
+  evidenceString = addToEvidenceString(evidenceString, evidence.freezing);
+  evidenceString = addToEvidenceString(evidenceString, evidence.spiritBox);
+  evidenceString = addToEvidenceString(evidenceString, evidence.writing);
+  evidenceString = addToEvidenceString(evidenceString, evidence.orbs);
+  evidenceString = addToEvidenceString(evidenceString, evidence.fingerprints);
+  evidenceString = addToEvidenceString(evidenceString, evidence.dots);
 
   return evidenceString;
 };
+
+const addToEvidenceString = (evidenceString, evidenceValue) => {
+  switch (evidenceValue) {
+    case EVIDENCE_OFF:
+      evidenceString = evidenceString + `${EVIDENCE_OFF}`;
+      break;
+    case EVIDENCE_ON:
+      evidenceString = evidenceString + `${EVIDENCE_ON}`;
+      break;
+    case EVIDENCE_NEGATIVE:
+      evidenceString = evidenceString + `${EVIDENCE_NEGATIVE}`;
+      break;
+  
+    default:
+      break;
+  }
+
+  return evidenceString;
+}
 
 const numOfTrueEvidenceInString = (evidenceString) => {
   let index,
@@ -1216,16 +1325,26 @@ const getGhostPossibilities = (evidenceString) => {
   for (let i = 0; i < config.ghosts.length; i++) {
     let evidenceMatch = 0;
     let ghostToCheck = config.ghosts[i];
+    let impossibleGhostDueToNegative = false;
 
     for (let j = 0; j < evidenceString.length; j++) {
       if (evidenceString.charAt(j) == "1") {
         if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
           evidenceMatch = evidenceMatch + 1;
         }
+
+        if (evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` 
+          && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
+        ) {
+          impossibleGhostDueToNegative = true;
+        }
       }
     }
 
-    if (evidenceMatch == numOfTrueEvidence && evidenceMatch > 1) {
+    if (!impossibleGhostDueToNegative
+      && evidenceMatch == numOfTrueEvidence 
+      && evidenceMatch > 1
+    ) {
       possibleGhosts.push(config.ghosts[i]);
     }
   }
