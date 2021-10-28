@@ -113,6 +113,7 @@ To get `Smudge`
 | High School | "hi" "hs" "high" "school" "brown" "brownstone" |
 | Prison | "pr" "prison" |
 | Asylum | "as" "asylum" |
+| Maple Lodge | "ma" "maple" "camp" "campsite" |
 
 | Difficulty | Possible Phrases |
 |--|--|
