@@ -355,7 +355,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
-        _setWritingImpossible,
+        _setWritingNegative,
         [userState, config]
       );
     },
@@ -363,7 +363,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
-        _setFreezingImpossible,
+        _setFreezingNegative,
         [userState, config]
       );
     },
@@ -371,7 +371,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
       runCommandWithPermission(
         modOrVIPPermission(config),
         data,
-        _setDotsImpossible,
+        _setDotsNegative,
         [userState, config]
       );
     },
@@ -840,6 +840,7 @@ const _toggleOuija = (state) => {
   state.ouija = !state.ouija;
 };
 
+// TODO: Update each of the _toggle<blank> to be a single method
 const _toggleEMF = (state, config) => {
   state.evidence.emf = toggleEvidence(state.evidence.emf);
   calculateGhostEvidenceDisplay(state, config);
@@ -883,45 +884,31 @@ const _toggleDots = (state, config) => {
 };
 
 const _setEMFNegative = (state, config) => {
-  state.evidence.emf = toggleEvidence(state.evidence.emf);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+  setEvidenceNegative("emf", state, config)
 };
 
 const _setSpiritBoxNegative = (state, config) => {
-  state.evidence.spiritBox = toggleEvidence(state.evidence.spiritBox);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+  setEvidenceNegative("spiritBox", state, config)
 };
 
 const _setFingerprintsNegative = (state, config) => {
-  state.evidence.fingerprints = toggleEvidence(state.evidence.fingerprints);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+  setEvidenceNegative("fingerprints", state, config)
 };
 
 const _setOrbsNegative = (state, config) => {
-  state.evidence.orbs = toggleEvidence(state.evidence.orbs);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+  setEvidenceNegative("orbs", state, config)
 };
 
 const _setWritingNegative = (state, config) => {
-  state.evidence.writing = toggleEvidence(state.evidence.writing);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+  setEvidenceNegative("writing", state, config)
 };
 
 const _setFreezingNegative = (state, config) => {
-  state.evidence.freezing = toggleEvidence(state.evidence.freezing);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+  setEvidenceNegative("freezing", state, config)
 };
 
 const _setDotsNegative = (state, config) => {
-  state.evidence.dots = toggleEvidence(state.evidence.dots);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+  setEvidenceNegative("dots", state, config)
 };
 
 const _setOptionalObjectives = (command, state) => {
@@ -980,6 +967,13 @@ const _glitchedMythos = (command) => {
 /*******************************************************
  *                  LOGIC FUNCTIONS                    *
  *******************************************************/
+// * This is abstracted out for simplicity.
+const setEvidenceNegative = (evidence, state, config) => {
+  state.evidence[evidence] = state.evidence === EVIDENCE_NEGATIVE ? EVIDENCE_OFF : EVIDENCE_NEGATIVE;
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+}
+
 const resetGhost = (newName, state) => {
   resetName(newName, state);
   resetLocationName(state);
@@ -1043,7 +1037,7 @@ const calculateGhostEvidenceDisplay = (state, config) => {
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
 
   if (numOfTrueEvidence < 2) {
-    evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay);
+    evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay, evidenceString, config);
   } else if (numOfTrueEvidence === 2) {
     evidenceDisplay = calculateDoubleGhostEvidence(
       evidenceDisplay,
@@ -1065,7 +1059,8 @@ const calculateGhostEvidenceDisplay = (state, config) => {
 const calculateSingleGhostEvidence = (evidence) => {
   // Here we need to ensure there is no impossible evidence
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM; i++) {
-    if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
+    if (
+      evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
       && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
     ) {
       evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_OFF;
@@ -1079,34 +1074,35 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
 
+
   if (config.markImpossibleEvidence) {
     // Addition shorthand prior to impossibleEvidence converts the string to a number
     // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | Dots
-    if (+impossibleEvidence[0] == 0) {
+    if (+impossibleEvidence[0] == EVIDENCE_OFF && +evidenceString[0] !== EVIDENCE_NEGATIVE) {
       evidence.emf = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[1] == 0) {
+    if (+impossibleEvidence[1] == EVIDENCE_OFF && +evidenceString[1] !== EVIDENCE_NEGATIVE) {
       evidence.freezing = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[2] == 0) {
+    if (+impossibleEvidence[2] == EVIDENCE_OFF && +evidenceString[2] !== EVIDENCE_NEGATIVE) {
       evidence.spiritBox = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[3] == 0) {
+    if (+impossibleEvidence[3] == EVIDENCE_OFF && +evidenceString[3] !== EVIDENCE_NEGATIVE) {
       evidence.writing = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[4] == 0) {
+    if (+impossibleEvidence[4] == EVIDENCE_OFF && +evidenceString[4] !== EVIDENCE_NEGATIVE) {
       evidence.orbs = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[5] == 0) {
+    if (+impossibleEvidence[5] == EVIDENCE_OFF && +evidenceString[5] !== EVIDENCE_NEGATIVE) {
       evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[6] == 0) {
+    if (+impossibleEvidence[6] == EVIDENCE_OFF && +evidenceString[6] !== EVIDENCE_NEGATIVE) {
       evidence.dots = EVIDENCE_IMPOSSIBLE;
     }
   }
@@ -1129,8 +1125,9 @@ const calculateTripleGhostEvidence = (evidence, evidenceString, config) => {
   } else {
     for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
       if (
-        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON &&
-        config.useEvidenceImpossibleCompleted
+        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
+        && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
+        && config.useEvidenceImpossibleCompleted
       ) {
         evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
       }
@@ -1191,7 +1188,6 @@ const updateFullOptionalObjectives = (
   return optionalObjectives;
 };
 
-// TODO: Ensure new ghosts work
 const determineConclusionMessage = (state) => {
   let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
   let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(
@@ -1240,13 +1236,6 @@ const toggleEvidence = (evidence) => {
   return evidence;
 };
 
-// * This is abstracted out for simplicity.
-const setEvidenceNegative = (evidence) => {
-  evidence = EVIDENCE_NEGATIVE;
-
-  return evidence;
-}
-
 const getLocationNameString = (location) => {
   let locationSplit = location.split(" ");
   if (locationSplit[1]) {
@@ -1275,36 +1264,22 @@ const toggleVIPAccessibility = (canUseVIP) => {
 };
 
 const createEvidenceString = (evidence) => {
-  let evidenceString = "";
 
-  evidenceString = addToEvidenceString(evidenceString, evidence.emf);
-  evidenceString = addToEvidenceString(evidenceString, evidence.freezing);
-  evidenceString = addToEvidenceString(evidenceString, evidence.spiritBox);
-  evidenceString = addToEvidenceString(evidenceString, evidence.writing);
-  evidenceString = addToEvidenceString(evidenceString, evidence.orbs);
-  evidenceString = addToEvidenceString(evidenceString, evidence.fingerprints);
-  evidenceString = addToEvidenceString(evidenceString, evidence.dots);
+  let evidenceString = 
+    "" + 
+    evidence.emf +
+    evidence.freezing +
+    evidence.spiritBox +
+    evidence.writing +
+    evidence.orbs +
+    evidence.fingerprints +
+    evidence.dots;
 
   return evidenceString;
 };
 
 const addToEvidenceString = (evidenceString, evidenceValue) => {
-  switch (evidenceValue) {
-    case EVIDENCE_OFF:
-      evidenceString = evidenceString + `${EVIDENCE_OFF}`;
-      break;
-    case EVIDENCE_ON:
-      evidenceString = evidenceString + `${EVIDENCE_ON}`;
-      break;
-    case EVIDENCE_NEGATIVE:
-      evidenceString = evidenceString + `${EVIDENCE_NEGATIVE}`;
-      break;
-  
-    default:
-      break;
-  }
-
-  return evidenceString;
+  return evidenceString + `${evidenceValue}`;
 }
 
 const numOfTrueEvidenceInString = (evidenceString) => {
@@ -1317,21 +1292,55 @@ const numOfTrueEvidenceInString = (evidenceString) => {
   return count;
 };
 
+const numOfSelectedEvidenceInString = (evidenceString) => {
+  let index,
+    count = 0;
+  for (index = 0; index < evidenceString.length; ++index) {
+    count = (evidenceString.charAt(index) == `${EVIDENCE_ON}` || evidenceString.charAt(index) == `${EVIDENCE_NEGATIVE}`) 
+      ? count + 1 : count;
+  }
+
+  return count;
+}
+
 const getGhostPossibilities = (evidenceString) => {
   // List of ghosts returns [<evidenceString>, <Name>]
   const possibleGhosts = [];
   const numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
 
-  for (let i = 0; i < config.ghosts.length; i++) {
-    let evidenceMatch = 0;
-    let ghostToCheck = config.ghosts[i];
-    let impossibleGhostDueToNegative = false;
+  if (numOfTrueEvidence > 0) {
+    for (let i = 0; i < config.ghosts.length; i++) {
+      let evidenceMatch = 0;
+      let ghostToCheck = config.ghosts[i];
+      let impossibleGhostDueToNegative = false;
 
-    for (let j = 0; j < evidenceString.length; j++) {
-      if (evidenceString.charAt(j) == "1") {
-        if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
-          evidenceMatch = evidenceMatch + 1;
+      for (let j = 0; j < evidenceString.length; j++) {
+        if (evidenceString.charAt(j) == "1") {
+          if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
+            evidenceMatch = evidenceMatch + 1;
+          }
+
+          if (evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` 
+            && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
+          ) {
+            impossibleGhostDueToNegative = true;
+          }
         }
+      }
+      
+      if (!impossibleGhostDueToNegative
+        && evidenceMatch == numOfTrueEvidence 
+        && evidenceMatch > 1
+      ) {
+        possibleGhosts.push(config.ghosts[i]);
+      }
+    }
+  } else {
+    for (let i = 0; i < config.ghosts.length; i++) {
+      let impossibleGhostDueToNegative = false;
+      
+      for (let j = 0; j < evidenceString.length; j++) {
+        let ghostToCheck = config.ghosts[i];
 
         if (evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` 
           && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
@@ -1339,13 +1348,10 @@ const getGhostPossibilities = (evidenceString) => {
           impossibleGhostDueToNegative = true;
         }
       }
-    }
 
-    if (!impossibleGhostDueToNegative
-      && evidenceMatch == numOfTrueEvidence 
-      && evidenceMatch > 1
-    ) {
-      possibleGhosts.push(config.ghosts[i]);
+      if  (!impossibleGhostDueToNegative) {
+        possibleGhosts.push(config.ghosts[i]);
+      }
     }
   }
 
@@ -1360,6 +1366,7 @@ const getImpossibleEvidence = (possibleGhosts) => {
         impossibleEvidenceString.substr(0, k) +
         `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` +
         impossibleEvidenceString.substr(k + 1);
+      
       impossibleEvidenceString[k] = `${
         +impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
       }`; // possibleGhosts[ghost][ghost evidence string][position in evidence string]
@@ -1425,6 +1432,8 @@ const updateEvidenceDOM = (evidence) => {
   resetEvidenceDOM();
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     let evidenceDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`);
+    let negativeDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-negative`);
+    negativeDom.addClass("hidden");
     switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
       case EVIDENCE_ON:
         evidenceDom.addClass("active");
@@ -1435,6 +1444,9 @@ const updateEvidenceDOM = (evidence) => {
       case EVIDENCE_COMPLETE_IMPOSSIBLE:
         evidenceDom.addClass("impossible-completed");
         break;
+      case EVIDENCE_NEGATIVE:
+        evidenceDom.addClass("impossible");
+        negativeDom.removeClass("hidden");
       case EVIDENCE_OFF:
       default:
         evidenceDom.addClass("inactive");

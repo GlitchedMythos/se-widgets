@@ -552,6 +552,12 @@
     "value": "rgba(28, 69, 233, 0.3)",
     "group": "Theming - Evidence"
   },
+  "evidenceNegative": {
+    "type": "colorpicker",
+    "label": "Negative X Evidence",
+    "value": "rgba(255, 0, 0, 1.0)",
+    "group": "Theming - Evidence"
+  },
   "evidencePixelSize": {
     "type": "number",
     "label": "Evidence Pixel Size",
