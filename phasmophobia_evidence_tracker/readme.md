@@ -16,13 +16,13 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Difficulty Input | !diff "difficulty" | Set the map name. Replace with a command from the map list below |
 | Toggle Bone | !boner | Change Bone to opposite of current state |
 | Toggle Ouija | !ouija | Change Ouija to opposite of current state |
-| Toggle EMF | !ge | Change EMF to opposite of current state |
-| Toggle Spirit Box | !gs | Change Spirit Box to opposite of current state |
-| Toggle Fingerprints | !gf | Change Fingerprints to opposite of current state |
-| Toggle Orbs | !go | Change Ghost Orbs to opposite of current state |
-| Toggle Ghost Writing | !gw | Change Ghost Writing to opposite of current state |
-| Toggle Freezing Temps | !gt | Change Freezing Temps to opposite of current state |
-| Toggle Dots | !gd | Change Dots to opposite of current state |
+| Toggle EMF | !ge | Cycle EMF to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage  |
+| Toggle Spirit Box | !gs | Cycle Spirit Box to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
+| Toggle Fingerprints | !gf | Cycle Fingerprints to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
+| Toggle Orbs | !go | Cycle Orbs to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
+| Toggle Ghost Writing | !gw | Cycle Ghost Writing to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
+| Toggle Freezing Temps | !gt | Cycle Freezing Temps to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
+| Toggle Dots | !gd | Cycle Dots to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
 | Optional Objectives | !oo "a" "b" "c"<br />!oo "a" | Set the optional objectives. Replace a, b or c with the objective you'd like below |
 | Toggle Optional Objective 1 | !o1 | Toggles Optional Objective 1 from being marked or not |
 | Toggle Optional Objective 2 | !o2 | Toggles Optional Objective 2 from being marked or not |
@@ -31,6 +31,37 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 | Set Counter Number | !setcounternumber "num"<br />!setcounter2number "num" | Set's the number in the counter to the number input |
 | Increment the counter by 1 | !counterup<br />!counter2up | Adds one to the counter number |
 | Decrement the counter by 1 | !counterdown<br />!counter2down | Subtracts one from the counter number |
+
+# Toggle Evidence Advanced Usage
+
+You can manually set evidence using extra parameters
+
+| Turn Evidence On | "o" "on" |
+| Turn Evidence Negative | "x" "n" "neg" "negative" |
+| Turn Evidence Off | "f" "off" |
+
+## Example Usage:
+
+To turn emf on:
+
+    !ge o
+    !ge on
+
+To turn ghost orbs to negative:
+
+    !go x
+    !go n
+    !go neg
+    !go negative
+
+To turn fingerprints to off:
+
+    !gf f
+    !gf off
+
+When using any of the ghost evidence commands without arguments, it will toggle to the next state:
+
+Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 
 # Optional Objectives
 
