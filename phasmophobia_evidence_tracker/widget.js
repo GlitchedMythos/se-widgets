@@ -1,4 +1,4 @@
-const version = "3.4";
+const version = "3.5 (Nightmare Update)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -12,12 +12,16 @@ const BANSHEE = "0000111",
   JINN =        "1100010",
   MARE =        "0011100",
   MYLING =      "1001010",
+  OBAKE =       "1000110",
   ONI =         "1100001",
+  ONRYO =       "0110100",
   PHANTOM =     "0010011",
   POLTERGEIST = "0011010",
+  RAIJU =       "1000101",
   REVENANT =    "0101100",
   SHADE =       "1101000",
   SPIRIT =      "1011000",
+  TWINS =       "1110000",
   WRAITH =      "1010001",
   YOKAI =       "0010101",
   YUREI =       "0100101";
@@ -77,6 +81,10 @@ const LOCATIONS = {
   prison: "Prison",
   as: "Asylum",
   asylum: "Asylum",
+  ma: "Maple Lodge",
+  maple: "Maple Lodge",
+  camp: "Maple Lodge",
+  campsite: "Maple Lodge",
 };
 
 const DIFFICULTY = {
@@ -89,13 +97,18 @@ const DIFFICULTY = {
   p: "Professional",
   pro: "Professional",
   professional: "Professional",
+  n: "Nightmare",
+  ni: "Nightmare",
+  night: "Nightmare",
+  nightmare: "Nightmare",
 };
 
 // Constants for displaying evidence on the widget
 const EVIDENCE_OFF = 0,
   EVIDENCE_ON = 1,
   EVIDENCE_IMPOSSIBLE = 2,
-  EVIDENCE_COMPLETE_IMPOSSIBLE = 3;
+  EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
+  EVIDENCE_NEGATIVE = 4;
 
 const EVIDENCE_NAMES_IN_DOM = [
   "emf",
@@ -260,6 +273,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
+        data.text,
         userState,
         config,
       ]);
@@ -269,7 +283,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleSpiritBox,
-        [userState, config]
+        [data.text, userState, config]
       );
     },
     [fieldData["fingerprintsCommand"]]: (data) => {
@@ -277,11 +291,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleFingerprints,
-        [userState, config]
+        [data.text, userState, config]
       );
     },
     [fieldData["orbsCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
+        data.text,
         userState,
         config,
       ]);
@@ -291,7 +306,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleWriting,
-        [userState, config]
+        [data.text, userState, config]
       );
     },
     [fieldData["freezingCommand"]]: (data) => {
@@ -299,7 +314,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleFreezing,
-        [userState, config]
+        [data.text, userState, config]
       );
     },
     [fieldData["dotsCommand"]]: (data) => {
@@ -307,6 +322,58 @@ window.addEventListener("onWidgetLoad", function (obj) {
         modOrVIPPermission(config),
         data,
         _toggleDots,
+        [data.text, userState, config]
+      );
+    },
+    [`${fieldData["emfCommand"]}x`]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _setEMFNegative, [
+        userState,
+        config,
+      ]);
+    },
+    [`${fieldData["spiritBoxCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setSpiritBoxNegative,
+        [userState, config]
+      );
+    },
+    [`${fieldData["fingerprintsCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setFingerprintsNegative,
+        [userState, config]
+      );
+    },
+    [`${fieldData["orbsCommand"]}x`]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _setOrbsNegative, [
+        userState,
+        config,
+      ]);
+    },
+    [`${fieldData["writingCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setWritingNegative,
+        [userState, config]
+      );
+    },
+    [`${fieldData["freezingCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setFreezingNegative,
+        [userState, config]
+      );
+    },
+    [`${fieldData["dotsCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _setDotsNegative,
         [userState, config]
       );
     },
@@ -486,9 +553,22 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: MYLING,
     },
     {
+      type: "Obake",
+      conclusion: createGhostConclusionString(fieldData["obakeString"], "Obake"),
+      evidence: OBAKE,
+    },
+    {
       type: "Oni",
       conclusion: createGhostConclusionString(fieldData["oniString"], "Oni"),
       evidence: ONI,
+    },
+    {
+      type: "Onryo",
+      conclusion: createGhostConclusionString(
+        fieldData["onryoString"],
+        "Onryo"
+      ),
+      evidence: ONRYO,
     },
     {
       type: "Phantom",
@@ -505,6 +585,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "Poltergeist"
       ),
       evidence: POLTERGEIST,
+    },
+    {
+      type: "Raiju",
+      conclusion: createGhostConclusionString(fieldData["raijuString"], "Raiju"),
+      evidence: RAIJU,
     },
     {
       type: "Revenant",
@@ -529,6 +614,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "Spirit"
       ),
       evidence: SPIRIT,
+    },
+    {
+      type: "The Twins",
+      conclusion: createGhostConclusionString(
+        fieldData["twinsString"],
+        "The Twins"
+      ),
+      evidence: TWINS,
     },
     {
       type: "Wraith",
@@ -749,46 +842,60 @@ const _toggleOuija = (state) => {
   state.ouija = !state.ouija;
 };
 
-const _toggleEMF = (state, config) => {
-  state.evidence.emf = toggleEvidence(state.evidence.emf);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+const _toggleEMF = (command, state, config) => {
+  toggleEvidence(command, state, config, 'emf')
 };
 
-const _toggleSpiritBox = (state, config) => {
-  state.evidence.spiritBox = toggleEvidence(state.evidence.spiritBox);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+const _toggleSpiritBox = (command, state, config) => {
+  toggleEvidence(command, state, config, 'spiritBox')
 };
 
-const _toggleFingerprints = (state, config) => {
-  state.evidence.fingerprints = toggleEvidence(state.evidence.fingerprints);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+const _toggleFingerprints = (command, state, config) => {
+  toggleEvidence(command, state, config, 'fingerprints')
 };
 
-const _toggleOrbs = (state, config) => {
-  state.evidence.orbs = toggleEvidence(state.evidence.orbs);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+const _toggleOrbs = (command, state, config) => {
+  toggleEvidence(command, state, config, 'orbs')
 };
 
-const _toggleWriting = (state, config) => {
-  state.evidence.writing = toggleEvidence(state.evidence.writing);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+const _toggleWriting = (command, state, config) => {
+  toggleEvidence(command, state, config, 'writing')
 };
 
-const _toggleFreezing = (state, config) => {
-  state.evidence.freezing = toggleEvidence(state.evidence.freezing);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+const _toggleFreezing = (command, state, config) => {
+  toggleEvidence(command, state, config, 'freezing')
 };
 
-const _toggleDots = (state, config) => {
-  state.evidence.dots = toggleEvidence(state.evidence.dots);
-  calculateGhostEvidenceDisplay(state, config);
-  determineConclusionMessage(state);
+const _toggleDots = (command, state, config) => {
+  toggleEvidence(command, state, config, 'dots')
+};
+
+const _setEMFNegative = (state, config) => {
+  setEvidenceNegative("emf", state, config)
+};
+
+const _setSpiritBoxNegative = (state, config) => {
+  setEvidenceNegative("spiritBox", state, config)
+};
+
+const _setFingerprintsNegative = (state, config) => {
+  setEvidenceNegative("fingerprints", state, config)
+};
+
+const _setOrbsNegative = (state, config) => {
+  setEvidenceNegative("orbs", state, config)
+};
+
+const _setWritingNegative = (state, config) => {
+  setEvidenceNegative("writing", state, config)
+};
+
+const _setFreezingNegative = (state, config) => {
+  setEvidenceNegative("freezing", state, config)
+};
+
+const _setDotsNegative = (state, config) => {
+  setEvidenceNegative("dots", state, config)
 };
 
 const _setOptionalObjectives = (command, state) => {
@@ -847,6 +954,24 @@ const _glitchedMythos = (command) => {
 /*******************************************************
  *                  LOGIC FUNCTIONS                    *
  *******************************************************/
+// * This is abstracted out for simplicity.
+const setEvidenceNegative = (evidence, state, config) => {
+  state.evidence[evidence] = (state.evidence[evidence] === EVIDENCE_NEGATIVE) ? EVIDENCE_OFF : EVIDENCE_NEGATIVE;
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+}
+
+const toggleEvidence = (command, state, config, evidenceType) => {
+  const arg = command.split(" ")[1];
+  if (arg) {
+    state.evidence[evidenceType] = setEvidence(arg);
+  } else {
+    state.evidence[evidenceType] = toggleEvidenceIterator(state.evidence[evidenceType]);
+  }
+  calculateGhostEvidenceDisplay(state, config);
+  determineConclusionMessage(state);
+}
+
 const resetGhost = (newName, state) => {
   resetName(newName, state);
   resetLocationName(state);
@@ -886,7 +1011,6 @@ const resetOptionalObjectives = (optionalObjectives, state) => {
   }
 };
 
-// TODO: Update with new evidence
 const resetEvidence = (evidence) => {
   evidence.emf = EVIDENCE_OFF;
   evidence.spiritBox = EVIDENCE_OFF;
@@ -902,7 +1026,6 @@ const resetConclusion = (state) => {
     config.conclusionStrings.zeroEvidenceConclusionString;
 };
 
-// TODO: Ensure this still works with new/more evidence
 const calculateGhostEvidenceDisplay = (state, config) => {
   // We do a deep copy to ensure there are no references
   let evidenceDisplay = JSON.parse(JSON.stringify(state.evidence));
@@ -910,7 +1033,7 @@ const calculateGhostEvidenceDisplay = (state, config) => {
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
 
   if (numOfTrueEvidence < 2) {
-    evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay);
+    evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay, evidenceString, config);
   } else if (numOfTrueEvidence === 2) {
     evidenceDisplay = calculateDoubleGhostEvidence(
       evidenceDisplay,
@@ -932,7 +1055,10 @@ const calculateGhostEvidenceDisplay = (state, config) => {
 const calculateSingleGhostEvidence = (evidence) => {
   // Here we need to ensure there is no impossible evidence
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM; i++) {
-    if (evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON) {
+    if (
+      evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
+      && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
+    ) {
       evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_OFF;
     }
   }
@@ -944,34 +1070,35 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
 
+
   if (config.markImpossibleEvidence) {
     // Addition shorthand prior to impossibleEvidence converts the string to a number
     // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | Dots
-    if (+impossibleEvidence[0] == 0) {
+    if (+impossibleEvidence[0] == EVIDENCE_OFF && +evidenceString[0] !== EVIDENCE_NEGATIVE) {
       evidence.emf = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[1] == 0) {
+    if (+impossibleEvidence[1] == EVIDENCE_OFF && +evidenceString[1] !== EVIDENCE_NEGATIVE) {
       evidence.freezing = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[2] == 0) {
+    if (+impossibleEvidence[2] == EVIDENCE_OFF && +evidenceString[2] !== EVIDENCE_NEGATIVE) {
       evidence.spiritBox = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[3] == 0) {
+    if (+impossibleEvidence[3] == EVIDENCE_OFF && +evidenceString[3] !== EVIDENCE_NEGATIVE) {
       evidence.writing = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[4] == 0) {
+    if (+impossibleEvidence[4] == EVIDENCE_OFF && +evidenceString[4] !== EVIDENCE_NEGATIVE) {
       evidence.orbs = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[5] == 0) {
+    if (+impossibleEvidence[5] == EVIDENCE_OFF && +evidenceString[5] !== EVIDENCE_NEGATIVE) {
       evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[6] == 0) {
+    if (+impossibleEvidence[6] == EVIDENCE_OFF && +evidenceString[6] !== EVIDENCE_NEGATIVE) {
       evidence.dots = EVIDENCE_IMPOSSIBLE;
     }
   }
@@ -979,7 +1106,6 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
   return evidence;
 };
 
-// TODO: Add/validate new evidence
 const calculateTripleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
 
@@ -994,8 +1120,9 @@ const calculateTripleGhostEvidence = (evidence, evidenceString, config) => {
   } else {
     for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
       if (
-        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON &&
-        config.useEvidenceImpossibleCompleted
+        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
+        && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
+        && config.useEvidenceImpossibleCompleted
       ) {
         evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
       }
@@ -1056,36 +1183,28 @@ const updateFullOptionalObjectives = (
   return optionalObjectives;
 };
 
-// TODO: Ensure new ghosts work
 const determineConclusionMessage = (state) => {
   let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
-  let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(
-    displayEvidenceString
-  );
+  let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(displayEvidenceString);
+  let numOfNegative = numOfNegativeEvidenceInString(displayEvidenceString);
+  let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
 
-  let userEvidenceString = createEvidenceString(state.evidence);
-  let numberOfUserTrueEvidence = numOfTrueEvidenceInString(userEvidenceString);
-
-  if (numOfDisplayTrueEvidence < 1 && numberOfUserTrueEvidence < 1) {
-    state.conclusionString =
-      config.conclusionStrings.zeroEvidenceConclusionString;
-  } else if (numOfDisplayTrueEvidence === 1) {
-    state.conclusionString =
-      config.conclusionStrings.oneEvidenceConclusionString;
-  } else if (numOfDisplayTrueEvidence === 2) {
-    let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
-    let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
-    state.conclusionString = `Could be a ` + ghostPossibilityStrings.join(", ");
-  } else if (numOfDisplayTrueEvidence === 3) {
-    let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
-    let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
-
-    state.conclusionString =
-      ghostPossibilityStrings.length === 0
-        ? config.conclusionStrings.tooMuchEvidence
-        : ghostPossibilities[0].conclusion;
-  } else {
-    state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+  switch (true) {
+    case numOfDisplayTrueEvidence <= 0:
+      state.conclusionString = getZeroEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+      break;
+    case numOfDisplayTrueEvidence == 1:
+      state.conclusionString = getSingleEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+      break;
+    case numOfDisplayTrueEvidence == 2:
+    case numOfDisplayTrueEvidence == 3:
+      state.conclusionString = getMultipleEvidenceConclusionMessage(ghostPossibilities);
+      break;
+    case numOfDisplayTrueEvidence >= 4:
+      state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+    default:
+      state.conclusionString = "Something broke";
+      break;
   }
 };
 
@@ -1093,14 +1212,33 @@ const determineConclusionMessage = (state) => {
  *                  HELPER FUNCTIONS                   *
  *******************************************************/
 
-const toggleEvidence = (evidence) => {
+// * This is set to always automatically set evidence to ON
+// * Except when ON, in which case it sets to OFF
+// * This is intentional behavior
+const toggleEvidenceIterator = (evidence) => {
   if (evidence === EVIDENCE_ON) {
+    evidence = EVIDENCE_NEGATIVE;
+  } else if (evidence === EVIDENCE_NEGATIVE) {
     evidence = EVIDENCE_OFF;
   } else {
     evidence = EVIDENCE_ON;
   }
   return evidence;
 };
+
+const setEvidence = (arg) => {
+  if (arg === 'o' || arg === 'on') {
+    return EVIDENCE_ON;
+  }
+
+  if (arg === 'f' || arg === 'off') {
+    return EVIDENCE_OFF;
+  }
+
+  if (arg === 'x' || arg === 'n' || arg === 'neg' || arg === 'negative') {
+    return EVIDENCE_NEGATIVE;
+  }
+}
 
 const getLocationNameString = (location) => {
   let locationSplit = location.split(" ");
@@ -1130,35 +1268,23 @@ const toggleVIPAccessibility = (canUseVIP) => {
 };
 
 const createEvidenceString = (evidence) => {
-  let evidenceString = "";
 
-  evidenceString =
-    evidence.emf === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    evidence.freezing === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.spiritBox === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.writing === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.orbs === EVIDENCE_ON ? evidenceString + "1" : evidenceString + "0";
-  evidenceString =
-    evidence.fingerprints === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
-  evidenceString =
-    evidence.dots === EVIDENCE_ON
-      ? evidenceString + "1"
-      : evidenceString + "0";
+  let evidenceString = 
+    "" + 
+    evidence.emf +
+    evidence.freezing +
+    evidence.spiritBox +
+    evidence.writing +
+    evidence.orbs +
+    evidence.fingerprints +
+    evidence.dots;
 
   return evidenceString;
 };
+
+const addToEvidenceString = (evidenceString, evidenceValue) => {
+  return evidenceString + `${evidenceValue}`;
+}
 
 const numOfTrueEvidenceInString = (evidenceString) => {
   let index,
@@ -1170,25 +1296,68 @@ const numOfTrueEvidenceInString = (evidenceString) => {
   return count;
 };
 
+const numOfNegativeEvidenceInString = (evidenceString) => {
+  let index,
+    count = 0;
+  for (index = 0; index < evidenceString.length; ++index) {
+    count = (evidenceString.charAt(index) == `${EVIDENCE_NEGATIVE}`) 
+      ? count + 1 : count;
+  }
+
+  return count;
+}
+
 const getGhostPossibilities = (evidenceString) => {
   // List of ghosts returns [<evidenceString>, <Name>]
   const possibleGhosts = [];
   const numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
 
-  for (let i = 0; i < config.ghosts.length; i++) {
-    let evidenceMatch = 0;
-    let ghostToCheck = config.ghosts[i];
+  if (numOfTrueEvidence > 0) {
+    for (let i = 0; i < config.ghosts.length; i++) {
+      let evidenceMatch = 0;
+      let ghostToCheck = config.ghosts[i];
+      let impossibleGhostDueToNegative = false;
 
-    for (let j = 0; j < evidenceString.length; j++) {
-      if (evidenceString.charAt(j) == "1") {
-        if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
-          evidenceMatch = evidenceMatch + 1;
+      for (let j = 0; j < evidenceString.length; j++) {
+        if (evidenceString.charAt(j) == `${EVIDENCE_ON}`) {
+          if (evidenceString.charAt(j) == ghostToCheck.evidence.charAt(j)) {
+            evidenceMatch = evidenceMatch + 1;
+          }
+        }
+
+        if (
+          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` 
+          && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
+        ) {
+          impossibleGhostDueToNegative = true;
         }
       }
+      
+      if (
+        impossibleGhostDueToNegative === false
+        && evidenceMatch == numOfTrueEvidence 
+      ) {
+        possibleGhosts.push(ghostToCheck);
+      }
     }
+  } else {
+    for (let i = 0; i < config.ghosts.length; i++) {
+      let impossibleGhostDueToNegative = false;
+      
+      for (let j = 0; j < evidenceString.length; j++) {
+        let ghostToCheck = config.ghosts[i];
 
-    if (evidenceMatch == numOfTrueEvidence && evidenceMatch > 1) {
-      possibleGhosts.push(config.ghosts[i]);
+        if (
+          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` 
+          && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
+        ) {
+          impossibleGhostDueToNegative = true;
+        }
+      }
+
+      if  (!impossibleGhostDueToNegative) {
+        possibleGhosts.push(config.ghosts[i]);
+      }
     }
   }
 
@@ -1203,6 +1372,7 @@ const getImpossibleEvidence = (possibleGhosts) => {
         impossibleEvidenceString.substr(0, k) +
         `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` +
         impossibleEvidenceString.substr(k + 1);
+      
       impossibleEvidenceString[k] = `${
         +impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
       }`; // possibleGhosts[ghost][ghost evidence string][position in evidence string]
@@ -1235,6 +1405,67 @@ const getNumberString = (num) => {
   return numStrings[num];
 };
 
+const getZeroEvidenceConclusionMessage = (numOfNegativeEvidence, ghostPossibilities) => {
+  let conclusionString = "";
+
+  switch (numOfNegativeEvidence) {
+    case 4:
+    case 3:
+    case 2:
+      conclusionString = getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
+      break;
+    case 1:
+      conclusionString = config.conclusionStrings.oneEvidenceConclusionString;
+      break;
+    default:
+      conclusionString = config.conclusionStrings.zeroEvidenceConclusionString;
+      break;
+  }
+
+  return conclusionString;
+}
+
+const getSingleEvidenceConclusionMessage = (numOfNegativeEvidence, ghostPossibilities) => {
+  let conclusionString = "";
+
+  switch (numOfNegativeEvidence) {
+    case 4:
+    case 3:
+    case 2:
+    case 1:
+      conclusionString = getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
+      break;
+    default:
+      conclusionString = config.conclusionStrings.oneEvidenceConclusionString;
+      break;
+  }
+
+  return conclusionString;
+}
+
+const getMultipleEvidenceConclusionMessage = (ghostPossibilities) => {
+  let conclusionString = "";
+
+  conclusionString = getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
+
+  return conclusionString;
+}
+
+const getConclusionStringBasedOnGhostPossiblities = (ghostPossibilities) => {
+  let conclusionString = "";
+  let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
+
+  if (ghostPossibilities.length === 0) {
+    conclusionString = config.conclusionStrings.tooMuchEvidence;
+  } else if (ghostPossibilities.length === 1) {
+    conclusionString = ghostPossibilities[0].conclusion;
+  } else {
+    conclusionString = `Could be a ` + ghostPossibilityStrings.join(", ")
+  }
+
+  return conclusionString;
+}
+
 /*******************************************************
  *             DOM MANIPULATING FUNCTIONS              *
  *******************************************************/
@@ -1262,12 +1493,13 @@ const updateNameDOM = (newName) => {
   $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
 };
 
-// TODO: Validate working
 /** EVIDENCE RELATED DOM MANIPULATING FUNCTIONS */
 const updateEvidenceDOM = (evidence) => {
   resetEvidenceDOM();
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     let evidenceDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`);
+    let negativeDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-negative`);
+    negativeDom.addClass("hidden");
     switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
       case EVIDENCE_ON:
         evidenceDom.addClass("active");
@@ -1278,6 +1510,9 @@ const updateEvidenceDOM = (evidence) => {
       case EVIDENCE_COMPLETE_IMPOSSIBLE:
         evidenceDom.addClass("impossible-completed");
         break;
+      case EVIDENCE_NEGATIVE:
+        evidenceDom.addClass("impossible");
+        negativeDom.removeClass("hidden");
       case EVIDENCE_OFF:
       default:
         evidenceDom.addClass("inactive");
@@ -1286,7 +1521,6 @@ const updateEvidenceDOM = (evidence) => {
   }
 };
 
-// TODO: Validate working
 const resetEvidenceDOM = () => {
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass([

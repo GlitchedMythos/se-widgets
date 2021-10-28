@@ -552,6 +552,12 @@
     "value": "rgba(28, 69, 233, 0.3)",
     "group": "Theming - Evidence"
   },
+  "evidenceNegative": {
+    "type": "colorpicker",
+    "label": "Negative X Evidence",
+    "value": "rgba(255, 0, 0, 1.0)",
+    "group": "Theming - Evidence"
+  },
   "evidencePixelSize": {
     "type": "number",
     "label": "Evidence Pixel Size",
@@ -710,9 +716,21 @@
     "value": "",
     "group": "Conclusion Messages"
   },
+  "obakeString": {
+    "type": "text",
+    "label": "Obake - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
   "oniString": {
     "type": "text",
     "label": "Oni - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "onryoString": {
+    "type": "text",
+    "label": "Onryo - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
@@ -725,6 +743,12 @@
   "poltergeistString": {
     "type": "text",
     "label": "Poltergeist - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "raijuString": {
+    "type": "text",
+    "label": "Raiju - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },
@@ -743,6 +767,12 @@
   "spiritString": {
     "type": "text",
     "label": "Spirit - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "twinsString": {
+    "type": "text",
+    "label": "The Twins - Leave empty 4 default",
     "value": "",
     "group": "Conclusion Messages"
   },

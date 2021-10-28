@@ -32,6 +32,11 @@
   margin: auto auto;
 }
 
+.negative {
+  position: absolute;
+  fill: {{evidenceNegative}};
+}
+
 .inactive {
   fill: {{evidenceInactive}};
 }
@@ -236,6 +241,10 @@
 
 .hide {
   display: none;
+}
+
+.hidden {
+  display: hidden;
 }
 
 .counter-theme {
