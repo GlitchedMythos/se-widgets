@@ -969,7 +969,7 @@ const _glitchedMythos = (command) => {
  *******************************************************/
 // * This is abstracted out for simplicity.
 const setEvidenceNegative = (evidence, state, config) => {
-  state.evidence[evidence] = state.evidence === EVIDENCE_NEGATIVE ? EVIDENCE_OFF : EVIDENCE_NEGATIVE;
+  state.evidence[evidence] = (state.evidence[evidence] === EVIDENCE_NEGATIVE) ? EVIDENCE_OFF : EVIDENCE_NEGATIVE;
   calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
 }
