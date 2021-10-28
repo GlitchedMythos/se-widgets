@@ -36,6 +36,8 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 
 You can manually set evidence using extra parameters
 
+| Result | Argument |
+|--|--|
 | Turn Evidence On | "o" "on" |
 | Turn Evidence Negative | "x" "n" "neg" "negative" |
 | Turn Evidence Off | "f" "off" |
