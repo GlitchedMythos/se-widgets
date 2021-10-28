@@ -1,4 +1,6 @@
-# Welcome to Phasmophobia Evidence V3.4
+# Welcome to Phasmophobia Evidence V3.5
+
+# Updated for Nightmare Update!
 
 I made this widget for anyone who uses StreamElements that plays Phasmophobia. To see how the widget works, please click the video below:
 

@@ -1,4 +1,4 @@
-const version = "3.5";
+const version = "3.5 (Nightmare Update)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
