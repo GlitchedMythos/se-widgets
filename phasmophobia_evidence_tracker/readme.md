@@ -11,6 +11,10 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 
 # Example Commands
 
+IF USING THE ONE CLICK INSTALL, THE DEFAULT GHOST RESET COMMAND IS `!ghostreset` AND THE DEFAULT NAME COMMAND IS `!ghostname`.
+
+THESE CAN BE UPDATED MANUALLY BY CHANGING THE OPTION IN STREAMELEMENTS UNDER THE COMMANDS OPTION FOR THE WIDGET.
+
 | Name | Command | Action |
 |--|--|--|
 | Name Reset | !gr | Reset the ghost |
