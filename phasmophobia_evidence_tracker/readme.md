@@ -1,4 +1,4 @@
-# Welcome to Phasmophobia Evidence V3.5
+# Welcome to Phasmophobia Evidence V3.5.1
 
 # Updated for Nightmare Update!
 
@@ -25,6 +25,7 @@ THESE CAN BE UPDATED MANUALLY BY CHANGING THE OPTION IN STREAMELEMENTS UNDER THE
 | Difficulty Input | !diff "difficulty" | Set the map name. Replace with a command from the map list below |
 | Toggle Bone | !boner | Change Bone to opposite of current state |
 | Toggle Ouija | !ouija | Change Ouija to opposite of current state |
+| Toggle Dirty Water | !water | Change Dirty Water to opposite of current state |
 | Toggle EMF | !ge | Cycle EMF to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage  |
 | Toggle Spirit Box | !gs | Cycle Spirit Box to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
 | Toggle Fingerprints | !gf | Cycle Fingerprints to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
