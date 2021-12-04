@@ -47,6 +47,12 @@
     "value": "!ouija",
     "group": "Commands"
   },
+  "waterCommand": {
+    "type": "string",
+    "label": "Set Dirty Water Command",
+    "value": "!water",
+    "group": "Commands"
+  },
   "emfCommand": {
     "type": "string",
     "label": "EMF Toggle Command",
@@ -221,7 +227,7 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Optionals"
+    "group": "Sightings"
   },
   "displayOuija": {
     "type": "dropdown",
@@ -231,7 +237,17 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Optionals"
+    "group": "Sightings"
+  },
+  "displayWater": {
+    "type": "dropdown",
+    "label": "Display Dirty Water",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Sightings"
   },
   "displayConclusion": {
     "type": "dropdown",
@@ -496,37 +512,55 @@
     "type": "number",
     "label": "Boner Icon Height",
     "value": 30,
-    "group": "Theming - Location"
+    "group": "Theming - Sightings"
   },
   "bonerIconInactiveColor": {
     "type": "colorpicker",
     "label": "Boner Inactive Color",
     "value": "rgba(255, 255, 255, 1)",
-    "group": "Theming - Location"
+    "group": "Theming - Sightings"
   },
   "bonerIconActiveColor": {
     "type": "colorpicker",
     "label": "Boner Active Color",
     "value": "rgba(0, 230, 64, 1)",
-    "group": "Theming - Location"
+    "group": "Theming - Sightings"
   },
   "ouijaIconHeight": {
     "type": "number",
     "label": "Ouija Icon Height",
     "value": 30,
-    "group": "Theming - Location"
+    "group": "Theming - Sightings"
   },
   "ouijaIconInactiveColor": {
     "type": "colorpicker",
     "label": "Ouija Inactive Color",
     "value": "rgba(255, 255 , 255, 1)",
-    "group": "Theming - Location"
+    "group": "Theming - Sightings"
   },
   "ouijaIconActiveColor": {
     "type": "colorpicker",
     "label": "Ouija Active Color",
     "value": "rgba(0, 230, 64, 1)",
-    "group": "Theming - Location"
+    "group": "Theming - Sightings"
+  },
+  "waterIconHeight": {
+    "type": "number",
+    "label": "Dirty Water Icon Height",
+    "value": 30,
+    "group": "Theming - Sightings"
+  },
+  "waterIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Dirty Water Inactive Color",
+    "value": "rgba(255, 255, 255, 1)",
+    "group": "Theming - Sightings"
+  },
+  "waterIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Dirty Water Active Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Theming - Sightings"
   },
   "evidenceActive": {
     "type": "colorpicker",

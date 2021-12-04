@@ -99,6 +99,20 @@
   fill: {{ouijaIconActiveColor}};
 }
 
+.water-svg-container {
+  height: {{waterIconHeight}}px;
+  width: {{waterIconHeight}}px;
+  margin-left: 10px;
+}
+
+.water-inactive {
+  fill: {{waterIconInactiveColor}};
+}
+
+.water-active {
+  fill: {{waterIconActiveColor}};
+}
+
 .divider-color > * + * {
   border-color: {{dividerColor}} ;
 }

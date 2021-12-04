@@ -1,4 +1,4 @@
-const version = "3.5 (Nightmare Update)";
+const version = "3.5.1";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -131,7 +131,6 @@ const PERMISSION_GLITCHED = 0,
 
 // TODO: Move all widget and user state to here
 let userState = {
-  boner: false,
   channelName: "",
   conclusionString: "",
   counter: 0,
@@ -166,7 +165,11 @@ let userState = {
     //   strike: true/false
     // }
   ],
-  ouija: false,
+  optionalSightings: {
+    boner: false,
+    ouija: false,
+    water: false,
+  },
 };
 
 let config = {};
@@ -262,12 +265,20 @@ window.addEventListener("onWidgetLoad", function (obj) {
       ]);
     },
     [fieldData["bonerCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleBoner, [
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, [
+        'boner',
         userState,
       ]);
     },
     [fieldData["ouijaCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleOuija, [
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, [
+        'ouija',
+        userState,
+      ]);
+    },
+    [fieldData["waterCommand"]]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, [
+        'water',
         userState,
       ]);
     },
@@ -678,6 +689,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   let displayLocation = fieldData["displayLocation"] === "yes" ? true : false;
   let displayBoner = fieldData["displayBoner"] === "yes" ? true : false;
   let displayOuija = fieldData["displayOuija"] === "yes" ? true : false;
+  let displayWater = fieldData["displayWater"] === "yes" ? true : false;
   let displayEvidence = fieldData["displayEvidence"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
   let displayCounter2 = fieldData["displayCounter2"] === "yes" ? true : false;
@@ -690,7 +702,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     $(`#name`).addClass("hidden");
   }
 
-  if (!displayLocation && !displayBoner && !displayOuija) {
+  if (!displayLocation && !displayBoner && !displayOuija && !displayWater) {
     $(`#location-container`).addClass("hidden");
   } else {
     if (!displayLocation) {
@@ -698,14 +710,17 @@ window.addEventListener("onWidgetLoad", function (obj) {
       $(`#location-difficulty`).addClass("hidden");
     }
 
-    if (!displayBoner && !displayOuija) {
-      $(`#location-optionals`).addClass("hidden");
+    if (!displayBoner && !displayOuija && !displayWater) {
+      $(`#location-sightings`).addClass("hidden");
     } else {
       if (!displayBoner) {
         $(`#boner-svg-container`).addClass("hidden");
       }
       if (!displayOuija) {
         $(`#ouija-svg-container`).addClass("hidden");
+      }
+      if (!displayWater) {
+        $(`#water-svg-container`).addClass("hidden");
       }
     }
   }
@@ -834,13 +849,9 @@ const _setDiffName = (command, state) => {
   state.location.locationDiff = getDifficultyString(commandArgument);
 };
 
-const _toggleBoner = (state) => {
-  state.boner = !state.boner;
-};
-
-const _toggleOuija = (state) => {
-  state.ouija = !state.ouija;
-};
+const _toggleSighting = (sighting, state) => {
+  state.optionalSightings[sighting] = !state.optionalSightings[sighting]
+}
 
 const _toggleEMF = (command, state, config) => {
   toggleEvidence(command, state, config, 'emf')
@@ -975,11 +986,11 @@ const toggleEvidence = (command, state, config, evidenceType) => {
 const resetGhost = (newName, state) => {
   resetName(newName, state);
   resetLocationName(state);
-  resetLocationOptionals(state);
   // resetEvidence is called twice here as it is resetting state in two places.
   resetEvidence(state.evidence);
   resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
+  resetSightings(state);
   resetConclusion(state);
 };
 
@@ -998,9 +1009,10 @@ const resetLocationName = (state) => {
   state.location.locationDiff = "";
 };
 
-const resetLocationOptionals = (state) => {
-  state.boner = false;
-  state.ouija = false;
+const resetSightings = (state) => {
+  for (const [key] of Object.entries(state.optionalSightings)) {
+    state.optionalSightings[key] = false
+  }
 };
 
 const resetOptionalObjectives = (optionalObjectives, state) => {
@@ -1474,8 +1486,7 @@ const updateDashboardDOM = (state) => {
   updateNameDOM(state.ghostName);
   updateLocationName(state.location.locationName);
   updateLocationDiff(state.location.locationDiff);
-  updateBoner(state.boner);
-  updateOuija(state.ouija);
+  updateSighting(state.optionalSightings);
   updateEvidenceDOM(state.evidenceDisplay);
   updateOptionalObjectivesDOM(state.optionalObjectives);
   updateConclusion(state.conclusionString);
@@ -1616,15 +1627,13 @@ const updateLocationDiff = (diff) => {
   $("#location-difficulty").html(diff);
 };
 
-const updateBoner = (boner) => {
-  $(`#boner`).removeClass(["boner-active", "boner-inactive"]);
-  $(`#boner`).addClass(boner ? "boner-active" : "boner-inactive");
-};
-
-const updateOuija = (ouija) => {
-  $(`#ouija`).removeClass(["ouija-active", "ouija-inactive"]);
-  $(`#ouija`).addClass(ouija ? "ouija-active" : "ouija-inactive");
-};
+/** SIGHTING RELATED DOM MANIPULATING FUNCTIONS */
+const updateSighting = (sightings) => {
+  for (const [key, value] of Object.entries(sightings)) {
+    $(`#${key}`).removeClass([`${key}-active`, `${key}-inactive`])
+    $(`#${key}`).addClass(value ? `${key}-active` : `${key}-inactive`)
+  }
+}
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */
 const updateConclusion = (conclusion) => {
