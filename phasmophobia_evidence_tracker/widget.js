@@ -1,4 +1,4 @@
-const version = "3.5.1";
+const version = "0.5.0.1";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
