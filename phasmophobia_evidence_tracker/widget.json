@@ -744,6 +744,12 @@
     "value": "",
     "group": "Conclusion Messages"
   },
+  "mimicString": {
+    "type": "text",
+    "label": "Mimic - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
   "mylingString": {
     "type": "text",
     "label": "Myling - Leave empty 4 default",
