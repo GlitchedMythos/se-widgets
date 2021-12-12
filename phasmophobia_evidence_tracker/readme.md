@@ -1,6 +1,6 @@
-# Welcome to Phasmophobia Evidence V3.5.1
+# Welcome to Phasmophobia Evidence V3.6.0
 
-# Updated for Nightmare Update!
+# Updated for the Cursed Possessions Update!
 
 ## One Click Install Link:
 https://strms.net/phasmophobia_widget_by_glitchedmythos 
@@ -21,11 +21,10 @@ THESE CAN BE UPDATED MANUALLY BY CHANGING THE OPTION IN STREAMELEMENTS UNDER THE
 | Name Reset| !gr "name" | Reset the ghost with the name |
 | Name Input | !gn "name" | Change name to "name" |
 | Name Input<br />(Stream Deck) | !gfn "name"<br />!gsn "name" | Change either first or last name to "name" |
-| Map Input | !map "map" | Set the map name. Replace with a command from the map list below |
-| Difficulty Input | !diff "difficulty" | Set the map name. Replace with a command from the map list below |
-| Toggle Bone | !boner | Change Bone to opposite of current state |
-| Toggle Ouija | !ouija | Change Ouija to opposite of current state |
-| Toggle Dirty Water | !water | Change Dirty Water to opposite of current state |
+| Map Input | !map "map" | Set the map name. Replace with a command from the [map list](#Map-Names-and-Difficulties) below |
+| Difficulty Input | !diff "difficulty" | Set the map name. Replace with a command from the [map list](#Map-Names-and-Difficulties) below |
+| Toggle Sightings | !sight "sighting" | Toggles Sightings for the Location On or Off, See [Sightings](#Sightings) |
+| Toggle Possession | !poss "possession" | Toggles Possession found for the Location, Defaults to None displayed as ?, See [Cursed Possessions](#Cursed-Possessions) |
 | Toggle EMF | !ge | Cycle EMF to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage  |
 | Toggle Spirit Box | !gs | Cycle Spirit Box to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
 | Toggle Fingerprints | !gf | Cycle Fingerprints to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
@@ -33,7 +32,7 @@ THESE CAN BE UPDATED MANUALLY BY CHANGING THE OPTION IN STREAMELEMENTS UNDER THE
 | Toggle Ghost Writing | !gw | Cycle Ghost Writing to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
 | Toggle Freezing Temps | !gt | Cycle Freezing Temps to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
 | Toggle Dots | !gd | Cycle Dots to next state: Off -> On -> Negative -> Off <br/> See below for advanced usage |
-| Optional Objectives | !oo "a" "b" "c"<br />!oo "a" | Set the optional objectives. Replace a, b or c with the objective you'd like below |
+| Optional Objectives | !oo "a" "b" "c"<br />!oo "a" | Set the optional objectives. Replace a, b or c with the objective you'd like below, See [Optional Objectives](#Optional-Objectives) |
 | Toggle Optional Objective 1 | !o1 | Toggles Optional Objective 1 from being marked or not |
 | Toggle Optional Objective 2 | !o2 | Toggles Optional Objective 2 from being marked or not |
 | Toggle Optional Objective 3 | !o3 | Toggles Optional Objective 3 from being marked or not |
@@ -91,6 +90,24 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 | Repel Ghost (During Hunt) - smudge during hunt | "re" "repel" |
 | <25% Sanity | "san "sanity" |
 | Candle | "ca" "candle" |
+
+# Sightings
+
+| Sighting | Possible Phrases |
+|--|--|
+| Bone | "bone" "boner" |
+| Slenderman | "slender" "slenderman" "man" |
+| Dirty Water | "dirtywater" "dirty" "water" |
+
+# Cursed Possession
+| Possession | Possible Phrases |
+|--|--|
+|Tortured Voodoo Doll | "tortured voodoo doll" "voodoo doll" "voodoo" "doll" |
+|Cursed Mirror| "mirror" |
+|Music Box| "music box" "music" "box" |
+|Summoning Circle| "summoning circle" "summoning" "summon" "circle" |
+|Tarot Cards| "tarot cards" "tarot" "cards" |
+|Ouija Board| "ouija board" "ouija" "board" |
 
 ## Example Usage:
 
