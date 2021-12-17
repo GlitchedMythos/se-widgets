@@ -1,6 +1,6 @@
 # Welcome to Phasmophobia Evidence V3.6.0
 
-# Updated for the Cursed Possessions Update!
+**Updated for the Cursed Possessions Update!**
 
 ## One Click Install Link:
 https://strms.net/phasmophobia_widget_by_glitchedmythos 
@@ -9,7 +9,7 @@ I made this widget for anyone who uses StreamElements that plays Phasmophobia. T
 
 [![Video showing how to use and edit the widget](http://img.youtube.com/vi/stYhlKtzIv0/0.jpg)](https://youtu.be/stYhlKtzIv0)
 
-# Example Commands
+## Example Commands
 
 IF USING THE ONE CLICK INSTALL, THE DEFAULT GHOST RESET COMMAND IS `!ghostreset` AND THE DEFAULT NAME COMMAND IS `!ghostname`.
 
@@ -41,7 +41,7 @@ THESE CAN BE UPDATED MANUALLY BY CHANGING THE OPTION IN STREAMELEMENTS UNDER THE
 | Increment the counter by 1 | !counterup<br />!counter2up | Adds one to the counter number |
 | Decrement the counter by 1 | !counterdown<br />!counter2down | Subtracts one from the counter number |
 
-# Toggle Evidence Advanced Usage
+## Toggle Evidence Advanced Usage
 
 You can manually set evidence using extra parameters
 
@@ -51,7 +51,7 @@ You can manually set evidence using extra parameters
 | Turn Evidence Negative | "x" "n" "neg" "negative" |
 | Turn Evidence Off | "f" "off" |
 
-## Example Usage:
+### Example Usage:
 
 To turn emf on:
 
@@ -74,7 +74,7 @@ When using any of the ghost evidence commands without arguments, it will toggle 
 
 Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 
-# Optional Objectives
+## Optional Objectives
 
 | Objective | Possible Phrases |
 |--|--|
@@ -91,7 +91,7 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 | <25% Sanity | "san "sanity" |
 | Candle | "ca" "candle" |
 
-# Sightings
+## Sightings
 
 | Sighting | Possible Phrases |
 |--|--|
@@ -99,7 +99,7 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 | Slenderman | "slender" "slenderman" "man" |
 | Dirty Water | "dirtywater" "dirty" "water" |
 
-# Cursed Possession
+## Cursed Possession
 | Possession | Possible Phrases |
 |--|--|
 |Tortured Voodoo Doll | "tortured voodoo doll" "voodoo doll" "voodoo" "doll" |
@@ -109,7 +109,7 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 |Tarot Cards| "tarot cards" "tarot" "cards" |
 |Ouija Board| "ouija board" "ouija" "board" |
 
-## Example Usage:
+### Example Usage:
 
 To get `Salt Photo Event`
 
@@ -125,7 +125,7 @@ To get `Smudge`
 
     !oo sm
 
-# Map Names and Difficulties
+## Map Names and Difficulties
 
 | Map | Possible Phrases |
 |--|--|
@@ -147,7 +147,7 @@ To get `Smudge`
 | Professional | "p" "pro" "professional" |
 | Nightmare | "n" "ni" "night" "nightmare" |
 
-## Example Usage:
+### Example Usage:
 
 To get `Grafton Farmhouse`
 
@@ -167,7 +167,7 @@ To get `Asylum Intermediate`
 
     !gm as i
 
-# How to Add to StreamElements?!?
+## How to Add to StreamElements?!?
 
 1. Create a Brand New Overlay
 2. Add a new Widget and select "Static/Custom" followed by Custom Widget
