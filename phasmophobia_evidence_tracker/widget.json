@@ -47,12 +47,6 @@
     "value": "!poss",
     "group": "Commands"
   },
-  "waterCommand": {
-    "type": "string",
-    "label": "Set Dirty Water Command",
-    "value": "!water",
-    "group": "Commands"
-  },
   "emfCommand": {
     "type": "string",
     "label": "EMF Toggle Command",
