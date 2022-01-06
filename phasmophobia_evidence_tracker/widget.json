@@ -195,6 +195,52 @@
     },
     "group": "Main Widget Options"
   },
+  "displayName": {
+    "type": "dropdown",
+    "label": "Display Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Ghost Name"
+  },
+  "noNameString": {
+    "type": "text",
+    "label": "No Ghost Name Message",
+    "value": "New Ghostie...",
+    "group": "Ghost Name"
+  },
+  "ghostNameString": {
+    "type": "text",
+    "label": "Ghost Name: [name]",
+    "value": "Name: [name]",
+    "group": "Ghost Name"
+  },
+  "nameColor": {
+    "type": "colorpicker",
+    "label": "Name Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Ghost Name"
+  },
+  "nameFontSize": {
+    "type": "number",
+    "label": "Name Font Size",
+    "value": 24,
+    "step": 1,
+    "min": 1,
+    "group": "Ghost Name"
+  },
+  "autoCapitalize": {
+    "type": "dropdown",
+    "label": "Auto Capitalize Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Ghost Name"
+  },
   "displayLocation": {
     "type": "dropdown",
     "label": "Display Map Name",
@@ -252,62 +298,6 @@
       "justify-evenly": "Space Evenly"
     },
     "group": "Map"
-  },
-  "displayEvidence": {
-    "type": "dropdown",
-    "label": "Allow VIPS to use commands",
-    "value": "no",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Main Widget Options"
-  },
-  "displayName": {
-    "type": "dropdown",
-    "label": "Display Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Ghost Name"
-  },
-  "noNameString": {
-    "type": "text",
-    "label": "No Ghost Name Message",
-    "value": "New Ghostie...",
-    "group": "Ghost Name"
-  },
-  "ghostNameString": {
-    "type": "text",
-    "label": "Ghost Name: [name]",
-    "value": "Name: [name]",
-    "group": "Ghost Name"
-  },
-  "nameColor": {
-    "type": "colorpicker",
-    "label": "Name Color",
-    "value": "rgb(255, 255, 255)",
-    "group": "Ghost Name"
-  },
-  "nameFontSize": {
-    "type": "number",
-    "label": "Name Font Size",
-    "value": 24,
-    "step": 1,
-    "min": 1,
-    "group": "Ghost Name"
-  },
-  "autoCapitalize": {
-    "type": "dropdown",
-    "label": "Auto Capitalize Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Ghost Name"
   },
   "displaySightings": {
     "type": "dropdown",
@@ -378,6 +368,16 @@
     "step": 0.5,
     "min": 0.5,
     "group": "Cursed Possessions"
+  },
+  "displayEvidence": {
+    "type": "dropdown",
+    "label": "Display Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Evidence"
   },
   "markImpossibleEvidence": {
     "type": "dropdown",
