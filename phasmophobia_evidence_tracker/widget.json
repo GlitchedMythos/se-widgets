@@ -35,22 +35,16 @@
     "value": "!diff",
     "group": "Commands"
   },
-  "bonerCommand": {
+  "sightingCommand": {
     "type": "string",
-    "label": "Set Boner Command",
-    "value": "!boner",
+    "label": "Set Sightings Command",
+    "value": "!sight",
     "group": "Commands"
   },
-  "ouijaCommand": {
+  "possessionCommand": {
     "type": "string",
-    "label": "Set Ouija Command",
-    "value": "!ouija",
-    "group": "Commands"
-  },
-  "waterCommand": {
-    "type": "string",
-    "label": "Set Dirty Water Command",
-    "value": "!water",
+    "label": "Set Cursed Possessions Command",
+    "value": "!poss",
     "group": "Commands"
   },
   "emfCommand": {
@@ -183,13 +177,13 @@
     "type": "colorpicker",
     "label": "Background Color",
     "value": "rgba(0, 0, 0, 0.5)",
-    "group": "Widget Options"
+    "group": "Main Widget Options"
   },
   "fontFamily": {
     "type": "googleFont",
     "label": "Font",
     "value": "Roboto",
-    "group": "Widget Options"
+    "group": "Main Widget Options"
   },
   "allowVIPS": {
     "type": "dropdown",
@@ -199,51 +193,7 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Widget Options"
-  },
-  "displayName": {
-    "type": "dropdown",
-    "label": "Display Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Name Options"
-  },
-  "autoCapitalize": {
-    "type": "dropdown",
-    "label": "Auto Capitalize Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Name Options"
-  },
-  "noNameString": {
-    "type": "text",
-    "label": "No Ghost Name Message",
-    "value": "New Ghostie...",
-    "group": "Name Options"
-  },
-  "ghostNameString": {
-    "type": "text",
-    "label": "Ghost Name: [name]",
-    "value": "Name: [name]",
-    "group": "Name Options"
-  },
-  "nameColor": {
-    "type": "colorpicker",
-    "label": "Name Color",
-    "value": "rgb(255, 255, 255)",
-    "group": "Name Options"
-  },
-  "nameFontSize": {
-    "type": "number",
-    "label": "Name Font Size",
-    "value": 24,
-    "group": "Name Options"
+    "group": "Main Widget Options"
   },
   "displayLocation": {
     "type": "dropdown",
@@ -253,29 +203,45 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Map Options"
+    "group": "Map"
   },
   "noLocationString": {
     "type": "text",
-    "label": "No Map Selected",
+    "label": "No Map Selected Message",
     "value": "No Map Selected...",
-    "group": "Map Options"
+    "group": "Map"
   },
   "locationFontColor": {
     "type": "colorpicker",
     "label": "Map Name Color",
     "value": "rgb(255, 255, 255)",
-    "group": "Map Options"
+    "group": "Map"
   },
   "locationFontSize": {
     "type": "number",
     "label": "Map Name Font Size",
     "value": 16,
-    "group": "Map Options"
+    "step": 1,
+    "min": 1,
+    "group": "Map"
+  },
+  "difficultyFontColor": {
+    "type": "colorpicker",
+    "label": "Map Difficulty Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Map"
+  },
+  "difficultyFontSize": {
+    "type": "number",
+    "label": "Map Difficulty Font Size",
+    "value": 16,
+    "step": 1,
+    "min": 1,
+    "group": "Map"
   },
   "locationSpacing": {
     "type": "dropdown",
-    "label": "Choose a spacing type for location bar:",
+    "label": "Map Bar Spacing",
     "value": "justify-between",
     "options": {
       "justify-start": "Left Align",
@@ -285,104 +251,133 @@
       "justify-around": "Space Around",
       "justify-evenly": "Space Evenly"
     },
-    "group": "Map Options"
-  },
-  "displayBoner": {
-    "type": "dropdown",
-    "label": "Display Boner",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Sighting Options"
-  },
-  "displayOuija": {
-    "type": "dropdown",
-    "label": "Display Ouija",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Sighting Options"
-  },
-  "displayWater": {
-    "type": "dropdown",
-    "label": "Display Dirty Water",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Sighting Options"
-  },
-  "bonerIconHeight": {
-    "type": "number",
-    "label": "Boner Icon Height",
-    "value": 30,
-	"step": 1,
-    "group": "Sighting Options"
-  },
-  "bonerIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Boner Inactive Color",
-    "value": "rgba(255, 255, 255, 1)",
-    "group": "Sighting Options"
-  },
-  "bonerIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Boner Active Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Sighting Options"
-  },
-  "ouijaIconHeight": {
-    "type": "number",
-    "label": "Ouija Icon Height",
-    "value": 30,
-	"step": 1,
-    "group": "Sighting Options"
-  },
-  "ouijaIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Ouija Inactive Color",
-    "value": "rgba(255, 255 , 255, 1)",
-    "group": "Sighting Options"
-  },
-  "ouijaIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Ouija Active Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Sighting Options"
-  },
-  "waterIconHeight": {
-    "type": "number",
-    "label": "Dirty Water Icon Height",
-    "value": 30,
-	"step": 1,
-    "group": "Sighting Options"
-  },
-  "waterIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Dirty Water Inactive Color",
-    "value": "rgba(255, 255, 255, 1)",
-    "group": "Sighting Options"
-  },
-  "waterIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Dirty Water Active Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Sighting Options"
+    "group": "Map"
   },
   "displayEvidence": {
     "type": "dropdown",
-    "label": "Display Evidence",
+    "label": "Allow VIPS to use commands",
+    "value": "no",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Main Widget Options"
+  },
+  "displayName": {
+    "type": "dropdown",
+    "label": "Display Name",
     "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Evidence Options"
+    "group": "Ghost Name"
+  },
+  "noNameString": {
+    "type": "text",
+    "label": "No Ghost Name Message",
+    "value": "New Ghostie...",
+    "group": "Ghost Name"
+  },
+  "ghostNameString": {
+    "type": "text",
+    "label": "Ghost Name: [name]",
+    "value": "Name: [name]",
+    "group": "Ghost Name"
+  },
+  "nameColor": {
+    "type": "colorpicker",
+    "label": "Name Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Ghost Name"
+  },
+  "nameFontSize": {
+    "type": "number",
+    "label": "Name Font Size",
+    "value": 24,
+    "step": 1,
+    "min": 1,
+    "group": "Ghost Name"
+  },
+  "autoCapitalize": {
+    "type": "dropdown",
+    "label": "Auto Capitalize Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Ghost Name"
+  },
+  "displaySightings": {
+    "type": "dropdown",
+    "label": "Display Sightings",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Sightings"
+  },
+  "displayInactiveSighting": {
+    "type": "dropdown",
+    "label": "Display Inactive Sightings",
+    "value": "inactive",
+    "options": {
+      "inactive": "Yes",
+      "hidden": "No"
+    },
+    "group": "Sightings"
+  },
+  "sightingIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Sightings Inactive Color",
+    "value": "rgba(255, 255, 255, 1)",
+    "group": "Sightings"
+  },
+  "sightingIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Sightings Active Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Sightings"
+  },
+  "sightingIconHeight": {
+    "type": "number",
+    "label": "Sightings Icon Height",
+    "value": 30,
+    "step": 0.5,
+    "min": 0.5,
+    "group": "Sightings"
+  },
+  "displayCursedPossessions": {
+    "type": "dropdown",
+    "label": "Display Cursed Possessions",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Cursed Possessions"
+  },
+  "possessionIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Cursed Possession Inactive Color",
+    "value": "rgba(255, 255, 255, 0.8)",
+    "group": "Cursed Possessions"
+  },
+  "possessionIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Cursed Possession Active Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Cursed Possessions"
+  },
+  "possessionIconHeight": {
+    "type": "number",
+    "label": "Cursed Possession Icon Height",
+    "value": 30,
+    "step": 0.5,
+    "min": 0.5,
+    "group": "Cursed Possessions"
   },
   "markImpossibleEvidence": {
     "type": "dropdown",
@@ -392,62 +387,64 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Evidence Options"
+    "group": "Evidence"
   },
   "useEvidenceImpossibleCompleted": {
     "type": "dropdown",
-    "label": "Use different impossible color when complete:",
+    "label": "Use different impossible color when complete",
     "value": "yes",
     "options": {
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Evidence Options"
+    "group": "Evidence"
   },
   "evidenceActive": {
     "type": "colorpicker",
     "label": "Active Evidence",
-    "value": "rgba(50,205,50 ,1 )",
-    "group": "Evidence Options"
+    "value": "rgba(50, 205, 50, 1)",
+    "group": "Evidence"
   },
   "evidenceInactive": {
     "type": "colorpicker",
     "label": "Inactive Evidence",
     "value": "rgb(255, 255, 255)",
-    "group": "Evidence Options"
+    "group": "Evidence"
   },
   "evidenceImpossible": {
     "type": "colorpicker",
     "label": "Impossible Evidence",
     "value": "rgba(234, 66, 29, 0.6)",
-    "group": "Evidence Options"
+    "group": "Evidence"
   },
   "evidenceImpossibleCompleted": {
     "type": "colorpicker",
     "label": "Complete Impossible Evidence",
     "value": "rgba(28, 69, 233, 0.3)",
-    "group": "Evidence Options"
+    "group": "Evidence"
   },
   "evidenceNegative": {
     "type": "colorpicker",
     "label": "Negative X Evidence",
     "value": "rgba(255, 0, 0, 1.0)",
-    "group": "Evidence Options"
+    "group": "Evidence"
   },
   "evidencePixelSize": {
     "type": "number",
     "label": "Evidence Pixel Size",
     "value": 50,
-	"step": 1,
-    "group": "Evidence Options"
+    "step": 1,
+    "min": 1,
+    "group": "Evidence"
   },
   "evidenceMarginSize": {
     "type": "number",
     "label": "Evidence Horizontal Margin Size",
     "value": 5,
-	"step": 0.5,
-    "group": "Evidence Options"
-  }, 
+    "step": 0.25,
+    "min": 0.25,
+    "group": "Evidence"
+  },
   "displayCounter": {
     "type": "dropdown",
     "label": "Display Counter(s)",
@@ -456,7 +453,7 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Counter Options"
+    "group": "Counters"
   },
   "displayCounter2": {
     "type": "dropdown",
@@ -466,32 +463,33 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Counter Options"
+    "group": "Counters"
   },
   "counterDefaultString": {
     "type": "text",
     "label": "Counter Default Name",
     "value": "Counter:",
-    "group": "Counter Options"
+    "group": "Counters"
   },
   "counter2DefaultString": {
     "type": "text",
     "label": "Counter 2 Default Name",
     "value": "Counter 2:",
-    "group": "Counter Options"
+    "group": "Counters"
   },
   "counterFontColor": {
     "type": "colorpicker",
     "label": "Counter Color",
     "value": "rgb(255, 255, 255)",
-    "group": "Counter Options"
+    "group": "Counters"
   },
   "counterFontSize": {
     "type": "number",
     "label": "Counter Font Size",
     "value": 24,
-	"step": 1,
-    "group": "Counter Options"
+    "step": 1,
+    "min": 1,
+    "group": "Counters"
   },
   "displayOptionalObjectives": {
     "type": "dropdown",
@@ -501,43 +499,45 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Optional Objective Options"
+    "group": "Optional Objectives"
   },
   "noOptionalObjectivesMessage": {
     "type": "text",
     "label": "No Optional Objectives Message",
     "value": "Widget Author: GlitchedMythos",
-    "group": "Optional Objective Options"
+    "group": "Optional Objectives"
   },
   "objectivesColor": {
     "type": "colorpicker",
     "label": "Objectives Text Color",
-    "value": "rgb(254, 255, 255)",
-    "group": "Optional Objective Options"
-  },
-  "objectivesFontSize": {
-    "type": "number",
-    "label": "Objectives Font Size",
-    "value": 16,
-	"step": 1,
-    "group": "Optional Objective Options"
-  },
-  "objectivesStrikethroughSize": {
-    "type": "number",
-    "label": "Objectives Strikethrough Size",
-    "value": 6,
-	"step": 0.25,
-    "group": "Optional Objective Options"
+    "value": "rgb(255, 255, 255)",
+    "group": "Optional Objectives"
   },
   "objectivesStrikethroughColor": {
     "type": "colorpicker",
     "label": "Objectives Strikethrough Color",
     "value": "rgba(234, 66, 29, 0.83)",
-    "group": "Optional Objective Options"
+    "group": "Optional Objectives"
+  },
+  "objectivesFontSize": {
+    "type": "number",
+    "label": "Objectives Font Size",
+    "value": 16,
+    "step": 1,
+    "min": 1,
+    "group": "Optional Objectives"
+  },
+  "objectivesStrikethroughSize": {
+    "type": "number",
+    "label": "Objectives Strikethrough Size",
+    "value": 6,
+    "step": 0.25,
+    "min": 0.25,
+    "group": "Optional Objectives"
   },
   "objectivesSpacing": {
     "type": "dropdown",
-    "label": "Choose a spacing type for optional objectives:",
+    "label": "Optional Objectives Spacing",
     "value": "justify-between",
     "options": {
       "justify-start": "Left Align",
@@ -547,7 +547,7 @@
       "justify-around": "Space Around",
       "justify-evenly": "Space Evenly"
     },
-    "group": "Optional Objective Options"
+    "group": "Optional Objectives"
   },
   "displayConclusion": {
     "type": "dropdown",
@@ -557,37 +557,38 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Conclusion Options"
+    "group": "Conclusion"
   },
   "conclusionColor": {
     "type": "colorpicker",
     "label": "Conclusion Color",
     "value": "rgb(60, 251, 57)",
-    "group": "Conclusion Options"
+    "group": "Conclusion"
   },
   "conclusionFontSize": {
     "type": "number",
     "label": "Conclusion Font Size",
     "value": 16,
-	"step": 1,
-    "group": "Conclusion Options"
+    "step": 1,
+    "min": 1,
+    "group": "Conclusion"
   },
   "zeroEvidenceConclusionString": {
     "type": "text",
     "label": "Zero Evidence",
-    "value": "",
+    "value": "Waiting for Evidence",
     "group": "Conclusion Messages - Empty for Default"
   },
   "oneEvidenceConclusionString": {
     "type": "text",
     "label": "One Evidence",
-    "value": "",
+    "value": "Not sure yet...",
     "group": "Conclusion Messages - Empty for Default"
   },
   "impossibleConclusionString": {
     "type": "text",
     "label": "Too much evidence entered",
-    "value": "",
+    "value": "It's over 9000!!",
     "group": "Conclusion Messages - Empty for Default"
   },
   "bansheeString": {
@@ -623,6 +624,12 @@
   "mareString": {
     "type": "text",
     "label": "Mare",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "mimicString": {
+    "type": "text",
+    "label": "The Mimic",
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
   },
@@ -714,7 +721,23 @@
     "type": "colorpicker",
     "label": "Border Color",
     "value": "rgb(255, 255, 255)",
-    "group": "Theming - Border"
+    "group": "Theming - Single-Color Border"
+  },
+  "borderWidth": {
+    "type": "number",
+    "label": "Border Thickness",
+    "value": 4,
+    "step": 0.25,
+    "min": 0,
+    "group": "Theming - Single-Color Border"
+  },
+  "borderRadius": {
+    "type": "number",
+    "label": "Border Radius (Corner Rounding)",
+    "value": 15,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Single-Color Border"
   },
   "borderType": {
     "type": "dropdown",
@@ -727,21 +750,7 @@
       "double": "Double Border",
       "none": "No Border"
     },
-    "group": "Theming - Border"
-  },
-  "borderWidth": {
-    "type": "number",
-    "label": "Border Width",
-    "value": 4,
-	"step": 0.25,
-    "group": "Theming - Border"
-  },
-  "borderRadius": {
-    "type": "number",
-    "label": "Border Radius",
-    "value": 30,
-	"step": 1,
-    "group": "Theming - Border"
+    "group": "Theming - Single-Color Border"
   },
   "useGradientBorder": {
     "type": "dropdown",
@@ -794,40 +803,31 @@
     "type": "number",
     "label": "Border Angle",
     "value": 0,
-	"step": 1,
+    "step": 1,
+    "min": -180,
+    "max": 180,
     "group": "Theming - Gradient Border"
   },
   "animatedBorderWidth": {
     "type": "number",
-    "label": "Border Width",
+    "label": "Border Thickness",
     "value": 4,
-	"step": 0.25,
+    "step": 0.25,
+    "min": 0.25,
     "group": "Theming - Gradient Border"
   },
   "animatedBorderRadius": {
     "type": "number",
-    "label": "Border Radius",
-    "value": 30,
-	"step": 1,
+    "label": "Border Radius (Corner Rounding)",
+    "value": 15,
+    "step": 1,
+    "min": 0,
     "group": "Theming - Gradient Border"
   },
   "dividerColor": {
     "type": "colorpicker",
     "label": "Divider Color",
     "value": "rgba(255, 255, 255, 1)",
-    "group": "Theming - Divider"
-  },
-  "dividerType": {
-    "type": "dropdown",
-    "label": "Divider Type",
-    "value": "divide-dashed",
-    "options": {
-      "divide-solid": "Solid Divider",
-      "divide-dashed": "Dashed Divider",
-      "divide-dotted": "Dotted Divider",
-      "divide-double": "Double Divider",
-      "divide-none": "No Divider"
-    },
     "group": "Theming - Divider"
   },
   "dividerWidth": {
@@ -839,6 +839,19 @@
       "divide-y-2": "2px",
       "divide-y-4": "4px",
       "divide-y-8": "8px"
+    },
+    "group": "Theming - Divider"
+  },
+  "dividerType": {
+    "type": "dropdown",
+    "label": "Choose a divider type:",
+    "value": "divide-dashed",
+    "options": {
+      "divide-solid": "Solid Divider",
+      "divide-dashed": "Dashed Divider",
+      "divide-dotted": "Dotted Divider",
+      "divide-double": "Double Divider",
+      "divide-none": "No Divider"
     },
     "group": "Theming - Divider"
   }
