@@ -1147,12 +1147,6 @@ const calculateGhostEvidenceDisplay = (state, config) => {
       evidenceString,
       config
     );
-  } else if (numOfTrueEvidence === 4) {
-    evidenceDisplay = calculateFalseGhostEvidence(
-      evidenceDisplay,
-      evidenceString,
-      config
-    );
   } else if (numOfTrueEvidence > 3) {
     evidenceDisplay = calculateBadEvidence(evidenceDisplay);
   }
@@ -1214,32 +1208,6 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
 };
 
 const calculateTripleGhostEvidence = (evidence, evidenceString, config) => {
-  let possibleGhosts = getGhostPossibilities(evidenceString);
-
-  if (possibleGhosts.length === 0) {
-    for (const val in evidence) {
-      if (evidence[val] === EVIDENCE_ON) {
-        evidence[val] = EVIDENCE_IMPOSSIBLE;
-      } else {
-        evidence[val] = EVIDENCE_OFF;
-      }
-    }
-  } else {
-    for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
-      if (
-        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
-        && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
-        && config.useEvidenceImpossibleCompleted
-      ) {
-        evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
-      }
-    }
-  }
-
-  return evidence;
-};
-
-const calculateFalseGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
 
   if (possibleGhosts.length === 0) {
@@ -1331,10 +1299,9 @@ const determineConclusionMessage = (state) => {
       break;
     case numOfDisplayTrueEvidence == 2:
     case numOfDisplayTrueEvidence == 3:
-    case numOfDisplayTrueEvidence == 4:
       state.conclusionString = getMultipleEvidenceConclusionMessage(ghostPossibilities);
       break;
-    case numOfDisplayTrueEvidence > 4:
+    case numOfDisplayTrueEvidence >= 4:
       state.conclusionString = config.conclusionStrings.tooMuchEvidence;
     default:
       state.conclusionString = "Something broke";
