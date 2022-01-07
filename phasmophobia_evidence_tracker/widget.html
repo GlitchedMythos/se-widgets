@@ -27,15 +27,17 @@ And I hope you don't get hunted yourself! :D -->
     <!-- LOCATION SECTION -->
     <div id="location-container">
       <div
-        class="flex flex-row {{locationSpacing}} pb-0.5"
+        class="location flex flex-row {{locationSpacing}}"
         id="location-container-top"
       >
         <div>
+          <!-- MAP NAME -->
           <div class="location-theme mr-0.5 pb-0.5" id="location-name">
             {{noLocationString}}
           </div>
+          <!-- LOCATION NAME -->
           <div
-            class="flex flex-row {{locationSpacing}} pb-0.5"
+            class="flex flex-row {{locationSpacing}}"
             id="location-container-bottom"
           >
             <div class="difficulty" id="location-difficulty"></div>
@@ -465,7 +467,9 @@ And I hope you don't get hunted yourself! :D -->
     <!-- EVIDENCE SECTION -->
     <div class="py-0.5 flex-grow" id="evidence-container">
       <!-- <div class="flex flex-grow flex-col h-full"> -->
-      <div class="flex flex-grow flex-row flex-wrap justify-between">
+      <div
+        class="evidence-inner-container flex flex-grow flex-row flex-wrap justify-between"
+      >
         <!-- EMF 5 SVG  -->
         <div class="evidence-svg-container">
           <svg
@@ -4056,29 +4060,37 @@ m-842 -163 c5 -33 -38 -106 -128 -219 -91 -114 -171 -260 -194 -355 -48 -195
     </div>
 
     <!-- COUNTER SECTION -->
-    <div class="py-0.5 flex flex-row flex-grow" id="counter-container">
-      <div class="counter-theme mr-0.5" id="counter-name">
-        {{counterDefaultString}}
-      </div>
-      <div class="counter-theme" id="counter-number">0</div>
-      <div class="counter-theme mr-0.5" id="counter2-name">
-        {{counter2DefaultString}}
-      </div>
-      <div class="counter-theme" id="counter2-number">0</div>
-    </div>
-
-    <div class="optional-obj py-0.5" id="optional-obj">
-      <div
-        class="flex-1 flex {{objectivesSpacing}} hidden"
-        id="optional-obj-container"
-      ></div>
-      <div class="objective" id="no-opt-objectives-container">
-        {{noOptionalObjectivesMessage}}
+    <div class="flex flex-row flex-grow" id="counter-container">
+      <div class="counters">
+        <div class="counter-theme mr-0.5" id="counter-name">
+          {{counterDefaultString}}
+        </div>
+        <div class="counter-theme" id="counter-number">0</div>
+        <div class="counter-theme mr-0.5" id="counter2-name">
+          {{counter2DefaultString}}
+        </div>
+        <div class="counter-theme" id="counter2-number">0</div>
       </div>
     </div>
 
-    <div class="conclusion pt-0.5 flex-1" id="conclusion">
-      {{zeroEvidenceConclusionString}}
+    <!-- OPTIONAL OBJECTIVES SECTION -->
+    <div class="optional-obj" id="optional-obj">
+      <div class="optionals">
+        <div
+          class="flex-1 flex {{objectivesSpacing}} hidden"
+          id="optional-obj-container"
+        ></div>
+        <div class="objective" id="no-opt-objectives-container">
+          {{noOptionalObjectivesMessage}}
+        </div>
+      </div>
+    </div>
+
+    <!-- CONCLUSION SECTION -->
+    <div class="flex-1" id="conclusion-container">
+      <div class="conclusion" id="conclusion">
+        {{zeroEvidenceConclusionString}}
+      </div>
     </div>
   </div>
 

@@ -23,9 +23,16 @@
   font-size: {{objectivesFontSize}}px;
 }
 
+.optionals {
+  margin-top: {{optionalsTopMargin}}px;
+  margin-bottom: {{optionalsBottomMargin}}px;
+}
+
 .conclusion {
   color: {{conclusionColor}};
   font-size: {{conclusionFontSize}}px;
+  margin-top: {{conclusionTopMargin}}px;
+  margin-bottom: {{conclusionBottomMargin}}px;
 }
 
 .evidence {
@@ -66,6 +73,11 @@
   position: absolute;
   right: 0;
   top: calc(50% - {{objectivesStrikethroughSize}}px / 2);
+}
+
+.evidence-inner-container {
+  margin-top: {{evidenceContainerTopMargin}}px;
+  margin-bottom: {{evidenceContainerBottomMargin}}px;
 }
 
 .evidence-svg-container {
@@ -272,9 +284,19 @@
   display: hidden;
 }
 
+.counters {
+  margin-top: {{counterContainerTopMargin}}px;
+  margin-bottom: {{counterContainerBottomMargin}}px;
+}
+
 .counter-theme {
   font-size: {{counterFontSize}}px;
   color: {{counterFontColor}};
+}
+
+.location {
+  margin-top: {{locationTopMargin}}px;
+  margin-bottom: {{locationBottomMargin}}px;
 }
 
 .location-theme {

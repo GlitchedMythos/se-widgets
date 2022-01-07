@@ -788,7 +788,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   }
 
   if (!displayConclusion) {
-    $(`#conclusion`).addClass("hidden");
+    $(`#conclusion-container`).addClass("hidden");
   }
 
   let useGradientBorder =

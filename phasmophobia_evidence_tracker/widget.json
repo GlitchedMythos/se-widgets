@@ -244,7 +244,7 @@
   "nameTopMargin": {
     "type": "number",
     "label": "Name Top Margin",
-    "value": 0,
+    "value": 5,
     "step": 1,
     "min": 0,
     "group": "Ghost Name"
@@ -252,7 +252,7 @@
   "nameBottomMargin": {
     "type": "number",
     "label": "Name Bottom Margin",
-    "value": 0,
+    "value": 5,
     "step": 1,
     "min": 0,
     "group": "Ghost Name"
@@ -313,6 +313,22 @@
       "justify-around": "Space Around",
       "justify-evenly": "Space Evenly"
     },
+    "group": "Map"
+  },
+  "locationTopMargin": {
+    "type": "number",
+    "label": "Map Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Map"
+  },
+  "locationBottomMargin": {
+    "type": "number",
+    "label": "Map Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
     "group": "Map"
   },
   "displaySightings": {
@@ -461,6 +477,22 @@
     "min": 0.25,
     "group": "Evidence"
   },
+  "evidenceContainerTopMargin": {
+    "type": "number",
+    "label": "Evidence Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Evidence"
+  },
+  "evidenceContainerBottomMargin": {
+    "type": "number",
+    "label": "Evidence Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Evidence"
+  },
   "displayCounter": {
     "type": "dropdown",
     "label": "Display Counter(s)",
@@ -505,6 +537,22 @@
     "value": 24,
     "step": 1,
     "min": 1,
+    "group": "Counters"
+  },
+  "counterContainerTopMargin": {
+    "type": "number",
+    "label": "Counters Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Counters"
+  },
+  "counterContainerBottomMargin": {
+    "type": "number",
+    "label": "Counters Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
     "group": "Counters"
   },
   "displayOptionalObjectives": {
@@ -565,6 +613,23 @@
     },
     "group": "Optional Objectives"
   },
+  
+  "optionalsTopMargin": {
+    "type": "number",
+    "label": "Optional Objectives Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Optional Objectives"
+  },
+  "optionalsBottomMargin": {
+    "type": "number",
+    "label": "Optional Objectives Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Optional Objectives"
+  },
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",
@@ -587,6 +652,22 @@
     "value": 16,
     "step": 1,
     "min": 1,
+    "group": "Conclusion"
+  },
+  "conclusionTopMargin": {
+    "type": "number",
+    "label": "Conclusion Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Conclusion"
+  },
+  "conclusionBottomMargin": {
+    "type": "number",
+    "label": "Conclusion Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
     "group": "Conclusion"
   },
   "zeroEvidenceConclusionString": {
