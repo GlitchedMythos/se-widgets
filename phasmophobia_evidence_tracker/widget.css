@@ -9,6 +9,9 @@
 
 .phas-dashboard {
   background-color: {{dashboardBackgroundColor}};
+  /* Top Right Bottom Left */
+  /* Yes, this is padding. I am calling it margin to keep naming "similar" */
+  padding: {{dashboardTopMargin}}px {{dashboardRightMargin}}px {{dashboardBottomMargin}}px {{dashboardLeftMargin}}px;
 }
 
 .name {

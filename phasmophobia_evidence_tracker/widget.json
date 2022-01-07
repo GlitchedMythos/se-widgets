@@ -814,6 +814,38 @@
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
   },
+  "dashboardTopMargin": {
+    "type": "number",
+    "label": "Border Top Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardRightMargin": {
+    "type": "number",
+    "label": "Border Right Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardBottomMargin": {
+    "type": "number",
+    "label": "Border Bottom Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardLeftMargin": {
+    "type": "number",
+    "label": "Border Left Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
   "borderColor": {
     "type": "colorpicker",
     "label": "Border Color",
