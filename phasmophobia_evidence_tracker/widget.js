@@ -764,7 +764,8 @@ window.addEventListener("onWidgetLoad", function (obj) {
   }
 
   if (!displayEvidence && !displayCounter) {
-    $(`#evidence-and-counter-container`).addClass("hidden");
+    $(`#evidence-container`).addClass("hidden");
+    $(`#counter-container`).addClass("hidden");
   } else {
     if (!displayEvidence) {
       $(`#evidence-container`).addClass("hidden");
@@ -773,6 +774,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     if (!displayCounter) {
       $(`#counter-container`).addClass("hidden");
     }
+    
     if (!displayCounter2) {
       $(`#counter2-name`).addClass("hidden");
       $(`#counter2-number`).addClass("hidden");

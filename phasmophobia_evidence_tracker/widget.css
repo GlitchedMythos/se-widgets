@@ -14,6 +14,8 @@
 .name {
   color: {{nameColor}};
   font-size: {{nameFontSize}}px;
+  margin-top: {{nameTopMargin}}px;
+  margin-bottom: {{nameBottomMargin}}px;
 }
 
 .objective {

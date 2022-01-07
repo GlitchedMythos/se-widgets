@@ -241,6 +241,22 @@
     },
     "group": "Ghost Name"
   },
+  "nameTopMargin": {
+    "type": "number",
+    "label": "Name Top Margin",
+    "value": 0,
+    "step": 1,
+    "min": 0,
+    "group": "Ghost Name"
+  },
+  "nameBottomMargin": {
+    "type": "number",
+    "label": "Name Bottom Margin",
+    "value": 0,
+    "step": 1,
+    "min": 0,
+    "group": "Ghost Name"
+  },
   "displayLocation": {
     "type": "dropdown",
     "label": "Display Map Name",
