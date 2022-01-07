@@ -195,6 +195,68 @@
     },
     "group": "Main Widget Options"
   },
+  "displayName": {
+    "type": "dropdown",
+    "label": "Display Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Ghost Name"
+  },
+  "noNameString": {
+    "type": "text",
+    "label": "No Ghost Name Message",
+    "value": "New Ghostie...",
+    "group": "Ghost Name"
+  },
+  "ghostNameString": {
+    "type": "text",
+    "label": "Ghost Name: [name]",
+    "value": "Name: [name]",
+    "group": "Ghost Name"
+  },
+  "nameColor": {
+    "type": "colorpicker",
+    "label": "Name Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Ghost Name"
+  },
+  "nameFontSize": {
+    "type": "number",
+    "label": "Name Font Size",
+    "value": 24,
+    "step": 1,
+    "min": 1,
+    "group": "Ghost Name"
+  },
+  "autoCapitalize": {
+    "type": "dropdown",
+    "label": "Auto Capitalize Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Ghost Name"
+  },
+  "nameTopMargin": {
+    "type": "number",
+    "label": "Name Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Ghost Name"
+  },
+  "nameBottomMargin": {
+    "type": "number",
+    "label": "Name Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Ghost Name"
+  },
   "displayLocation": {
     "type": "dropdown",
     "label": "Display Map Name",
@@ -253,61 +315,21 @@
     },
     "group": "Map"
   },
-  "displayEvidence": {
-    "type": "dropdown",
-    "label": "Allow VIPS to use commands",
-    "value": "no",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Main Widget Options"
-  },
-  "displayName": {
-    "type": "dropdown",
-    "label": "Display Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Ghost Name"
-  },
-  "noNameString": {
-    "type": "text",
-    "label": "No Ghost Name Message",
-    "value": "New Ghostie...",
-    "group": "Ghost Name"
-  },
-  "ghostNameString": {
-    "type": "text",
-    "label": "Ghost Name: [name]",
-    "value": "Name: [name]",
-    "group": "Ghost Name"
-  },
-  "nameColor": {
-    "type": "colorpicker",
-    "label": "Name Color",
-    "value": "rgb(255, 255, 255)",
-    "group": "Ghost Name"
-  },
-  "nameFontSize": {
+  "locationTopMargin": {
     "type": "number",
-    "label": "Name Font Size",
-    "value": 24,
+    "label": "Map Top Margin",
+    "value": 5,
     "step": 1,
-    "min": 1,
-    "group": "Ghost Name"
+    "min": 0,
+    "group": "Map"
   },
-  "autoCapitalize": {
-    "type": "dropdown",
-    "label": "Auto Capitalize Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Ghost Name"
+  "locationBottomMargin": {
+    "type": "number",
+    "label": "Map Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Map"
   },
   "displaySightings": {
     "type": "dropdown",
@@ -379,6 +401,16 @@
     "min": 0.5,
     "group": "Cursed Possessions"
   },
+  "displayEvidence": {
+    "type": "dropdown",
+    "label": "Display Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Evidence"
+  },
   "markImpossibleEvidence": {
     "type": "dropdown",
     "label": "Mark Impossible Evidence",
@@ -445,6 +477,22 @@
     "min": 0.25,
     "group": "Evidence"
   },
+  "evidenceContainerTopMargin": {
+    "type": "number",
+    "label": "Evidence Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Evidence"
+  },
+  "evidenceContainerBottomMargin": {
+    "type": "number",
+    "label": "Evidence Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Evidence"
+  },
   "displayCounter": {
     "type": "dropdown",
     "label": "Display Counter(s)",
@@ -462,6 +510,30 @@
     "options": {
       "yes": "Yes",
       "no": "No"
+    },
+    "group": "Counters"
+  },
+  "counterFlexDirection": {
+    "type": "dropdown",
+    "label": "Counter Direction",
+    "value": "flex-col",
+    "options": {
+      "flex-col": "Vertical",
+      "flex-row": "Horizontal"
+    },
+    "group": "Counters"
+  },
+  "countersSpacing": {
+    "type": "dropdown",
+    "label": "Counter Spacing",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left",
+      "justify-end": "Right",
+      "justify-center": "Center",
+      "justify-between": "Between",
+      "justify-around": "Around",
+      "justify-evenly": "Evenly"
     },
     "group": "Counters"
   },
@@ -489,6 +561,22 @@
     "value": 24,
     "step": 1,
     "min": 1,
+    "group": "Counters"
+  },
+  "counterContainerTopMargin": {
+    "type": "number",
+    "label": "Counters Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Counters"
+  },
+  "counterContainerBottomMargin": {
+    "type": "number",
+    "label": "Counters Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
     "group": "Counters"
   },
   "displayOptionalObjectives": {
@@ -549,6 +637,23 @@
     },
     "group": "Optional Objectives"
   },
+  
+  "optionalsTopMargin": {
+    "type": "number",
+    "label": "Optional Objectives Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Optional Objectives"
+  },
+  "optionalsBottomMargin": {
+    "type": "number",
+    "label": "Optional Objectives Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Optional Objectives"
+  },
   "displayConclusion": {
     "type": "dropdown",
     "label": "Display Conclusion",
@@ -571,6 +676,22 @@
     "value": 16,
     "step": 1,
     "min": 1,
+    "group": "Conclusion"
+  },
+  "conclusionTopMargin": {
+    "type": "number",
+    "label": "Conclusion Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Conclusion"
+  },
+  "conclusionBottomMargin": {
+    "type": "number",
+    "label": "Conclusion Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
     "group": "Conclusion"
   },
   "zeroEvidenceConclusionString": {
@@ -716,6 +837,38 @@
     "label": "Yurei",
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
+  },
+  "dashboardTopMargin": {
+    "type": "number",
+    "label": "Border Top Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardRightMargin": {
+    "type": "number",
+    "label": "Border Right Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardBottomMargin": {
+    "type": "number",
+    "label": "Border Bottom Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardLeftMargin": {
+    "type": "number",
+    "label": "Border Left Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
   },
   "borderColor": {
     "type": "colorpicker",

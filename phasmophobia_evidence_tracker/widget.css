@@ -9,11 +9,16 @@
 
 .phas-dashboard {
   background-color: {{dashboardBackgroundColor}};
+  /* Top Right Bottom Left */
+  /* Yes, this is padding. I am calling it margin to keep naming "similar" */
+  padding: {{dashboardTopMargin}}px {{dashboardRightMargin}}px {{dashboardBottomMargin}}px {{dashboardLeftMargin}}px;
 }
 
 .name {
   color: {{nameColor}};
   font-size: {{nameFontSize}}px;
+  margin-top: {{nameTopMargin}}px;
+  margin-bottom: {{nameBottomMargin}}px;
 }
 
 .objective {
@@ -21,9 +26,16 @@
   font-size: {{objectivesFontSize}}px;
 }
 
+.optionals {
+  margin-top: {{optionalsTopMargin}}px;
+  margin-bottom: {{optionalsBottomMargin}}px;
+}
+
 .conclusion {
   color: {{conclusionColor}};
   font-size: {{conclusionFontSize}}px;
+  margin-top: {{conclusionTopMargin}}px;
+  margin-bottom: {{conclusionBottomMargin}}px;
 }
 
 .evidence {
@@ -64,6 +76,11 @@
   position: absolute;
   right: 0;
   top: calc(50% - {{objectivesStrikethroughSize}}px / 2);
+}
+
+.evidence-inner-container {
+  margin-top: {{evidenceContainerTopMargin}}px;
+  margin-bottom: {{evidenceContainerBottomMargin}}px;
 }
 
 .evidence-svg-container {
@@ -270,9 +287,20 @@
   display: hidden;
 }
 
+.counters {
+  width: 100%;
+  margin-top: {{counterContainerTopMargin}}px;
+  margin-bottom: {{counterContainerBottomMargin}}px;
+}
+
 .counter-theme {
   font-size: {{counterFontSize}}px;
   color: {{counterFontColor}};
+}
+
+.location {
+  margin-top: {{locationTopMargin}}px;
+  margin-bottom: {{locationBottomMargin}}px;
 }
 
 .location-theme {

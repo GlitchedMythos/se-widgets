@@ -736,7 +736,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   let displayLocation = fieldData["displayLocation"] === "yes" ? true : false;
   let displayEvidence = fieldData["displayEvidence"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
-  let displayCounter2 = fieldData["displayCounter2"] === "yes" ? true : false;
+  let displayCounterTwo = fieldData["displayCounter2"] === "yes" ? true : false;
   let displayCursedPossessions = fieldData["displayCursedPossessions"] === "yes" ? true : false;
   let displaySightings = fieldData["displaySightings"] === "yes" ? true : false;
   let displayOptionalObjectives =
@@ -745,48 +745,58 @@ window.addEventListener("onWidgetLoad", function (obj) {
     fieldData["displayConclusion"] === "yes" ? true : false;
 
   if (!displayName) {
-    $(`#name`).addClass("hidden");
+    $(`#name`).remove();
   }
 
   if (!displayLocation && !displaySightings && !displayCursedPossessions) {
-    $(`#location-container`).addClass("hidden");
+    $(`#location-container`).remove();
   } else {
     if (!displayLocation) {
-      $(`#location-name`).addClass("hidden");
-      $(`#location-difficulty`).addClass("hidden");
+      $(`#location-name`).remove();
+      $(`#location-difficulty`).remove();
     }
     if (!displaySightings) {
-      $(`#location-sightings`).addClass("hidden");
+      $(`#location-sightings`).remove();
     } 
     if (!displayCursedPossessions) {
-      $(`#possession-container`).addClass("hidden");
+      $(`#possession-container`).remove();
     }
   }
 
   if (!displayEvidence && !displayCounter) {
-    $(`#evidence-and-counter-container`).addClass("hidden");
+    $(`#evidence-container`).remove();
+    $(`#counter-container`).remove();
   } else {
     if (!displayEvidence) {
-      $(`#evidence-container`).addClass("hidden");
+      $(`#evidence-container`).remove();
     }
 
     if (!displayCounter) {
-      $(`#counter-container`).addClass("hidden");
+      $(`#counter-container`).remove();
     }
-    if (!displayCounter2) {
-      $(`#counter2-name`).addClass("hidden");
-      $(`#counter2-number`).addClass("hidden");
+    
+    if (!displayCounterTwo) {
+      $(`#counter-two`).remove();
     } else {
-      $(`#counter2-name`).html(". "+$(`#counter2-name`).text());
+      $(`#counter2-name`).html($(`#counter2-name`).text());
+      let countersSpacing = fieldData["countersSpacing"];
+      let hasCloseSpacing = countersSpacing === "justify-start"
+      || countersSpacing === "justify-end"
+      || countersSpacing === "justify-center";
+
+      if(hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
+        $(`#counter-one`).addClass("mr-0.5");
+        $(`#counter-two`).addClass("ml-0.5");
+      }
     }
   }
 
   if (!displayOptionalObjectives) {
-    $(`#optional-obj`).addClass(`hidden`);
+    $(`#optional-obj`).remove();
   }
 
   if (!displayConclusion) {
-    $(`#conclusion`).addClass("hidden");
+    $(`#conclusion-container`).remove();
   }
 
   let useGradientBorder =
@@ -1801,7 +1811,7 @@ const setCounterName = (which, name) => {
   if (which === 1) {
     $("#counter-name").html(name);
   } else if (which === 2) {
-    $("#counter2-name").html(". "+name);
+    $("#counter2-name").html(name);
   }
 };
 

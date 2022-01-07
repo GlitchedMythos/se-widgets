@@ -151,21 +151,21 @@ To get `Smudge`
 
 To get `Grafton Farmhouse`
 
-    !gm gr
+    !map gr
 
 To get `Brownstone High School`
 
-    !gm school
+    !map school
 
 To get `Professional` Difficulty
 
-    !gd pro
+    !diff pro
 
 Both Map and Difficulty can be combined in one map command
 
 To get `Asylum Intermediate`
 
-    !gm as i
+    !map as i
 
 ## How to Add to StreamElements?!?
 
