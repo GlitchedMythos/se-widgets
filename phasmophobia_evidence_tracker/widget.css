@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family={fontFamily}:100,300,400,500,700,900&display=swap');
-@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro: 400, 300);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,300);
 
 * {
   font: normal 76px/1 {{fontFamily}}, Helvetica, sans-serif;
@@ -9,11 +9,16 @@
 
 .phas-dashboard {
   background-color: {{dashboardBackgroundColor}};
+  /* Top Right Bottom Left */
+  /* Yes, this is padding. I am calling it margin to keep naming "similar" */
+  padding: {{dashboardTopMargin}}px {{dashboardRightMargin}}px {{dashboardBottomMargin}}px {{dashboardLeftMargin}}px;
 }
 
 .name {
   color: {{nameColor}};
   font-size: {{nameFontSize}}px;
+  margin-top: {{nameTopMargin}}px;
+  margin-bottom: {{nameBottomMargin}}px;
 }
 
 .objective {
@@ -21,9 +26,16 @@
   font-size: {{objectivesFontSize}}px;
 }
 
+.optionals {
+  margin-top: {{optionalsTopMargin}}px;
+  margin-bottom: {{optionalsBottomMargin}}px;
+}
+
 .conclusion {
   color: {{conclusionColor}};
   font-size: {{conclusionFontSize}}px;
+  margin-top: {{conclusionTopMargin}}px;
+  margin-bottom: {{conclusionBottomMargin}}px;
 }
 
 .evidence {
@@ -66,37 +78,51 @@
   top: calc(50% - {{objectivesStrikethroughSize}}px / 2);
 }
 
+.evidence-inner-container {
+  margin-top: {{evidenceContainerTopMargin}}px;
+  margin-bottom: {{evidenceContainerBottomMargin}}px;
+}
+
 .evidence-svg-container {
   height: auto; 
   margin: 0 {{evidenceMarginSize}}px;
 }
 
-.boner-svg-container {
-  height: {{bonerIconHeight}}px;
-  width: {{bonerIconHeight}}px;
+.sighting-hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.sighting-inactive {
+  fill: {{sightingIconInactiveColor}};
+}
+
+.sighting-active {
+  fill: {{sightingIconActiveColor}};
+  height: {{sightingIconHeight}}px;
+  width: {{sightingIconHeight}}px;
+}
+
+.sighting-svg-container {
+  height: {{sightingIconHeight}}px;
+  width: {{sightingIconHeight}}px;
   margin-left: 10px;
 }
 
-.boner-inactive {
-  fill: {{bonerIconInactiveColor}};
+.possession-inactive {
+  display: none;
+  visibility: hidden;
 }
 
-.boner-active {
-  fill: {{bonerIconActiveColor}};
+.possession-active {
+  fill: {{possessionIconActiveColor}};
+  height: {{possessionIconHeight}}px;
+  width: {{possessionIconHeight}}px;
 }
 
-.ouija-svg-container {
-  height: {{ouijaIconHeight}}px;
-  width: {{ouijaIconHeight}}px;
-  margin-left: 10px;
-}
-
-.ouija-inactive {
-  fill: {{ouijaIconInactiveColor}};
-}
-
-.ouija-active {
-  fill: {{ouijaIconActiveColor}};
+.possession-svg-container {
+  height: {{possessionIconHeight}}px;
+  width: {{possessionIconHeight}}px;
 }
 
 .water-svg-container {
@@ -261,12 +287,28 @@
   display: hidden;
 }
 
+.counters {
+  width: 100%;
+  margin-top: {{counterContainerTopMargin}}px;
+  margin-bottom: {{counterContainerBottomMargin}}px;
+}
+
 .counter-theme {
   font-size: {{counterFontSize}}px;
   color: {{counterFontColor}};
 }
 
+.location {
+  margin-top: {{locationTopMargin}}px;
+  margin-bottom: {{locationBottomMargin}}px;
+}
+
 .location-theme {
   font-size: {{locationFontSize}}px;
   color: {{locationFontColor}};
+}
+
+.difficulty {
+  font-size: {{difficultyFontSize}}px;
+  color: {{difficultyFontColor}};
 }

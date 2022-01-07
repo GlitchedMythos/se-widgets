@@ -35,22 +35,16 @@
     "value": "!diff",
     "group": "Commands"
   },
-  "bonerCommand": {
+  "sightingCommand": {
     "type": "string",
-    "label": "Set Boner Command",
-    "value": "!boner",
+    "label": "Set Sightings Command",
+    "value": "!sight",
     "group": "Commands"
   },
-  "ouijaCommand": {
+  "possessionCommand": {
     "type": "string",
-    "label": "Set Ouija Command",
-    "value": "!ouija",
-    "group": "Commands"
-  },
-  "waterCommand": {
-    "type": "string",
-    "label": "Set Dirty Water Command",
-    "value": "!water",
+    "label": "Set Cursed Possessions Command",
+    "value": "!poss",
     "group": "Commands"
   },
   "emfCommand": {
@@ -179,135 +173,17 @@
     "value": "!vipoff",
     "group": "Commands"
   },
-  "displayName": {
-    "type": "dropdown",
-    "label": "Display Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
+  "dashboardBackgroundColor": {
+    "type": "colorpicker",
+    "label": "Background Color",
+    "value": "rgba(0, 0, 0, 0.5)",
+    "group": "Main Widget Options"
   },
-  "autoCapitalize": {
-    "type": "dropdown",
-    "label": "Auto Capitalize Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "displayEvidence": {
-    "type": "dropdown",
-    "label": "Display Evidence",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "displayLocation": {
-    "type": "dropdown",
-    "label": "Display Map Name",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "displayBoner": {
-    "type": "dropdown",
-    "label": "Display Boner",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Sightings"
-  },
-  "displayOuija": {
-    "type": "dropdown",
-    "label": "Display Ouija",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Sightings"
-  },
-  "displayWater": {
-    "type": "dropdown",
-    "label": "Display Dirty Water",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Sightings"
-  },
-  "displayConclusion": {
-    "type": "dropdown",
-    "label": "Display Conclusion",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "displayCounter": {
-    "type": "dropdown",
-    "label": "Display Counter(s)",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "displayCounter2": {
-    "type": "dropdown",
-    "label": "Display Counter 2",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "displayOptionalObjectives": {
-    "type": "dropdown",
-    "label": "Display Optional Objectives",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "markImpossibleEvidence": {
-    "type": "dropdown",
-    "label": "Mark Impossible Evidence",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
-  },
-  "useEvidenceImpossibleCompleted": {
-    "type": "dropdown",
-    "label": "Use different impossible color when complete:",
-    "value": "yes",
-    "options": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "group": "Optionals"
+  "fontFamily": {
+    "type": "googleFont",
+    "label": "Font",
+    "value": "Roboto",
+    "group": "Main Widget Options"
   },
   "allowVIPS": {
     "type": "dropdown",
@@ -317,65 +193,714 @@
       "yes": "Yes",
       "no": "No"
     },
-    "group": "Optionals"
+    "group": "Main Widget Options"
   },
-  "dashboardBackgroundColor": {
-    "type": "colorpicker",
-    "label": "Background Color",
-    "value": "rgba(0, 0, 0, 0.5)",
-    "group": "Theming"
+  "displayName": {
+    "type": "dropdown",
+    "label": "Display Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Ghost Name"
   },
-  "fontFamily": {
-    "type": "googleFont",
-    "label": "Font",
-    "value": "Roboto",
-    "group": "Theming"
+  "noNameString": {
+    "type": "text",
+    "label": "No Ghost Name Message",
+    "value": "New Ghostie...",
+    "group": "Ghost Name"
+  },
+  "ghostNameString": {
+    "type": "text",
+    "label": "Ghost Name: [name]",
+    "value": "Name: [name]",
+    "group": "Ghost Name"
   },
   "nameColor": {
     "type": "colorpicker",
     "label": "Name Color",
     "value": "rgb(255, 255, 255)",
-    "group": "Theming"
+    "group": "Ghost Name"
   },
   "nameFontSize": {
     "type": "number",
     "label": "Name Font Size",
     "value": 24,
-    "group": "Theming"
+    "step": 1,
+    "min": 1,
+    "group": "Ghost Name"
+  },
+  "autoCapitalize": {
+    "type": "dropdown",
+    "label": "Auto Capitalize Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Ghost Name"
+  },
+  "nameTopMargin": {
+    "type": "number",
+    "label": "Name Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Ghost Name"
+  },
+  "nameBottomMargin": {
+    "type": "number",
+    "label": "Name Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Ghost Name"
+  },
+  "displayLocation": {
+    "type": "dropdown",
+    "label": "Display Map Name",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Map"
+  },
+  "noLocationString": {
+    "type": "text",
+    "label": "No Map Selected Message",
+    "value": "No Map Selected...",
+    "group": "Map"
   },
   "locationFontColor": {
     "type": "colorpicker",
     "label": "Map Name Color",
     "value": "rgb(255, 255, 255)",
-    "group": "Theming"
+    "group": "Map"
   },
   "locationFontSize": {
     "type": "number",
     "label": "Map Name Font Size",
     "value": 16,
-    "group": "Theming"
+    "step": 1,
+    "min": 1,
+    "group": "Map"
+  },
+  "difficultyFontColor": {
+    "type": "colorpicker",
+    "label": "Map Difficulty Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Map"
+  },
+  "difficultyFontSize": {
+    "type": "number",
+    "label": "Map Difficulty Font Size",
+    "value": 16,
+    "step": 1,
+    "min": 1,
+    "group": "Map"
+  },
+  "locationSpacing": {
+    "type": "dropdown",
+    "label": "Map Bar Spacing",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left Align",
+      "justify-end": "Right Align",
+      "justify-center": "Center Align",
+      "justify-between": "Space Between",
+      "justify-around": "Space Around",
+      "justify-evenly": "Space Evenly"
+    },
+    "group": "Map"
+  },
+  "locationTopMargin": {
+    "type": "number",
+    "label": "Map Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Map"
+  },
+  "locationBottomMargin": {
+    "type": "number",
+    "label": "Map Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Map"
+  },
+  "displaySightings": {
+    "type": "dropdown",
+    "label": "Display Sightings",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Sightings"
+  },
+  "displayInactiveSighting": {
+    "type": "dropdown",
+    "label": "Display Inactive Sightings",
+    "value": "inactive",
+    "options": {
+      "inactive": "Yes",
+      "hidden": "No"
+    },
+    "group": "Sightings"
+  },
+  "sightingIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Sightings Inactive Color",
+    "value": "rgba(255, 255, 255, 1)",
+    "group": "Sightings"
+  },
+  "sightingIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Sightings Active Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Sightings"
+  },
+  "sightingIconHeight": {
+    "type": "number",
+    "label": "Sightings Icon Height",
+    "value": 30,
+    "step": 0.5,
+    "min": 0.5,
+    "group": "Sightings"
+  },
+  "displayCursedPossessions": {
+    "type": "dropdown",
+    "label": "Display Cursed Possessions",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Cursed Possessions"
+  },
+  "possessionIconInactiveColor": {
+    "type": "colorpicker",
+    "label": "Cursed Possession Inactive Color",
+    "value": "rgba(255, 255, 255, 0.8)",
+    "group": "Cursed Possessions"
+  },
+  "possessionIconActiveColor": {
+    "type": "colorpicker",
+    "label": "Cursed Possession Active Color",
+    "value": "rgba(0, 230, 64, 1)",
+    "group": "Cursed Possessions"
+  },
+  "possessionIconHeight": {
+    "type": "number",
+    "label": "Cursed Possession Icon Height",
+    "value": 30,
+    "step": 0.5,
+    "min": 0.5,
+    "group": "Cursed Possessions"
+  },
+  "displayEvidence": {
+    "type": "dropdown",
+    "label": "Display Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Evidence"
+  },
+  "markImpossibleEvidence": {
+    "type": "dropdown",
+    "label": "Mark Impossible Evidence",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Evidence"
+  },
+  "useEvidenceImpossibleCompleted": {
+    "type": "dropdown",
+    "label": "Use different impossible color when complete",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Evidence"
+  },
+  "evidenceActive": {
+    "type": "colorpicker",
+    "label": "Active Evidence",
+    "value": "rgba(50, 205, 50, 1)",
+    "group": "Evidence"
+  },
+  "evidenceInactive": {
+    "type": "colorpicker",
+    "label": "Inactive Evidence",
+    "value": "rgb(255, 255, 255)",
+    "group": "Evidence"
+  },
+  "evidenceImpossible": {
+    "type": "colorpicker",
+    "label": "Impossible Evidence",
+    "value": "rgba(234, 66, 29, 0.6)",
+    "group": "Evidence"
+  },
+  "evidenceImpossibleCompleted": {
+    "type": "colorpicker",
+    "label": "Complete Impossible Evidence",
+    "value": "rgba(28, 69, 233, 0.3)",
+    "group": "Evidence"
+  },
+  "evidenceNegative": {
+    "type": "colorpicker",
+    "label": "Negative X Evidence",
+    "value": "rgba(255, 0, 0, 1.0)",
+    "group": "Evidence"
+  },
+  "evidencePixelSize": {
+    "type": "number",
+    "label": "Evidence Pixel Size",
+    "value": 50,
+    "step": 1,
+    "min": 1,
+    "group": "Evidence"
+  },
+  "evidenceMarginSize": {
+    "type": "number",
+    "label": "Evidence Horizontal Margin Size",
+    "value": 5,
+    "step": 0.25,
+    "min": 0.25,
+    "group": "Evidence"
+  },
+  "evidenceContainerTopMargin": {
+    "type": "number",
+    "label": "Evidence Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Evidence"
+  },
+  "evidenceContainerBottomMargin": {
+    "type": "number",
+    "label": "Evidence Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Evidence"
+  },
+  "displayCounter": {
+    "type": "dropdown",
+    "label": "Display Counter(s)",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Counters"
+  },
+  "displayCounter2": {
+    "type": "dropdown",
+    "label": "Display Counter 2",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Counters"
+  },
+  "counterFlexDirection": {
+    "type": "dropdown",
+    "label": "Counter Direction",
+    "value": "flex-col",
+    "options": {
+      "flex-col": "Vertical",
+      "flex-row": "Horizontal"
+    },
+    "group": "Counters"
+  },
+  "countersSpacing": {
+    "type": "dropdown",
+    "label": "Counter Spacing",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left",
+      "justify-end": "Right",
+      "justify-center": "Center",
+      "justify-between": "Between",
+      "justify-around": "Around",
+      "justify-evenly": "Evenly"
+    },
+    "group": "Counters"
+  },
+  "counterDefaultString": {
+    "type": "text",
+    "label": "Counter Default Name",
+    "value": "Counter:",
+    "group": "Counters"
+  },
+  "counter2DefaultString": {
+    "type": "text",
+    "label": "Counter 2 Default Name",
+    "value": "Counter 2:",
+    "group": "Counters"
+  },
+  "counterFontColor": {
+    "type": "colorpicker",
+    "label": "Counter Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Counters"
+  },
+  "counterFontSize": {
+    "type": "number",
+    "label": "Counter Font Size",
+    "value": 24,
+    "step": 1,
+    "min": 1,
+    "group": "Counters"
+  },
+  "counterContainerTopMargin": {
+    "type": "number",
+    "label": "Counters Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Counters"
+  },
+  "counterContainerBottomMargin": {
+    "type": "number",
+    "label": "Counters Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Counters"
+  },
+  "displayOptionalObjectives": {
+    "type": "dropdown",
+    "label": "Display Optional Objectives",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Optional Objectives"
+  },
+  "noOptionalObjectivesMessage": {
+    "type": "text",
+    "label": "No Optional Objectives Message",
+    "value": "Widget Author: GlitchedMythos",
+    "group": "Optional Objectives"
+  },
+  "objectivesColor": {
+    "type": "colorpicker",
+    "label": "Objectives Text Color",
+    "value": "rgb(255, 255, 255)",
+    "group": "Optional Objectives"
+  },
+  "objectivesStrikethroughColor": {
+    "type": "colorpicker",
+    "label": "Objectives Strikethrough Color",
+    "value": "rgba(234, 66, 29, 0.83)",
+    "group": "Optional Objectives"
+  },
+  "objectivesFontSize": {
+    "type": "number",
+    "label": "Objectives Font Size",
+    "value": 16,
+    "step": 1,
+    "min": 1,
+    "group": "Optional Objectives"
+  },
+  "objectivesStrikethroughSize": {
+    "type": "number",
+    "label": "Objectives Strikethrough Size",
+    "value": 6,
+    "step": 0.25,
+    "min": 0.25,
+    "group": "Optional Objectives"
+  },
+  "objectivesSpacing": {
+    "type": "dropdown",
+    "label": "Optional Objectives Spacing",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left Align",
+      "justify-end": "Right Align",
+      "justify-center": "Center Align",
+      "justify-between": "Space Between",
+      "justify-around": "Space Around",
+      "justify-evenly": "Space Evenly"
+    },
+    "group": "Optional Objectives"
+  },
+  
+  "optionalsTopMargin": {
+    "type": "number",
+    "label": "Optional Objectives Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Optional Objectives"
+  },
+  "optionalsBottomMargin": {
+    "type": "number",
+    "label": "Optional Objectives Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Optional Objectives"
+  },
+  "displayConclusion": {
+    "type": "dropdown",
+    "label": "Display Conclusion",
+    "value": "yes",
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "group": "Conclusion"
   },
   "conclusionColor": {
     "type": "colorpicker",
     "label": "Conclusion Color",
     "value": "rgb(60, 251, 57)",
-    "group": "Theming"
+    "group": "Conclusion"
   },
   "conclusionFontSize": {
     "type": "number",
     "label": "Conclusion Font Size",
     "value": 16,
-    "group": "Theming"
+    "step": 1,
+    "min": 1,
+    "group": "Conclusion"
+  },
+  "conclusionTopMargin": {
+    "type": "number",
+    "label": "Conclusion Top Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Conclusion"
+  },
+  "conclusionBottomMargin": {
+    "type": "number",
+    "label": "Conclusion Bottom Margin",
+    "value": 5,
+    "step": 1,
+    "min": 0,
+    "group": "Conclusion"
+  },
+  "zeroEvidenceConclusionString": {
+    "type": "text",
+    "label": "Zero Evidence",
+    "value": "Waiting for Evidence",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "oneEvidenceConclusionString": {
+    "type": "text",
+    "label": "One Evidence",
+    "value": "Not sure yet...",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "impossibleConclusionString": {
+    "type": "text",
+    "label": "Too much evidence entered",
+    "value": "It's over 9000!!",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "bansheeString": {
+    "type": "text",
+    "label": "Banshee",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "demonString": {
+    "type": "text",
+    "label": "Demon",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "goryoString": {
+    "type": "text",
+    "label": "Goryo",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "hantuString": {
+    "type": "text",
+    "label": "Hantu",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "jinnString": {
+    "type": "text",
+    "label": "Jinn",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "mareString": {
+    "type": "text",
+    "label": "Mare",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "mimicString": {
+    "type": "text",
+    "label": "The Mimic",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "mimicString": {
+    "type": "text",
+    "label": "Mimic - Leave empty 4 default",
+    "value": "",
+    "group": "Conclusion Messages"
+  },
+  "mylingString": {
+    "type": "text",
+    "label": "Myling",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "obakeString": {
+    "type": "text",
+    "label": "Obake",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "oniString": {
+    "type": "text",
+    "label": "Oni",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "onryoString": {
+    "type": "text",
+    "label": "Onryo",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "phantomString": {
+    "type": "text",
+    "label": "Phantom",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "poltergeistString": {
+    "type": "text",
+    "label": "Poltergeist",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "raijuString": {
+    "type": "text",
+    "label": "Raiju",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "revenantString": {
+    "type": "text",
+    "label": "Revenant",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "shadeString": {
+    "type": "text",
+    "label": "Shade",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "spiritString": {
+    "type": "text",
+    "label": "Spirit",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "twinsString": {
+    "type": "text",
+    "label": "The Twins",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "wraithString": {
+    "type": "text",
+    "label": "Wraith",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "yokaiString": {
+    "type": "text",
+    "label": "Yokai",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "yureiString": {
+    "type": "text",
+    "label": "Yurei",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "dashboardTopMargin": {
+    "type": "number",
+    "label": "Border Top Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardRightMargin": {
+    "type": "number",
+    "label": "Border Right Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardBottomMargin": {
+    "type": "number",
+    "label": "Border Bottom Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
+  },
+  "dashboardLeftMargin": {
+    "type": "number",
+    "label": "Border Left Margin",
+    "value": 20,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Border Margins"
   },
   "borderColor": {
     "type": "colorpicker",
     "label": "Border Color",
     "value": "rgb(255, 255, 255)",
-    "group": "Theming - Border"
+    "group": "Theming - Single-Color Border"
+  },
+  "borderWidth": {
+    "type": "number",
+    "label": "Border Thickness",
+    "value": 4,
+    "step": 0.25,
+    "min": 0,
+    "group": "Theming - Single-Color Border"
+  },
+  "borderRadius": {
+    "type": "number",
+    "label": "Border Radius (Corner Rounding)",
+    "value": 15,
+    "step": 1,
+    "min": 0,
+    "group": "Theming - Single-Color Border"
   },
   "borderType": {
     "type": "dropdown",
-    "label": "Choose a border type:",
+    "label": "Border Type",
     "value": "solid",
     "options": {
       "solid": "Solid Border",
@@ -384,19 +909,7 @@
       "double": "Double Border",
       "none": "No Border"
     },
-    "group": "Theming - Border"
-  },
-  "borderWidth": {
-    "type": "number",
-    "label": "Enter a border width:",
-    "value": 4,
-    "group": "Theming - Border"
-  },
-  "borderRadius": {
-    "type": "number",
-    "label": "Enter a border radius:",
-    "value": 30,
-    "group": "Theming - Border"
+    "group": "Theming - Single-Color Border"
   },
   "useGradientBorder": {
     "type": "dropdown",
@@ -449,24 +962,43 @@
     "type": "number",
     "label": "Border Angle",
     "value": 0,
+    "step": 1,
+    "min": -180,
+    "max": 180,
     "group": "Theming - Gradient Border"
   },
   "animatedBorderWidth": {
     "type": "number",
-    "label": "Enter a border width:",
-    "value": 10,
+    "label": "Border Thickness",
+    "value": 4,
+    "step": 0.25,
+    "min": 0.25,
     "group": "Theming - Gradient Border"
   },
   "animatedBorderRadius": {
     "type": "number",
-    "label": "Enter a border radius:",
-    "value": 5,
+    "label": "Border Radius (Corner Rounding)",
+    "value": 15,
+    "step": 1,
+    "min": 0,
     "group": "Theming - Gradient Border"
   },
   "dividerColor": {
     "type": "colorpicker",
     "label": "Divider Color",
     "value": "rgba(255, 255, 255, 1)",
+    "group": "Theming - Divider"
+  },
+  "dividerWidth": {
+    "type": "dropdown",
+    "label": "Divider Width",
+    "value": "divide-y",
+    "options": {
+      "divide-y": "1px",
+      "divide-y-2": "2px",
+      "divide-y-4": "4px",
+      "divide-y-8": "8px"
+    },
     "group": "Theming - Divider"
   },
   "dividerType": {
@@ -481,357 +1013,5 @@
       "divide-none": "No Divider"
     },
     "group": "Theming - Divider"
-  },
-  "dividerWidth": {
-    "type": "dropdown",
-    "label": "Choose a divider width:",
-    "value": "divide-y",
-    "options": {
-      "divide-y": "1px",
-      "divide-y-2": "2px",
-      "divide-y-4": "4px",
-      "divide-y-8": "8px"
-    },
-    "group": "Theming - Divider"
-  },
-  "locationSpacing": {
-    "type": "dropdown",
-    "label": "Choose a spacing type for location bar:",
-    "value": "justify-between",
-    "options": {
-      "justify-start": "Left Align",
-      "justify-end": "Right Align",
-      "justify-center": "Center Align",
-      "justify-between": "Space Between",
-      "justify-around": "Space Around",
-      "justify-evenly": "Space Evenly"
-    },
-    "group": "Theming - Location"
-  },
-  "bonerIconHeight": {
-    "type": "number",
-    "label": "Boner Icon Height",
-    "value": 30,
-    "group": "Theming - Sightings"
-  },
-  "bonerIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Boner Inactive Color",
-    "value": "rgba(255, 255, 255, 1)",
-    "group": "Theming - Sightings"
-  },
-  "bonerIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Boner Active Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Theming - Sightings"
-  },
-  "ouijaIconHeight": {
-    "type": "number",
-    "label": "Ouija Icon Height",
-    "value": 30,
-    "group": "Theming - Sightings"
-  },
-  "ouijaIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Ouija Inactive Color",
-    "value": "rgba(255, 255 , 255, 1)",
-    "group": "Theming - Sightings"
-  },
-  "ouijaIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Ouija Active Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Theming - Sightings"
-  },
-  "waterIconHeight": {
-    "type": "number",
-    "label": "Dirty Water Icon Height",
-    "value": 30,
-    "group": "Theming - Sightings"
-  },
-  "waterIconInactiveColor": {
-    "type": "colorpicker",
-    "label": "Dirty Water Inactive Color",
-    "value": "rgba(255, 255, 255, 1)",
-    "group": "Theming - Sightings"
-  },
-  "waterIconActiveColor": {
-    "type": "colorpicker",
-    "label": "Dirty Water Active Color",
-    "value": "rgba(0, 230, 64, 1)",
-    "group": "Theming - Sightings"
-  },
-  "evidenceActive": {
-    "type": "colorpicker",
-    "label": "Active Evidence",
-    "value": "rgba(50,205,50 ,1 )",
-    "group": "Theming - Evidence"
-  },
-  "evidenceInactive": {
-    "type": "colorpicker",
-    "label": "Inactive Evidence",
-    "value": "rgb(255, 255, 255)",
-    "group": "Theming - Evidence"
-  },
-  "evidenceImpossible": {
-    "type": "colorpicker",
-    "label": "Impossible Evidence",
-    "value": "rgba(234, 66, 29, 0.6)",
-    "group": "Theming - Evidence"
-  },
-  "evidenceImpossibleCompleted": {
-    "type": "colorpicker",
-    "label": "Complete Impossible Evidence",
-    "value": "rgba(28, 69, 233, 0.3)",
-    "group": "Theming - Evidence"
-  },
-  "evidenceNegative": {
-    "type": "colorpicker",
-    "label": "Negative X Evidence",
-    "value": "rgba(255, 0, 0, 1.0)",
-    "group": "Theming - Evidence"
-  },
-  "evidencePixelSize": {
-    "type": "number",
-    "label": "Evidence Pixel Size",
-    "value": 50,
-    "group": "Theming - Evidence"
-  },
-  "evidenceMarginSize": {
-    "type": "number",
-    "label": "Evidence Horizontal Margin Size",
-    "value": 5,
-    "group": "Theming - Evidence"
-  },
-  "counterFontColor": {
-    "type": "colorpicker",
-    "label": "Counter Color",
-    "value": "rgb(255, 255, 255)",
-    "group": "Theming - Counter"
-  },
-  "counterFontSize": {
-    "type": "number",
-    "label": "Counter Font Size",
-    "value": 24,
-    "group": "Theming - Counter"
-  },
-  "objectivesColor": {
-    "type": "colorpicker",
-    "label": "Objectives Text Color",
-    "value": "rgb(254, 255, 255)",
-    "group": "Theming - Optional Objectives"
-  },
-  "objectivesFontSize": {
-    "type": "number",
-    "label": "Objectives Font Size",
-    "value": 16,
-    "group": "Theming - Optional Objectives"
-  },
-  "objectivesStrikethroughSize": {
-    "type": "number",
-    "label": "Objectives Strikethrough Size",
-    "value": 6,
-    "group": "Theming - Optional Objectives"
-  },
-  "objectivesStrikethroughColor": {
-    "type": "colorpicker",
-    "label": "Objectives Strikethrough Color",
-    "value": "rgba(234, 66, 29, 0.83)",
-    "group": "Theming - Optional Objectives"
-  },
-  "objectivesSpacing": {
-    "type": "dropdown",
-    "label": "Choose a spacing type for optional objectives:",
-    "value": "justify-between",
-    "options": {
-      "justify-start": "Left Align",
-      "justify-end": "Right Align",
-      "justify-center": "Center Align",
-      "justify-between": "Space Between",
-      "justify-around": "Space Around",
-      "justify-evenly": "Space Evenly"
-    },
-    "group": "Theming - Optional Objectives"
-  },
-  "noNameString": {
-    "type": "text",
-    "label": "No Ghost Name Message",
-    "value": "New Ghostie...",
-    "group": "Name Messages"
-  },
-  "ghostNameString": {
-    "type": "text",
-    "label": "Ghost Name: [name]",
-    "value": "Name: [name]",
-    "group": "Name Messages"
-  },
-  "noLocationString": {
-    "type": "text",
-    "label": "No Map Selected",
-    "value": "No Map Selected...",
-    "group": "Map Messages"
-  },
-  "counterDefaultString": {
-    "type": "text",
-    "label": "Counter Default Name",
-    "value": "Counter:",
-    "group": "Counter"
-  },
-  "counter2DefaultString": {
-    "type": "text",
-    "label": "Counter 2 Default Name",
-    "value": "Counter 2:",
-    "group": "Counter"
-  },
-  "noOptionalObjectivesMessage": {
-    "type": "text",
-    "label": "No Optional Objectives Message",
-    "value": "Widget Author: GlitchedMythos",
-    "group": "Optional Objectives"
-  },
-  "zeroEvidenceConclusionString": {
-    "type": "text",
-    "label": "Zero Evidence",
-    "value": "Waiting for Evidence",
-    "group": "Conclusion Messages"
-  },
-  "oneEvidenceConclusionString": {
-    "type": "text",
-    "label": "One Evidence",
-    "value": "Not sure yet...",
-    "group": "Conclusion Messages"
-  },
-  "impossibleConclusionString": {
-    "type": "text",
-    "label": "Too much evidence entered",
-    "value": "It's over 9000!!",
-    "group": "Conclusion Messages"
-  },
-  "bansheeString": {
-    "type": "text",
-    "label": "Banshee - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "demonString": {
-    "type": "text",
-    "label": "Demon - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "goryoString": {
-    "type": "text",
-    "label": "Goryo - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "hantuString": {
-    "type": "text",
-    "label": "Hantu - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "jinnString": {
-    "type": "text",
-    "label": "Jinn - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "mareString": {
-    "type": "text",
-    "label": "Mare - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "mimicString": {
-    "type": "text",
-    "label": "Mimic - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "mylingString": {
-    "type": "text",
-    "label": "Myling - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "obakeString": {
-    "type": "text",
-    "label": "Obake - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "oniString": {
-    "type": "text",
-    "label": "Oni - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "onryoString": {
-    "type": "text",
-    "label": "Onryo - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "phantomString": {
-    "type": "text",
-    "label": "Phantom - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "poltergeistString": {
-    "type": "text",
-    "label": "Poltergeist - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "raijuString": {
-    "type": "text",
-    "label": "Raiju - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "revenantString": {
-    "type": "text",
-    "label": "Revenant - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "shadeString": {
-    "type": "text",
-    "label": "Shade - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "spiritString": {
-    "type": "text",
-    "label": "Spirit - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "twinsString": {
-    "type": "text",
-    "label": "The Twins - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "wraithString": {
-    "type": "text",
-    "label": "Wraith - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "yokaiString": {
-    "type": "text",
-    "label": "Yokai - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
-  },
-  "yureiString": {
-    "type": "text",
-    "label": "Yurei - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
   }
 }

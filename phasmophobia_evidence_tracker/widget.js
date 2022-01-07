@@ -1,31 +1,73 @@
-const version = "3.5.1";
+const version = "4.0.0 (Cursed Possessions)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
 // 1 is true
 // 0 is false
 
-const BANSHEE = "0000111",
-  DEMON =       "0101010",
-  GORYO =       "1000011",
-  HANTU =       "0100110",
-  JINN =        "1100010",
-  MARE =        "0011100",
-  MIMIC =       "0110010",
-  MYLING =      "1001010",
-  OBAKE =       "1000110",
-  ONI =         "1100001",
-  ONRYO =       "0110100",
-  PHANTOM =     "0010011",
-  POLTERGEIST = "0011010",
-  RAIJU =       "1000101",
-  REVENANT =    "0101100",
-  SHADE =       "1101000",
-  SPIRIT =      "1011000",
-  TWINS =       "1110000",
-  WRAITH =      "1010001",
-  YOKAI =       "0010101",
-  YUREI =       "0100101";
+const BANSHEE =     "0000111",
+      DEMON =       "0101010",
+      GORYO =       "1000011",
+      HANTU =       "0100110",
+      JINN =        "1100010",
+      MARE =        "0011100",
+      MIMIC =       "0110010",
+      MYLING =      "1001010",
+      OBAKE =       "1000110",
+      ONI =         "1100001",
+      ONRYO =       "0110100",
+      PHANTOM =     "0010011",
+      POLTERGEIST = "0011010",
+      RAIJU =       "1000101",
+      REVENANT =    "0101100",
+      SHADE =       "1101000",
+      SPIRIT =      "1011000",
+      TWINS =       "1110000",
+      WRAITH =      "1010001",
+      YOKAI =       "0010101",
+      YUREI =       "0100101";
+
+const EVIDENCE = {
+  emf: "emf",
+  freez: "freezing",
+  temp: "freezing",
+  box: "spiritBox",
+  spirit: "spiritBox",
+  book: "writing",
+  writ: "Writing",
+  orbs: "Orbs",
+  fing: "fingerprints",
+  hand: "fingerprints",
+  dots: "dots",
+}
+
+const POSSESSIONS = {
+  none: "none",
+  doll: "doll",
+  tortured: "doll",
+  voodoo: "doll",
+  mirror: "mirror",
+  box: "music",
+  music: "music",
+  circle: "summoning",
+  summon: "summoning",
+  cards: "tarot",
+  tarot: "tarot",
+  board: "ouija",
+  ouija: "ouija",
+  luigi: "ouija",
+  milton: "ouija",
+}
+
+const SIGHTINGS = {
+  bone: "boner",
+  slender: "slenderman",
+  man: "slenderman",
+  water: "water",
+  dirty: "water",
+  "dirty water": "water",
+  coffee: "water",
+}
 
 const OPTIONAL_OBJECTIVES = {
   ca: "Candle",
@@ -106,10 +148,10 @@ const DIFFICULTY = {
 
 // Constants for displaying evidence on the widget
 const EVIDENCE_OFF = 0,
-  EVIDENCE_ON = 1,
-  EVIDENCE_IMPOSSIBLE = 2,
-  EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
-  EVIDENCE_NEGATIVE = 4;
+      EVIDENCE_ON = 1,
+      EVIDENCE_IMPOSSIBLE = 2,
+      EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
+      EVIDENCE_NEGATIVE = 4;
 
 const EVIDENCE_NAMES_IN_DOM = [
   "emf",
@@ -122,13 +164,13 @@ const EVIDENCE_NAMES_IN_DOM = [
 ];
 
 const COUNTER_1 = 1,
-  COUNTER_2 = 2;
+      COUNTER_2 = 2;
 
 // Permission levels for commands
 const PERMISSION_GLITCHED = 0,
-  PERMISSION_BROADCASTER = 1,
-  PERMISSION_MOD = 2,
-  PERMISSION_VIP = 3;
+      PERMISSION_BROADCASTER = 1,
+      PERMISSION_MOD = 2,
+      PERMISSION_VIP = 3;
 
 // TODO: Move all widget and user state to here
 let userState = {
@@ -136,6 +178,15 @@ let userState = {
   conclusionString: "",
   counter: 0,
   counter2: 0,
+  cursedPossessions: {
+    none: true,
+    doll: false,
+    mirror: false,
+    music: false,
+    ouija: false,
+    summoning: false,
+    tarot: false,
+  },
   evidence: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
@@ -166,9 +217,9 @@ let userState = {
     //   strike: true/false
     // }
   ],
-  optionalSightings: {
-    boner: false,
-    ouija: false,
+  sightings: {
+    bone: false,
+    slenderman: false,
     water: false,
   },
 };
@@ -265,23 +316,13 @@ window.addEventListener("onWidgetLoad", function (obj) {
         userState,
       ]);
     },
-    [fieldData["bonerCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, [
-        'boner',
-        userState,
-      ]);
+    [fieldData["possessionCommand"]]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _togglePossession, 
+      [data.text, userState]);
     },
-    [fieldData["ouijaCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, [
-        'ouija',
-        userState,
-      ]);
-    },
-    [fieldData["waterCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, [
-        'water',
-        userState,
-      ]);
+    [fieldData["sightingCommand"]]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, 
+      [data.text, userState]);
     },
     [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
@@ -560,8 +601,8 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: MARE,
     },
     {
-      type: "Mimic",
-      conclusion: createGhostConclusionString(fieldData["mimicString"], "Mimic"),
+      type: "The Mimic",
+      conclusion: createGhostConclusionString(fieldData["mimicString"], "The Mimic"),
       evidence: MIMIC,
     },
     {
@@ -693,68 +734,69 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
   let displayLocation = fieldData["displayLocation"] === "yes" ? true : false;
-  let displayBoner = fieldData["displayBoner"] === "yes" ? true : false;
-  let displayOuija = fieldData["displayOuija"] === "yes" ? true : false;
-  let displayWater = fieldData["displayWater"] === "yes" ? true : false;
   let displayEvidence = fieldData["displayEvidence"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
-  let displayCounter2 = fieldData["displayCounter2"] === "yes" ? true : false;
+  let displayCounterTwo = fieldData["displayCounter2"] === "yes" ? true : false;
+  let displayCursedPossessions = fieldData["displayCursedPossessions"] === "yes" ? true : false;
+  let displaySightings = fieldData["displaySightings"] === "yes" ? true : false;
   let displayOptionalObjectives =
     fieldData["displayOptionalObjectives"] === "yes" ? true : false;
   let displayConclusion =
     fieldData["displayConclusion"] === "yes" ? true : false;
 
   if (!displayName) {
-    $(`#name`).addClass("hidden");
+    $(`#name`).remove();
   }
 
-  if (!displayLocation && !displayBoner && !displayOuija && !displayWater) {
-    $(`#location-container`).addClass("hidden");
+  if (!displayLocation && !displaySightings && !displayCursedPossessions) {
+    $(`#location-container`).remove();
   } else {
     if (!displayLocation) {
-      $(`#location-name`).addClass("hidden");
-      $(`#location-difficulty`).addClass("hidden");
+      $(`#location-name`).remove();
+      $(`#location-difficulty`).remove();
     }
-
-    if (!displayBoner && !displayOuija && !displayWater) {
-      $(`#location-sightings`).addClass("hidden");
-    } else {
-      if (!displayBoner) {
-        $(`#boner-svg-container`).addClass("hidden");
-      }
-      if (!displayOuija) {
-        $(`#ouija-svg-container`).addClass("hidden");
-      }
-      if (!displayWater) {
-        $(`#water-svg-container`).addClass("hidden");
-      }
+    if (!displaySightings) {
+      $(`#location-sightings`).remove();
+    } 
+    if (!displayCursedPossessions) {
+      $(`#possession-container`).remove();
     }
   }
 
   if (!displayEvidence && !displayCounter) {
-    $(`#evidence-and-counter-container`).addClass("hidden");
+    $(`#evidence-container`).remove();
+    $(`#counter-container`).remove();
   } else {
     if (!displayEvidence) {
-      $(`#evidence-container`).addClass("hidden");
+      $(`#evidence-container`).remove();
     }
 
     if (!displayCounter) {
-      $(`#counter-container`).addClass("hidden");
+      $(`#counter-container`).remove();
     }
-    if (!displayCounter2) {
-      $(`#counter2-name`).addClass("hidden");
-      $(`#counter2-number`).addClass("hidden");
+    
+    if (!displayCounterTwo) {
+      $(`#counter-two`).remove();
     } else {
-      $(`#counter2-name`).html(". "+$(`#counter2-name`).text());
+      $(`#counter2-name`).html($(`#counter2-name`).text());
+      let countersSpacing = fieldData["countersSpacing"];
+      let hasCloseSpacing = countersSpacing === "justify-start"
+      || countersSpacing === "justify-end"
+      || countersSpacing === "justify-center";
+
+      if(hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
+        $(`#counter-one`).addClass("mr-0.5");
+        $(`#counter-two`).addClass("ml-0.5");
+      }
     }
   }
 
   if (!displayOptionalObjectives) {
-    $(`#optional-obj`).addClass(`hidden`);
+    $(`#optional-obj`).remove();
   }
 
   if (!displayConclusion) {
-    $(`#conclusion`).addClass("hidden");
+    $(`#conclusion-container`).remove();
   }
 
   let useGradientBorder =
@@ -856,8 +898,38 @@ const _setDiffName = (command, state) => {
 };
 
 const _toggleSighting = (sighting, state) => {
-  state.optionalSightings[sighting] = !state.optionalSightings[sighting]
+  sightingArray = sighting.split(" ");
+  sightingArray.shift();
+  for (const [key,value] of Object.entries(sightingArray)) {
+    const s = getValueFromArray(SIGHTINGS, value);
+    if (s === "slenderman") { 
+      state.sightings[s] = (state.location.locationName === "Maple Lodge") ? !state.sightings[s] : false;
+    } else { state.sightings[s] = !state.sightings[s] }
+  }
 }
+
+const _togglePossession = (possession, state) => {
+  possession = possession.substr(possession.indexOf(" ") + 1)
+  const thisPossession = getValueFromArray(POSSESSIONS, possession);
+  for (const [key] of Object.entries(state.cursedPossessions)) {
+    state.cursedPossessions[key] = (key === thisPossession) ? !state.cursedPossessions[key] : false;
+  }
+  state.cursedPossessions['none'] = (arrayIsFalse(state.cursedPossessions)) ? true : false;
+}
+
+const _toggleEvidence = (evidence, state, config) => {
+  evidenceArray = evidence.split(" ").shift();
+  for (const [key] of Object.entries(evidenceArray)) {
+    toggleEvidence(command, state, config, key)
+  }
+};
+
+const _setEvidenceNegative = (evidence, state, config) => {
+  evidenceArray = evidence.split(" ")
+  for (const [e] of Object.entries(evidenceArray)) {
+    setEvidenceNegative(e, state, config)
+  }
+};
 
 const _toggleEMF = (command, state, config) => {
   toggleEvidence(command, state, config, 'emf')
@@ -997,6 +1069,7 @@ const resetGhost = (newName, state) => {
   resetEvidence(state.evidenceDisplay);
   resetOptionalObjectives([], state);
   resetSightings(state);
+  resetPossessions(state);
   resetConclusion(state);
 };
 
@@ -1016,8 +1089,18 @@ const resetLocationName = (state) => {
 };
 
 const resetSightings = (state) => {
-  for (const [key] of Object.entries(state.optionalSightings)) {
-    state.optionalSightings[key] = false
+  for (const [key] of Object.entries(state.sightings)) {
+    state.sightings[key] = false
+  }
+};
+
+const resetPossessions = (state) => {
+  for (const [key] of Object.entries(state.cursedPossessions)) {
+    if (key === "none") {
+      state.cursedPossessions[key] = true
+    } else {
+      state.cursedPossessions[key] = false
+    }
   }
 };
 
@@ -1204,12 +1287,19 @@ const updateFullOptionalObjectives = (
 const determineConclusionMessage = (state) => {
   let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
   let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(displayEvidenceString);
+
+  let numOfPlayerTrueEvidence = numOfTrueEvidenceInString(createEvidenceString(state.evidence));
+
   let numOfNegative = numOfNegativeEvidenceInString(displayEvidenceString);
   let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
 
   switch (true) {
     case numOfDisplayTrueEvidence <= 0:
-      state.conclusionString = getZeroEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+      if (numOfPlayerTrueEvidence < 4) {
+        state.conclusionString = getZeroEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+      } else {
+        state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+      }
       break;
     case numOfDisplayTrueEvidence == 1:
       state.conclusionString = getSingleEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
@@ -1218,8 +1308,11 @@ const determineConclusionMessage = (state) => {
     case numOfDisplayTrueEvidence == 3:
       state.conclusionString = getMultipleEvidenceConclusionMessage(ghostPossibilities);
       break;
+    case numOfDisplayTrueEvidence == 4:
     case numOfDisplayTrueEvidence >= 4:
+      console.log('in here');
       state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+      break;
     default:
       state.conclusionString = "Something broke";
       break;
@@ -1264,11 +1357,31 @@ const getLocationNameString = (location) => {
     _setDiffName(locationSplit[1].toLowerCase(), userState);
   }
   updateLocationName(LOCATIONS[locationSplit[0].toLowerCase()]);
+  return LOCATIONS[locationSplit[0].toLowerCase()];
 };
 
 const getDifficultyString = (difficulty) => {
   updateLocationDiff(DIFFICULTY[difficulty.toLowerCase()]);
+  return DIFFICULTY[difficulty.toLowerCase()]
 };
+
+const getValueFromArray = (array, string) => {
+  for (const [key,value] of Object.entries(array)){
+    var pattern = new RegExp(`^${key}`, 'ig');
+    if(pattern.test(string)){
+      return value;
+    }
+  }
+}
+
+const arrayIsFalse = (array) => {
+  for (const [key] of Object.entries(array)) {
+    if (array[key]) {
+      return false;
+    }
+  }
+  return true;
+}
 
 // Returns each first character capitalized
 const camelCase = (sentence) => {
@@ -1469,6 +1582,15 @@ const getMultipleEvidenceConclusionMessage = (ghostPossibilities) => {
   return conclusionString;
 }
 
+const getConclusionArticleBasedOnGhostPossibilities = (ghostPossibilities) => {
+  const firstGhost = ghostPossibilities[0]
+  const firstWord = firstGhost.split(/(\s+)/)[0]
+  const isVowel = /[aeiouAEIOU]/.test(firstWord.charAt(0))
+  const isThe = /The/.test(firstWord)
+  if (isThe) { return "" } else if (isVowel) { return "an" } else { return "a" }
+  return "a"
+}
+
 const getConclusionStringBasedOnGhostPossiblities = (ghostPossibilities) => {
   let conclusionString = "";
   let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
@@ -1478,7 +1600,8 @@ const getConclusionStringBasedOnGhostPossiblities = (ghostPossibilities) => {
   } else if (ghostPossibilities.length === 1) {
     conclusionString = ghostPossibilities[0].conclusion;
   } else {
-    conclusionString = `Could be a ` + ghostPossibilityStrings.join(", ")
+    let conclusionArticle = getConclusionArticleBasedOnGhostPossibilities(ghostPossibilityStrings)
+    conclusionString = `Could be ${conclusionArticle} ${ghostPossibilityStrings.join(", ")}`
   }
 
   return conclusionString;
@@ -1492,7 +1615,8 @@ const updateDashboardDOM = (state) => {
   updateNameDOM(state.ghostName);
   updateLocationName(state.location.locationName);
   updateLocationDiff(state.location.locationDiff);
-  updateSighting(state.optionalSightings);
+  updateSighting(state.sightings, state.location.locationName);
+  updatePossession(state.cursedPossessions);
   updateEvidenceDOM(state.evidenceDisplay);
   updateOptionalObjectivesDOM(state.optionalObjectives);
   updateConclusion(state.conclusionString);
@@ -1634,10 +1758,23 @@ const updateLocationDiff = (diff) => {
 };
 
 /** SIGHTING RELATED DOM MANIPULATING FUNCTIONS */
-const updateSighting = (sightings) => {
+const updateSighting = (sightings, locationName) => {
   for (const [key, value] of Object.entries(sightings)) {
-    $(`#${key}`).removeClass([`${key}-active`, `${key}-inactive`])
-    $(`#${key}`).addClass(value ? `${key}-active` : `${key}-inactive`)
+    let sightingInactive = (key === "slenderman" && locationName != "Maple Lodge") ? `sighting-hidden` : `sighting-{{displayInactiveSighting}}`
+    $(`#${key}-svg-container`).removeClass([`sighting-active`, `sighting-hidden`, sightingInactive])
+    $(`#${key}-svg-container`).addClass(value ? `sighting-active` : sightingInactive)
+    $(`#${key}`).removeClass([`sighting-active`, `sighting-hidden`, sightingInactive])
+    $(`#${key}`).addClass(value ? `sighting-active` : sightingInactive)
+  }
+}
+
+/** POSESSIONS RELATED DOM MANIPULATING FUNCTIONS */
+const updatePossession = (possessions) => {
+  for (const [key, value] of Object.entries(possessions)) {
+    $(`#${key}-svg-container`).removeClass([`possession-active`, `possession-inactive`])
+    $(`#${key}`).removeClass([`possession-active`, `possession-inactive`])
+    $(`#${key}-svg-container`).addClass(value ? `possession-active` : `possession-inactive`)
+    $(`#${key}`).addClass(value ? `possession-active` : `possession-inactive`)
   }
 }
 
@@ -1651,7 +1788,7 @@ const setCounterName = (which, name) => {
   if (which === 1) {
     $("#counter-name").html(name);
   } else if (which === 2) {
-    $("#counter2-name").html(". "+name);
+    $("#counter2-name").html(name);
   }
 };
 
