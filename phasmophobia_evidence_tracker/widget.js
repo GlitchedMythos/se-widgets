@@ -736,7 +736,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   let displayLocation = fieldData["displayLocation"] === "yes" ? true : false;
   let displayEvidence = fieldData["displayEvidence"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
-  let displayCounter2 = fieldData["displayCounter2"] === "yes" ? true : false;
+  let displayCounterTwo = fieldData["displayCounter2"] === "yes" ? true : false;
   let displayCursedPossessions = fieldData["displayCursedPossessions"] === "yes" ? true : false;
   let displaySightings = fieldData["displaySightings"] === "yes" ? true : false;
   let displayOptionalObjectives =
@@ -775,11 +775,19 @@ window.addEventListener("onWidgetLoad", function (obj) {
       $(`#counter-container`).addClass("hidden");
     }
     
-    if (!displayCounter2) {
-      $(`#counter2-name`).addClass("hidden");
-      $(`#counter2-number`).addClass("hidden");
+    if (!displayCounterTwo) {
+      $(`#counter-two`).addClass("hidden");
     } else {
-      $(`#counter2-name`).html(". "+$(`#counter2-name`).text());
+      $(`#counter2-name`).html($(`#counter2-name`).text());
+      let countersSpacing = fieldData["countersSpacing"];
+      let hasCloseSpacing = countersSpacing === "justify-start"
+      || countersSpacing === "justify-end"
+      || countersSpacing === "justify-center";
+
+      if(hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
+        $(`#counter-one`).addClass("mr-0.5");
+        $(`#counter-two`).addClass("ml-0.5");
+      }
     }
   }
 
@@ -1803,7 +1811,7 @@ const setCounterName = (which, name) => {
   if (which === 1) {
     $("#counter-name").html(name);
   } else if (which === 2) {
-    $("#counter2-name").html(". "+name);
+    $("#counter2-name").html(name);
   }
 };
 

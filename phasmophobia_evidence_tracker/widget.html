@@ -4061,15 +4061,21 @@ m-842 -163 c5 -33 -38 -106 -128 -219 -91 -114 -171 -260 -194 -355 -48 -195
 
     <!-- COUNTER SECTION -->
     <div class="flex flex-row flex-grow" id="counter-container">
-      <div class="counters">
-        <div class="counter-theme mr-0.5" id="counter-name">
-          {{counterDefaultString}}
+      <div class="counters flex {{counterFlexDirection}} {{countersSpacing}}">
+        <!-- COUNTER ONE -->
+        <div class="counter-one flex flex-row" id="counter-one">
+          <div class="counter-theme mr-0.5" id="counter-name">
+            {{counterDefaultString}}
+          </div>
+          <div class="counter-theme" id="counter-number">0</div>
         </div>
-        <div class="counter-theme" id="counter-number">0</div>
-        <div class="counter-theme mr-0.5" id="counter2-name">
-          {{counter2DefaultString}}
+        <!-- COUNTER TWO -->
+        <div class="counter-two flex flex-row" id="counter-two">
+          <div class="counter-theme mr-0.5" id="counter2-name">
+            {{counter2DefaultString}}
+          </div>
+          <div class="counter-theme" id="counter2-number">0</div>
         </div>
-        <div class="counter-theme" id="counter2-number">0</div>
       </div>
     </div>
 

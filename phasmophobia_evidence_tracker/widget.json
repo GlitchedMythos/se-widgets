@@ -513,6 +513,30 @@
     },
     "group": "Counters"
   },
+  "counterFlexDirection": {
+    "type": "dropdown",
+    "label": "Counter Direction",
+    "value": "flex-col",
+    "options": {
+      "flex-col": "Vertical",
+      "flex-row": "Horizontal"
+    },
+    "group": "Counters"
+  },
+  "countersSpacing": {
+    "type": "dropdown",
+    "label": "Counter Spacing",
+    "value": "justify-between",
+    "options": {
+      "justify-start": "Left",
+      "justify-end": "Right",
+      "justify-center": "Center",
+      "justify-between": "Between",
+      "justify-around": "Around",
+      "justify-evenly": "Evenly"
+    },
+    "group": "Counters"
+  },
   "counterDefaultString": {
     "type": "text",
     "label": "Counter Default Name",
