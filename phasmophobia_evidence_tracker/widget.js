@@ -1287,12 +1287,19 @@ const updateFullOptionalObjectives = (
 const determineConclusionMessage = (state) => {
   let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
   let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(displayEvidenceString);
+
+  let numOfPlayerTrueEvidence = numOfTrueEvidenceInString(createEvidenceString(state.evidence));
+
   let numOfNegative = numOfNegativeEvidenceInString(displayEvidenceString);
   let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
 
   switch (true) {
     case numOfDisplayTrueEvidence <= 0:
-      state.conclusionString = getZeroEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+      if (numOfPlayerTrueEvidence < 4) {
+        state.conclusionString = getZeroEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+      } else {
+        state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+      }
       break;
     case numOfDisplayTrueEvidence == 1:
       state.conclusionString = getSingleEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
@@ -1301,8 +1308,11 @@ const determineConclusionMessage = (state) => {
     case numOfDisplayTrueEvidence == 3:
       state.conclusionString = getMultipleEvidenceConclusionMessage(ghostPossibilities);
       break;
+    case numOfDisplayTrueEvidence == 4:
     case numOfDisplayTrueEvidence >= 4:
+      console.log('in here');
       state.conclusionString = config.conclusionStrings.tooMuchEvidence;
+      break;
     default:
       state.conclusionString = "Something broke";
       break;
