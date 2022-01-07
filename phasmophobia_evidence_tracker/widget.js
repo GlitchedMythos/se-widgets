@@ -745,38 +745,38 @@ window.addEventListener("onWidgetLoad", function (obj) {
     fieldData["displayConclusion"] === "yes" ? true : false;
 
   if (!displayName) {
-    $(`#name`).addClass("hidden");
+    $(`#name`).remove();
   }
 
   if (!displayLocation && !displaySightings && !displayCursedPossessions) {
-    $(`#location-container`).addClass("hidden");
+    $(`#location-container`).remove();
   } else {
     if (!displayLocation) {
-      $(`#location-name`).addClass("hidden");
-      $(`#location-difficulty`).addClass("hidden");
+      $(`#location-name`).remove();
+      $(`#location-difficulty`).remove();
     }
     if (!displaySightings) {
-      $(`#location-sightings`).addClass("hidden");
+      $(`#location-sightings`).remove();
     } 
     if (!displayCursedPossessions) {
-      $(`#possession-container`).addClass("hidden");
+      $(`#possession-container`).remove();
     }
   }
 
   if (!displayEvidence && !displayCounter) {
-    $(`#evidence-container`).addClass("hidden");
-    $(`#counter-container`).addClass("hidden");
+    $(`#evidence-container`).remove();
+    $(`#counter-container`).remove();
   } else {
     if (!displayEvidence) {
-      $(`#evidence-container`).addClass("hidden");
+      $(`#evidence-container`).remove();
     }
 
     if (!displayCounter) {
-      $(`#counter-container`).addClass("hidden");
+      $(`#counter-container`).remove();
     }
     
     if (!displayCounterTwo) {
-      $(`#counter-two`).addClass("hidden");
+      $(`#counter-two`).remove();
     } else {
       $(`#counter2-name`).html($(`#counter2-name`).text());
       let countersSpacing = fieldData["countersSpacing"];
@@ -792,11 +792,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
   }
 
   if (!displayOptionalObjectives) {
-    $(`#optional-obj`).addClass(`hidden`);
+    $(`#optional-obj`).remove();
   }
 
   if (!displayConclusion) {
-    $(`#conclusion-container`).addClass("hidden");
+    $(`#conclusion-container`).remove();
   }
 
   let useGradientBorder =
