@@ -1,4 +1,4 @@
-# Welcome to Phasmophobia Evidence V3.6.0
+# Welcome to Phasmophobia Evidence V4.0.0
 
 **Updated for the Cursed Possessions Update!**
 

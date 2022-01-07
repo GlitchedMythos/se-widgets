@@ -1,4 +1,4 @@
-const version = "3.6.0 (Cursed Possessions)";
+const version = "4.0.0 (Cursed Possessions)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
