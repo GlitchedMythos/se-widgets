@@ -6,7 +6,7 @@
 [![Watch the video](https://img.youtube.com/vi/vkb0zO9xz1Q/default.jpg)](https://youtu.be/vkb0zO9xz1Q)
 
 ## One Click Install Link:
-[Click here for the one click install link!](streamelements.com/dashboard/overlays/share/61d7ca3b1d6574d979bdfdcd)
+[Click here for the one click install link!](https://streamelements.com/dashboard/overlays/share/61d7ca3b1d6574d979bdfdcd)
 
 I made this widget for anyone who uses StreamElements that plays Phasmophobia.
 
