@@ -41,21 +41,21 @@
     "value": "!sight",
     "group": "Commands"
   },
-  "waterSightingKey": {
+  "waterSightingCommand": {
     "type": "string",
-    "label": "Comma Separated Sighting Commands for water",
+    "label": "Dirty Water (Comma Separated)",
     "value": "water,dirty,coffee",
     "group": "Commands"
   },
-  "slendermanSightingKey": {
+  "slendermanSightingCommand": {
     "type": "string",
-    "label": "Comma Separated Sighting Commands for SlenderMan",
+    "label": "SlenderMan (Comma Separated)",
     "value": "slender,man",
     "group": "Commands"
   },
-  "bonerSightingKey": {
+  "bonerSightingCommand": {
     "type": "string",
-    "label": "Comma Separated Sighting Commands for boner",
+    "label": "Bone (Comma Separated)",
     "value": "boner",
     "group": "Commands"
   },
@@ -65,45 +65,45 @@
     "value": "!poss",
     "group": "Commands"
   },
-  "nonePossessionKey":{
+  "nonePossessionCommand":{
     "type": "string",
-    "label": "Comma Separated Possession Commands for none",
+    "label": "None (Comma Separated)",
     "value": "none",
     "group": "Commands"
   },
-  "dollPossessionKey":{
+  "dollPossessionCommand":{
     "type": "string",
-    "label": "Comma Separated Possession Commands for doll",
+    "label": "Doll (Comma Separated)",
     "value": "doll,tortured,voodoo",
     "group": "Commands"
   },
-  "mirrorPossessionKey":{
+  "mirrorPossessionCommand":{
     "type": "string",
-    "label": "Comma Separated Possession Commands for mirror",
+    "label": "Mirror (Comma Separated)",
     "value": "mirror",
     "group": "Commands"
   },
-  "musicPossessionKey":{
+  "musicPossessionCommand":{
     "type": "string",
-    "label": "Comma Separated Possession Commands for music",
+    "label": "Music (Comma Separated)",
     "value": "music,box",
     "group": "Commands"
   },
-  "summoningPossessionKey":{
+  "summoningPossessionCommand":{
     "type": "string",
-    "label": "Comma Separated Possession Commands for summon",
+    "label": "Summon (Comma Separated)",
     "value": "circle,summon",
     "group": "Commands"
   },
-  "tarotPossessionKey":{
+  "tarotPossessionCommand":{
     "type": "string",
-    "label": "Comma Separated Possession Commands for Tarot",
+    "label": "Tarot (Comma Separated)",
     "value": "cards,tarot",
     "group": "Commands"
   },
-  "ouijaPossessionKey":{
+  "ouijaPossessionCommand":{
     "type": "string",
-    "label": "Comma Separated Possession Commands for none Ouija",
+    "label": "Ouija (Comma Separated)",
     "value": "board,ouija,luigi,milton",
     "group": "Commands"
   },

@@ -249,9 +249,9 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // setting up the POSSESSIONS
   {
     ['none', 'doll', 'mirror', 'music', 'summoning', 'tarot', 'ouija'].forEach(v => {
-      let keys = fieldData[v + "PossessionKey"]
+      let keys = fieldData[v + "PossessionCommand"]
       keys.split(',').forEach(key => {
-        POSSESSIONS[key] = v
+        POSSESSIONS[key.trim()] = v
       })
     })
   }
@@ -259,9 +259,9 @@ window.addEventListener("onWidgetLoad", function (obj) {
 
   {
     ['boner', 'slenderman', 'water'].forEach(v => {
-      let keys = fieldData[v + "SightingKey"]
+      let keys = fieldData[v + "SightingCommand"]
       keys.split(',').forEach(key => {
-        SIGHTINGS[key] = v
+        SIGHTINGS[key.trim()] = v
       })
     })
   }
