@@ -41,10 +41,70 @@
     "value": "!sight",
     "group": "Commands"
   },
+  "waterSightingCommand": {
+    "type": "string",
+    "label": "Dirty Water (Comma Separated)",
+    "value": "water,dirty,coffee",
+    "group": "Commands"
+  },
+  "slendermanSightingCommand": {
+    "type": "string",
+    "label": "SlenderMan (Comma Separated)",
+    "value": "slender,man",
+    "group": "Commands"
+  },
+  "bonerSightingCommand": {
+    "type": "string",
+    "label": "Bone (Comma Separated)",
+    "value": "boner",
+    "group": "Commands"
+  },
   "possessionCommand": {
     "type": "string",
     "label": "Set Cursed Possessions Command",
     "value": "!poss",
+    "group": "Commands"
+  },
+  "nonePossessionCommand":{
+    "type": "string",
+    "label": "None (Comma Separated)",
+    "value": "none",
+    "group": "Commands"
+  },
+  "dollPossessionCommand":{
+    "type": "string",
+    "label": "Doll (Comma Separated)",
+    "value": "doll,tortured,voodoo",
+    "group": "Commands"
+  },
+  "mirrorPossessionCommand":{
+    "type": "string",
+    "label": "Mirror (Comma Separated)",
+    "value": "mirror",
+    "group": "Commands"
+  },
+  "musicPossessionCommand":{
+    "type": "string",
+    "label": "Music (Comma Separated)",
+    "value": "music,box",
+    "group": "Commands"
+  },
+  "summoningPossessionCommand":{
+    "type": "string",
+    "label": "Summon (Comma Separated)",
+    "value": "circle,summon",
+    "group": "Commands"
+  },
+  "tarotPossessionCommand":{
+    "type": "string",
+    "label": "Tarot (Comma Separated)",
+    "value": "cards,tarot",
+    "group": "Commands"
+  },
+  "ouijaPossessionCommand":{
+    "type": "string",
+    "label": "Ouija (Comma Separated)",
+    "value": "board,ouija,luigi,milton",
     "group": "Commands"
   },
   "emfCommand": {
@@ -637,7 +697,7 @@
     },
     "group": "Optional Objectives"
   },
-  
+
   "optionalsTopMargin": {
     "type": "number",
     "label": "Optional Objectives Top Margin",
@@ -753,12 +813,6 @@
     "label": "The Mimic",
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
-  },
-  "mimicString": {
-    "type": "text",
-    "label": "Mimic - Leave empty 4 default",
-    "value": "",
-    "group": "Conclusion Messages"
   },
   "mylingString": {
     "type": "text",
