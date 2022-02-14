@@ -41,10 +41,70 @@
     "value": "!sight",
     "group": "Commands"
   },
+  "waterSightingKey": {
+    "type": "string",
+    "label": "Comma Separated Sighting Commands for water",
+    "value": "water,dirty,coffee",
+    "group": "Commands"
+  },
+  "slendermanSightingKey": {
+    "type": "string",
+    "label": "Comma Separated Sighting Commands for SlenderMan",
+    "value": "slender,man",
+    "group": "Commands"
+  },
+  "bonerSightingKey": {
+    "type": "string",
+    "label": "Comma Separated Sighting Commands for boner",
+    "value": "boner",
+    "group": "Commands"
+  },
   "possessionCommand": {
     "type": "string",
     "label": "Set Cursed Possessions Command",
     "value": "!poss",
+    "group": "Commands"
+  },
+  "nonePossessionKey":{
+    "type": "string",
+    "label": "Comma Separated Possession Commands for none",
+    "value": "none",
+    "group": "Commands"
+  },
+  "dollPossessionKey":{
+    "type": "string",
+    "label": "Comma Separated Possession Commands for doll",
+    "value": "doll,tortured,voodoo",
+    "group": "Commands"
+  },
+  "mirrorPossessionKey":{
+    "type": "string",
+    "label": "Comma Separated Possession Commands for mirror",
+    "value": "mirror",
+    "group": "Commands"
+  },
+  "musicPossessionKey":{
+    "type": "string",
+    "label": "Comma Separated Possession Commands for music",
+    "value": "music,box",
+    "group": "Commands"
+  },
+  "summoningPossessionKey":{
+    "type": "string",
+    "label": "Comma Separated Possession Commands for summon",
+    "value": "circle,summon",
+    "group": "Commands"
+  },
+  "tarotPossessionKey":{
+    "type": "string",
+    "label": "Comma Separated Possession Commands for Tarot",
+    "value": "cards,tarot",
+    "group": "Commands"
+  },
+  "ouijaPossessionKey":{
+    "type": "string",
+    "label": "Comma Separated Possession Commands for none Ouija",
+    "value": "board,ouija,luigi,milton",
     "group": "Commands"
   },
   "emfCommand": {
@@ -637,7 +697,7 @@
     },
     "group": "Optional Objectives"
   },
-  
+
   "optionalsTopMargin": {
     "type": "number",
     "label": "Optional Objectives Top Margin",

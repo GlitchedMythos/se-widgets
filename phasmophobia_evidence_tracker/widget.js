@@ -41,33 +41,10 @@ const EVIDENCE = {
   dots: "dots",
 }
 
-const POSSESSIONS = {
-  none: "none",
-  doll: "doll",
-  tortured: "doll",
-  voodoo: "doll",
-  mirror: "mirror",
-  box: "music",
-  music: "music",
-  circle: "summoning",
-  summon: "summoning",
-  cards: "tarot",
-  tarot: "tarot",
-  board: "ouija",
-  ouija: "ouija",
-  luigi: "ouija",
-  milton: "ouija",
-}
+const POSSESSIONS = {}
 
-const SIGHTINGS = {
-  bone: "boner",
-  slender: "slenderman",
-  man: "slenderman",
-  water: "water",
-  dirty: "water",
-  "dirty water": "water",
-  coffee: "water",
-}
+//object used to store sighting keys
+const SIGHTINGS = {}
 
 const OPTIONAL_OBJECTIVES = {
   ca: "Candle",
@@ -269,6 +246,25 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // Field data from Stream Elements from the overlay settings the user set
   userState.channelName = obj["detail"]["channel"]["username"];
   const fieldData = obj.detail.fieldData;
+  // setting up the POSSESSIONS
+  {
+    ['none', 'doll', 'mirror', 'music', 'summoning', 'tarot', 'ouija'].forEach(v => {
+      let keys = fieldData[v + "PossessionKey"]
+      keys.split(',').forEach(key => {
+        POSSESSIONS[key] = v
+      })
+    })
+  }
+  // setting up the SIGHTINGS
+
+  {
+    ['boner', 'slenderman', 'water'].forEach(v => {
+      let keys = fieldData[v + "SightingKey"]
+      keys.split(',').forEach(key => {
+        SIGHTINGS[key] = v
+      })
+    })
+  }
 
   // Sets up all the commands for the widget
   config.commands = {
@@ -317,12 +313,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
       ]);
     },
     [fieldData["possessionCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _togglePossession, 
+      runCommandWithPermission(modOrVIPPermission(config), data, _togglePossession,
       [data.text, userState]);
     },
     [fieldData["sightingCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting, 
-      [data.text, userState]);
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting,
+        [data.text, userState]);
     },
     [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
@@ -757,7 +753,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     }
     if (!displaySightings) {
       $(`#location-sightings`).remove();
-    } 
+    }
     if (!displayCursedPossessions) {
       $(`#possession-container`).remove();
     }
@@ -774,7 +770,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     if (!displayCounter) {
       $(`#counter-container`).remove();
     }
-    
+
     if (!displayCounterTwo) {
       $(`#counter-two`).remove();
     } else {
@@ -902,7 +898,7 @@ const _toggleSighting = (sighting, state) => {
   sightingArray.shift();
   for (const [key,value] of Object.entries(sightingArray)) {
     const s = getValueFromArray(SIGHTINGS, value);
-    if (s === "slenderman") { 
+    if (s === "slenderman") {
       state.sightings[s] = (state.location.locationName === "Maple Lodge") ? !state.sightings[s] : false;
     } else { state.sightings[s] = !state.sightings[s] }
   }
@@ -1400,8 +1396,8 @@ const toggleVIPAccessibility = (canUseVIP) => {
 
 const createEvidenceString = (evidence) => {
 
-  let evidenceString = 
-    "" + 
+  let evidenceString =
+    "" +
     evidence.emf +
     evidence.freezing +
     evidence.spiritBox +
@@ -1431,7 +1427,7 @@ const numOfNegativeEvidenceInString = (evidenceString) => {
   let index,
     count = 0;
   for (index = 0; index < evidenceString.length; ++index) {
-    count = (evidenceString.charAt(index) == `${EVIDENCE_NEGATIVE}`) 
+    count = (evidenceString.charAt(index) == `${EVIDENCE_NEGATIVE}`)
       ? count + 1 : count;
   }
 
@@ -1457,16 +1453,16 @@ const getGhostPossibilities = (evidenceString) => {
         }
 
         if (
-          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` 
+          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}`
           && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
         ) {
           impossibleGhostDueToNegative = true;
         }
       }
-      
+
       if (
         impossibleGhostDueToNegative === false
-        && evidenceMatch == numOfTrueEvidence 
+        && evidenceMatch == numOfTrueEvidence
       ) {
         possibleGhosts.push(ghostToCheck);
       }
@@ -1474,12 +1470,12 @@ const getGhostPossibilities = (evidenceString) => {
   } else {
     for (let i = 0; i < config.ghosts.length; i++) {
       let impossibleGhostDueToNegative = false;
-      
+
       for (let j = 0; j < evidenceString.length; j++) {
         let ghostToCheck = config.ghosts[i];
 
         if (
-          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` 
+          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}`
           && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
         ) {
           impossibleGhostDueToNegative = true;
@@ -1503,7 +1499,7 @@ const getImpossibleEvidence = (possibleGhosts) => {
         impossibleEvidenceString.substr(0, k) +
         `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` +
         impossibleEvidenceString.substr(k + 1);
-      
+
       impossibleEvidenceString[k] = `${
         +impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
       }`; // possibleGhosts[ghost][ghost evidence string][position in evidence string]
