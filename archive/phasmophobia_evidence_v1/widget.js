@@ -359,7 +359,7 @@ let getImpossibleEvidence = (possibleGhosts) => {
     console.log('going through ghost', possibleGhosts[i])
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
       console.log('values: ', `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}`, `${+impossibleEvidenceString[k]}`, `${+possibleGhosts[i][0][k]}`);
-      impossibleEvidenceString = impossibleEvidenceString.substr(0, k) + `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}` + impossibleEvidenceString.substr(k + 1);
+      impossibleEvidenceString = impossibleEvidenceString.slice(0, k) + `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}` + impossibleEvidenceString.slice(k + 1);
       impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i][0][k]}` // possibleGhosts[ghost][ghost evidence string][position in evidence string]
     }
   }
