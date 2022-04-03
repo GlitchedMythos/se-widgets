@@ -905,7 +905,7 @@ const _toggleSighting = (sighting, state) => {
 }
 
 const _togglePossession = (possession, state) => {
-  possession = possession.substr(possession.indexOf(" ") + 1)
+  possession = possession.slice(possession.indexOf(" ") + 1)
   const thisPossession = getValueFromArray(POSSESSIONS, possession);
   for (const [key] of Object.entries(state.cursedPossessions)) {
     state.cursedPossessions[key] = (key === thisPossession) ? !state.cursedPossessions[key] : false;
@@ -1496,9 +1496,9 @@ const getImpossibleEvidence = (possibleGhosts) => {
   for (let i = 0; i < possibleGhosts.length; i++) {
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
       impossibleEvidenceString =
-        impossibleEvidenceString.substr(0, k) +
+        impossibleEvidenceString.slice(0, k) +
         `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` +
-        impossibleEvidenceString.substr(k + 1);
+        impossibleEvidenceString.slice(k + 1);
 
       impossibleEvidenceString[k] = `${
         +impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
