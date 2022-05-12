@@ -1,6 +1,6 @@
-# Welcome to Phasmophobia Evidence V4.0.0
+# Welcome to Phasmophobia Evidence V4.1.0
 
-**Updated for the Cursed Possessions Update!**
+**Updated for the Progression Update!**
 
 ## Video Tutorial
 [![Watch the video](https://img.youtube.com/vi/vkb0zO9xz1Q/default.jpg)](https://youtu.be/vkb0zO9xz1Q)
@@ -138,7 +138,7 @@ To get `Smudge`
 | Bleasdale | "bl" "bleasdale" |
 | High School | "hi" "hs" "high" "school" "brown" "brownstone" |
 | Prison | "pr" "prison" |
-| Asylum | "as" "asylum" |
+| Asylum | "as" "asylum" "su" "sunny" |
 | Maple Lodge | "ma" "maple" "camp" "campsite" |
 
 | Difficulty | Possible Phrases |
@@ -174,14 +174,11 @@ To get `Asylum Intermediate`
 2. Add a new Widget and select "Static/Custom" followed by Custom Widget
 3. Select the Widget under Layers on the left. Select Open Editor. This will give you a code screen with several tabs. DON'T BE SCARED. For each tab, delete everything that exists and paste the related content from the files listed in this folder into the editor and save.
 
-NOTE: 
-
-html -> html
-
-css -> css
-
-js -> js
-
-json -> fields
-
-data -> Input just -> { }
+### Custom Widget Configuration Mapping
+| Custom Widget Section | File/Content |
+|--|--|
+|html|widget.html|
+|css|widget.css|
+|js|widget.js|
+|fields|widget.json|
+|data|Input just -> `{ }`|
