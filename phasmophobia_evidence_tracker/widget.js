@@ -26,6 +26,7 @@ const BANSHEE =     "0000111",
       WRAITH =      "1010001",
       YOKAI =       "0010101",
       YUREI =       "0100101";
+      MOIROII =     "0111000";
 
 const EVIDENCE = {
   emf: "emf",
@@ -101,6 +102,8 @@ const LOCATIONS = {
   prison: "Prison",
   as: "Asylum",
   asylum: "Asylum",
+  su: "Asylum",
+  sunny: "Asylum",
   ma: "Maple Lodge",
   maple: "Maple Lodge",
   camp: "Maple Lodge",
@@ -600,6 +603,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
       type: "The Mimic",
       conclusion: createGhostConclusionString(fieldData["mimicString"], "The Mimic"),
       evidence: MIMIC,
+    },
+    {
+      type: "Moroii",
+      conclusion: createGhostConclusionString(fieldData["moroiiString"], "Moroii"),
+      evidence: MOIROII,
     },
     {
       type: "Myling",

@@ -814,6 +814,12 @@
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
   },
+  "moroiiString": {
+    "type": "text",
+    "label": "Moroii",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
   "mylingString": {
     "type": "text",
     "label": "Myling",
