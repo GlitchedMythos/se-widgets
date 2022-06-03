@@ -138,7 +138,7 @@ To get `Smudge`
 | Bleasdale | "bl" "bleasdale" |
 | High School | "hi" "hs" "high" "school" "brown" "brownstone" |
 | Prison | "pr" "prison" |
-| Asylum | "as" "asylum" "su" "sunny" |
+| Sunny Valley Asylum | "as" "asylum" "su" "sunny" |
 | Maple Lodge | "ma" "maple" "camp" "campsite" |
 
 | Difficulty | Possible Phrases |
@@ -175,10 +175,10 @@ To get `Asylum Intermediate`
 3. Select the Widget under Layers on the left. Select Open Editor. This will give you a code screen with several tabs. DON'T BE SCARED. For each tab, delete everything that exists and paste the related content from the files listed in this folder into the editor and save.
 
 ### Custom Widget Configuration Mapping
-| Custom Widget Section | File/Content |
+| **Custom Widget Section** | **File/Content** |
 |--|--|
-|html|widget.html|
-|css|widget.css|
-|js|widget.js|
-|fields|widget.json|
-|data|Input just -> `{ }`|
+|***html***|[widget.html](widget.html)|
+|***css***|[widget.css](widget.css)|
+|***js***|[widget.js](widget.js)|
+|***fields***|[widget.json](widget.json)|
+|***data***|Input just -> `{ }`|
