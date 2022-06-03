@@ -177,8 +177,8 @@ To get `Asylum Intermediate`
 ### Custom Widget Configuration Mapping
 | **Custom Widget Section** | **File/Content** |
 |--|--|
-|***html***|[widget.html](widget.html)|
-|***css***|[widget.css](widget.css)|
-|***js***|[widget.js](widget.js)|
-|***fields***|[widget.json](widget.json)|
+|***html***|[widget.html](widget.html?raw=1){:target="_blank"}|
+|***css***|[widget.css](widget.css?raw=1){:target="_blank"}|
+|***js***|[widget.js](widget.js?raw=1){:target="_blank"}|
+|***fields***|[widget.json](widget.json?raw=1){:target="_blank"}|
 |***data***|Input just -> `{ }`|
