@@ -7,11 +7,13 @@ const version = "4.1.0 (Progression)";
 
 const BANSHEE =     "0000111",
       DEMON =       "0101010",
+      DEOGEN =      "0011001",
       GORYO =       "1000011",
       HANTU =       "0100110",
       JINN =        "1100010",
       MARE =        "0011100",
       MIMIC =       "0110010",
+      MOROII =      "0111000",
       MYLING =      "1001010",
       OBAKE =       "1000110",
       ONI =         "1100001",
@@ -26,7 +28,6 @@ const BANSHEE =     "0000111",
       WRAITH =      "1010001",
       YOKAI =       "0010101",
       YUREI =       "0100101";
-      MOIROII =     "0111000";
 
 const EVIDENCE = {
   emf: "emf",
@@ -574,6 +575,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: DEMON,
     },
     {
+      type: "Deogen",
+      conclusion: createGhostConclusionString(
+        fieldData["deogenString"],
+        "Deogen"
+      ),
+      evidence: DEOGEN,
+    },
+    {
       type: "Goryo",
       conclusion: createGhostConclusionString(
         fieldData["goryoString"],
@@ -607,7 +616,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     {
       type: "Moroii",
       conclusion: createGhostConclusionString(fieldData["moroiiString"], "Moroii"),
-      evidence: MOIROII,
+      evidence: MOROII,
     },
     {
       type: "Myling",
