@@ -1,4 +1,4 @@
-const version = "4.0.0 (Cursed Possessions)";
+const version = "4.1.0 (Progression)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -7,11 +7,13 @@ const version = "4.0.0 (Cursed Possessions)";
 
 const BANSHEE =     "0000111",
       DEMON =       "0101010",
+      DEOGEN =      "0011001",
       GORYO =       "1000011",
       HANTU =       "0100110",
       JINN =        "1100010",
       MARE =        "0011100",
       MIMIC =       "0110010",
+      MOROI =       "0111000",
       MYLING =      "1001010",
       OBAKE =       "1000110",
       ONI =         "1100001",
@@ -22,6 +24,7 @@ const BANSHEE =     "0000111",
       REVENANT =    "0101100",
       SHADE =       "1101000",
       SPIRIT =      "1011000",
+      THAYE =       "0001101",
       TWINS =       "1110000",
       WRAITH =      "1010001",
       YOKAI =       "0010101",
@@ -101,6 +104,8 @@ const LOCATIONS = {
   prison: "Prison",
   as: "Asylum",
   asylum: "Asylum",
+  su: "Sunny Valley",
+  sunny: "Sunny Valley",
   ma: "Maple Lodge",
   maple: "Maple Lodge",
   camp: "Maple Lodge",
@@ -571,6 +576,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
       evidence: DEMON,
     },
     {
+      type: "Deogen",
+      conclusion: createGhostConclusionString(
+        fieldData["deogenString"],
+        "Deogen"
+      ),
+      evidence: DEOGEN,
+    },
+    {
       type: "Goryo",
       conclusion: createGhostConclusionString(
         fieldData["goryoString"],
@@ -600,6 +613,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
       type: "The Mimic",
       conclusion: createGhostConclusionString(fieldData["mimicString"], "The Mimic"),
       evidence: MIMIC,
+    },
+    {
+      type: "Moroi",
+      conclusion: createGhostConclusionString(fieldData["moroiString"], "Moroi"),
+      evidence: MOROI,
     },
     {
       type: "Myling",
@@ -676,6 +694,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
         "The Twins"
       ),
       evidence: TWINS,
+    },
+    {
+      type: "Thaye",
+      conclusion: createGhostConclusionString(
+        fieldData["thayeString"],
+        "Thaye"
+      ),
+      evidence: THAYE,
     },
     {
       type: "Wraith",
