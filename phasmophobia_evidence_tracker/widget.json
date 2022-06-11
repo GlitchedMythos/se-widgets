@@ -820,9 +820,9 @@
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
   },
-  "moroiiString": {
+  "moroiString": {
     "type": "text",
-    "label": "Moroii",
+    "label": "Moroi",
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
   },
@@ -889,6 +889,12 @@
   "twinsString": {
     "type": "text",
     "label": "The Twins",
+    "value": "",
+    "group": "Conclusion Messages - Empty for Default"
+  },
+  "thayeString": {
+    "type": "text",
+    "label": "Thaye",
     "value": "",
     "group": "Conclusion Messages - Empty for Default"
   },

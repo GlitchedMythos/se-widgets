@@ -1,6 +1,6 @@
 # Welcome to Phasmophobia Evidence V4.1.0
 
-**Updated for the Progression Update!**
+**Updated for the Truck Update!**
 
 ## Video Tutorial
 [![Watch the video](https://img.youtube.com/vi/vkb0zO9xz1Q/default.jpg)](https://youtu.be/vkb0zO9xz1Q)
@@ -138,7 +138,7 @@ To get `Smudge`
 | Bleasdale | "bl" "bleasdale" |
 | High School | "hi" "hs" "high" "school" "brown" "brownstone" |
 | Prison | "pr" "prison" |
-| Sunny Valley Asylum | "as" "asylum" "su" "sunny" |
+| Asylum | "as" "asylum" |
 | Maple Lodge | "ma" "maple" "camp" "campsite" |
 
 | Difficulty | Possible Phrases |
