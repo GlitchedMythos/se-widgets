@@ -1,6 +1,6 @@
-# Welcome to Phasmophobia Evidence V4.1.0
+# Welcome to Phasmophobia Evidence V4.2.0
 
-**Updated for the Truck Update!**
+**Updated for the Apocalypse Update!**
 
 ## Video Tutorial
 [![Watch the video](https://img.youtube.com/vi/vkb0zO9xz1Q/default.jpg)](https://youtu.be/vkb0zO9xz1Q)
@@ -91,6 +91,7 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 | Repel Ghost (During Hunt) - smudge during hunt | "re" "repel" |
 | <25% Sanity | "san "sanity" |
 | Candle | "ca" "candle" |
+| Parabolic Microphone | "mi" "microphone" |
 
 ## Sightings
 
@@ -138,8 +139,10 @@ To get `Smudge`
 | Bleasdale | "bl" "bleasdale" |
 | High School | "hi" "hs" "high" "school" "brown" "brownstone" |
 | Prison | "pr" "prison" |
-| Asylum | "as" "asylum" |
 | Maple Lodge | "ma" "maple" "camp" "campsite" |
+| Sunny Meadows | "su" "sunny" |
+| Camp Woodwind | "wo" "wood" "woodwind" "campwoodwind" |
+
 
 | Difficulty | Possible Phrases |
 |--|--|
@@ -164,9 +167,9 @@ To get `Professional` Difficulty
 
 Both Map and Difficulty can be combined in one map command
 
-To get `Asylum Intermediate`
+To get `Sunny Meadows Intermediate`
 
-    !map as i
+    !map su i
 
 ## How to Add to StreamElements?!?
 

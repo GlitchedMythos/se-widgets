@@ -56,7 +56,7 @@
   "bonerSightingCommand": {
     "type": "string",
     "label": "Bone (Comma Separated)",
-    "value": "boner",
+    "value": "bone, boner",
     "group": "Commands"
   },
   "possessionCommand": {
@@ -65,43 +65,43 @@
     "value": "!poss",
     "group": "Commands"
   },
-  "nonePossessionCommand":{
+  "nonePossessionCommand": {
     "type": "string",
     "label": "None (Comma Separated)",
     "value": "none",
     "group": "Commands"
   },
-  "dollPossessionCommand":{
+  "dollPossessionCommand": {
     "type": "string",
     "label": "Doll (Comma Separated)",
     "value": "doll,tortured,voodoo",
     "group": "Commands"
   },
-  "mirrorPossessionCommand":{
+  "mirrorPossessionCommand": {
     "type": "string",
     "label": "Mirror (Comma Separated)",
     "value": "mirror",
     "group": "Commands"
   },
-  "musicPossessionCommand":{
+  "musicPossessionCommand": {
     "type": "string",
     "label": "Music (Comma Separated)",
     "value": "music,box",
     "group": "Commands"
   },
-  "summoningPossessionCommand":{
+  "summoningPossessionCommand": {
     "type": "string",
     "label": "Summon (Comma Separated)",
     "value": "circle,summon",
     "group": "Commands"
   },
-  "tarotPossessionCommand":{
+  "tarotPossessionCommand": {
     "type": "string",
     "label": "Tarot (Comma Separated)",
     "value": "cards,tarot",
     "group": "Commands"
   },
-  "ouijaPossessionCommand":{
+  "ouijaPossessionCommand": {
     "type": "string",
     "label": "Ouija (Comma Separated)",
     "value": "board,ouija,luigi,milton",
