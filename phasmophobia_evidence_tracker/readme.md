@@ -151,6 +151,7 @@ To get `Smudge`
 | Intermediate | "i" "int" "intermediate" |
 | Professional | "p" "pro" "professional" |
 | Nightmare | "n" "ni" "night" "nightmare" |
+| Custom | "c" "cu" "custom" |
 
 ### Example Usage:
 

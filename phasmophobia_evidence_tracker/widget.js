@@ -133,6 +133,9 @@ const DIFFICULTY = {
   ni: "Nightmare",
   night: "Nightmare",
   nightmare: "Nightmare",
+  c: "Custom",
+  cu: "Custom",
+  custom: "Custom",
 };
 
 // Constants for displaying evidence on the widget
