@@ -141,6 +141,7 @@ To get `Smudge`
 | Prison | "pr" "prison" |
 | Maple Lodge | "ma" "maple" "camp" "campsite" |
 | Sunny Meadows | "su" "sunny" |
+| Sunny Meadows (Restricted) | "sur" "sunnyres" |
 | Camp Woodwind | "wo" "wood" "woodwind" "campwoodwind" |
 
 

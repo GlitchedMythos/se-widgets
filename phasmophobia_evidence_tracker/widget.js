@@ -107,6 +107,8 @@ const LOCATIONS = {
   prison: "Prison",
   su: "Sunny Meadows",
   sunny: "Sunny Meadows",
+  sur: "Sunny Meadows (Restricted)",
+  sunnyres: "Sunny Meadows (Restricted)",
   ma: "Maple Lodge",
   maple: "Maple Lodge",
   camp: "Maple Lodge",
