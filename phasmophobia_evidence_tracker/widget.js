@@ -5,30 +5,30 @@ const version = "4.1.0 (Progression)";
 // 1 is true
 // 0 is false
 
-const BANSHEE = "0000111",
-  DEMON = "0101010",
-  DEOGEN = "0011001",
-  GORYO = "1000011",
-  HANTU = "0100110",
-  JINN = "1100010",
-  MARE = "0011100",
-  MIMIC = "0110010",
-  MOROI = "0111000",
-  MYLING = "1001010",
-  OBAKE = "1000110",
-  ONI = "1100001",
-  ONRYO = "0110100",
-  PHANTOM = "0010011",
-  POLTERGEIST = "0011010",
-  RAIJU = "1000101",
-  REVENANT = "0101100",
-  SHADE = "1101000",
-  SPIRIT = "1011000",
-  THAYE = "0001101",
-  TWINS = "1110000",
-  WRAITH = "1010001",
-  YOKAI = "0010101",
-  YUREI = "0100101";
+const BANSHEE =     "0000111",
+      DEMON =       "0101010",
+      DEOGEN =      "0011001",
+      GORYO =       "1000011",
+      HANTU =       "0100110",
+      JINN =        "1100010",
+      MARE =        "0011100",
+      MIMIC =       "0110010",
+      MOROI =       "0111000",
+      MYLING =      "1001010",
+      OBAKE =       "1000110",
+      ONI =         "1100001",
+      ONRYO =       "0110100",
+      PHANTOM =     "0010011",
+      POLTERGEIST = "0011010",
+      RAIJU =       "1000101",
+      REVENANT =    "0101100",
+      SHADE =       "1101000",
+      SPIRIT =      "1011000",
+      THAYE =       "0001101",
+      TWINS =       "1110000",
+      WRAITH =      "1010001",
+      YOKAI =       "0010101",
+      YUREI =       "0100101";
 
 const EVIDENCE = {
   emf: "emf",
@@ -140,10 +140,10 @@ const DIFFICULTY = {
 
 // Constants for displaying evidence on the widget
 const EVIDENCE_OFF = 0,
-  EVIDENCE_ON = 1,
-  EVIDENCE_IMPOSSIBLE = 2,
-  EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
-  EVIDENCE_NEGATIVE = 4;
+      EVIDENCE_ON = 1,
+      EVIDENCE_IMPOSSIBLE = 2,
+      EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
+      EVIDENCE_NEGATIVE = 4;
 
 const EVIDENCE_NAMES_IN_DOM = [
   "emf",
@@ -156,13 +156,13 @@ const EVIDENCE_NAMES_IN_DOM = [
 ];
 
 const COUNTER_1 = 1,
-  COUNTER_2 = 2;
+      COUNTER_2 = 2;
 
 // Permission levels for commands
 const PERMISSION_GLITCHED = 0,
-  PERMISSION_BROADCASTER = 1,
-  PERMISSION_MOD = 2,
-  PERMISSION_VIP = 3;
+      PERMISSION_BROADCASTER = 1,
+      PERMISSION_MOD = 2,
+      PERMISSION_VIP = 3;
 
 // TODO: Move all widget and user state to here
 let userState = {
@@ -329,7 +329,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["possessionCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _togglePossession,
-        [data.text, userState]);
+      [data.text, userState]);
     },
     [fieldData["sightingCommand"]]: (data) => {
       runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting,
@@ -813,10 +813,10 @@ window.addEventListener("onWidgetLoad", function (obj) {
       $(`#counter2-name`).html($(`#counter2-name`).text());
       let countersSpacing = fieldData["countersSpacing"];
       let hasCloseSpacing = countersSpacing === "justify-start"
-        || countersSpacing === "justify-end"
-        || countersSpacing === "justify-center";
+      || countersSpacing === "justify-end"
+      || countersSpacing === "justify-center";
 
-      if (hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
+      if(hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
         $(`#counter-one`).addClass("mr-0.5");
         $(`#counter-two`).addClass("ml-0.5");
       }
@@ -932,7 +932,7 @@ const _setDiffName = (command, state) => {
 const _toggleSighting = (sighting, state) => {
   sightingArray = sighting.split(" ");
   sightingArray.shift();
-  for (const [key, value] of Object.entries(sightingArray)) {
+  for (const [key,value] of Object.entries(sightingArray)) {
     const s = getValueFromArray(SIGHTINGS, value);
     if (s === "slenderman") {
       state.sightings[s] = (state.location.locationName === "Maple Lodge") ? !state.sightings[s] : false;
@@ -1398,9 +1398,9 @@ const getDifficultyString = (difficulty) => {
 };
 
 const getValueFromArray = (array, string) => {
-  for (const [key, value] of Object.entries(array)) {
+  for (const [key,value] of Object.entries(array)){
     var pattern = new RegExp(`^${key}`, 'ig');
-    if (pattern.test(string)) {
+    if(pattern.test(string)){
       return value;
     }
   }
@@ -1518,7 +1518,7 @@ const getGhostPossibilities = (evidenceString) => {
         }
       }
 
-      if (!impossibleGhostDueToNegative) {
+      if  (!impossibleGhostDueToNegative) {
         possibleGhosts.push(config.ghosts[i]);
       }
     }
@@ -1536,8 +1536,9 @@ const getImpossibleEvidence = (possibleGhosts) => {
         `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]}` +
         impossibleEvidenceString.slice(k + 1);
 
-      impossibleEvidenceString[k] = `${+impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
-        }`; // possibleGhosts[ghost][ghost evidence string][position in evidence string]
+      impossibleEvidenceString[k] = `${
+        +impossibleEvidenceString[k] + +possibleGhosts[i].evidence[k]
+      }`; // possibleGhosts[ghost][ghost evidence string][position in evidence string]
     }
   }
   return impossibleEvidenceString;
@@ -1716,8 +1717,9 @@ const updateOptionalObjectivesDOM = (optionalObjectives) => {
     for (let i = 0; i < optionalObjectives.length; i++) {
       $("#optional-obj-container").append(
         $("<div>", {
-          class: `objective px-0.5 ${optionalObjectives[i].strike ? " strikethrough" : ""
-            }`,
+          class: `objective px-0.5 ${
+            optionalObjectives[i].strike ? " strikethrough" : ""
+          }`,
           id: `objective-${getNumberString(i + 1)}`,
           text: optionalObjectives[i].text,
         })
@@ -1734,8 +1736,9 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
     if (optionalObjectives[0]) {
       $("#optional-obj-container").append(
         $("<div>", {
-          class: `objective w-1/3 text-left${optionalObjectives[0].strike ? " strikethrough" : ""
-            }`,
+          class: `objective w-1/3 text-left${
+            optionalObjectives[0].strike ? " strikethrough" : ""
+          }`,
           id: "objective-one",
           text: optionalObjectives[0].text,
         })
@@ -1744,8 +1747,9 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
     if (optionalObjectives[1]) {
       $("#optional-obj-container").append(
         $("<div>", {
-          class: `objective w-1/3 text-center${optionalObjectives[1].strike ? " strikethrough" : ""
-            }`,
+          class: `objective w-1/3 text-center${
+            optionalObjectives[1].strike ? " strikethrough" : ""
+          }`,
           id: "objective-two",
           text: optionalObjectives[1].text,
         })
@@ -1754,8 +1758,9 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
     if (optionalObjectives[2]) {
       $("#optional-obj-container").append(
         $("<div>", {
-          class: `objective w-1/3 text-right${optionalObjectives[2].strike ? " strikethrough" : ""
-            }`,
+          class: `objective w-1/3 text-right${
+            optionalObjectives[2].strike ? " strikethrough" : ""
+          }`,
           id: "objective-three",
           text: optionalObjectives[2].text,
         })
