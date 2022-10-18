@@ -1,6 +1,6 @@
-# Welcome to Phasmophobia Evidence V4.1.0
+# Welcome to Phasmophobia Evidence V4.2.0
 
-**Updated for the Truck Update!**
+**Updated for the Apocalypse Update!**
 
 ## Video Tutorial
 [![Watch the video](https://img.youtube.com/vi/vkb0zO9xz1Q/default.jpg)](https://youtu.be/vkb0zO9xz1Q)
@@ -128,25 +128,28 @@ To get `Smudge`
 
 ## Map Names and Difficulties
 
-| Map | Possible Phrases |
+| Map | Words for Regex Match |
 |--|--|
-| Tanglewood | "ta" "tangle" "tanglewood" |
-| Willow | "wi" "will" "willow" |
-| Edgefield | "ed" "edge" "edgefield" |
-| Ridgeview | "ri" "ridge" "ridgeview" |
-| Grafton | "gr" "grafton" |
-| Bleasdale | "bl" "bleasdale" |
-| High School | "hi" "hs" "high" "school" "brown" "brownstone" |
-| Prison | "pr" "prison" |
-| Asylum | "as" "asylum" |
-| Maple Lodge | "ma" "maple" "camp" "campsite" |
+| Tanglewood | "tanglewood" "drive" |
+| Willow | "willow" "street" |
+| Edgefield | "edgefield" "road" |
+| Ridgeview | "ridgeview" "court" |
+| Grafton | "grafton" "farmhouse" |
+| Bleasdale | "bleasdale" |
+| High School | "brownstone" "highschool" "high" "scool"|
+| Prison | "prison" |
+| Maple Lodge | "maple" "lodge" |
+| Camp Woodwind | "camp" "wood" "wind" |
+| Sunny Meadows | "sunny" "meadows" |
+| Sunny Meadows (Restricted) | "restricted" |
 
-| Difficulty | Possible Phrases |
+| Difficulty | Words for Regex Match |
 |--|--|
-| Amateur | "a" "am" "amateur" |
-| Intermediate | "i" "int" "intermediate" |
-| Professional | "p" "pro" "professional" |
-| Nightmare | "n" "ni" "night" "nightmare" |
+| Amateur | "amateur" |
+| Intermediate | "intermediate" |
+| Professional |  "professional" |
+| Nightmare |  "nightmare" |
+| Custom | "custom" |
 
 ### Example Usage:
 
@@ -164,9 +167,9 @@ To get `Professional` Difficulty
 
 Both Map and Difficulty can be combined in one map command
 
-To get `Asylum Intermediate`
+To get `Prison Intermediate`
 
-    !map as i
+    !map pr i
 
 ## How to Add to StreamElements?!?
 
