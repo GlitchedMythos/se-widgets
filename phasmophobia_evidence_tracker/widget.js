@@ -514,11 +514,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
   };
 
   // Configuration based on user choices
-  if (config.allowVIPs) { 
-    config.requiredPermission = (config.allowVIPs === "yes") 
+  if (config.allowVIPS || fieldData["allowVIPS"]) { 
+    config.requiredPermission = (config.allowVIPS === "yes") 
       ? "vip" 
       : fieldData["requiredPermission"]; 
-    delete config.allowVIPs 
+    delete config.allowVIPS
+    ["allowVIPS", "vipToggleOffCommand", "vipToggleOnCommand"].forEach(e => delete fieldData[e]);
   };
   config.requiredPermission = fieldData["requiredPermission"];
   config.TRUSTEES = fieldData["trustees"].split();
