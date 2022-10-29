@@ -77,31 +77,37 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 
 ## Optional Objectives
 
-| Objective | Possible Phrases |
+| Objective | Phrases for Regex Match |
 |--|--|
-| Motion Sensor | "mo" "motion" |
-| Salt | "sa" "salt" |
-| Photo | "ph" "photo" |
-| Event | "ev" "event" |
-| EMF | "em" "emf" |
-| Crucifix | "cr" "crucifix" |
-| Smudge Ghost (NON-Hunt) | "sm" "smudge" |
-| Escape | "es" "escape" |
-| Smudge Ghost (During Hunt) | "hu" "hunt" |
-| Repel Ghost (During Hunt) - smudge during hunt | "re" "repel" |
-| <25% Sanity | "san "sanity" |
-| Candle | "ca" "candle" |
+| Motion Sensor | "motion" |
+| Salt | "salt" |
+| Photo | "photo" "camera" |
+| Event | "event" |
+| EMF | "emf" |
+| Crucifix | "crucifix" |
+| Smudge Ghost (NON-Hunt) | "smudge" |
+| Escape | "escape" |
+| Smudge Ghost (During Hunt) | "hunt" |
+| Repel Ghost (During Hunt) - smudge during hunt | "repel" |
+| <25% Sanity | "sanity" |
+| Candle | "candle" |
+| Parabolic Microphone | "microphone" |
 
 ## Sightings
 
-| Sighting | Possible Phrases |
+Sightings phrases are user defined and can be set in **Settings > Commands**
+
+| Sighting | Default Phrases |
 |--|--|
 | Bone | "bone" "boner" |
 | Slenderman | "slender" "slenderman" "man" |
 | Dirty Water | "dirtywater" "dirty" "water" |
 
 ## Cursed Possession
-| Possession | Possible Phrases |
+
+Possession phrases are user defined and can be set in **Settings > Commands**
+
+| Possession | Default Phrases |
 |--|--|
 |Tortured Voodoo Doll | "tortured voodoo doll" "voodoo doll" "voodoo" "doll" |
 |Cursed Mirror| "mirror" |
@@ -128,7 +134,7 @@ To get `Smudge`
 
 ## Map Names and Difficulties
 
-| Map | Words for Regex Match |
+| Map | Phrases for Regex Match |
 |--|--|
 | Tanglewood | "tanglewood" "drive" |
 | Willow | "willow" "street" |
@@ -143,7 +149,7 @@ To get `Smudge`
 | Sunny Meadows | "sunny" "meadows" |
 | Sunny Meadows (Restricted) | "restricted" |
 
-| Difficulty | Words for Regex Match |
+| Difficulty | Phrase for Regex Match |
 |--|--|
 | Amateur | "amateur" |
 | Intermediate | "intermediate" |
