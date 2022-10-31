@@ -1,6 +1,6 @@
-# Welcome to Phasmophobia Evidence V4.1.0
+# Welcome to Phasmophobia Evidence V4.2.0
 
-**Updated for the Truck Update!**
+**Updated for the Apocalypse Update!**
 
 ## Video Tutorial
 [![Watch the video](https://img.youtube.com/vi/vkb0zO9xz1Q/default.jpg)](https://youtu.be/vkb0zO9xz1Q)
@@ -77,31 +77,37 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 
 ## Optional Objectives
 
-| Objective | Possible Phrases |
+| Objective | Phrases for Regex Match |
 |--|--|
-| Motion Sensor | "mo" "motion" |
-| Salt | "sa" "salt" |
-| Photo | "ph" "photo" |
-| Event | "ev" "event" |
-| EMF | "em" "emf" |
-| Crucifix | "cr" "crucifix" |
-| Smudge Ghost (NON-Hunt) | "sm" "smudge" |
-| Escape | "es" "escape" |
-| Smudge Ghost (During Hunt) | "hu" "hunt" |
-| Repel Ghost (During Hunt) - smudge during hunt | "re" "repel" |
-| <25% Sanity | "san "sanity" |
-| Candle | "ca" "candle" |
+| Motion Sensor | "motion" |
+| Salt | "salt" |
+| Photo | "photo" "camera" |
+| Event | "event" |
+| EMF | "emf" |
+| Crucifix | "crucifix" |
+| Smudge Ghost (NON-Hunt) | "smudge" |
+| Escape | "escape" |
+| Smudge Ghost (During Hunt) | "hunt" |
+| Repel Ghost (During Hunt) - smudge during hunt | "repel" |
+| <25% Sanity | "sanity" |
+| Candle | "candle" |
+| Parabolic Microphone | "microphone" |
 
 ## Sightings
 
-| Sighting | Possible Phrases |
+Sightings phrases are user defined and can be set in **Settings > Commands**
+
+| Sighting | Default Phrases |
 |--|--|
 | Bone | "bone" "boner" |
 | Slenderman | "slender" "slenderman" "man" |
 | Dirty Water | "dirtywater" "dirty" "water" |
 
 ## Cursed Possession
-| Possession | Possible Phrases |
+
+Possession phrases are user defined and can be set in **Settings > Commands**
+
+| Possession | Default Phrases |
 |--|--|
 |Tortured Voodoo Doll | "tortured voodoo doll" "voodoo doll" "voodoo" "doll" |
 |Cursed Mirror| "mirror" |
@@ -128,25 +134,28 @@ To get `Smudge`
 
 ## Map Names and Difficulties
 
-| Map | Possible Phrases |
+| Map | Phrases for Regex Match |
 |--|--|
-| Tanglewood | "ta" "tangle" "tanglewood" |
-| Willow | "wi" "will" "willow" |
-| Edgefield | "ed" "edge" "edgefield" |
-| Ridgeview | "ri" "ridge" "ridgeview" |
-| Grafton | "gr" "grafton" |
-| Bleasdale | "bl" "bleasdale" |
-| High School | "hi" "hs" "high" "school" "brown" "brownstone" |
-| Prison | "pr" "prison" |
-| Asylum | "as" "asylum" |
-| Maple Lodge | "ma" "maple" "camp" "campsite" |
+| Tanglewood | "tanglewood" "drive" |
+| Willow | "willow" "street" |
+| Edgefield | "edgefield" "road" |
+| Ridgeview | "ridgeview" "court" |
+| Grafton | "grafton" "farmhouse" |
+| Bleasdale | "bleasdale" |
+| High School | "brownstone" "highschool" "high" "scool"|
+| Prison | "prison" |
+| Maple Lodge | "maple" "lodge" |
+| Camp Woodwind | "camp" "wood" "wind" |
+| Sunny Meadows | "sunny" "meadows" |
+| Sunny Meadows (Restricted) | "restricted" |
 
-| Difficulty | Possible Phrases |
+| Difficulty | Phrase for Regex Match |
 |--|--|
-| Amateur | "a" "am" "amateur" |
-| Intermediate | "i" "int" "intermediate" |
-| Professional | "p" "pro" "professional" |
-| Nightmare | "n" "ni" "night" "nightmare" |
+| Amateur | "amateur" |
+| Intermediate | "intermediate" |
+| Professional |  "professional" |
+| Nightmare |  "nightmare" |
+| Custom | "custom" |
 
 ### Example Usage:
 
@@ -164,9 +173,9 @@ To get `Professional` Difficulty
 
 Both Map and Difficulty can be combined in one map command
 
-To get `Asylum Intermediate`
+To get `Prison Intermediate`
 
-    !map as i
+    !map pr i
 
 ## How to Add to StreamElements?!?
 

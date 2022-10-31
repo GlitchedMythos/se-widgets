@@ -1,139 +1,101 @@
-const version = "4.1.0 (Progression)";
+const version = "4.2.0 (Apocalypse)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
 // 1 is true
 // 0 is false
 
-const BANSHEE =     "0000111",
-      DEMON =       "0101010",
-      DEOGEN =      "0011001",
-      GORYO =       "1000011",
-      HANTU =       "0100110",
-      JINN =        "1100010",
-      MARE =        "0011100",
-      MIMIC =       "0110010",
-      MOROI =       "0111000",
-      MYLING =      "1001010",
-      OBAKE =       "1000110",
-      ONI =         "1100001",
-      ONRYO =       "0110100",
-      PHANTOM =     "0010011",
-      POLTERGEIST = "0011010",
-      RAIJU =       "1000101",
-      REVENANT =    "0101100",
-      SHADE =       "1101000",
-      SPIRIT =      "1011000",
-      THAYE =       "0001101",
-      TWINS =       "1110000",
-      WRAITH =      "1010001",
-      YOKAI =       "0010101",
-      YUREI =       "0100101";
+const BANSHEE = "0000111",
+  DEMON = "0101010",
+  DEOGEN = "0011001",
+  GORYO = "1000011",
+  HANTU = "0100110",
+  JINN = "1100010",
+  MARE = "0011100",
+  MIMIC = "0110010",
+  MOROI = "0111000",
+  MYLING = "1001010",
+  OBAKE = "1000110",
+  ONI = "1100001",
+  ONRYO = "0110100",
+  PHANTOM = "0010011",
+  POLTERGEIST = "0011010",
+  RAIJU = "1000101",
+  REVENANT = "0101100",
+  SHADE = "1101000",
+  SPIRIT = "1011000",
+  THAYE = "0001101",
+  TWINS = "1110000",
+  WRAITH = "1010001",
+  YOKAI = "0010101",
+  YUREI = "0100101";
 
 const EVIDENCE = {
   emf: "emf",
-  freez: "freezing",
-  temp: "freezing",
-  box: "spiritBox",
-  spirit: "spiritBox",
+  freeze: "freezing",
+  freezing: "freezing",
+  temperature: "freezing",
+  spiritbox: "spiritBox",
   book: "writing",
-  writ: "Writing",
-  orbs: "Orbs",
-  fing: "fingerprints",
+  writing: "writing",
+  orbs: "orbs",
+  fingerprints: "fingerprints",
+  fingies: "fingerprints",
   hand: "fingerprints",
   dots: "dots",
-}
+};
 
-const POSSESSIONS = {}
+const POSSESSIONS = {};
 
 //object used to store sighting keys
-const SIGHTINGS = {}
+const SIGHTINGS = {};
 
 const OPTIONAL_OBJECTIVES = {
-  ca: "Candle",
-  can: "Candle",
   candle: "Candle",
-  cr: "Crucifix",
   crucifix: "Crucifix",
-  em: "EMF",
   emf: "EMF",
-  es: "Escape",
   escape: "Escape",
-  ev: "Event",
   event: "Event",
-  hu: "Smudge(Hunt)",
-  hunt: "Smudge(Hunt)",
-  mo: "Motion",
+  hunt: "Smudge (Hunt)",
+  microphone: "Microphone",
   motion: "Motion",
-  ph: "Photo",
   photo: "Photo",
-  re: "Repel",
+  camera: "Photo",
   repel: "Repel",
-  sa: "Salt",
   salt: "Salt",
-  san: "<25% Sanity",
   sanity: "<25% Sanity",
-  sm: "Smudge",
-  smudge: "Smudge",
-};
+  smudge: "Smudge"
+}
 
-const LOCATIONS = {
-  ta: "Tanglewood",
-  tangle: "Tanglewood",
-  tanglewood: "Tanglewood",
-  wi: "Willow",
-  will: "Willow",
-  willow: "Willow",
-  ed: "Edgefield",
-  edge: "Edgefield",
-  edgefield: "Edgefield",
-  ri: "Ridgeview",
-  ridge: "Ridgeview",
-  ridgeview: "Ridgeview",
-  gr: "Grafton",
-  grafton: "Grafton",
-  bl: "Bleasdale",
-  bleasdale: "Bleasdale",
-  hi: "High School",
-  hs: "High School",
-  high: "High School",
-  school: "High School",
-  brown: "High School",
-  brownstone: "High School",
-  pr: "Prison",
-  prison: "Prison",
-  as: "Asylum",
-  asylum: "Asylum",
-  su: "Sunny Valley",
-  sunny: "Sunny Valley",
-  ma: "Maple Lodge",
-  maple: "Maple Lodge",
-  camp: "Maple Lodge",
-  campsite: "Maple Lodge",
-};
+const LOCATIONS = [
+  "Tanglewood Drive",
+  "Willow Street",
+  "Edgefield Road",
+  "Ridgeview Court",
+  "Grafton Farmhouse",
+  "Bleasdale Farmhouse",
+  "Brownstone HighSchool",
+  "Prison",
+  "Sunny Meadows",
+  "Sunny Meadows (Restricted)",
+  "Camp Woodwind",
+  "Maple Lodge",
+];
 
-const DIFFICULTY = {
-  a: "Amateur",
-  am: "Amateur",
-  amateur: "Amateur",
-  i: "Intermediate",
-  int: "Intermediate",
-  intermediate: "Intermediate",
-  p: "Professional",
-  pro: "Professional",
-  professional: "Professional",
-  n: "Nightmare",
-  ni: "Nightmare",
-  night: "Nightmare",
-  nightmare: "Nightmare",
-};
+const DIFFICULTY = [
+  "Amateur",
+  "Intermediate",
+  "Professional",
+  "Nightmare",
+  "Custom",
+];
 
 // Constants for displaying evidence on the widget
 const EVIDENCE_OFF = 0,
-      EVIDENCE_ON = 1,
-      EVIDENCE_IMPOSSIBLE = 2,
-      EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
-      EVIDENCE_NEGATIVE = 4;
+  EVIDENCE_ON = 1,
+  EVIDENCE_IMPOSSIBLE = 2,
+  EVIDENCE_COMPLETE_IMPOSSIBLE = 3,
+  EVIDENCE_NEGATIVE = 4;
 
 const EVIDENCE_NAMES_IN_DOM = [
   "emf",
@@ -142,17 +104,21 @@ const EVIDENCE_NAMES_IN_DOM = [
   "orbs",
   "writing",
   "freezing",
-  "dots"
+  "dots",
 ];
 
 const COUNTER_1 = 1,
-      COUNTER_2 = 2;
+  COUNTER_2 = 2;
 
 // Permission levels for commands
-const PERMISSION_GLITCHED = 0,
-      PERMISSION_BROADCASTER = 1,
-      PERMISSION_MOD = 2,
-      PERMISSION_VIP = 3;
+const PERMISSIONS = {
+  glitched: 0,
+  broadcaster: 1,
+  moderator: 2,
+  vip: 3,
+  trustee: 4,
+  subscriber: 5,
+};
 
 // TODO: Move all widget and user state to here
 let userState = {
@@ -176,7 +142,7 @@ let userState = {
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
-    dots: EVIDENCE_OFF
+    dots: EVIDENCE_OFF,
   },
   evidenceDisplay: {
     emf: EVIDENCE_OFF,
@@ -185,7 +151,7 @@ let userState = {
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
-    dots: EVIDENCE_OFF
+    dots: EVIDENCE_OFF,
   },
   ghostName: "",
   location: {
@@ -216,25 +182,22 @@ const runCommandWithPermission = (permission, data, command, commandArgs) => {
 };
 
 const getUserLevelFromData = (data) => {
-  let level = 999;
   let badges = data.badges;
   let badgeLevel = 999;
 
-  for (let i = 0; i < badges.length; i++) {
-    if (data.displayName.toLowerCase() === "glitchedmythos") {
-      badgeLevel = PERMISSION_GLITCHED;
-    } else if (badges[i].type === "broadcaster") {
-      badgeLevel = PERMISSION_BROADCASTER;
-    } else if (badges[i].type === "moderator") {
-      badgeLevel = PERMISSION_MOD;
-    } else if (badges[i].type === "vip") {
-      badgeLevel = PERMISSION_VIP;
+  if (data.nick.toLowerCase() === "glitchedmythos") {
+    badgeLevel = PERMISSIONS["glitched"];
+  } else if (data.channel.toLowerCase() == data.nick.toLowerCase()) {
+    badgeLevel = PERMISSIONS["broadcaster"];
+  } else if (getValueFromObject(config.TRUSTEES, data.nick.toLowerCase())) {
+    badgeLevel = PERMISSIONS["trustee"];
+  } else {
+    for (let i = 0; i < badges.length; i++) {
+      const level = PERMISSIONS[badges[i].type.toLowerCase()];
+      badgeLevel = badgeLevel <= level ? badgeLevel : level;
     }
   }
-
-  level = badgeLevel < level ? badgeLevel : level;
-
-  return level;
+  return badgeLevel;
 };
 
 // If user level is equal to or less than permission level, then they have permission
@@ -243,8 +206,10 @@ const hasPermission = (permission, userLevel) => {
 };
 
 // For commands where VIP's are allowed to help
-const modOrVIPPermission = (configuration) => {
-  return configuration.allowVIPS ? PERMISSION_VIP : PERMISSION_MOD;
+const requiredPermission = (configuration) => {
+  const required = configuration.requiredPermission;
+  const level = PERMISSIONS[required];
+  return level;
 };
 
 window.addEventListener("onWidgetLoad", function (obj) {
@@ -253,35 +218,37 @@ window.addEventListener("onWidgetLoad", function (obj) {
   const fieldData = obj.detail.fieldData;
   // setting up the POSSESSIONS
   {
-    ['none', 'doll', 'mirror', 'music', 'summoning', 'tarot', 'ouija'].forEach(v => {
-      let keys = fieldData[v + "PossessionCommand"]
-      keys.split(',').forEach(key => {
-        POSSESSIONS[key.trim()] = v
-      })
-    })
+    ["none", "doll", "mirror", "music", "summoning", "tarot", "ouija"].forEach(
+      (v) => {
+        let keys = fieldData[v + "PossessionCommand"];
+        keys.split(",").forEach((key) => {
+          POSSESSIONS[key.trim()] = v;
+        });
+      }
+    );
   }
   // setting up the SIGHTINGS
 
   {
-    ['boner', 'slenderman', 'water'].forEach(v => {
-      let keys = fieldData[v + "SightingCommand"]
-      keys.split(',').forEach(key => {
-        SIGHTINGS[key.trim()] = v
-      })
-    })
+    ["boner", "slenderman", "water"].forEach((v) => {
+      let keys = fieldData[v + "SightingCommand"];
+      keys.split(",").forEach((key) => {
+        SIGHTINGS[key.trim()] = v;
+      });
+    });
   }
 
   // Sets up all the commands for the widget
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
+      runCommandWithPermission(requiredPermission(config), data, _resetGhost, [
         data.text,
         userState,
       ]);
     },
     [fieldData["nameCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setGhostName,
         [data.text, userState]
@@ -289,7 +256,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["firstnameCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setGhostFirstName,
         [data.text, userState]
@@ -297,7 +264,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["surnameCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setGhostSurName,
         [data.text, userState]
@@ -305,28 +272,36 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["locationNameCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setLocationName,
         [data.text, userState]
       );
     },
     [fieldData["locationDiffCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _setDiffName, [
+      runCommandWithPermission(requiredPermission(config), data, _setDiffName, [
         data.text,
         userState,
       ]);
     },
     [fieldData["possessionCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _togglePossession,
-      [data.text, userState]);
+      runCommandWithPermission(
+        requiredPermission(config),
+        data,
+        _togglePossession,
+        [data.text, userState]
+      );
     },
     [fieldData["sightingCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting,
-        [data.text, userState]);
+      runCommandWithPermission(
+        requiredPermission(config),
+        data,
+        _toggleSighting,
+        [data.text, userState]
+      );
     },
     [fieldData["emfCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
+      runCommandWithPermission(requiredPermission(config), data, _toggleEMF, [
         data.text,
         userState,
         config,
@@ -334,7 +309,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["spiritBoxCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _toggleSpiritBox,
         [data.text, userState, config]
@@ -342,14 +317,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["fingerprintsCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _toggleFingerprints,
         [data.text, userState, config]
       );
     },
     [fieldData["orbsCommand"]]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
+      runCommandWithPermission(requiredPermission(config), data, _toggleOrbs, [
         data.text,
         userState,
         config,
@@ -357,7 +332,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["writingCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _toggleWriting,
         [data.text, userState, config]
@@ -365,29 +340,30 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["freezingCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _toggleFreezing,
         [data.text, userState, config]
       );
     },
     [fieldData["dotsCommand"]]: (data) => {
-      runCommandWithPermission(
-        modOrVIPPermission(config),
-        data,
-        _toggleDots,
-        [data.text, userState, config]
-      );
-    },
-    [`${fieldData["emfCommand"]}x`]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _setEMFNegative, [
+      runCommandWithPermission(requiredPermission(config), data, _toggleDots, [
+        data.text,
         userState,
         config,
       ]);
     },
+    [`${fieldData["emfCommand"]}x`]: (data) => {
+      runCommandWithPermission(
+        requiredPermission(config),
+        data,
+        _setEMFNegative,
+        [userState, config]
+      );
+    },
     [`${fieldData["spiritBoxCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setSpiritBoxNegative,
         [userState, config]
@@ -395,21 +371,23 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [`${fieldData["fingerprintsCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setFingerprintsNegative,
         [userState, config]
       );
     },
     [`${fieldData["orbsCommand"]}x`]: (data) => {
-      runCommandWithPermission(modOrVIPPermission(config), data, _setOrbsNegative, [
-        userState,
-        config,
-      ]);
+      runCommandWithPermission(
+        requiredPermission(config),
+        data,
+        _setOrbsNegative,
+        [userState, config]
+      );
     },
     [`${fieldData["writingCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setWritingNegative,
         [userState, config]
@@ -417,7 +395,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [`${fieldData["freezingCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setFreezingNegative,
         [userState, config]
@@ -425,7 +403,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [`${fieldData["dotsCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setDotsNegative,
         [userState, config]
@@ -433,7 +411,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["optionalObjectivesCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setOptionalObjectives,
         [data.text, userState]
@@ -441,7 +419,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["toggleOptObjOneCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _toggleOptionalObjective,
         [0, userState] // The position in array
@@ -449,7 +427,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["toggleOptObjTwoCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _toggleOptionalObjective,
         [1, userState] // The position in array
@@ -457,25 +435,18 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["toggleOptObjThreeCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _toggleOptionalObjective,
         [2, userState] // The position in array
       );
     },
-    [fieldData["vipToggleOnCommand"]]: (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
-        true,
-      ]);
-    },
-    [fieldData["vipToggleOffCommand"]]: (data) => {
-      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
-        false,
-      ]);
+    [fieldData["setRequiredPermissions"]]: (data) => {
+      runCommandWithPermission(PERMISSIONS["moderator"], data, _setRequiredPermissions, [data.text])
     },
     [fieldData["setCounterNameCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setCounterName,
         [COUNTER_1, data.text]
@@ -483,7 +454,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["setCounterNumberCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setCounterNumber,
         [COUNTER_1, data.text]
@@ -491,7 +462,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["incrementCounterCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _incrementCounter,
         [COUNTER_1]
@@ -499,7 +470,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["decrementCounterCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _decrementCounter,
         [COUNTER_1]
@@ -507,7 +478,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["setCounter2NameCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setCounterName,
         [COUNTER_2, data.text]
@@ -515,7 +486,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["setCounter2NumberCommand"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _setCounterNumber,
         [COUNTER_2, data.text]
@@ -523,7 +494,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["incrementCounter2Command"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _incrementCounter,
         [COUNTER_2]
@@ -531,21 +502,29 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["decrementCounter2Command"]]: (data) => {
       runCommandWithPermission(
-        modOrVIPPermission(config),
+        requiredPermission(config),
         data,
         _decrementCounter,
         [COUNTER_2]
       );
     },
     "!glitchedmythos": (data) => {
-      runCommandWithPermission(PERMISSION_GLITCHED, data, _glitchedMythos, [
+      runCommandWithPermission(PERMISSIONS["glitched"], data, _glitchedMythos, [
         data.text,
       ]);
     },
   };
 
   // Configuration based on user choices
-  config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
+  if (config.allowVIPS || fieldData["allowVIPS"]) { 
+    config.requiredPermission = (config.allowVIPS === "yes") 
+      ? "vip" 
+      : fieldData["requiredPermission"]; 
+    delete config.allowVIPS
+    ["allowVIPS", "vipToggleOffCommand", "vipToggleOnCommand"].forEach(e => delete fieldData[e]);
+  };
+  config.requiredPermission = fieldData["requiredPermission"];
+  config.TRUSTEES = fieldData["trustees"].split();
   config.conclusionStrings = {
     zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
       ? fieldData["zeroEvidenceConclusionString"]
@@ -611,22 +590,34 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     {
       type: "The Mimic",
-      conclusion: createGhostConclusionString(fieldData["mimicString"], "The Mimic"),
+      conclusion: createGhostConclusionString(
+        fieldData["mimicString"],
+        "The Mimic"
+      ),
       evidence: MIMIC,
     },
     {
       type: "Moroi",
-      conclusion: createGhostConclusionString(fieldData["moroiString"], "Moroi"),
+      conclusion: createGhostConclusionString(
+        fieldData["moroiString"],
+        "Moroi"
+      ),
       evidence: MOROI,
     },
     {
       type: "Myling",
-      conclusion: createGhostConclusionString(fieldData["mylingString"], "Myling"),
+      conclusion: createGhostConclusionString(
+        fieldData["mylingString"],
+        "Myling"
+      ),
       evidence: MYLING,
     },
     {
       type: "Obake",
-      conclusion: createGhostConclusionString(fieldData["obakeString"], "Obake"),
+      conclusion: createGhostConclusionString(
+        fieldData["obakeString"],
+        "Obake"
+      ),
       evidence: OBAKE,
     },
     {
@@ -660,7 +651,10 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     {
       type: "Raiju",
-      conclusion: createGhostConclusionString(fieldData["raijuString"], "Raiju"),
+      conclusion: createGhostConclusionString(
+        fieldData["raijuString"],
+        "Raiju"
+      ),
       evidence: RAIJU,
     },
     {
@@ -759,7 +753,8 @@ window.addEventListener("onWidgetLoad", function (obj) {
   let displayEvidence = fieldData["displayEvidence"] === "yes" ? true : false;
   let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
   let displayCounterTwo = fieldData["displayCounter2"] === "yes" ? true : false;
-  let displayCursedPossessions = fieldData["displayCursedPossessions"] === "yes" ? true : false;
+  let displayCursedPossessions =
+    fieldData["displayCursedPossessions"] === "yes" ? true : false;
   let displaySightings = fieldData["displaySightings"] === "yes" ? true : false;
   let displayOptionalObjectives =
     fieldData["displayOptionalObjectives"] === "yes" ? true : false;
@@ -802,11 +797,12 @@ window.addEventListener("onWidgetLoad", function (obj) {
     } else {
       $(`#counter2-name`).html($(`#counter2-name`).text());
       let countersSpacing = fieldData["countersSpacing"];
-      let hasCloseSpacing = countersSpacing === "justify-start"
-      || countersSpacing === "justify-end"
-      || countersSpacing === "justify-center";
+      let hasCloseSpacing =
+        countersSpacing === "justify-start" ||
+        countersSpacing === "justify-end" ||
+        countersSpacing === "justify-center";
 
-      if(hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
+      if (hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
         $(`#counter-one`).addClass("mr-0.5");
         $(`#counter-two`).addClass("ml-0.5");
       }
@@ -849,6 +845,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
 window.addEventListener("onEventReceived", function (obj) {
   // Grab relevant data from the event;
   let data = obj.detail.event.data;
+  console.log(data)
 
   // Check if a matching command
   let givenCommand = data.text.split(" ")[0];
@@ -908,7 +905,9 @@ const _setGhostSurName = (command, state) => {
 
 const _setLocationName = (command, state) => {
   commandArgument = command.split(" ").slice(1).join(" ");
-  state.location.locationName = getLocationNameString(commandArgument);
+  state.location.locationName = getLocationNameString(
+    commandArgument.toLowerCase()
+  );
 };
 
 const _setDiffName = (command, state) => {
@@ -922,91 +921,99 @@ const _setDiffName = (command, state) => {
 const _toggleSighting = (sighting, state) => {
   sightingArray = sighting.split(" ");
   sightingArray.shift();
-  for (const [key,value] of Object.entries(sightingArray)) {
-    const s = getValueFromArray(SIGHTINGS, value);
+  for (const [key, value] of Object.entries(sightingArray)) {
+    const s = getValueFromObject(SIGHTINGS, value);
     if (s === "slenderman") {
-      state.sightings[s] = (state.location.locationName === "Maple Lodge") ? !state.sightings[s] : false;
-    } else { state.sightings[s] = !state.sightings[s] }
+      state.sightings[s] =
+        state.location.locationName === "Maple Lodge"
+          ? !state.sightings[s]
+          : false;
+    } else {
+      state.sightings[s] = !state.sightings[s];
+    }
   }
-}
+};
 
 const _togglePossession = (possession, state) => {
-  possession = possession.slice(possession.indexOf(" ") + 1)
-  const thisPossession = getValueFromArray(POSSESSIONS, possession);
+  possession = possession.slice(possession.indexOf(" ") + 1);
+  const thisPossession = getValueFromObject(POSSESSIONS, possession);
   for (const [key] of Object.entries(state.cursedPossessions)) {
-    state.cursedPossessions[key] = (key === thisPossession) ? !state.cursedPossessions[key] : false;
+    state.cursedPossessions[key] =
+      key === thisPossession ? !state.cursedPossessions[key] : false;
   }
-  state.cursedPossessions['none'] = (arrayIsFalse(state.cursedPossessions)) ? true : false;
-}
+  state.cursedPossessions["none"] = arrayIsFalse(state.cursedPossessions)
+    ? true
+    : false;
+};
 
 const _toggleEvidence = (evidence, state, config) => {
   evidenceArray = evidence.split(" ").shift();
   for (const [key] of Object.entries(evidenceArray)) {
-    toggleEvidence(command, state, config, key)
+    toggleEvidence(command, state, config, key);
   }
 };
 
 const _setEvidenceNegative = (evidence, state, config) => {
-  evidenceArray = evidence.split(" ")
+  evidenceArray = evidence.split(" ");
   for (const [e] of Object.entries(evidenceArray)) {
-    setEvidenceNegative(e, state, config)
+    setEvidenceNegative(e, state, config);
   }
 };
 
 const _toggleEMF = (command, state, config) => {
-  toggleEvidence(command, state, config, 'emf')
+  toggleEvidence(command, state, config, "emf");
 };
 
 const _toggleSpiritBox = (command, state, config) => {
-  toggleEvidence(command, state, config, 'spiritBox')
+  toggleEvidence(command, state, config, "spiritBox");
 };
 
 const _toggleFingerprints = (command, state, config) => {
-  toggleEvidence(command, state, config, 'fingerprints')
+  toggleEvidence(command, state, config, "fingerprints");
 };
 
 const _toggleOrbs = (command, state, config) => {
-  toggleEvidence(command, state, config, 'orbs')
+  toggleEvidence(command, state, config, "orbs");
 };
 
 const _toggleWriting = (command, state, config) => {
-  toggleEvidence(command, state, config, 'writing')
+  toggleEvidence(command, state, config, "writing");
 };
 
 const _toggleFreezing = (command, state, config) => {
-  toggleEvidence(command, state, config, 'freezing')
+  toggleEvidence(command, state, config, "freezing");
 };
 
 const _toggleDots = (command, state, config) => {
-  toggleEvidence(command, state, config, 'dots')
+  toggleEvidence(command, state, config, "dots");
 };
 
 const _setEMFNegative = (state, config) => {
-  setEvidenceNegative("emf", state, config)
+  setEvidenceNegative("emf", state, config);
 };
 
 const _setSpiritBoxNegative = (state, config) => {
-  setEvidenceNegative("spiritBox", state, config)
+  setEvidenceNegative("spiritBox", state, config);
 };
 
 const _setFingerprintsNegative = (state, config) => {
-  setEvidenceNegative("fingerprints", state, config)
+  setEvidenceNegative("fingerprints", state, config);
 };
 
 const _setOrbsNegative = (state, config) => {
-  setEvidenceNegative("orbs", state, config)
+  setEvidenceNegative("orbs", state, config);
 };
 
 const _setWritingNegative = (state, config) => {
-  setEvidenceNegative("writing", state, config)
+  setEvidenceNegative("writing", state, config);
 };
 
 const _setFreezingNegative = (state, config) => {
-  setEvidenceNegative("freezing", state, config)
+  setEvidenceNegative("freezing", state, config);
 };
 
 const _setDotsNegative = (state, config) => {
-  setEvidenceNegative("dots", state, config)
+  setEvidenceNegative("dots", state, config);
 };
 
 const _setOptionalObjectives = (command, state) => {
@@ -1028,9 +1035,13 @@ const _toggleOptionalObjective = (objectiveNumber, state) => {
   toggleStrikethrough(objectiveNumber, state);
 };
 
-const _toggleVIPAccessibility = (canUseVIP) => {
-  toggleVIPAccessibility(canUseVIP);
-};
+const _setRequiredPermissions = (required) => {
+  setRequiredPermissions(
+    (isNaN(required)) 
+    ? getKeyByValue(PERMISSIONS, required)
+    : getValueFromObject(PERMISSIONS, required)
+  )
+}
 
 const _setCounterName = (num, command) => {
   commandArgument = command.split(" ").slice(1).join(" ");
@@ -1062,26 +1073,35 @@ const _glitchedMythos = (command) => {
   }
 };
 
+const DEBUG = (output) => {
+  console.log(output);
+}
+
 /*******************************************************
  *                  LOGIC FUNCTIONS                    *
  *******************************************************/
 // * This is abstracted out for simplicity.
 const setEvidenceNegative = (evidence, state, config) => {
-  state.evidence[evidence] = (state.evidence[evidence] === EVIDENCE_NEGATIVE) ? EVIDENCE_OFF : EVIDENCE_NEGATIVE;
+  state.evidence[evidence] =
+    state.evidence[evidence] === EVIDENCE_NEGATIVE
+      ? EVIDENCE_OFF
+      : EVIDENCE_NEGATIVE;
   calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
-}
+};
 
 const toggleEvidence = (command, state, config, evidenceType) => {
   const arg = command.split(" ")[1];
   if (arg) {
     state.evidence[evidenceType] = setEvidence(arg);
   } else {
-    state.evidence[evidenceType] = toggleEvidenceIterator(state.evidence[evidenceType]);
+    state.evidence[evidenceType] = toggleEvidenceIterator(
+      state.evidence[evidenceType]
+    );
   }
   calculateGhostEvidenceDisplay(state, config);
   determineConclusionMessage(state);
-}
+};
 
 const resetGhost = (newName, state) => {
   resetName(newName, state);
@@ -1112,16 +1132,16 @@ const resetLocationName = (state) => {
 
 const resetSightings = (state) => {
   for (const [key] of Object.entries(state.sightings)) {
-    state.sightings[key] = false
+    state.sightings[key] = false;
   }
 };
 
 const resetPossessions = (state) => {
   for (const [key] of Object.entries(state.cursedPossessions)) {
     if (key === "none") {
-      state.cursedPossessions[key] = true
+      state.cursedPossessions[key] = true;
     } else {
-      state.cursedPossessions[key] = false
+      state.cursedPossessions[key] = false;
     }
   }
 };
@@ -1156,7 +1176,11 @@ const calculateGhostEvidenceDisplay = (state, config) => {
   let numOfTrueEvidence = numOfTrueEvidenceInString(evidenceString);
 
   if (numOfTrueEvidence < 2) {
-    evidenceDisplay = calculateSingleGhostEvidence(evidenceDisplay, evidenceString, config);
+    evidenceDisplay = calculateSingleGhostEvidence(
+      evidenceDisplay,
+      evidenceString,
+      config
+    );
   } else if (numOfTrueEvidence === 2) {
     evidenceDisplay = calculateDoubleGhostEvidence(
       evidenceDisplay,
@@ -1179,8 +1203,8 @@ const calculateSingleGhostEvidence = (evidence) => {
   // Here we need to ensure there is no impossible evidence
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM; i++) {
     if (
-      evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
-      && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
+      evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON &&
+      evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
     ) {
       evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_OFF;
     }
@@ -1193,35 +1217,55 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
   let possibleGhosts = getGhostPossibilities(evidenceString);
   let impossibleEvidence = getImpossibleEvidence(possibleGhosts);
 
-
   if (config.markImpossibleEvidence) {
     // Addition shorthand prior to impossibleEvidence converts the string to a number
     // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | Dots
-    if (+impossibleEvidence[0] == EVIDENCE_OFF && +evidenceString[0] !== EVIDENCE_NEGATIVE) {
+    if (
+      +impossibleEvidence[0] == EVIDENCE_OFF &&
+      +evidenceString[0] !== EVIDENCE_NEGATIVE
+    ) {
       evidence.emf = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[1] == EVIDENCE_OFF && +evidenceString[1] !== EVIDENCE_NEGATIVE) {
+    if (
+      +impossibleEvidence[1] == EVIDENCE_OFF &&
+      +evidenceString[1] !== EVIDENCE_NEGATIVE
+    ) {
       evidence.freezing = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[2] == EVIDENCE_OFF && +evidenceString[2] !== EVIDENCE_NEGATIVE) {
+    if (
+      +impossibleEvidence[2] == EVIDENCE_OFF &&
+      +evidenceString[2] !== EVIDENCE_NEGATIVE
+    ) {
       evidence.spiritBox = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[3] == EVIDENCE_OFF && +evidenceString[3] !== EVIDENCE_NEGATIVE) {
+    if (
+      +impossibleEvidence[3] == EVIDENCE_OFF &&
+      +evidenceString[3] !== EVIDENCE_NEGATIVE
+    ) {
       evidence.writing = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[4] == EVIDENCE_OFF && +evidenceString[4] !== EVIDENCE_NEGATIVE) {
+    if (
+      +impossibleEvidence[4] == EVIDENCE_OFF &&
+      +evidenceString[4] !== EVIDENCE_NEGATIVE
+    ) {
       evidence.orbs = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[5] == EVIDENCE_OFF && +evidenceString[5] !== EVIDENCE_NEGATIVE) {
+    if (
+      +impossibleEvidence[5] == EVIDENCE_OFF &&
+      +evidenceString[5] !== EVIDENCE_NEGATIVE
+    ) {
       evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
     }
 
-    if (+impossibleEvidence[6] == EVIDENCE_OFF && +evidenceString[6] !== EVIDENCE_NEGATIVE) {
+    if (
+      +impossibleEvidence[6] == EVIDENCE_OFF &&
+      +evidenceString[6] !== EVIDENCE_NEGATIVE
+    ) {
       evidence.dots = EVIDENCE_IMPOSSIBLE;
     }
   }
@@ -1243,9 +1287,9 @@ const calculateTripleGhostEvidence = (evidence, evidenceString, config) => {
   } else {
     for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
       if (
-        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON
-        && evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE
-        && config.useEvidenceImpossibleCompleted
+        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_ON &&
+        evidence[EVIDENCE_NAMES_IN_DOM[i]] !== EVIDENCE_NEGATIVE &&
+        config.useEvidenceImpossibleCompleted
       ) {
         evidence[EVIDENCE_NAMES_IN_DOM[i]] = EVIDENCE_COMPLETE_IMPOSSIBLE;
       }
@@ -1308,9 +1352,13 @@ const updateFullOptionalObjectives = (
 
 const determineConclusionMessage = (state) => {
   let displayEvidenceString = createEvidenceString(state.evidenceDisplay);
-  let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(displayEvidenceString);
+  let numOfDisplayTrueEvidence = numOfTrueEvidenceInString(
+    displayEvidenceString
+  );
 
-  let numOfPlayerTrueEvidence = numOfTrueEvidenceInString(createEvidenceString(state.evidence));
+  let numOfPlayerTrueEvidence = numOfTrueEvidenceInString(
+    createEvidenceString(state.evidence)
+  );
 
   let numOfNegative = numOfNegativeEvidenceInString(displayEvidenceString);
   let ghostPossibilities = getGhostPossibilities(displayEvidenceString);
@@ -1318,21 +1366,28 @@ const determineConclusionMessage = (state) => {
   switch (true) {
     case numOfDisplayTrueEvidence <= 0:
       if (numOfPlayerTrueEvidence < 4) {
-        state.conclusionString = getZeroEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+        state.conclusionString = getZeroEvidenceConclusionMessage(
+          numOfNegative,
+          ghostPossibilities
+        );
       } else {
         state.conclusionString = config.conclusionStrings.tooMuchEvidence;
       }
       break;
     case numOfDisplayTrueEvidence == 1:
-      state.conclusionString = getSingleEvidenceConclusionMessage(numOfNegative, ghostPossibilities);
+      state.conclusionString = getSingleEvidenceConclusionMessage(
+        numOfNegative,
+        ghostPossibilities
+      );
       break;
     case numOfDisplayTrueEvidence == 2:
     case numOfDisplayTrueEvidence == 3:
-      state.conclusionString = getMultipleEvidenceConclusionMessage(ghostPossibilities);
+      state.conclusionString =
+        getMultipleEvidenceConclusionMessage(ghostPossibilities);
       break;
     case numOfDisplayTrueEvidence == 4:
     case numOfDisplayTrueEvidence >= 4:
-      console.log('in here');
+      console.log("in here");
       state.conclusionString = config.conclusionStrings.tooMuchEvidence;
       break;
     default:
@@ -1360,40 +1415,57 @@ const toggleEvidenceIterator = (evidence) => {
 };
 
 const setEvidence = (arg) => {
-  if (arg === 'o' || arg === 'on') {
+  if (arg === "o" || arg === "on") {
     return EVIDENCE_ON;
   }
 
-  if (arg === 'f' || arg === 'off') {
+  if (arg === "f" || arg === "off") {
     return EVIDENCE_OFF;
   }
 
-  if (arg === 'x' || arg === 'n' || arg === 'neg' || arg === 'negative') {
+  if (arg === "x" || arg === "n" || arg === "neg" || arg === "negative") {
     return EVIDENCE_NEGATIVE;
   }
-}
+};
 
 const getLocationNameString = (location) => {
   let locationSplit = location.split(" ");
   if (locationSplit[1]) {
     _setDiffName(locationSplit[1].toLowerCase(), userState);
   }
-  updateLocationName(LOCATIONS[locationSplit[0].toLowerCase()]);
-  return LOCATIONS[locationSplit[0].toLowerCase()];
+  const location_name = getValueFromArray(LOCATIONS, locationSplit[0]);
+  updateLocationName(location_name);
+  return location_name;
 };
 
 const getDifficultyString = (difficulty) => {
-  updateLocationDiff(DIFFICULTY[difficulty.toLowerCase()]);
-  return DIFFICULTY[difficulty.toLowerCase()]
+  const difficulty_name = getValueFromArray(DIFFICULTY, difficulty, true)
+  updateLocationDiff(difficulty_name);
+  return difficulty_name;
 };
 
-const getValueFromArray = (array, string) => {
-  for (const [key,value] of Object.entries(array)){
-    var pattern = new RegExp(`^${key}`, 'ig');
-    if(pattern.test(string)){
+const getValueFromArray = (array, string, fromStart = false) => {
+  const regexMatch = (fromStart) ? new RegExp(`^${string}`, "gi") : new RegExp(`${string}`, "gi");
+  var result
+  array.forEach(entry => {
+    if (entry.match(regexMatch)) {
+      result=entry
+    }
+  });
+  return result
+};
+
+function getValueFromObject(object, string) {
+  for (const [key, value] of Object.entries(object)) {
+    var pattern = new RegExp(`^${key}`, "ig");
+    if (pattern.test(string)) {
       return value;
     }
   }
+}
+
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
 }
 
 const arrayIsFalse = (array) => {
@@ -1403,7 +1475,7 @@ const arrayIsFalse = (array) => {
     }
   }
   return true;
-}
+};
 
 // Returns each first character capitalized
 const camelCase = (sentence) => {
@@ -1412,16 +1484,11 @@ const camelCase = (sentence) => {
   );
 };
 
-const toggleVIPAccessibility = (canUseVIP) => {
-  if (canUseVIP !== undefined && canUseVIP !== null) {
-    config.allowVIPS = canUseVIP;
-  } else {
-    config.allowVIPS = !config.allowVIPS;
-  }
-};
+const setRequiredPermissions = (required) => {
+  config.requiredPermission = required
+}
 
 const createEvidenceString = (evidence) => {
-
   let evidenceString =
     "" +
     evidence.emf +
@@ -1437,7 +1504,7 @@ const createEvidenceString = (evidence) => {
 
 const addToEvidenceString = (evidenceString, evidenceValue) => {
   return evidenceString + `${evidenceValue}`;
-}
+};
 
 const numOfTrueEvidenceInString = (evidenceString) => {
   let index,
@@ -1453,12 +1520,14 @@ const numOfNegativeEvidenceInString = (evidenceString) => {
   let index,
     count = 0;
   for (index = 0; index < evidenceString.length; ++index) {
-    count = (evidenceString.charAt(index) == `${EVIDENCE_NEGATIVE}`)
-      ? count + 1 : count;
+    count =
+      evidenceString.charAt(index) == `${EVIDENCE_NEGATIVE}`
+        ? count + 1
+        : count;
   }
 
   return count;
-}
+};
 
 const getGhostPossibilities = (evidenceString) => {
   // List of ghosts returns [<evidenceString>, <Name>]
@@ -1479,16 +1548,16 @@ const getGhostPossibilities = (evidenceString) => {
         }
 
         if (
-          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}`
-          && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
+          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` &&
+          ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
         ) {
           impossibleGhostDueToNegative = true;
         }
       }
 
       if (
-        impossibleGhostDueToNegative === false
-        && evidenceMatch == numOfTrueEvidence
+        impossibleGhostDueToNegative === false &&
+        evidenceMatch == numOfTrueEvidence
       ) {
         possibleGhosts.push(ghostToCheck);
       }
@@ -1501,14 +1570,14 @@ const getGhostPossibilities = (evidenceString) => {
         let ghostToCheck = config.ghosts[i];
 
         if (
-          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}`
-          && ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
+          evidenceString.charAt(j) == `${EVIDENCE_NEGATIVE}` &&
+          ghostToCheck.evidence.charAt(j) == `${EVIDENCE_ON}`
         ) {
           impossibleGhostDueToNegative = true;
         }
       }
 
-      if  (!impossibleGhostDueToNegative) {
+      if (!impossibleGhostDueToNegative) {
         possibleGhosts.push(config.ghosts[i]);
       }
     }
@@ -1539,7 +1608,8 @@ const createGhostConclusionString = (conclusionString, ghostType) => {
 };
 
 const getOptObjectiveString = (obj) => {
-  return OPTIONAL_OBJECTIVES[obj.toLowerCase()];
+  const objective = getValueFromObject(OPTIONAL_OBJECTIVES, obj)
+  return objective
 };
 
 const getNumberString = (num) => {
@@ -1558,14 +1628,18 @@ const getNumberString = (num) => {
   return numStrings[num];
 };
 
-const getZeroEvidenceConclusionMessage = (numOfNegativeEvidence, ghostPossibilities) => {
+const getZeroEvidenceConclusionMessage = (
+  numOfNegativeEvidence,
+  ghostPossibilities
+) => {
   let conclusionString = "";
 
   switch (numOfNegativeEvidence) {
     case 4:
     case 3:
     case 2:
-      conclusionString = getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
+      conclusionString =
+        getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
       break;
     case 1:
       conclusionString = config.conclusionStrings.oneEvidenceConclusionString;
@@ -1576,9 +1650,12 @@ const getZeroEvidenceConclusionMessage = (numOfNegativeEvidence, ghostPossibilit
   }
 
   return conclusionString;
-}
+};
 
-const getSingleEvidenceConclusionMessage = (numOfNegativeEvidence, ghostPossibilities) => {
+const getSingleEvidenceConclusionMessage = (
+  numOfNegativeEvidence,
+  ghostPossibilities
+) => {
   let conclusionString = "";
 
   switch (numOfNegativeEvidence) {
@@ -1586,7 +1663,8 @@ const getSingleEvidenceConclusionMessage = (numOfNegativeEvidence, ghostPossibil
     case 3:
     case 2:
     case 1:
-      conclusionString = getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
+      conclusionString =
+        getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
       break;
     default:
       conclusionString = config.conclusionStrings.oneEvidenceConclusionString;
@@ -1594,24 +1672,31 @@ const getSingleEvidenceConclusionMessage = (numOfNegativeEvidence, ghostPossibil
   }
 
   return conclusionString;
-}
+};
 
 const getMultipleEvidenceConclusionMessage = (ghostPossibilities) => {
   let conclusionString = "";
 
-  conclusionString = getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
+  conclusionString =
+    getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
 
   return conclusionString;
-}
+};
 
 const getConclusionArticleBasedOnGhostPossibilities = (ghostPossibilities) => {
-  const firstGhost = ghostPossibilities[0]
-  const firstWord = firstGhost.split(/(\s+)/)[0]
-  const isVowel = /[aeiouAEIOU]/.test(firstWord.charAt(0))
-  const isThe = /The/.test(firstWord)
-  if (isThe) { return "" } else if (isVowel) { return "an" } else { return "a" }
-  return "a"
-}
+  const firstGhost = ghostPossibilities[0];
+  const firstWord = firstGhost.split(/(\s+)/)[0];
+  const isVowel = /[aeiouAEIOU]/.test(firstWord.charAt(0));
+  const isThe = /The/.test(firstWord);
+  if (isThe) {
+    return "";
+  } else if (isVowel) {
+    return "an";
+  } else {
+    return "a";
+  }
+  return "a";
+};
 
 const getConclusionStringBasedOnGhostPossiblities = (ghostPossibilities) => {
   let conclusionString = "";
@@ -1622,12 +1707,16 @@ const getConclusionStringBasedOnGhostPossiblities = (ghostPossibilities) => {
   } else if (ghostPossibilities.length === 1) {
     conclusionString = ghostPossibilities[0].conclusion;
   } else {
-    let conclusionArticle = getConclusionArticleBasedOnGhostPossibilities(ghostPossibilityStrings)
-    conclusionString = `Could be ${conclusionArticle} ${ghostPossibilityStrings.join(", ")}`
+    let conclusionArticle = getConclusionArticleBasedOnGhostPossibilities(
+      ghostPossibilityStrings
+    );
+    conclusionString = `Could be ${conclusionArticle} ${ghostPossibilityStrings.join(
+      ", "
+    )}`;
   }
 
   return conclusionString;
-}
+};
 
 /*******************************************************
  *             DOM MANIPULATING FUNCTIONS              *
@@ -1782,23 +1871,41 @@ const updateLocationDiff = (diff) => {
 /** SIGHTING RELATED DOM MANIPULATING FUNCTIONS */
 const updateSighting = (sightings, locationName) => {
   for (const [key, value] of Object.entries(sightings)) {
-    let sightingInactive = (key === "slenderman" && locationName != "Maple Lodge") ? `sighting-hidden` : `sighting-{{displayInactiveSighting}}`
-    $(`#${key}-svg-container`).removeClass([`sighting-active`, `sighting-hidden`, sightingInactive])
-    $(`#${key}-svg-container`).addClass(value ? `sighting-active` : sightingInactive)
-    $(`#${key}`).removeClass([`sighting-active`, `sighting-hidden`, sightingInactive])
-    $(`#${key}`).addClass(value ? `sighting-active` : sightingInactive)
+    let sightingInactive =
+      key === "slenderman" && locationName != "Maple Lodge"
+        ? `sighting-hidden`
+        : `sighting-{{displayInactiveSighting}}`;
+    $(`#${key}-svg-container`).removeClass([
+      `sighting-active`,
+      `sighting-hidden`,
+      sightingInactive,
+    ]);
+    $(`#${key}-svg-container`).addClass(
+      value ? `sighting-active` : sightingInactive
+    );
+    $(`#${key}`).removeClass([
+      `sighting-active`,
+      `sighting-hidden`,
+      sightingInactive,
+    ]);
+    $(`#${key}`).addClass(value ? `sighting-active` : sightingInactive);
   }
-}
+};
 
 /** POSESSIONS RELATED DOM MANIPULATING FUNCTIONS */
 const updatePossession = (possessions) => {
   for (const [key, value] of Object.entries(possessions)) {
-    $(`#${key}-svg-container`).removeClass([`possession-active`, `possession-inactive`])
-    $(`#${key}`).removeClass([`possession-active`, `possession-inactive`])
-    $(`#${key}-svg-container`).addClass(value ? `possession-active` : `possession-inactive`)
-    $(`#${key}`).addClass(value ? `possession-active` : `possession-inactive`)
+    $(`#${key}-svg-container`).removeClass([
+      `possession-active`,
+      `possession-inactive`,
+    ]);
+    $(`#${key}`).removeClass([`possession-active`, `possession-inactive`]);
+    $(`#${key}-svg-container`).addClass(
+      value ? `possession-active` : `possession-inactive`
+    );
+    $(`#${key}`).addClass(value ? `possession-active` : `possession-inactive`);
   }
-}
+};
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */
 const updateConclusion = (conclusion) => {
