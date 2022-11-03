@@ -1,4 +1,12 @@
-{
+{ "debug": {
+  "type": "dropdown",
+  "label": "Enable Command Debugging",
+  "value": "false",
+  "options": {
+    "true": "Yes",
+    "false": "No"
+  }
+},
   "resetCommand": {
     "type": "string",
     "label": "Name Reset Command",

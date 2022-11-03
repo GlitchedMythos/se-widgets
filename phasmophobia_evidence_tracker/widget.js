@@ -175,6 +175,7 @@ let userState = {
 let config = {};
 
 const runCommandWithPermission = (permission, data, command, commandArgs) => {
+  if (config.debug) console.log({ permission: permission, command: command, data: data, arguments: commandArgs });
   if (hasPermission(permission, getUserLevelFromData(data))) {
     command(...commandArgs);
   }
@@ -202,6 +203,7 @@ const getUserLevelFromData = (data) => {
 
 // If user level is equal to or less than permission level, then they have permission
 const hasPermission = (permission, userLevel) => {
+  if (config.debug) { console.log({ userLevel: userLevel, commandLevel: permission })}
   return userLevel <= permission;
 };
 
@@ -441,9 +443,6 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [2, userState] // The position in array
       );
     },
-    [fieldData["setRequiredPermissions"]]: (data) => {
-      runCommandWithPermission(PERMISSIONS["moderator"], data, _setRequiredPermissions, [data.text])
-    },
     [fieldData["setCounterNameCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
@@ -508,6 +507,9 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [COUNTER_2]
       );
     },
+    [fieldData["setRequiredPermissions"]]: (data) => {
+      runCommandWithPermission(PERMISSIONS["moderator"], data, _setRequiredPermissions, [data.text])
+    },
     "!glitchedmythos": (data) => {
       runCommandWithPermission(PERMISSIONS["glitched"], data, _glitchedMythos, [
         data.text,
@@ -516,15 +518,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
   };
 
   // Configuration based on user choices
-  if (config.allowVIPS || fieldData["allowVIPS"]) { 
+  if (config.allowVIPS || config.allowVIPs|| fieldData["allowVIPS"] || fieldData["allowVIPs"]) { 
     config.requiredPermission = (config.allowVIPS === "yes") 
       ? "vip" 
       : fieldData["requiredPermission"]; 
-    delete config.allowVIPS
-    ["allowVIPS", "vipToggleOffCommand", "vipToggleOnCommand"].forEach(e => delete fieldData[e]);
-  };
-  config.requiredPermission = fieldData["requiredPermission"];
-  config.TRUSTEES = fieldData["trustees"].split();
+    ["allowVIPS", "allowVIPs"].forEach(e => delete config[e]);
+    ["allowVIPS", "allowVIPs", "vipToggleOffCommand", "vipToggleOnCommand"].forEach(e => delete fieldData[e]);
+  } else { config.requiredPermission = fieldData["requiredPermission"]; };
+  config['TRUSTEES'] = fieldData["trustees"].split();
   config.conclusionStrings = {
     zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
       ? fieldData["zeroEvidenceConclusionString"]
@@ -746,6 +747,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     fieldData["markImpossibleEvidence"] === "yes" ? true : false;
   config.useEvidenceImpossibleCompleted =
     fieldData["useEvidenceImpossibleCompleted"] === "yes" ? true : false;
+  config.debug = fieldData["debug"] === "true" ? true : false;
 
   // TODO: Refactor to set up in config
   let displayName = fieldData["displayName"] === "yes" ? true : false;
@@ -845,7 +847,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
 window.addEventListener("onEventReceived", function (obj) {
   // Grab relevant data from the event;
   let data = obj.detail.event.data;
-  console.log(data)
+  if (config.debug) { console.log({ Event: data })}
 
   // Check if a matching command
   let givenCommand = data.text.split(" ")[0];
@@ -1387,7 +1389,6 @@ const determineConclusionMessage = (state) => {
       break;
     case numOfDisplayTrueEvidence == 4:
     case numOfDisplayTrueEvidence >= 4:
-      console.log("in here");
       state.conclusionString = config.conclusionStrings.tooMuchEvidence;
       break;
     default:
@@ -1444,14 +1445,17 @@ const getDifficultyString = (difficulty) => {
   return difficulty_name;
 };
 
-const getValueFromArray = (array, string, fromStart = false) => {
+const getValueFromArray = (theArray, string, fromStart = false) => {
   const regexMatch = (fromStart) ? new RegExp(`^${string}`, "gi") : new RegExp(`${string}`, "gi");
+  const restricted = new RegExp('restricted', 'gi'); const sunny = new RegExp('^Sunny Meadows$', "gi");
   var result
-  array.forEach(entry => {
-    if (entry.match(regexMatch)) {
-      result=entry
-    }
-  });
+  for (var i = 0; i < theArray.length; i++) {
+      const entry = theArray[i];
+      if (entry.match(regexMatch)) {
+        result = entry;
+        break;
+      }
+   }
   return result
 };
 
