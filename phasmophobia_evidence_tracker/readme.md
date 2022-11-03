@@ -1,4 +1,4 @@
-# Welcome to Phasmophobia Evidence V4.2.0
+# Welcome to Phasmophobia Evidence V4.2.1
 
 **Updated for the Apocalypse Update!**
 
