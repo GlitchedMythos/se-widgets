@@ -111,14 +111,10 @@ const COUNTER_1 = 1,
   COUNTER_2 = 2;
 
 // Permission levels for commands
-const PERMISSIONS = {
-  glitched: 0,
-  broadcaster: 1,
-  moderator: 2,
-  vip: 3,
-  trustee: 4,
-  subscriber: 5,
-};
+const PERMISSION_GLITCHED = 0,
+  PERMISSION_BROADCASTER = 1,
+  PERMISSION_MOD = 2,
+  PERMISSION_VIP = 3;
 
 // TODO: Move all widget and user state to here
 let userState = {
@@ -183,35 +179,35 @@ const runCommandWithPermission = (permission, data, command, commandArgs) => {
 };
 
 const getUserLevelFromData = (data) => {
+  let level = 999;
   let badges = data.badges;
   let badgeLevel = 999;
 
-  if (data.nick.toLowerCase() === "glitchedmythos") {
-    badgeLevel = PERMISSIONS["glitched"];
-  } else if (data.channel.toLowerCase() == data.nick.toLowerCase()) {
-    badgeLevel = PERMISSIONS["broadcaster"];
-  } else if (getValueFromObject(config.TRUSTEES, data.nick.toLowerCase())) {
-    badgeLevel = PERMISSIONS["trustee"];
-  } else {
-    for (let i = 0; i < badges.length; i++) {
-      const level = PERMISSIONS[badges[i].type.toLowerCase()];
-      badgeLevel = badgeLevel <= level ? badgeLevel : level;
+  for (let i = 0; i < badges.length; i++) {
+    if (data.displayName.toLowerCase() === "glitchedmythos") {
+      badgeLevel = PERMISSION_GLITCHED;
+    } else if (badges[i].type === "broadcaster") {
+      badgeLevel = PERMISSION_BROADCASTER;
+    } else if (badges[i].type === "moderator") {
+      badgeLevel = PERMISSION_MOD;
+    } else if (badges[i].type === "vip") {
+      badgeLevel = PERMISSION_VIP;
     }
   }
-  return badgeLevel;
+
+  level = badgeLevel < level ? badgeLevel : level;
+
+  return level;
 };
 
 // If user level is equal to or less than permission level, then they have permission
 const hasPermission = (permission, userLevel) => {
-  if (config.debug) { console.log({ userLevel: userLevel, commandLevel: permission })}
   return userLevel <= permission;
 };
 
 // For commands where VIP's are allowed to help
-const requiredPermission = (configuration) => {
-  const required = configuration.requiredPermission;
-  const level = PERMISSIONS[required];
-  return level;
+const modOrVIPPermission = (configuration) => {
+  return configuration.allowVIPS ? PERMISSION_VIP : PERMISSION_MOD;
 };
 
 window.addEventListener("onWidgetLoad", function (obj) {
@@ -243,14 +239,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
   // Sets up all the commands for the widget
   config.commands = {
     [fieldData["resetCommand"]]: (data) => {
-      runCommandWithPermission(requiredPermission(config), data, _resetGhost, [
+      runCommandWithPermission(modOrVIPPermission(config), data, _resetGhost, [
         data.text,
         userState,
       ]);
     },
     [fieldData["nameCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setGhostName,
         [data.text, userState]
@@ -258,7 +254,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["firstnameCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setGhostFirstName,
         [data.text, userState]
@@ -266,7 +262,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["surnameCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setGhostSurName,
         [data.text, userState]
@@ -274,36 +270,28 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["locationNameCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setLocationName,
         [data.text, userState]
       );
     },
     [fieldData["locationDiffCommand"]]: (data) => {
-      runCommandWithPermission(requiredPermission(config), data, _setDiffName, [
+      runCommandWithPermission(modOrVIPPermission(config), data, _setDiffName, [
         data.text,
         userState,
       ]);
     },
     [fieldData["possessionCommand"]]: (data) => {
-      runCommandWithPermission(
-        requiredPermission(config),
-        data,
-        _togglePossession,
-        [data.text, userState]
-      );
+      runCommandWithPermission(modOrVIPPermission(config), data, _togglePossession,
+        [data.text, userState]);
     },
     [fieldData["sightingCommand"]]: (data) => {
-      runCommandWithPermission(
-        requiredPermission(config),
-        data,
-        _toggleSighting,
-        [data.text, userState]
-      );
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleSighting,
+        [data.text, userState]);
     },
     [fieldData["emfCommand"]]: (data) => {
-      runCommandWithPermission(requiredPermission(config), data, _toggleEMF, [
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleEMF, [
         data.text,
         userState,
         config,
@@ -311,7 +299,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["spiritBoxCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _toggleSpiritBox,
         [data.text, userState, config]
@@ -319,14 +307,14 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["fingerprintsCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _toggleFingerprints,
         [data.text, userState, config]
       );
     },
     [fieldData["orbsCommand"]]: (data) => {
-      runCommandWithPermission(requiredPermission(config), data, _toggleOrbs, [
+      runCommandWithPermission(modOrVIPPermission(config), data, _toggleOrbs, [
         data.text,
         userState,
         config,
@@ -334,7 +322,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["writingCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _toggleWriting,
         [data.text, userState, config]
@@ -342,30 +330,29 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["freezingCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _toggleFreezing,
         [data.text, userState, config]
       );
     },
     [fieldData["dotsCommand"]]: (data) => {
-      runCommandWithPermission(requiredPermission(config), data, _toggleDots, [
-        data.text,
+      runCommandWithPermission(
+        modOrVIPPermission(config),
+        data,
+        _toggleDots,
+        [data.text, userState, config]
+      );
+    },
+    [`${fieldData["emfCommand"]}x`]: (data) => {
+      runCommandWithPermission(modOrVIPPermission(config), data, _setEMFNegative, [
         userState,
         config,
       ]);
     },
-    [`${fieldData["emfCommand"]}x`]: (data) => {
-      runCommandWithPermission(
-        requiredPermission(config),
-        data,
-        _setEMFNegative,
-        [userState, config]
-      );
-    },
     [`${fieldData["spiritBoxCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setSpiritBoxNegative,
         [userState, config]
@@ -373,23 +360,21 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [`${fieldData["fingerprintsCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setFingerprintsNegative,
         [userState, config]
       );
     },
     [`${fieldData["orbsCommand"]}x`]: (data) => {
-      runCommandWithPermission(
-        requiredPermission(config),
-        data,
-        _setOrbsNegative,
-        [userState, config]
-      );
+      runCommandWithPermission(modOrVIPPermission(config), data, _setOrbsNegative, [
+        userState,
+        config,
+      ]);
     },
     [`${fieldData["writingCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setWritingNegative,
         [userState, config]
@@ -397,7 +382,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [`${fieldData["freezingCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setFreezingNegative,
         [userState, config]
@@ -405,7 +390,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [`${fieldData["dotsCommand"]}x`]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setDotsNegative,
         [userState, config]
@@ -413,7 +398,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["optionalObjectivesCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setOptionalObjectives,
         [data.text, userState]
@@ -421,7 +406,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["toggleOptObjOneCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _toggleOptionalObjective,
         [0, userState] // The position in array
@@ -429,7 +414,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["toggleOptObjTwoCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _toggleOptionalObjective,
         [1, userState] // The position in array
@@ -437,15 +422,25 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["toggleOptObjThreeCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _toggleOptionalObjective,
         [2, userState] // The position in array
       );
     },
+    [fieldData["vipToggleOnCommand"]]: (data) => {
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
+        true,
+      ]);
+    },
+    [fieldData["vipToggleOffCommand"]]: (data) => {
+      runCommandWithPermission(PERMISSION_MOD, data, _toggleVIPAccessibility, [
+        false,
+      ]);
+    },
     [fieldData["setCounterNameCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setCounterName,
         [COUNTER_1, data.text]
@@ -453,7 +448,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["setCounterNumberCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setCounterNumber,
         [COUNTER_1, data.text]
@@ -461,7 +456,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["incrementCounterCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _incrementCounter,
         [COUNTER_1]
@@ -469,7 +464,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["decrementCounterCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _decrementCounter,
         [COUNTER_1]
@@ -477,7 +472,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["setCounter2NameCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setCounterName,
         [COUNTER_2, data.text]
@@ -485,7 +480,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["setCounter2NumberCommand"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _setCounterNumber,
         [COUNTER_2, data.text]
@@ -493,7 +488,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["incrementCounter2Command"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _incrementCounter,
         [COUNTER_2]
@@ -501,31 +496,21 @@ window.addEventListener("onWidgetLoad", function (obj) {
     },
     [fieldData["decrementCounter2Command"]]: (data) => {
       runCommandWithPermission(
-        requiredPermission(config),
+        modOrVIPPermission(config),
         data,
         _decrementCounter,
         [COUNTER_2]
       );
     },
-    [fieldData["setRequiredPermissions"]]: (data) => {
-      runCommandWithPermission(PERMISSIONS["moderator"], data, _setRequiredPermissions, [data.text])
-    },
     "!glitchedmythos": (data) => {
-      runCommandWithPermission(PERMISSIONS["glitched"], data, _glitchedMythos, [
+      runCommandWithPermission(PERMISSION_GLITCHED, data, _glitchedMythos, [
         data.text,
       ]);
     },
   };
 
   // Configuration based on user choices
-  if (config.allowVIPS || config.allowVIPs|| fieldData["allowVIPS"] || fieldData["allowVIPs"]) { 
-    config.requiredPermission = (config.allowVIPS === "yes") 
-      ? "vip" 
-      : fieldData["requiredPermission"]; 
-    ["allowVIPS", "allowVIPs"].forEach(e => delete config[e]);
-    ["allowVIPS", "allowVIPs", "vipToggleOffCommand", "vipToggleOnCommand"].forEach(e => delete fieldData[e]);
-  } else { config.requiredPermission = fieldData["requiredPermission"]; };
-  config['TRUSTEES'] = fieldData["trustees"].split();
+  config.allowVIPS = fieldData["allowVIPS"] === "yes" ? true : false;
   config.conclusionStrings = {
     zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
       ? fieldData["zeroEvidenceConclusionString"]
@@ -1037,13 +1022,9 @@ const _toggleOptionalObjective = (objectiveNumber, state) => {
   toggleStrikethrough(objectiveNumber, state);
 };
 
-const _setRequiredPermissions = (required) => {
-  setRequiredPermissions(
-    (isNaN(required)) 
-    ? getKeyByValue(PERMISSIONS, required)
-    : getValueFromObject(PERMISSIONS, required)
-  )
-}
+const _toggleVIPAccessibility = (canUseVIP) => {
+  toggleVIPAccessibility(canUseVIP);
+};
 
 const _setCounterName = (num, command) => {
   commandArgument = command.split(" ").slice(1).join(" ");
@@ -1488,9 +1469,13 @@ const camelCase = (sentence) => {
   );
 };
 
-const setRequiredPermissions = (required) => {
-  config.requiredPermission = required
-}
+const toggleVIPAccessibility = (canUseVIP) => {
+  if (canUseVIP !== undefined && canUseVIP !== null) {
+    config.allowVIPS = canUseVIP;
+  } else {
+    config.allowVIPS = !config.allowVIPS;
+  }
+};
 
 const createEvidenceString = (evidence) => {
   let evidenceString =

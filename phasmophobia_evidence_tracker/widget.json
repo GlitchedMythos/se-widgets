@@ -229,10 +229,16 @@
     "value": "!counter2down",
     "group": "Commands"
   },
-  "requiredPermissionCommand": {
+  "vipToggleOnCommand": {
     "type": "string",
-    "label": "Command to change widget permissions",
-    "value": "!setperm",
+    "label": "Toggle Allowing VIPS on",
+    "value": "!vipon",
+    "group": "Commands"
+  },
+  "vipToggleOffCommand": {
+    "type": "string",
+    "label": "Toggle Allowing VIPS off",
+    "value": "!vipoff",
     "group": "Commands"
   },
   "dashboardBackgroundColor": {
@@ -247,23 +253,14 @@
     "value": "Roboto",
     "group": "Main Widget Options"
   },
-  "requiredPermission": {
+  "allowVIPS": {
     "type": "dropdown",
-    "label": "Permission level required to issue commands",
-    "value": "moderator",
+    "label": "Allow VIPS to use commands",
+    "value": "no",
     "options": {
-      "moderator": "Moderator",
-      "vip": "VIP",
-      "trustee": "Trustee [See list Below]",
-      "subscriber": "Subscriber",
-      "everyone": "Everyone"
+      "yes": "Yes",
+      "no": "No"
     },
-    "group": "Main Widget Options"
-  },
-  "trustees": {
-    "type": "text",
-    "label": "Comma Seperated list of Trustee Usernames",
-    "value": "", 
     "group": "Main Widget Options"
   },
   "displayName": {
