@@ -87,6 +87,7 @@ const DIFFICULTY = [
   "Intermediate",
   "Professional",
   "Nightmare",
+  "Double Nightmare",
   "Custom",
 ];
 

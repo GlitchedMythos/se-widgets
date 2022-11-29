@@ -155,6 +155,7 @@ To get `Smudge`
 | Intermediate | "intermediate" |
 | Professional |  "professional" |
 | Nightmare |  "nightmare" |
+| Double Nightmare | "double" |
 | Custom | "custom" |
 
 ### Example Usage:
