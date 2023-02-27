@@ -1,6 +1,6 @@
-# Welcome to Phasmophobia Evidence V4.2.1
+# Welcome to Phasmophobia Evidence V4.2.2
 
-**Updated for the Apocalypse Update!**
+**Updated for the Tempest  Update!**
 
 ## Video Tutorial
 [![Watch the video](https://img.youtube.com/vi/vkb0zO9xz1Q/default.jpg)](https://youtu.be/vkb0zO9xz1Q)
@@ -115,6 +115,7 @@ Possession phrases are user defined and can be set in **Settings > Commands**
 |Summoning Circle| "summoning circle" "summoning" "summon" "circle" |
 |Tarot Cards| "tarot cards" "tarot" "cards" |
 |Ouija Board| "ouija board" "ouija" "board" |
+|Monkey Paw| "monkey paw" "monkey" "paw" |
 
 ### Example Usage:
 
@@ -155,6 +156,8 @@ To get `Smudge`
 | Intermediate | "intermediate" |
 | Professional |  "professional" |
 | Nightmare |  "nightmare" |
+| Insanity | "insanity" |
+| Challenge | "challenge" |
 | Double Nightmare | "double" |
 | Custom | "custom" |
 

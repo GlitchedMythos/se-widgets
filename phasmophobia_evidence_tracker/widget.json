@@ -115,6 +115,12 @@
     "value": "board,ouija,luigi,milton",
     "group": "Commands"
   },
+  "pawPossessionCommand": {
+    "type": "string",
+    "label": "Monkey Paw (Comma Separated)",
+    "value": "monkey,paw,monkey paw",
+    "group": "Commands"
+  },
   "emfCommand": {
     "type": "string",
     "label": "EMF Toggle Command",

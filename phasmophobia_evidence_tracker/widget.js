@@ -87,6 +87,8 @@ const DIFFICULTY = [
   "Intermediate",
   "Professional",
   "Nightmare",
+  "Insanity",
+  "Challenge Mode",
   "Double Nightmare",
   "Custom",
 ];
@@ -131,6 +133,7 @@ let userState = {
     ouija: false,
     summoning: false,
     tarot: false,
+    paw: false,
   },
   evidence: {
     emf: EVIDENCE_OFF,
@@ -217,7 +220,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   const fieldData = obj.detail.fieldData;
   // setting up the POSSESSIONS
   {
-    ["none", "doll", "mirror", "music", "summoning", "tarot", "ouija"].forEach(
+    ["none", "doll", "mirror", "music", "summoning", "tarot", "ouija", "paw"].forEach(
       (v) => {
         let keys = fieldData[v + "PossessionCommand"];
         keys.split(",").forEach((key) => {
