@@ -1,4 +1,4 @@
-const version = "4.2.1 (Apocalypse)";
+const version = "4.2.2 (Tempest)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
