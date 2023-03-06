@@ -1,50 +1,50 @@
 /** @format */
 
-const version = '4.2.2 (Tempest)';
+const version = "4.2.2 (Tempest)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
 // 1 is true
 // 0 is false
 
-const BANSHEE = '0000111',
-  DEMON = '0101010',
-  DEOGEN = '0011001',
-  GORYO = '1000011',
-  HANTU = '0100110',
-  JINN = '1100010',
-  MARE = '0011100',
-  MIMIC = '0110010',
-  MOROI = '0111000',
-  MYLING = '1001010',
-  OBAKE = '1000110',
-  ONI = '1100001',
-  ONRYO = '0110100',
-  PHANTOM = '0010011',
-  POLTERGEIST = '0011010',
-  RAIJU = '1000101',
-  REVENANT = '0101100',
-  SHADE = '1101000',
-  SPIRIT = '1011000',
-  THAYE = '0001101',
-  TWINS = '1110000',
-  WRAITH = '1010001',
-  YOKAI = '0010101',
-  YUREI = '0100101';
+const BANSHEE = "0000111",
+  DEMON = "0101010",
+  DEOGEN = "0011001",
+  GORYO = "1000011",
+  HANTU = "0100110",
+  JINN = "1100010",
+  MARE = "0011100",
+  MIMIC = "0110010",
+  MOROI = "0111000",
+  MYLING = "1001010",
+  OBAKE = "1000110",
+  ONI = "1100001",
+  ONRYO = "0110100",
+  PHANTOM = "0010011",
+  POLTERGEIST = "0011010",
+  RAIJU = "1000101",
+  REVENANT = "0101100",
+  SHADE = "1101000",
+  SPIRIT = "1011000",
+  THAYE = "0001101",
+  TWINS = "1110000",
+  WRAITH = "1010001",
+  YOKAI = "0010101",
+  YUREI = "0100101";
 
 const EVIDENCE = {
-  emf: 'emf',
-  freeze: 'freezing',
-  freezing: 'freezing',
-  temperature: 'freezing',
-  spiritbox: 'spiritBox',
-  book: 'writing',
-  writing: 'writing',
-  orbs: 'orbs',
-  fingerprints: 'fingerprints',
-  fingies: 'fingerprints',
-  hand: 'fingerprints',
-  dots: 'dots'
+  emf: "emf",
+  freeze: "freezing",
+  freezing: "freezing",
+  temperature: "freezing",
+  spiritbox: "spiritBox",
+  book: "writing",
+  writing: "writing",
+  orbs: "orbs",
+  fingerprints: "fingerprints",
+  fingies: "fingerprints",
+  hand: "fingerprints",
+  dots: "dots"
 };
 
 const POSSESSIONS = {};
@@ -53,45 +53,45 @@ const POSSESSIONS = {};
 const SIGHTINGS = {};
 
 const OPTIONAL_OBJECTIVES = {
-  candle: 'Candle',
-  crucifix: 'Crucifix',
-  emf: 'EMF',
-  escape: 'Escape',
-  event: 'Event',
-  hunt: 'Smudge (Hunt)',
-  microphone: 'Microphone',
-  motion: 'Motion',
-  photo: 'Photo',
-  camera: 'Photo',
-  repel: 'Repel',
-  salt: 'Salt',
-  sanity: '<25% Sanity',
-  smudge: 'Smudge'
+  candle: "Candle",
+  crucifix: "Crucifix",
+  emf: "EMF",
+  escape: "Escape",
+  event: "Event",
+  hunt: "Smudge (Hunt)",
+  microphone: "Microphone",
+  motion: "Motion",
+  photo: "Photo",
+  camera: "Photo",
+  repel: "Repel",
+  salt: "Salt",
+  sanity: "<25% Sanity",
+  smudge: "Smudge"
 };
 
 const LOCATIONS = [
-  'Tanglewood Drive',
-  'Willow Street',
-  'Edgefield Road',
-  'Ridgeview Court',
-  'Grafton Farmhouse',
-  'Bleasdale Farmhouse',
-  'Brownstone HighSchool',
-  'Prison',
-  'Sunny Meadows',
-  'Sunny Meadows (Restricted)',
-  'Camp Woodwind',
-  'Maple Lodge'
+  "Tanglewood Drive",
+  "Willow Street",
+  "Edgefield Road",
+  "Ridgeview Court",
+  "Grafton Farmhouse",
+  "Bleasdale Farmhouse",
+  "Brownstone HighSchool",
+  "Prison",
+  "Sunny Meadows",
+  "Sunny Meadows (Restricted)",
+  "Camp Woodwind",
+  "Maple Lodge"
 ];
 
 const DIFFICULTY = [
-  'Amateur',
-  'Intermediate',
-  'Professional',
-  'Nightmare',
-  'Insanity',
-  'Challenge',
-  'Custom'
+  "Amateur",
+  "Intermediate",
+  "Professional",
+  "Nightmare",
+  "Insanity",
+  "Challenge",
+  "Custom"
 ];
 
 // Constants for displaying evidence on the widget
@@ -102,13 +102,13 @@ const EVIDENCE_OFF = 0,
   EVIDENCE_NEGATIVE = 4;
 
 const EVIDENCE_NAMES_IN_DOM = [
-  'emf',
-  'spiritBox',
-  'fingerprints',
-  'orbs',
-  'writing',
-  'freezing',
-  'dots'
+  "emf",
+  "spiritBox",
+  "fingerprints",
+  "orbs",
+  "writing",
+  "freezing",
+  "dots"
 ];
 
 const COUNTER_1 = 1,
@@ -126,8 +126,8 @@ const PERMISSIONS = {
 
 // TODO: Move all widget and user state to here
 let userState = {
-  channelName: '',
-  conclusionString: '',
+  channelName: "",
+  conclusionString: "",
   counter: 0,
   counter2: 0,
   cursedPossessions: {
@@ -158,10 +158,10 @@ let userState = {
     freezing: EVIDENCE_OFF,
     dots: EVIDENCE_OFF
   },
-  ghostName: '',
+  ghostName: "",
   location: {
-    locationName: '',
-    locationDiff: ''
+    locationName: "",
+    locationDiff: ""
   },
   optionalObjectives: [
     // Object Format:
@@ -197,12 +197,12 @@ const getUserLevelFromData = (data) => {
   let badges = data.badges;
   let badgeLevel = 999;
 
-  if (data.nick.toLowerCase() === 'glitchedmythos') {
-    badgeLevel = PERMISSIONS['glitched'];
+  if (data.nick.toLowerCase() === "glitchedmythos") {
+    badgeLevel = PERMISSIONS["glitched"];
   } else if (data.channel.toLowerCase() == data.nick.toLowerCase()) {
-    badgeLevel = PERMISSIONS['broadcaster'];
+    badgeLevel = PERMISSIONS["broadcaster"];
   } else if (getValueFromObject(config.TRUSTEES, data.nick.toLowerCase())) {
-    badgeLevel = PERMISSIONS['trustee'];
+    badgeLevel = PERMISSIONS["trustee"];
   } else {
     for (let i = 0; i < badges.length; i++) {
       const level = PERMISSIONS[badges[i].type.toLowerCase()];
@@ -220,31 +220,31 @@ const hasPermission = (permission, userLevel) => {
   return userLevel <= permission;
 };
 
-// For commands where VIP's are allowed to help
+// For commands where VIP"s are allowed to help
 const requiredPermission = (configuration) => {
   const required = configuration.requiredPermission;
   const level = PERMISSIONS[required];
   return level;
 };
 
-window.addEventListener('onWidgetLoad', function (obj) {
+window.addEventListener("onWidgetLoad", function (obj) {
   // Field data from Stream Elements from the overlay settings the user set
-  userState.channelName = obj['detail']['channel']['username'];
+  userState.channelName = obj["detail"]["channel"]["username"];
   const fieldData = obj.detail.fieldData;
   // setting up the POSSESSIONS
   {
     [
-      'none',
-      'doll',
-      'mirror',
-      'music',
-      'summoning',
-      'tarot',
-      'ouija',
-      'paw'
+      "none",
+      "doll",
+      "mirror",
+      "music",
+      "summoning",
+      "tarot",
+      "ouija",
+      "paw"
     ].forEach((v) => {
-      let keys = fieldData[v + 'PossessionCommand'];
-      keys.split(',').forEach((key) => {
+      let keys = fieldData[v + "PossessionCommand"];
+      keys.split(",").forEach((key) => {
         POSSESSIONS[key.trim()] = v;
       });
     });
@@ -252,9 +252,9 @@ window.addEventListener('onWidgetLoad', function (obj) {
   // setting up the SIGHTINGS
 
   {
-    ['boner', 'slenderman', 'water'].forEach((v) => {
-      let keys = fieldData[v + 'SightingCommand'];
-      keys.split(',').forEach((key) => {
+    ["boner", "slenderman", "water"].forEach((v) => {
+      let keys = fieldData[v + "SightingCommand"];
+      keys.split(",").forEach((key) => {
         SIGHTINGS[key.trim()] = v;
       });
     });
@@ -262,13 +262,13 @@ window.addEventListener('onWidgetLoad', function (obj) {
 
   // Sets up all the commands for the widget
   config.commands = {
-    [fieldData['resetCommand']]: (data) => {
+    [fieldData["resetCommand"]]: (data) => {
       runCommandWithPermission(requiredPermission(config), data, _resetGhost, [
         data.text,
         userState
       ]);
     },
-    [fieldData['nameCommand']]: (data) => {
+    [fieldData["nameCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -276,7 +276,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData['firstnameCommand']]: (data) => {
+    [fieldData["firstnameCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -284,7 +284,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData['surnameCommand']]: (data) => {
+    [fieldData["surnameCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -292,7 +292,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData['locationNameCommand']]: (data) => {
+    [fieldData["locationNameCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -300,13 +300,13 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData['locationDiffCommand']]: (data) => {
+    [fieldData["locationDiffCommand"]]: (data) => {
       runCommandWithPermission(requiredPermission(config), data, _setDiffName, [
         data.text,
         userState
       ]);
     },
-    [fieldData['possessionCommand']]: (data) => {
+    [fieldData["possessionCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -314,7 +314,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData['sightingCommand']]: (data) => {
+    [fieldData["sightingCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -322,14 +322,14 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData['emfCommand']]: (data) => {
+    [fieldData["emfCommand"]]: (data) => {
       runCommandWithPermission(requiredPermission(config), data, _toggleEMF, [
         data.text,
         userState,
         config
       ]);
     },
-    [fieldData['spiritBoxCommand']]: (data) => {
+    [fieldData["spiritBoxCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -337,7 +337,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState, config]
       );
     },
-    [fieldData['fingerprintsCommand']]: (data) => {
+    [fieldData["fingerprintsCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -345,14 +345,14 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState, config]
       );
     },
-    [fieldData['orbsCommand']]: (data) => {
+    [fieldData["orbsCommand"]]: (data) => {
       runCommandWithPermission(requiredPermission(config), data, _toggleOrbs, [
         data.text,
         userState,
         config
       ]);
     },
-    [fieldData['writingCommand']]: (data) => {
+    [fieldData["writingCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -360,7 +360,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState, config]
       );
     },
-    [fieldData['freezingCommand']]: (data) => {
+    [fieldData["freezingCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -368,14 +368,14 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState, config]
       );
     },
-    [fieldData['dotsCommand']]: (data) => {
+    [fieldData["dotsCommand"]]: (data) => {
       runCommandWithPermission(requiredPermission(config), data, _toggleDots, [
         data.text,
         userState,
         config
       ]);
     },
-    [`${fieldData['emfCommand']}x`]: (data) => {
+    [`${fieldData["emfCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -383,7 +383,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [userState, config]
       );
     },
-    [`${fieldData['spiritBoxCommand']}x`]: (data) => {
+    [`${fieldData["spiritBoxCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -391,7 +391,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [userState, config]
       );
     },
-    [`${fieldData['fingerprintsCommand']}x`]: (data) => {
+    [`${fieldData["fingerprintsCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -399,7 +399,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [userState, config]
       );
     },
-    [`${fieldData['orbsCommand']}x`]: (data) => {
+    [`${fieldData["orbsCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -407,7 +407,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [userState, config]
       );
     },
-    [`${fieldData['writingCommand']}x`]: (data) => {
+    [`${fieldData["writingCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -415,7 +415,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [userState, config]
       );
     },
-    [`${fieldData['freezingCommand']}x`]: (data) => {
+    [`${fieldData["freezingCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -423,7 +423,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [userState, config]
       );
     },
-    [`${fieldData['dotsCommand']}x`]: (data) => {
+    [`${fieldData["dotsCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -431,7 +431,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [userState, config]
       );
     },
-    [fieldData['optionalObjectivesCommand']]: (data) => {
+    [fieldData["optionalObjectivesCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -439,7 +439,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [data.text, userState]
       );
     },
-    [fieldData['toggleOptObjOneCommand']]: (data) => {
+    [fieldData["toggleOptObjOneCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -447,7 +447,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [0, userState] // The position in array
       );
     },
-    [fieldData['toggleOptObjTwoCommand']]: (data) => {
+    [fieldData["toggleOptObjTwoCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -455,7 +455,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [1, userState] // The position in array
       );
     },
-    [fieldData['toggleOptObjThreeCommand']]: (data) => {
+    [fieldData["toggleOptObjThreeCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -463,7 +463,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [2, userState] // The position in array
       );
     },
-    [fieldData['setCounterNameCommand']]: (data) => {
+    [fieldData["setCounterNameCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -471,7 +471,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_1, data.text]
       );
     },
-    [fieldData['setCounterNumberCommand']]: (data) => {
+    [fieldData["setCounterNumberCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -479,7 +479,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_1, data.text]
       );
     },
-    [fieldData['incrementCounterCommand']]: (data) => {
+    [fieldData["incrementCounterCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -487,7 +487,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_1]
       );
     },
-    [fieldData['decrementCounterCommand']]: (data) => {
+    [fieldData["decrementCounterCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -495,7 +495,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_1]
       );
     },
-    [fieldData['setCounter2NameCommand']]: (data) => {
+    [fieldData["setCounter2NameCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -503,7 +503,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_2, data.text]
       );
     },
-    [fieldData['setCounter2NumberCommand']]: (data) => {
+    [fieldData["setCounter2NumberCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -511,7 +511,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_2, data.text]
       );
     },
-    [fieldData['incrementCounter2Command']]: (data) => {
+    [fieldData["incrementCounter2Command"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -519,7 +519,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_2]
       );
     },
-    [fieldData['decrementCounter2Command']]: (data) => {
+    [fieldData["decrementCounter2Command"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
@@ -527,16 +527,16 @@ window.addEventListener('onWidgetLoad', function (obj) {
         [COUNTER_2]
       );
     },
-    [fieldData['setRequiredPermissions']]: (data) => {
+    [fieldData["setRequiredPermissions"]]: (data) => {
       runCommandWithPermission(
-        PERMISSIONS['moderator'],
+        PERMISSIONS["moderator"],
         data,
         _setRequiredPermissions,
         [data.text]
       );
     },
-    '!glitchedmythos': (data) => {
-      runCommandWithPermission(PERMISSIONS['glitched'], data, _glitchedMythos, [
+    "!glitchedmythos": (data) => {
+      runCommandWithPermission(PERMISSIONS["glitched"], data, _glitchedMythos, [
         data.text
       ]);
     }
@@ -546,258 +546,258 @@ window.addEventListener('onWidgetLoad', function (obj) {
   if (
     config.allowVIPS ||
     config.allowVIPs ||
-    fieldData['allowVIPS'] ||
-    fieldData['allowVIPs']
+    fieldData["allowVIPS"] ||
+    fieldData["allowVIPs"]
   ) {
     config.requiredPermission =
-      config.allowVIPS === 'yes' ? 'vip' : fieldData['requiredPermission'];
-    ['allowVIPS', 'allowVIPs'].forEach((e) => delete config[e]);
+      config.allowVIPS === "yes" ? "vip" : fieldData["requiredPermission"];
+    ["allowVIPS", "allowVIPs"].forEach((e) => delete config[e]);
     [
-      'allowVIPS',
-      'allowVIPs',
-      'vipToggleOffCommand',
-      'vipToggleOnCommand'
+      "allowVIPS",
+      "allowVIPs",
+      "vipToggleOffCommand",
+      "vipToggleOnCommand"
     ].forEach((e) => delete fieldData[e]);
   } else {
-    config.requiredPermission = fieldData['requiredPermission'];
+    config.requiredPermission = fieldData["requiredPermission"];
   }
-  config['TRUSTEES'] = fieldData['trustees'].split();
+  config["TRUSTEES"] = fieldData["trustees"].split();
   config.conclusionStrings = {
-    zeroEvidenceConclusionString: fieldData['zeroEvidenceConclusionString']
-      ? fieldData['zeroEvidenceConclusionString']
-      : 'Waiting for Evidence',
-    oneEvidenceConclusionString: fieldData['oneEvidenceConclusionString']
-      ? fieldData['oneEvidenceConclusionString']
-      : 'Not sure yet...',
-    tooMuchEvidence: fieldData['impossibleConclusionString']
-      ? fieldData['impossibleConclusionString']
-      : 'Too Much Evidence'
+    zeroEvidenceConclusionString: fieldData["zeroEvidenceConclusionString"]
+      ? fieldData["zeroEvidenceConclusionString"]
+      : "Waiting for Evidence",
+    oneEvidenceConclusionString: fieldData["oneEvidenceConclusionString"]
+      ? fieldData["oneEvidenceConclusionString"]
+      : "Not sure yet...",
+    tooMuchEvidence: fieldData["impossibleConclusionString"]
+      ? fieldData["impossibleConclusionString"]
+      : "Too Much Evidence"
   };
 
   config.ghosts = [
     {
-      type: 'Banshee',
+      type: "Banshee",
       conclusion: createGhostConclusionString(
-        fieldData['bansheeString'],
-        'Banshee'
+        fieldData["bansheeString"],
+        "Banshee"
       ),
       evidence: BANSHEE
     },
     {
-      type: 'Demon',
+      type: "Demon",
       conclusion: createGhostConclusionString(
-        fieldData['demonString'],
-        'Demon'
+        fieldData["demonString"],
+        "Demon"
       ),
       evidence: DEMON
     },
     {
-      type: 'Deogen',
+      type: "Deogen",
       conclusion: createGhostConclusionString(
-        fieldData['deogenString'],
-        'Deogen'
+        fieldData["deogenString"],
+        "Deogen"
       ),
       evidence: DEOGEN
     },
     {
-      type: 'Goryo',
+      type: "Goryo",
       conclusion: createGhostConclusionString(
-        fieldData['goryoString'],
-        'Goryo'
+        fieldData["goryoString"],
+        "Goryo"
       ),
       evidence: GORYO
     },
     {
-      type: 'Hantu',
+      type: "Hantu",
       conclusion: createGhostConclusionString(
-        fieldData['hantuString'],
-        'Hantu'
+        fieldData["hantuString"],
+        "Hantu"
       ),
       evidence: HANTU
     },
     {
-      type: 'Jinn',
-      conclusion: createGhostConclusionString(fieldData['jinnString'], 'Jinn'),
+      type: "Jinn",
+      conclusion: createGhostConclusionString(fieldData["jinnString"], "Jinn"),
       evidence: JINN
     },
     {
-      type: 'Mare',
-      conclusion: createGhostConclusionString(fieldData['mareString'], 'Mare'),
+      type: "Mare",
+      conclusion: createGhostConclusionString(fieldData["mareString"], "Mare"),
       evidence: MARE
     },
     {
-      type: 'The Mimic',
+      type: "The Mimic",
       conclusion: createGhostConclusionString(
-        fieldData['mimicString'],
-        'The Mimic'
+        fieldData["mimicString"],
+        "The Mimic"
       ),
       evidence: MIMIC
     },
     {
-      type: 'Moroi',
+      type: "Moroi",
       conclusion: createGhostConclusionString(
-        fieldData['moroiString'],
-        'Moroi'
+        fieldData["moroiString"],
+        "Moroi"
       ),
       evidence: MOROI
     },
     {
-      type: 'Myling',
+      type: "Myling",
       conclusion: createGhostConclusionString(
-        fieldData['mylingString'],
-        'Myling'
+        fieldData["mylingString"],
+        "Myling"
       ),
       evidence: MYLING
     },
     {
-      type: 'Obake',
+      type: "Obake",
       conclusion: createGhostConclusionString(
-        fieldData['obakeString'],
-        'Obake'
+        fieldData["obakeString"],
+        "Obake"
       ),
       evidence: OBAKE
     },
     {
-      type: 'Oni',
-      conclusion: createGhostConclusionString(fieldData['oniString'], 'Oni'),
+      type: "Oni",
+      conclusion: createGhostConclusionString(fieldData["oniString"], "Oni"),
       evidence: ONI
     },
     {
-      type: 'Onryo',
+      type: "Onryo",
       conclusion: createGhostConclusionString(
-        fieldData['onryoString'],
-        'Onryo'
+        fieldData["onryoString"],
+        "Onryo"
       ),
       evidence: ONRYO
     },
     {
-      type: 'Phantom',
+      type: "Phantom",
       conclusion: createGhostConclusionString(
-        fieldData['phantomString'],
-        'Phantom'
+        fieldData["phantomString"],
+        "Phantom"
       ),
       evidence: PHANTOM
     },
     {
-      type: 'Poltergeist',
+      type: "Poltergeist",
       conclusion: createGhostConclusionString(
-        fieldData['poltergeistString'],
-        'Poltergeist'
+        fieldData["poltergeistString"],
+        "Poltergeist"
       ),
       evidence: POLTERGEIST
     },
     {
-      type: 'Raiju',
+      type: "Raiju",
       conclusion: createGhostConclusionString(
-        fieldData['raijuString'],
-        'Raiju'
+        fieldData["raijuString"],
+        "Raiju"
       ),
       evidence: RAIJU
     },
     {
-      type: 'Revenant',
+      type: "Revenant",
       conclusion: createGhostConclusionString(
-        fieldData['revenantString'],
-        'Revenant'
+        fieldData["revenantString"],
+        "Revenant"
       ),
       evidence: REVENANT
     },
     {
-      type: 'Shade',
+      type: "Shade",
       conclusion: createGhostConclusionString(
-        fieldData['shadeString'],
-        'Shade'
+        fieldData["shadeString"],
+        "Shade"
       ),
       evidence: SHADE
     },
     {
-      type: 'Spirit',
+      type: "Spirit",
       conclusion: createGhostConclusionString(
-        fieldData['spiritString'],
-        'Spirit'
+        fieldData["spiritString"],
+        "Spirit"
       ),
       evidence: SPIRIT
     },
     {
-      type: 'The Twins',
+      type: "The Twins",
       conclusion: createGhostConclusionString(
-        fieldData['twinsString'],
-        'The Twins'
+        fieldData["twinsString"],
+        "The Twins"
       ),
       evidence: TWINS
     },
     {
-      type: 'Thaye',
+      type: "Thaye",
       conclusion: createGhostConclusionString(
-        fieldData['thayeString'],
-        'Thaye'
+        fieldData["thayeString"],
+        "Thaye"
       ),
       evidence: THAYE
     },
     {
-      type: 'Wraith',
+      type: "Wraith",
       conclusion: createGhostConclusionString(
-        fieldData['wraithString'],
-        'Wraith'
+        fieldData["wraithString"],
+        "Wraith"
       ),
       evidence: WRAITH
     },
     {
-      type: 'Yokai',
+      type: "Yokai",
       conclusion: createGhostConclusionString(
-        fieldData['yokaiString'],
-        'Yokai'
+        fieldData["yokaiString"],
+        "Yokai"
       ),
       evidence: YOKAI
     },
     {
-      type: 'Yurei',
+      type: "Yurei",
       conclusion: createGhostConclusionString(
-        fieldData['yureiString'],
-        'Yurei'
+        fieldData["yureiString"],
+        "Yurei"
       ),
       evidence: YUREI
     }
   ];
   config.nameStrings = {
-    noNameString: fieldData['noNameString']
-      ? fieldData['noNameString']
-      : 'A New Ghostie',
-    ghostNameString: fieldData['ghostNameString']
-      ? fieldData['ghostNameString']
-      : 'Name: [name]',
-    autoCapitalize: fieldData['autoCapitalize'] === 'yes' ? true : false
+    noNameString: fieldData["noNameString"]
+      ? fieldData["noNameString"]
+      : "A New Ghostie",
+    ghostNameString: fieldData["ghostNameString"]
+      ? fieldData["ghostNameString"]
+      : "Name: [name]",
+    autoCapitalize: fieldData["autoCapitalize"] === "yes" ? true : false
   };
   config.locationNameStrings = {
-    noLocationString: fieldData['noLocationString']
-      ? fieldData['noLocationString']
-      : 'No Map Selected...'
+    noLocationString: fieldData["noLocationString"]
+      ? fieldData["noLocationString"]
+      : "No Map Selected..."
   };
   config.optionalObj = {
-    noOptionalString: fieldData['noOptionalObjectivesMessage']
-      ? fieldData['noOptionalObjectivesMessage']
-      : 'Widget Author: GlitchedMythos',
-    spacing: fieldData['objectivesSpacing']
+    noOptionalString: fieldData["noOptionalObjectivesMessage"]
+      ? fieldData["noOptionalObjectivesMessage"]
+      : "Widget Author: GlitchedMythos",
+    spacing: fieldData["objectivesSpacing"]
   };
   config.markImpossibleEvidence =
-    fieldData['markImpossibleEvidence'] === 'yes' ? true : false;
+    fieldData["markImpossibleEvidence"] === "yes" ? true : false;
   config.useEvidenceImpossibleCompleted =
-    fieldData['useEvidenceImpossibleCompleted'] === 'yes' ? true : false;
-  config.debug = fieldData['debug'] === 'true' ? true : false;
+    fieldData["useEvidenceImpossibleCompleted"] === "yes" ? true : false;
+  config.debug = fieldData["debug"] === "true" ? true : false;
 
   // TODO: Refactor to set up in config
-  let displayName = fieldData['displayName'] === 'yes' ? true : false;
-  let displayLocation = fieldData['displayLocation'] === 'yes' ? true : false;
-  let displayEvidence = fieldData['displayEvidence'] === 'yes' ? true : false;
-  let displayCounter = fieldData['displayCounter'] === 'yes' ? true : false;
-  let displayCounterTwo = fieldData['displayCounter2'] === 'yes' ? true : false;
+  let displayName = fieldData["displayName"] === "yes" ? true : false;
+  let displayLocation = fieldData["displayLocation"] === "yes" ? true : false;
+  let displayEvidence = fieldData["displayEvidence"] === "yes" ? true : false;
+  let displayCounter = fieldData["displayCounter"] === "yes" ? true : false;
+  let displayCounterTwo = fieldData["displayCounter2"] === "yes" ? true : false;
   let displayCursedPossessions =
-    fieldData['displayCursedPossessions'] === 'yes' ? true : false;
-  let displaySightings = fieldData['displaySightings'] === 'yes' ? true : false;
+    fieldData["displayCursedPossessions"] === "yes" ? true : false;
+  let displaySightings = fieldData["displaySightings"] === "yes" ? true : false;
   let displayOptionalObjectives =
-    fieldData['displayOptionalObjectives'] === 'yes' ? true : false;
+    fieldData["displayOptionalObjectives"] === "yes" ? true : false;
   let displayConclusion =
-    fieldData['displayConclusion'] === 'yes' ? true : false;
+    fieldData["displayConclusion"] === "yes" ? true : false;
 
   if (!displayName) {
     $(`#name`).remove();
@@ -834,15 +834,15 @@ window.addEventListener('onWidgetLoad', function (obj) {
       $(`#counter-two`).remove();
     } else {
       $(`#counter2-name`).html($(`#counter2-name`).text());
-      let countersSpacing = fieldData['countersSpacing'];
+      let countersSpacing = fieldData["countersSpacing"];
       let hasCloseSpacing =
-        countersSpacing === 'justify-start' ||
-        countersSpacing === 'justify-end' ||
-        countersSpacing === 'justify-center';
+        countersSpacing === "justify-start" ||
+        countersSpacing === "justify-end" ||
+        countersSpacing === "justify-center";
 
-      if (hasCloseSpacing && fieldData['counterFlexDirection'] === 'flex-row') {
-        $(`#counter-one`).addClass('mr-0.5');
-        $(`#counter-two`).addClass('ml-0.5');
+      if (hasCloseSpacing && fieldData["counterFlexDirection"] === "flex-row") {
+        $(`#counter-one`).addClass("mr-0.5");
+        $(`#counter-two`).addClass("ml-0.5");
       }
     }
   }
@@ -856,21 +856,21 @@ window.addEventListener('onWidgetLoad', function (obj) {
   }
 
   let useGradientBorder =
-    fieldData['useGradientBorder'] === 'yes' ? true : false;
+    fieldData["useGradientBorder"] === "yes" ? true : false;
   let useAnimatedBorder =
-    fieldData['useAnimatedBorder'] === 'yes' ? true : false;
+    fieldData["useAnimatedBorder"] === "yes" ? true : false;
 
   if (useGradientBorder) {
-    $('#phas-dashboard').addClass('animated-box');
+    $("#phas-dashboard").addClass("animated-box");
 
     if (useAnimatedBorder) {
-      $('#phas-dashboard').addClass('in');
-      $('#phas-dashboard').addClass('animated-box-300');
+      $("#phas-dashboard").addClass("in");
+      $("#phas-dashboard").addClass("animated-box-300");
     } else {
-      $('#phas-dashboard').addClass('animated-box-100');
+      $("#phas-dashboard").addClass("animated-box-100");
     }
   } else {
-    $('#phas-dashboard').addClass('phas-border');
+    $("#phas-dashboard").addClass("phas-border");
   }
 
   userState.conclusionString =
@@ -880,7 +880,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
   updateDashboardDOM(userState);
 });
 
-window.addEventListener('onEventReceived', function (obj) {
+window.addEventListener("onEventReceived", function (obj) {
   // Grab relevant data from the event;
   let data = obj.detail.event.data;
   if (config.debug) {
@@ -888,12 +888,12 @@ window.addEventListener('onEventReceived', function (obj) {
   }
 
   // Check if a matching command
-  let givenCommand = data.text.split(' ')[0];
+  let givenCommand = data.text.split(" ")[0];
 
   if (config.commands[givenCommand.toLowerCase()]) {
     config.commands[givenCommand.toLowerCase()](data);
   } else {
-    console.log('No command exists');
+    console.log("No command exists");
   }
 });
 
@@ -902,7 +902,7 @@ window.addEventListener('onEventReceived', function (obj) {
  *******************************************************/
 
 const _resetGhost = (command, state) => {
-  let commandArgument = command.split(' ').slice(1).join(' ');
+  let commandArgument = command.split(" ").slice(1).join(" ");
   if (commandArgument.length > 0) {
     resetGhost(commandArgument, state);
   } else {
@@ -911,17 +911,17 @@ const _resetGhost = (command, state) => {
 };
 
 const _setGhostName = (command, state) => {
-  enteredName = command.split(' ').slice(1).join(' ');
+  enteredName = command.split(" ").slice(1).join(" ");
   state.ghostName = config.nameStrings.autoCapitalize
     ? camelCase(enteredName)
     : enteredName;
 };
 
 const _setGhostFirstName = (command, state) => {
-  enteredName = command.split(' ').slice(1).join(' ');
-  currentName = state.ghostName ? state.ghostName.split(' ') : '';
+  enteredName = command.split(" ").slice(1).join(" ");
+  currentName = state.ghostName ? state.ghostName.split(" ") : "";
   newName = currentName[1]
-    ? enteredName + ' ' + currentName.slice(1).join(' ')
+    ? enteredName + " " + currentName.slice(1).join(" ")
     : enteredName;
   state.ghostName = config.nameStrings.autoCapitalize
     ? camelCase(newName)
@@ -929,12 +929,12 @@ const _setGhostFirstName = (command, state) => {
 };
 
 const _setGhostSurName = (command, state) => {
-  enteredName = command.split(' ').slice(1).join(' ');
-  currentName = state.ghostName ? state.ghostName.split(' ') : '';
+  enteredName = command.split(" ").slice(1).join(" ");
+  currentName = state.ghostName ? state.ghostName.split(" ") : "";
   if (currentName[1]) {
-    newName = currentName.slice(0, -1).join(' ') + ' ' + enteredName;
+    newName = currentName.slice(0, -1).join(" ") + " " + enteredName;
   } else if (currentName[0]) {
-    newName = currentName[0] + ' ' + enteredName;
+    newName = currentName[0] + " " + enteredName;
   } else {
     newName = enteredName;
   }
@@ -944,14 +944,14 @@ const _setGhostSurName = (command, state) => {
 };
 
 const _setLocationName = (command, state) => {
-  commandArgument = command.split(' ').slice(1).join(' ');
+  commandArgument = command.split(" ").slice(1).join(" ");
   state.location.locationName = getLocationNameString(
     commandArgument.toLowerCase()
   );
 };
 
 const _setDiffName = (command, state) => {
-  commandArgument = command.split(' ');
+  commandArgument = command.split(" ");
   commandArgument = commandArgument[1]
     ? commandArgument[1]
     : commandArgument[0];
@@ -959,13 +959,13 @@ const _setDiffName = (command, state) => {
 };
 
 const _toggleSighting = (sighting, state) => {
-  sightingArray = sighting.split(' ');
+  sightingArray = sighting.split(" ");
   sightingArray.shift();
   for (const [key, value] of Object.entries(sightingArray)) {
     const s = getValueFromObject(SIGHTINGS, value);
-    if (s === 'slenderman') {
+    if (s === "slenderman") {
       state.sightings[s] =
-        state.location.locationName === 'Maple Lodge'
+        state.location.locationName === "Maple Lodge"
           ? !state.sightings[s]
           : false;
     } else {
@@ -975,89 +975,89 @@ const _toggleSighting = (sighting, state) => {
 };
 
 const _togglePossession = (possession, state) => {
-  possession = possession.slice(possession.indexOf(' ') + 1);
+  possession = possession.slice(possession.indexOf(" ") + 1);
   const thisPossession = getValueFromObject(POSSESSIONS, possession);
   for (const [key] of Object.entries(state.cursedPossessions)) {
     state.cursedPossessions[key] =
       key === thisPossession ? !state.cursedPossessions[key] : false;
   }
-  state.cursedPossessions['none'] = arrayIsFalse(state.cursedPossessions)
+  state.cursedPossessions["none"] = arrayIsFalse(state.cursedPossessions)
     ? true
     : false;
 };
 
 const _toggleEvidence = (evidence, state, config) => {
-  evidenceArray = evidence.split(' ').shift();
+  evidenceArray = evidence.split(" ").shift();
   for (const [key] of Object.entries(evidenceArray)) {
     toggleEvidence(command, state, config, key);
   }
 };
 
 const _setEvidenceNegative = (evidence, state, config) => {
-  evidenceArray = evidence.split(' ');
+  evidenceArray = evidence.split(" ");
   for (const [e] of Object.entries(evidenceArray)) {
     setEvidenceNegative(e, state, config);
   }
 };
 
 const _toggleEMF = (command, state, config) => {
-  toggleEvidence(command, state, config, 'emf');
+  toggleEvidence(command, state, config, "emf");
 };
 
 const _toggleSpiritBox = (command, state, config) => {
-  toggleEvidence(command, state, config, 'spiritBox');
+  toggleEvidence(command, state, config, "spiritBox");
 };
 
 const _toggleFingerprints = (command, state, config) => {
-  toggleEvidence(command, state, config, 'fingerprints');
+  toggleEvidence(command, state, config, "fingerprints");
 };
 
 const _toggleOrbs = (command, state, config) => {
-  toggleEvidence(command, state, config, 'orbs');
+  toggleEvidence(command, state, config, "orbs");
 };
 
 const _toggleWriting = (command, state, config) => {
-  toggleEvidence(command, state, config, 'writing');
+  toggleEvidence(command, state, config, "writing");
 };
 
 const _toggleFreezing = (command, state, config) => {
-  toggleEvidence(command, state, config, 'freezing');
+  toggleEvidence(command, state, config, "freezing");
 };
 
 const _toggleDots = (command, state, config) => {
-  toggleEvidence(command, state, config, 'dots');
+  toggleEvidence(command, state, config, "dots");
 };
 
 const _setEMFNegative = (state, config) => {
-  setEvidenceNegative('emf', state, config);
+  setEvidenceNegative("emf", state, config);
 };
 
 const _setSpiritBoxNegative = (state, config) => {
-  setEvidenceNegative('spiritBox', state, config);
+  setEvidenceNegative("spiritBox", state, config);
 };
 
 const _setFingerprintsNegative = (state, config) => {
-  setEvidenceNegative('fingerprints', state, config);
+  setEvidenceNegative("fingerprints", state, config);
 };
 
 const _setOrbsNegative = (state, config) => {
-  setEvidenceNegative('orbs', state, config);
+  setEvidenceNegative("orbs", state, config);
 };
 
 const _setWritingNegative = (state, config) => {
-  setEvidenceNegative('writing', state, config);
+  setEvidenceNegative("writing", state, config);
 };
 
 const _setFreezingNegative = (state, config) => {
-  setEvidenceNegative('freezing', state, config);
+  setEvidenceNegative("freezing", state, config);
 };
 
 const _setDotsNegative = (state, config) => {
-  setEvidenceNegative('dots', state, config);
+  setEvidenceNegative("dots", state, config);
 };
 
 const _setOptionalObjectives = (command, state) => {
-  let commandSplit = command.split(' ');
+  let commandSplit = command.split(" ");
   let optObjCommands = commandSplit.slice(1);
   optObjCommands = optObjCommands.slice(Math.max(optObjCommands.length - 3, 0)); // Grabs only the last 3 commands
 
@@ -1084,12 +1084,12 @@ const _setRequiredPermissions = (required) => {
 };
 
 const _setCounterName = (num, command) => {
-  commandArgument = command.split(' ').slice(1).join(' ');
+  commandArgument = command.split(" ").slice(1).join(" ");
   setCounterName(num, commandArgument);
 };
 
 const _setCounterNumber = (num, command) => {
-  commandArgument = command.split(' ').slice(1).join(' ');
+  commandArgument = command.split(" ").slice(1).join(" ");
   setCounterNumber(num, commandArgument);
 };
 
@@ -1102,7 +1102,7 @@ const _decrementCounter = (num) => {
 };
 
 const _glitchedMythos = (command) => {
-  commandArgument = command.split(' ').slice(1).join(' ');
+  commandArgument = command.split(" ").slice(1).join(" ");
 
   if (commandArgument) {
     writeOutVersion(commandArgument);
@@ -1131,7 +1131,7 @@ const setEvidenceNegative = (evidence, state, config) => {
 };
 
 const toggleEvidence = (command, state, config, evidenceType) => {
-  const arg = command.split(' ')[1];
+  const arg = command.split(" ")[1];
   if (arg) {
     state.evidence[evidenceType] = setEvidence(arg);
   } else {
@@ -1161,13 +1161,13 @@ const resetName = (newName, state) => {
       ? camelCase(newName)
       : newName;
   } else {
-    state.ghostName = '';
+    state.ghostName = "";
   }
 };
 
 const resetLocationName = (state) => {
   state.location.locationName = config.locationNameStrings.noLocationString;
-  state.location.locationDiff = '';
+  state.location.locationDiff = "";
 };
 
 const resetSightings = (state) => {
@@ -1178,7 +1178,7 @@ const resetSightings = (state) => {
 
 const resetPossessions = (state) => {
   for (const [key] of Object.entries(state.cursedPossessions)) {
-    if (key === 'none') {
+    if (key === "none") {
       state.cursedPossessions[key] = true;
     } else {
       state.cursedPossessions[key] = false;
@@ -1430,7 +1430,7 @@ const determineConclusionMessage = (state) => {
       state.conclusionString = config.conclusionStrings.tooMuchEvidence;
       break;
     default:
-      state.conclusionString = 'Something broke';
+      state.conclusionString = "Something broke";
       break;
   }
 };
@@ -1454,21 +1454,21 @@ const toggleEvidenceIterator = (evidence) => {
 };
 
 const setEvidence = (arg) => {
-  if (arg === 'o' || arg === 'on') {
+  if (arg === "o" || arg === "on") {
     return EVIDENCE_ON;
   }
 
-  if (arg === 'f' || arg === 'off') {
+  if (arg === "f" || arg === "off") {
     return EVIDENCE_OFF;
   }
 
-  if (arg === 'x' || arg === 'n' || arg === 'neg' || arg === 'negative') {
+  if (arg === "x" || arg === "n" || arg === "neg" || arg === "negative") {
     return EVIDENCE_NEGATIVE;
   }
 };
 
 const getLocationNameString = (location) => {
-  let locationSplit = location.split(' ');
+  let locationSplit = location.split(" ");
   if (locationSplit[1]) {
     _setDiffName(locationSplit[1].toLowerCase(), userState);
   }
@@ -1485,10 +1485,10 @@ const getDifficultyString = (difficulty) => {
 
 const getValueFromArray = (theArray, string, fromStart = false) => {
   const regexMatch = fromStart
-    ? new RegExp(`^${string}`, 'gi')
-    : new RegExp(`${string}`, 'gi');
-  const restricted = new RegExp('restricted', 'gi');
-  const sunny = new RegExp('^Sunny Meadows$', 'gi');
+    ? new RegExp(`^${string}`, "gi")
+    : new RegExp(`${string}`, "gi");
+  const restricted = new RegExp("restricted", "gi");
+  const sunny = new RegExp("^Sunny Meadows$", "gi");
   var result;
   for (var i = 0; i < theArray.length; i++) {
     const entry = theArray[i];
@@ -1502,7 +1502,7 @@ const getValueFromArray = (theArray, string, fromStart = false) => {
 
 function getValueFromObject(object, string) {
   for (const [key, value] of Object.entries(object)) {
-    var pattern = new RegExp(`^${key}`, 'ig');
+    var pattern = new RegExp(`^${key}`, "ig");
     if (pattern.test(string)) {
       return value;
     }
@@ -1535,7 +1535,7 @@ const setRequiredPermissions = (required) => {
 
 const createEvidenceString = (evidence) => {
   let evidenceString =
-    '' +
+    "" +
     evidence.emf +
     evidence.freezing +
     evidence.spiritBox +
@@ -1555,7 +1555,7 @@ const numOfTrueEvidenceInString = (evidenceString) => {
   let index,
     count = 0;
   for (index = 0; index < evidenceString.length; ++index) {
-    count = evidenceString.charAt(index) == '1' ? count + 1 : count;
+    count = evidenceString.charAt(index) == "1" ? count + 1 : count;
   }
 
   return count;
@@ -1632,7 +1632,7 @@ const getGhostPossibilities = (evidenceString) => {
 };
 
 const getImpossibleEvidence = (possibleGhosts) => {
-  let impossibleEvidenceString = '0000000'; // If it stays a 0, we know it can't match any of the ghosts
+  let impossibleEvidenceString = "0000000"; // If it stays a 0, we know it can"t match any of the ghosts
   for (let i = 0; i < possibleGhosts.length; i++) {
     for (let k = 0; k < impossibleEvidenceString.length; k++) {
       impossibleEvidenceString =
@@ -1649,7 +1649,7 @@ const getImpossibleEvidence = (possibleGhosts) => {
 };
 
 const createGhostConclusionString = (conclusionString, ghostType) => {
-  return conclusionString ? conclusionString : `It's a ${ghostType}!!`;
+  return conclusionString ? conclusionString : `It"s a ${ghostType}!!`;
 };
 
 const getOptObjectiveString = (obj) => {
@@ -1659,16 +1659,16 @@ const getOptObjectiveString = (obj) => {
 
 const getNumberString = (num) => {
   const numStrings = [
-    '',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine'
+    "",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine"
   ];
   return numStrings[num];
 };
@@ -1677,7 +1677,7 @@ const getZeroEvidenceConclusionMessage = (
   numOfNegativeEvidence,
   ghostPossibilities
 ) => {
-  let conclusionString = '';
+  let conclusionString = "";
 
   switch (numOfNegativeEvidence) {
     case 4:
@@ -1701,7 +1701,7 @@ const getSingleEvidenceConclusionMessage = (
   numOfNegativeEvidence,
   ghostPossibilities
 ) => {
-  let conclusionString = '';
+  let conclusionString = "";
 
   switch (numOfNegativeEvidence) {
     case 4:
@@ -1720,7 +1720,7 @@ const getSingleEvidenceConclusionMessage = (
 };
 
 const getMultipleEvidenceConclusionMessage = (ghostPossibilities) => {
-  let conclusionString = '';
+  let conclusionString = "";
 
   conclusionString =
     getConclusionStringBasedOnGhostPossiblities(ghostPossibilities);
@@ -1734,17 +1734,17 @@ const getConclusionArticleBasedOnGhostPossibilities = (ghostPossibilities) => {
   const isVowel = /[aeiouAEIOU]/.test(firstWord.charAt(0));
   const isThe = /The/.test(firstWord);
   if (isThe) {
-    return '';
+    return "";
   } else if (isVowel) {
-    return 'an';
+    return "an";
   } else {
-    return 'a';
+    return "a";
   }
-  return 'a';
+  return "a";
 };
 
 const getConclusionStringBasedOnGhostPossiblities = (ghostPossibilities) => {
-  let conclusionString = '';
+  let conclusionString = "";
   let ghostPossibilityStrings = ghostPossibilities.map((ghost) => ghost.type);
 
   if (ghostPossibilities.length === 0) {
@@ -1756,7 +1756,7 @@ const getConclusionStringBasedOnGhostPossiblities = (ghostPossibilities) => {
       ghostPossibilityStrings
     );
     conclusionString = `Could be ${conclusionArticle} ${ghostPossibilityStrings.join(
-      ', '
+      ", "
     )}`;
   }
 
@@ -1780,14 +1780,14 @@ const updateDashboardDOM = (state) => {
 
 /** NAME RELATED DOM MANIPULATING FUNCTIONS */
 const updateNameDOM = (newName) => {
-  let nameString = '' + config.nameStrings.ghostNameString;
+  let nameString = "" + config.nameStrings.ghostNameString;
 
   /**
    * Replaces "[name]" with the name of the ghost, allowing the user to paramaterize
    * the name for things such as "Name: [name]" === "Name: John Doe"
    */
   nameString = nameString.replace(/\[name\]/g, newName);
-  $('#name').html(`${newName ? nameString : config.nameStrings.noNameString}`);
+  $("#name").html(`${newName ? nameString : config.nameStrings.noNameString}`);
 };
 
 /** EVIDENCE RELATED DOM MANIPULATING FUNCTIONS */
@@ -1796,23 +1796,23 @@ const updateEvidenceDOM = (evidence) => {
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     let evidenceDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`);
     let negativeDom = $(`#${EVIDENCE_NAMES_IN_DOM[i]}-negative`);
-    negativeDom.addClass('hidden');
+    negativeDom.addClass("hidden");
     switch (evidence[EVIDENCE_NAMES_IN_DOM[i]]) {
       case EVIDENCE_ON:
-        evidenceDom.addClass('active');
+        evidenceDom.addClass("active");
         break;
       case EVIDENCE_IMPOSSIBLE:
-        evidenceDom.addClass('impossible');
+        evidenceDom.addClass("impossible");
         break;
       case EVIDENCE_COMPLETE_IMPOSSIBLE:
-        evidenceDom.addClass('impossible-completed');
+        evidenceDom.addClass("impossible-completed");
         break;
       case EVIDENCE_NEGATIVE:
-        evidenceDom.addClass('impossible');
-        negativeDom.removeClass('hidden');
+        evidenceDom.addClass("impossible");
+        negativeDom.removeClass("hidden");
       case EVIDENCE_OFF:
       default:
-        evidenceDom.addClass('inactive');
+        evidenceDom.addClass("inactive");
         break;
     }
   }
@@ -1821,10 +1821,10 @@ const updateEvidenceDOM = (evidence) => {
 const resetEvidenceDOM = () => {
   for (let i = 0; i < EVIDENCE_NAMES_IN_DOM.length; i++) {
     $(`#${EVIDENCE_NAMES_IN_DOM[i]}-svg`).removeClass([
-      'active',
-      'inactive',
-      'impossible',
-      'impossible-completed'
+      "active",
+      "inactive",
+      "impossible",
+      "impossible-completed"
     ]);
   }
 };
@@ -1833,16 +1833,16 @@ const resetEvidenceDOM = () => {
 const updateOptionalObjectivesDOM = (optionalObjectives) => {
   resetOptionalDOM();
 
-  if (config.optionalObj.spacing === 'justify-evenly') {
+  if (config.optionalObj.spacing === "justify-evenly") {
     updateOptionalObjectivesDOMEvenly(optionalObjectives);
   } else if (optionalObjectives.length > 0) {
-    $('#optional-obj-container').removeClass('hidden');
-    $('#no-opt-objectives-container').addClass('hidden');
+    $("#optional-obj-container").removeClass("hidden");
+    $("#no-opt-objectives-container").addClass("hidden");
     for (let i = 0; i < optionalObjectives.length; i++) {
-      $('#optional-obj-container').append(
-        $('<div>', {
+      $("#optional-obj-container").append(
+        $("<div>", {
           class: `objective px-0.5 ${
-            optionalObjectives[i].strike ? ' strikethrough' : ''
+            optionalObjectives[i].strike ? " strikethrough" : ""
           }`,
           id: `objective-${getNumberString(i + 1)}`,
           text: optionalObjectives[i].text
@@ -1854,38 +1854,38 @@ const updateOptionalObjectivesDOM = (optionalObjectives) => {
 
 const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
   if (optionalObjectives.length > 0) {
-    $('#optional-obj-container').removeClass('hidden');
-    $('#no-opt-objectives-container').addClass('hidden');
+    $("#optional-obj-container").removeClass("hidden");
+    $("#no-opt-objectives-container").addClass("hidden");
 
     if (optionalObjectives[0]) {
-      $('#optional-obj-container').append(
-        $('<div>', {
+      $("#optional-obj-container").append(
+        $("<div>", {
           class: `objective w-1/3 text-left${
-            optionalObjectives[0].strike ? ' strikethrough' : ''
+            optionalObjectives[0].strike ? " strikethrough" : ""
           }`,
-          id: 'objective-one',
+          id: "objective-one",
           text: optionalObjectives[0].text
         })
       );
     }
     if (optionalObjectives[1]) {
-      $('#optional-obj-container').append(
-        $('<div>', {
+      $("#optional-obj-container").append(
+        $("<div>", {
           class: `objective w-1/3 text-center${
-            optionalObjectives[1].strike ? ' strikethrough' : ''
+            optionalObjectives[1].strike ? " strikethrough" : ""
           }`,
-          id: 'objective-two',
+          id: "objective-two",
           text: optionalObjectives[1].text
         })
       );
     }
     if (optionalObjectives[2]) {
-      $('#optional-obj-container').append(
-        $('<div>', {
+      $("#optional-obj-container").append(
+        $("<div>", {
           class: `objective w-1/3 text-right${
-            optionalObjectives[2].strike ? ' strikethrough' : ''
+            optionalObjectives[2].strike ? " strikethrough" : ""
           }`,
-          id: 'objective-three',
+          id: "objective-three",
           text: optionalObjectives[2].text
         })
       );
@@ -1894,9 +1894,9 @@ const updateOptionalObjectivesDOMEvenly = (optionalObjectives) => {
 };
 
 const resetOptionalDOM = () => {
-  $('#optional-obj-container').empty();
-  $('#optional-obj-container').addClass('hidden');
-  $('#no-opt-objectives-container').removeClass('hidden');
+  $("#optional-obj-container").empty();
+  $("#optional-obj-container").addClass("hidden");
+  $("#no-opt-objectives-container").removeClass("hidden");
 };
 
 const toggleStrikethrough = (optionalNumber, state) => {
@@ -1906,18 +1906,18 @@ const toggleStrikethrough = (optionalNumber, state) => {
 
 /** LOCATION RELATED DOM MANIPULATING FUNCTIONS */
 const updateLocationName = (location) => {
-  $('#location-name').html(location);
+  $("#location-name").html(location);
 };
 
 const updateLocationDiff = (diff) => {
-  $('#location-difficulty').html(diff);
+  $("#location-difficulty").html(diff);
 };
 
 /** SIGHTING RELATED DOM MANIPULATING FUNCTIONS */
 const updateSighting = (sightings, locationName) => {
   for (const [key, value] of Object.entries(sightings)) {
     let sightingInactive =
-      key === 'slenderman' && locationName != 'Maple Lodge'
+      key === "slenderman" && locationName != "Maple Lodge"
         ? `sighting-hidden`
         : `sighting-{{displayInactiveSighting}}`;
     $(`#${key}-svg-container`).removeClass([
@@ -1954,15 +1954,15 @@ const updatePossession = (possessions) => {
 
 /** CONCLUSION RELATED DOM MANIPULATING FUNCTIONS */
 const updateConclusion = (conclusion) => {
-  $('#conclusion').html(conclusion);
+  $("#conclusion").html(conclusion);
 };
 
 /** COUNTER RELATED DOM MANIPULATING FUNCTIONS */
 const setCounterName = (which, name) => {
   if (which === 1) {
-    $('#counter-name').html(name);
+    $("#counter-name").html(name);
   } else if (which === 2) {
-    $('#counter2-name').html(name);
+    $("#counter2-name").html(name);
   }
 };
 
@@ -1971,9 +1971,9 @@ const setCounterNumber = (which, number) => {
 
   if (Number.isInteger(num)) {
     if (which === 1) {
-      $('#counter-number').text('' + num);
+      $("#counter-number").text("" + num);
     } else if (which === 2) {
-      $('#counter2-number').text('' + num);
+      $("#counter2-number").text("" + num);
     }
   }
 };
@@ -1981,9 +1981,9 @@ const setCounterNumber = (which, number) => {
 const incrementCounter = (which, num) => {
   let counter;
   if (which === 1) {
-    counter = $('#counter-number');
+    counter = $("#counter-number");
   } else if (which === 2) {
-    counter = $('#counter2-number');
+    counter = $("#counter2-number");
   }
   counter.text(parseInt(counter.text()) + (num ? num : 1));
 };
@@ -1991,9 +1991,9 @@ const incrementCounter = (which, num) => {
 const decrementCounter = (which, num) => {
   let counter;
   if (which === 1) {
-    counter = $('#counter-number');
+    counter = $("#counter-number");
   } else if (which === 2) {
-    counter = $('#counter2-number');
+    counter = $("#counter2-number");
   }
   counter.text(parseInt(counter.text()) - (num ? num : 1));
 };
@@ -2008,11 +2008,11 @@ let time = 0;
 let prevTime = 200;
 
 const writeMessage = (word) => {
-  for (let c in word.split('')) {
+  for (let c in word.split("")) {
     time = Math.floor(Math.random() * speed);
 
     setTimeout(() => {
-      $('#text').before(word[c]);
+      $("#text").before(word[c]);
     }, prevTime + time);
 
     prevTime += time;
@@ -2022,18 +2022,18 @@ const writeMessage = (word) => {
 };
 
 const writeOutVersion = (command) => {
-  $('#version').addClass('show-version-item');
+  $("#version").addClass("show-version-item");
   setTimeout(() => {
     let time = writeMessage(command);
     setTimeout(() => {
-      $('#version').removeClass('show-version-item');
+      $("#version").removeClass("show-version-item");
       prevTime = 0;
       time = 0;
       setTimeout(() => {
-        $('#console-container').empty();
-        $('#console-container').append($(`<span class="prompt">>  </span>`));
-        $('#console-container').append($(`<div id="text"></div>`));
-        $('#console-container').append($(`<div class="cursor"></div>`));
+        $("#console-container").empty();
+        $("#console-container").append($(`<span class="prompt">>  </span>`));
+        $("#console-container").append($(`<div id="text"></div>`));
+        $("#console-container").append($(`<div class="cursor"></div>`));
       }, 2000);
     }, time + 2000);
   }, 1000);
