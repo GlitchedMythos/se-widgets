@@ -188,7 +188,7 @@ const runCommandWithPermission = (permission, data, command, commandArgs) => {
 };
 
 const getHighestBadgeLevel = (badges) => {
-  let badgeValue = Infinity;
+  let badgeValue = 999;
   badges.forEach(badge => {
     if (PERMISSIONS.hasOwnProperty(badge) && PERMISSIONS[badge] < badgeValue) {
       badgeValue = PERMISSIONS[badge];
