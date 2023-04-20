@@ -1,4 +1,4 @@
-const version = "4.2.1 (Apocalypse)";
+const version = "4.2.2 (Tempest)";
 
 // Order is important here:
 // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
@@ -87,6 +87,8 @@ const DIFFICULTY = [
   "Intermediate",
   "Professional",
   "Nightmare",
+  "Insanity",
+  "Challenge",
   "Custom",
 ];
 
@@ -118,6 +120,7 @@ const PERMISSIONS = {
   vip: 3,
   trustee: 4,
   subscriber: 5,
+  everyone: 999
 };
 
 // TODO: Move all widget and user state to here
@@ -132,6 +135,7 @@ let userState = {
     mirror: false,
     music: false,
     ouija: false,
+    paw: false,
     summoning: false,
     tarot: false,
   },
@@ -175,29 +179,34 @@ let userState = {
 let config = {};
 
 const runCommandWithPermission = (permission, data, command, commandArgs) => {
-  if (config.debug) console.log({ permission: permission, command: command, data: data, arguments: commandArgs });
+  if (config.debug) console.log({ permission, command, data, commandArgs });
   if (hasPermission(permission, getUserLevelFromData(data))) {
+    if (config.debug) { console.log(`User ${data.nick} has permission to run command`)}
     command(...commandArgs);
   }
   updateDashboardDOM(userState);
 };
 
-const getUserLevelFromData = (data) => {
-  let badges = data.badges;
-  let badgeLevel = 999;
-
-  if (data.nick.toLowerCase() === "glitchedmythos") {
-    badgeLevel = PERMISSIONS["glitched"];
-  } else if (data.channel.toLowerCase() == data.nick.toLowerCase()) {
-    badgeLevel = PERMISSIONS["broadcaster"];
-  } else if (getValueFromObject(config.TRUSTEES, data.nick.toLowerCase())) {
-    badgeLevel = PERMISSIONS["trustee"];
-  } else {
-    for (let i = 0; i < badges.length; i++) {
-      const level = PERMISSIONS[badges[i].type.toLowerCase()];
-      badgeLevel = badgeLevel <= level ? badgeLevel : level;
+const getHighestBadgeLevel = (badges) => {
+  let badgeValue = 999;
+  badges.forEach(badge => {
+    if (PERMISSIONS.hasOwnProperty(badge) && PERMISSIONS[badge] < badgeValue) {
+      badgeValue = PERMISSIONS[badge];
     }
-  }
+  })
+  return badgeValue;
+}
+
+const getUserLevelFromData = (data) => {
+  const badges = (Object.keys(data.badges).length > 0) ? data.badges.map(badge => badge.type.toLowerCase()): [];
+  const nick = data.nick.toLowerCase();
+  const channel = data.channel.toLowerCase();
+  const trustees = (config.TRUSTEES) ? config.TRUSTEES : [];
+  if (trustees.includes(nick)) { badges.push('trustee'); }
+  if (nick === 'glitchedmythos') { badges.push('glitched'); }
+  const badgeLevel = getHighestBadgeLevel(badges) || 999;
+
+  if (console.debug) console.log({ channel, badges, nick, trustees, badgeLevel })
   return badgeLevel;
 };
 
@@ -220,7 +229,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   const fieldData = obj.detail.fieldData;
   // setting up the POSSESSIONS
   {
-    ["none", "doll", "mirror", "music", "summoning", "tarot", "ouija"].forEach(
+    ["none", "doll", "mirror", "music", "summoning", "tarot", "ouija", "paw"].forEach(
       (v) => {
         let keys = fieldData[v + "PossessionCommand"];
         keys.split(",").forEach((key) => {
