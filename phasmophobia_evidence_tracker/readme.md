@@ -121,17 +121,17 @@ Possession phrases are user defined and can be set in **Settings > Commands**
 
 To get `Salt Photo Event`
 
-    !oo sa ph ev
+    !oo salt photo event
 
 To get `Crucifix Motion Salt`
 
-    !oo cr motion sa
+    !oo crucifix motion salt
 
 Individual Objectives can be used and can be toggled on and off
 
 To get `Smudge`
 
-    !oo sm
+    !oo smudge
 
 ## Map Names and Difficulties
 
