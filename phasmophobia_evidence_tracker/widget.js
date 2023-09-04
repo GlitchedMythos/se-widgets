@@ -1,7 +1,7 @@
-const version = "4.2.2 (Tempest)";
+const version = "4.2.3 (Ascension)";
 
 // Order is important here:
-// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | DOTS
+// EMF-5 | Freezing | Spirit Box | Writing | Orbs | Ultraviolet | DOTS
 // 1 is true
 // 0 is false
 
@@ -39,9 +39,9 @@ const EVIDENCE = {
   book: "writing",
   writing: "writing",
   orbs: "orbs",
-  fingerprints: "fingerprints",
-  fingies: "fingerprints",
-  hand: "fingerprints",
+  ultraviolet: "ultraviolet",
+  uv: "ultraviolet",
+  hand: "ultraviolet",
   dots: "dots",
 };
 
@@ -51,20 +51,19 @@ const POSSESSIONS = {};
 const SIGHTINGS = {};
 
 const OPTIONAL_OBJECTIVES = {
-  candle: "Candle",
+  firelight: "Firelight",
+  cleanse: "Cleanse Area",
   crucifix: "Crucifix",
   emf: "EMF",
   escape: "Escape",
   event: "Event",
-  hunt: "Smudge (Hunt)",
   microphone: "Microphone",
   motion: "Motion",
   photo: "Photo",
   camera: "Photo",
   repel: "Repel",
   salt: "Salt",
-  sanity: "<25% Sanity",
-  smudge: "Smudge"
+  sanity: "<25% Sanity"
 }
 
 const LOCATIONS = [
@@ -102,7 +101,7 @@ const EVIDENCE_OFF = 0,
 const EVIDENCE_NAMES_IN_DOM = [
   "emf",
   "spiritBox",
-  "fingerprints",
+  "ultraviolet",
   "orbs",
   "writing",
   "freezing",
@@ -142,7 +141,7 @@ let userState = {
   evidence: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
-    fingerprints: EVIDENCE_OFF,
+    ultraviolet: EVIDENCE_OFF,
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
@@ -151,7 +150,7 @@ let userState = {
   evidenceDisplay: {
     emf: EVIDENCE_OFF,
     spiritBox: EVIDENCE_OFF,
-    fingerprints: EVIDENCE_OFF,
+    ultraviolet: EVIDENCE_OFF,
     orbs: EVIDENCE_OFF,
     writing: EVIDENCE_OFF,
     freezing: EVIDENCE_OFF,
@@ -326,11 +325,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [data.text, userState, config]
       );
     },
-    [fieldData["fingerprintsCommand"]]: (data) => {
+    [fieldData["ultravioletCommand"]]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
-        _toggleFingerprints,
+        _toggleUltraviolet,
         [data.text, userState, config]
       );
     },
@@ -380,11 +379,11 @@ window.addEventListener("onWidgetLoad", function (obj) {
         [userState, config]
       );
     },
-    [`${fieldData["fingerprintsCommand"]}x`]: (data) => {
+    [`${fieldData["ultravioletCommand"]}x`]: (data) => {
       runCommandWithPermission(
         requiredPermission(config),
         data,
-        _setFingerprintsNegative,
+        _setUltravioletNegative,
         [userState, config]
       );
     },
@@ -979,8 +978,8 @@ const _toggleSpiritBox = (command, state, config) => {
   toggleEvidence(command, state, config, "spiritBox");
 };
 
-const _toggleFingerprints = (command, state, config) => {
-  toggleEvidence(command, state, config, "fingerprints");
+const _toggleUltraviolet = (command, state, config) => {
+  toggleEvidence(command, state, config, "ultraviolet");
 };
 
 const _toggleOrbs = (command, state, config) => {
@@ -1007,8 +1006,8 @@ const _setSpiritBoxNegative = (state, config) => {
   setEvidenceNegative("spiritBox", state, config);
 };
 
-const _setFingerprintsNegative = (state, config) => {
-  setEvidenceNegative("fingerprints", state, config);
+const _setUltravioletNegative = (state, config) => {
+  setEvidenceNegative("ultraviolet", state, config);
 };
 
 const _setOrbsNegative = (state, config) => {
@@ -1168,7 +1167,7 @@ const resetOptionalObjectives = (optionalObjectives, state) => {
 const resetEvidence = (evidence) => {
   evidence.emf = EVIDENCE_OFF;
   evidence.spiritBox = EVIDENCE_OFF;
-  evidence.fingerprints = EVIDENCE_OFF;
+  evidence.ultraviolet = EVIDENCE_OFF;
   evidence.orbs = EVIDENCE_OFF;
   evidence.writing = EVIDENCE_OFF;
   evidence.freezing = EVIDENCE_OFF;
@@ -1230,7 +1229,7 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
 
   if (config.markImpossibleEvidence) {
     // Addition shorthand prior to impossibleEvidence converts the string to a number
-    // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Fingerprints | Dots
+    // EMF-5 | Freezing | Spirit Box | Writing | Orbs | Ultraviolet | Dots
     if (
       +impossibleEvidence[0] == EVIDENCE_OFF &&
       +evidenceString[0] !== EVIDENCE_NEGATIVE
@@ -1270,7 +1269,7 @@ const calculateDoubleGhostEvidence = (evidence, evidenceString, config) => {
       +impossibleEvidence[5] == EVIDENCE_OFF &&
       +evidenceString[5] !== EVIDENCE_NEGATIVE
     ) {
-      evidence.fingerprints = EVIDENCE_IMPOSSIBLE;
+      evidence.ultraviolet = EVIDENCE_IMPOSSIBLE;
     }
 
     if (
@@ -1509,7 +1508,7 @@ const createEvidenceString = (evidence) => {
     evidence.spiritBox +
     evidence.writing +
     evidence.orbs +
-    evidence.fingerprints +
+    evidence.ultraviolet +
     evidence.dots;
 
   return evidenceString;
