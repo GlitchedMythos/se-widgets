@@ -85,12 +85,11 @@ Off -> On -> Negative -> Off -> On -> Negative -> Off -> etc.
 | Event | "event" |
 | EMF | "emf" |
 | Crucifix | "crucifix" |
-| Smudge Ghost (NON-Hunt) | "smudge" |
+| Cleanse Area (NON-Hunt) | "cleanse" |
 | Escape | "escape" |
-| Smudge Ghost (During Hunt) | "hunt" |
-| Repel Ghost (During Hunt) - smudge during hunt | "repel" |
+| Repel Ghost (During Hunt) | "repel" |
 | <25% Sanity | "sanity" |
-| Candle | "candle" |
+| Firelight | "firelight" |
 | Parabolic Microphone | "microphone" |
 
 ## Sightings
@@ -129,9 +128,9 @@ To get `Crucifix Motion Salt`
 
 Individual Objectives can be used and can be toggled on and off
 
-To get `Smudge`
+To get `Cleanse Area`
 
-    !oo smudge
+    !oo cleanse
 
 ## Map Names and Difficulties
 

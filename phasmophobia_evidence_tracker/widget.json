@@ -134,10 +134,10 @@
     "value": "!gs",
     "group": "Commands"
   },
-  "fingerprintsCommand": {
+  "ultravioletCommand": {
     "type": "string",
-    "label": "Fingerprints Toggle Command",
-    "value": "!gf",
+    "label": "Ultraviolet Toggle Command",
+    "value": "!gu",
     "group": "Commands"
   },
   "orbsCommand": {
